@@ -1,4 +1,4 @@
-# Supervisor Bot - Current Version: Beta 0.1 Framework
+# MargarineBot - Current Version: Beta 0.1 Framework
 A Discord bot coded in Node.js using the Discord.js Commando Library.
 
 <b>Introduction:</b>
