@@ -1,5 +1,5 @@
 # Supervisor Bot - Current Version: Beta 0.1 Framework
-Discord bot that handles all admin commands for moderating your Discord Server.
+A Discord bot coded in Node.js using the Discord.js Commando Library.
 
 <b>Introduction:</b>
 
