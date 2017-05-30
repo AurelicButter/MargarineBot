@@ -1,6 +1,6 @@
 {
   "name": "margarine",
-  "version": "0.1",
+  "version": "0.2",
   "description": "Margarine Bot",
   "main": "index.js",
   "dependencies": {
