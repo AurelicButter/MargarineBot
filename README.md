@@ -4,11 +4,11 @@ A Discord bot coded in Node.js using the Discord.js Library.
 <b>Introduction:</b>
 
 <b>Features:</b>
-<li>Ping command</li>
-<li>Guild and Member events</li>
+- Ping command
+- Guild and Member events
 
 <b>Updates:</b>
-<li>May 30th, 2017: Beta 0.2 Released</li>
+- May 30th, 2017: Beta 0.2 Released
 
 <b>Invite me!</b>
 <i>Not avalible at the current moment as the bot is in development.</i>
