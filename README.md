@@ -1,5 +1,5 @@
 # MargarineBot - Current Version: Beta 0.1 Framework
-A Discord bot coded in Node.js using the Discord.js Commando Library.
+A Discord bot coded in Node.js using the Discord.js Library.
 
 <b>Introduction:</b>
 
