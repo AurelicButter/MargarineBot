@@ -1,0 +1,16 @@
+{
+  "name": "margarine",
+  "version": "0.1",
+  "description": "Margarine Bot",
+  "main": "index.js",
+  "dependencies": {
+    "discord.js": "^11.1.0",
+    "return-deep-diff": "^0.2.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Butterstroke",
+  "license": "Apache-2.0"
+}
