@@ -52,11 +52,18 @@ client.on('warn', (e) => console.warn(e));
 client.on('debug', (e) => console.debug(e));
 
 client.on('message', message => {
-	if (message.author === client.user) return;
+	if (message.author.bot) return;
+	
 	if (message.content.startsWith(config.prefix + 'ping')) { //Possible to move command to different file and still work?
 		console.log('Ping command executed.');
         	message.channel.send('Pong');
+	} else
+	
+	if (message.content.startWith(config.prefix + 'send')){
+		console.log('Trans-channel message sent!');
+		client.channel.get('304129722999373825').sendMessage('Hello!');
 	}
+		
 	if (message.content.startsWith(config.prefix + 'version')){
 		console.log('Version command executed.');
 		message.channel.send(`Margarine is on version: ${package.version}`);
