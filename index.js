@@ -23,7 +23,7 @@ client.on('guildCreate', guild =>{
 
 client.on('guildMemberAdd', (member) =>{
     console.log(`New User: ${member.user.username}`);
-    let guild= member.guild;
+    let guild = member.guild;
     member.guild.defaultChannel.sendMessage(`${member.user.username} has joined for the first time!`);
 });
 
