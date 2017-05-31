@@ -8,7 +8,6 @@ const path = require('path');
 client.on('ready', () =>{
     console.log('This is Margarine speaking!');
     console.log('Online and awaiting orders!');
-    client.user.setGame('Being Useless...');
 });
 
 client.on('guildDelete', guild =>{
@@ -52,6 +51,9 @@ client.on('warn', (e) => console.warn(e));
 client.on('debug', (e) => console.debug(e));
 
 client.on('message', message => {
+	if(!message.content.startsWith(config.prefix)) return;
+	let args = message.content.split(' ').slice(1);
+	var argresult = args.join(' ');
 	if (message.author.bot) return;
 	
 	if (message.content.startsWith(config.prefix + 'ping')) { //Possible to move command to different file and still work?
@@ -62,11 +64,23 @@ client.on('message', message => {
 	if (message.content.startWith(config.prefix + 'send')){
 		console.log('Trans-channel message sent!');
 		client.channel.get('304129722999373825').sendMessage('Hello!');
-	}
+	} else
 		
 	if (message.content.startsWith(config.prefix + 'version')){
 		console.log('Version command executed.');
 		message.channel.send(`Margarine is on version: ${package.version}`);
+	} else
+		
+	if (message.content.startWith(config.prefix + 'setgame')){
+		if(message.author !== config.OwnerID) return;
+		if (!result) { result = null; }
+		client.user.setGame(argresult);
+	} else
+	
+	if (message.content.startWith(config.prefix + 'setStatus')){
+		if(message.author !== config.OwnerID) return;
+		if (!result) { result = null; }
+		client.user.setStatus(argresult);
 	}
 });
 
