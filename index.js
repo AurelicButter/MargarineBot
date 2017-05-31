@@ -46,7 +46,10 @@ client.on('guildBanRemove', (guild, user) => {
     guild.defaultChannel.sendMessage(`${user.username} fought the ban hammer and won!`);
 });
 
+//Bot Failure Safety net
 client.on('error', (e) => console.error(e));
+client.on('warn', (e) => console.warn(e));
+client.on('debug', (e) => console.debug(e));
 
 client.on('message', message => {
 	if (message.author === client.user) return;
