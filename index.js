@@ -72,13 +72,13 @@ client.on('message', message => {
 	} else
 		
 	if (message.content.startWith(config.prefix + 'setgame')){
-		if(message.author !== config.OwnerID) return;
+		if(message.author.id !== config.OwnerID) return;
 		if (!result) { result = null; }
 		client.user.setGame(argresult);
 	} else
 	
 	if (message.content.startWith(config.prefix + 'setStatus')){
-		if(message.author !== config.OwnerID) return;
+		if(message.author.id !== config.OwnerID) return;
 		if (!result) { result = null; }
 		client.user.setStatus(argresult);
 	}
