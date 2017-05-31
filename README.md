@@ -1,4 +1,4 @@
-# MargarineBot - Current Version: Beta 0.2 Startup!
+# MargarineBot - Current Version: Beta 0.3 Commands!
 
 A Discord bot coded in Node.js using the Discord.js Library.
 
