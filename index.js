@@ -55,7 +55,11 @@ client.on('message', message => {
 	if (message.author === client.user) return;
 	if (message.content.startsWith(config.prefix + 'ping')) { //Possible to move command to different file and still work?
 		console.log('Ping command executed.');
-        message.channel.send('Pong');
+        	message.channel.send('Pong');
+	}
+	if (message.content.startsWith(config.prefix + 'version')){
+		console.log('Version command executed.');
+		message.channel.send(`Margarine is on version: ${package.version}`);
 	}
 });
 
