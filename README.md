@@ -13,3 +13,5 @@ A Discord bot coded in Node.js using the Discord.js Library.
 
 <b>Invite me!</b>
 <i>Not avalible at the current moment as the bot is in development.</i>
+
+Hello from mobile device! 
