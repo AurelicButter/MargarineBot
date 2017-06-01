@@ -2,7 +2,6 @@ const Discord = require('discord.js');
 const config = require('./settings.json');
 const client = new Discord.Client();
 const ddiff = require('return-deep-diff');
-const path = require('path');
 
 //Events
 client.on('ready', () =>{
@@ -17,7 +16,6 @@ client.on('guildDelete', guild =>{
 client.on('guildCreate', guild =>{
     console.log(`I have started working for ${guild.name} at ${new Date()}`);
     guild.defaultChannel.sendMessage('Hello! I am Margarine and I will be a bot on here!');
-    guild.defaultChannel.sendMessage('Please do m~help for more information!'); //Not a command yet. Final command before 0.2 release.
 });
 
 client.on('guildMemberAdd', (member) =>{
@@ -48,39 +46,50 @@ client.on('guildBanRemove', (guild, user) => {
 //Bot Failure Safety net
 client.on('error', (e) => console.error(e));
 client.on('warn', (e) => console.warn(e));
-client.on('debug', (e) => console.debug(e));
 
 client.on('message', message => {
-	if(!message.content.startsWith(config.prefix)) return;
 	let args = message.content.split(' ').slice(1);
-	var argresult = args.join(' ');
+  	var result = args.join(' ');
+
+	if(!message.content.startsWith(config.prefix)) return;
 	if (message.author.bot) return;
 	
-	if (message.content.startsWith(config.prefix + 'ping')) { //Possible to move command to different file and still work?
+	if (message.content.startsWith(config.prefix + 'ping')) { 
 		console.log('Ping command executed.');
         	message.channel.send('Pong');
 	} else
+
+	if (message.content.startsWith(config.prefix + 'welcome')){
+		if(message.author.id !== config.ownerID) return;
+		console.log('Welcome command executed.');
+		message.channel.send('Hello! I am Margarine!');
+		message.channel.send('I will be a bot user on here so feel free to use me when I am online!');
+	}
 	
-	if (message.content.startWith(config.prefix + 'send')){
+	if (message.content.startsWith(config.prefix + 'send')){
 		console.log('Trans-channel message sent!');
-		client.channel.get('304129722999373825').sendMessage('Hello!');
+		client.channels.get('304129722999373825').send('Hello!');
 	} else
 		
 	if (message.content.startsWith(config.prefix + 'version')){
 		console.log('Version command executed.');
-		message.channel.send(`Margarine is on version: ${package.version}`);
+		message.channel.send(`Margarine is on version: ${config.version}`);
 	} else
 		
-	if (message.content.startWith(config.prefix + 'setgame')){
-		if(message.author.id !== config.OwnerID) return;
-		if (!result) { result = null; }
-		client.user.setGame(argresult);
+	if (message.content.startsWith(config.prefix + 'setgame')){
+		if(message.author.id !== config.ownerID) return;
+		if (!result) { 
+			result = null; 
+		}
+		client.user.setGame(result);
 	} else
 	
-	if (message.content.startWith(config.prefix + 'setStatus')){
-		if(message.author.id !== config.OwnerID) return;
-		if (!result) { result = null; }
-		client.user.setStatus(argresult);
+	if (message.content.startsWith(config.prefix + 'setstatus')){
+		if(message.author.id !== config.ownerID) return;
+		if (!result) { 
+			client.user.setStatus(online); 
+		}
+		client.user.setStatus(result);
 	}
 });
 
