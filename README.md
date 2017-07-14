@@ -1,4 +1,4 @@
-# MargarineBot - Current Version: Beta 0.3 Commands!
+# MargarineBot - Current Version: Beta 0.4 Moderator!
 
 A Discord bot coded in Node.js using the Discord.js Library.
 
@@ -8,6 +8,9 @@ A Discord bot coded in Node.js using the Discord.js Library.
 - Ping command
 - Guild and Member events
 - Avatar command
+- Warn and Ban commands
+- Permission levels for commands
+- Bingo Command
 
 <b>Updates:</b>
 - June 6th, 2017: Beta 0.3 Released

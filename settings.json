@@ -1,5 +1,9 @@
 {
-  "token": "[BOT TOKEN]",
-  "OwnerID": "[OWNER ID]",
-  "prefix": "[PREFIX]"
+    "token": "<BOT_TOKEN>",
+    "ownerID": "<OWNER_ID>",
+    "modrolename": "Moderator",
+	  "adminrolename": "Admin",
+    "mAvatar": "<BOT_AVATAR_URL>",
+    "prefix": "<PREFIX>", 
+    "version": "Beta 0.4"
 }
