@@ -1,9 +1,8 @@
 {
-    "token": "MzE1MTMyNzk0MTcyOTk3NjMz.DA-iqw.0okCZSApTiNNr3ckv-fVXnjCKRA",
+    "token": "<BOT_TOKEN>",
     "ownerID": "303236614623068161",
     "modrolename": "Moderator",
-	"adminrolename": "Admin",
-    "developrolename": "Developer",
+    "adminrolename": "Admin",
     "mAvatar": "https://cdn.discordapp.com/avatars/315132794172997633/48c22c5e694309d921d95faa7d863a6e.jpg?size=128",
     "prefix": "m~", 
     "version": "Beta 0.4"
