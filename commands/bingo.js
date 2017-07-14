@@ -1,6 +1,4 @@
-exports.run = function(client, message, args){
-    // if( !== role.id('321245223671824394')) return; - Role restriction development.
-
+exports.run = function(client, message){
     min = Math.ceil(1);
     max = Math.floor(75)
     y = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -28,3 +26,16 @@ exports.run = function(client, message, args){
         message.channel.send('O' + y);
     }
 }
+
+exports.conf = {
+  enabled: true,
+  guildOnly: false,
+  aliases: ['bingo'],
+  permLevel: 2
+};
+
+exports.help = {
+  name: 'Bingo',
+  description: 'Bingo command.',
+  usage: 'bingo'
+};

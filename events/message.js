@@ -1,15 +1,26 @@
-const config = require('../settings.json');
-
+const settings = require('../settings.json');
+const response = require('../response.json');
 module.exports = message => {
-    const client = message.client;
-    const args = message.content.split(' ');
-    const command = args.shift().slice(config.prefix.length);
-
-	if(!message.content.startsWith(config.prefix)) return;
-	if (message.author.bot) return;
-
-    try {
-        let cmdFile = require(`../commands/${command}`);
-        cmdFile.run(client, message, args);
-    } catch (err) { console.log(`Command ${command} failed.\n${err.stack}`);}
+    let client = message.client;
+    if (message.author.bot) return;
+    if (!message.content.startsWith(settings.prefix)) return;
+    let command = message.content.split(' ')[0].slice(settings.prefix.length);
+    let params = message.content.split(' ').slice(1);
+    let perms = client.elevation(message);
+    let cmd;
+  
+    if (client.commands.has(command)) {
+      cmd = client.commands.get(command);
+    } else if (client.aliases.has(command)) {
+      cmd = client.commands.get(client.aliases.get(command));
+    }
+	
+	if(response[message.content]) {
+		message.channel.send(response[message.content]);
+	}
+	
+  if (cmd) {
+    if (perms < cmd.conf.permLevel) return;
+    cmd.run(client, message, params, perms);
+  }
 };
