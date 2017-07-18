@@ -1,5 +1,6 @@
 exports.run = function(client, message, args){
-  let user = message.mentions.users.first()message.channel.send(message.user.avatarURL);
+  let user = message.mentions.users.first()
+message.channel.send(message.user.avatarURL);
 }
 
 exports.conf = {
