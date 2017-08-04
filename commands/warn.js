@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 exports.run = (client, message, args) => {
     let reason = args.slice(1).join(" ");
     let user = message.mentions.users.first();
-    let modlog = client.channels.find("name", "centraloffice")
+    let modlog = client.channels.find("name", "centraloffice");
     
     if (!modlog) { return message.reply("I cannot find the Central Office."); }
     if (reason.length < 1) { return message.reply("You must supply a reason for the warning."); }
