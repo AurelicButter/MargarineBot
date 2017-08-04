@@ -1,4 +1,4 @@
-const settings = require('../settings.json');
+const settings = require("../settings.json");
 exports.run = (client, message, params) => {
   if (!params[0]) {
     const commandNames = Array.from(client.commands.keys());
@@ -16,12 +16,12 @@ exports.run = (client, message, params) => {
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ['h', 'help'],
+  aliases: ["h", "help"],
   permLevel: 0
 };
 
 exports.help = {
-  name: 'Help',
-  description: 'Displays all the available commands for your permission level.',
-  usage: 'help <command>'
+  name: "Help",
+  description: "Displays all the available commands for your permission level.",
+  usage: "help <command>"
 };
