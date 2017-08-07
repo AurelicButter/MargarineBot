@@ -8,7 +8,7 @@ exports.run = function(client, message, args) {
         limit: messagecount
     }).then(messages => {
 	message.channel.bulkDelete(messages);
-	message.reply(`Purged ${messagecount} messages from the channel, ${message.author.username}.`);
+	message.reply(`Purged ${messagecount} messages from the channel.`);
 	console.log(`[${moment().format("YYYY-MM-DD HH:mm")}] ${message.author.username} has purged ${messagecount} messages from ${guild}`);
     });
 };
