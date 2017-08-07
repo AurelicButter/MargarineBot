@@ -1,6 +1,6 @@
 exports.run = function(client, message, args){
   if (message.mentions.users.size === 0) {
-	  return message.channel.send(message.author.avatarURL);	
+    return message.channel.send(message.author.avatarURL);	
   }
   
   let user = message.mentions.users.first();
