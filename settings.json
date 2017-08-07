@@ -2,8 +2,8 @@
     "token": "<BOT_TOKEN>",
     "ownerID": "<OWNER_ID>",
     "modrolename": "Moderator",
-	  "adminrolename": "Admin",
+    "adminrolename": "Admin",
     "mAvatar": "<BOT_AVATAR_URL>",
     "prefix": "<PREFIX>", 
-    "version": "Beta 0.4"
+    "version": "Beta 0.5"
 }

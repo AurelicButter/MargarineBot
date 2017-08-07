@@ -1,5 +1,10 @@
 exports.run = function(client, message, args){
-  message.channel.send(message.author.avatarURL);
+  if (message.mentions.users.size === 0) {
+	  return message.channel.send(message.author.avatarURL);	
+  }
+  
+  let user = message.mentions.users.first();
+  return message.channel.send(user.avatarURL);
 };
 
 exports.conf = {
@@ -12,5 +17,5 @@ exports.conf = {
 exports.help = {
   name: "Avatar",
   description: "Avatar command.",
-  usage: "avatar"
+  usage: "avatar <mentioned user [Optional]>"
 };
