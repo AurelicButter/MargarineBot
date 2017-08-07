@@ -1,6 +1,9 @@
+const moment = require("moment");
+
 exports.run = function(client, message){
-    console.log("Margarine greeted someone.");
-    message.channel.send("Hello!");
+    console.log(`[${moment().format('YYYY-MM-DD HH:mm')}] Margarine greeted someone.`);
+    message.delete().catch();
+    message.channel.send(`Hello ${message.author.username}!`);
 };
 
 exports.conf = {
