@@ -1,7 +1,7 @@
 const config = require("../settings.json");
 
 exports.run = function(client, message){
-	message.channel.send(`Margarine is on version: ${config.version}`);
+  message.channel.send(`Margarine is on version: ${config.version}`);
 };
 
 exports.conf = {
