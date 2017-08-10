@@ -7,7 +7,7 @@ exports.run = function(client, message, args){
 
   console.log(`[${moment().format("YYYY-MM-DD HH:mm")}] Game status changed to ${args}.`);
   client.user.setGame(args);
-}
+};
 
 exports.conf = {
   enabled: true,
