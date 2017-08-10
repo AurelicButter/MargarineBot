@@ -3,9 +3,9 @@ exports.run = function(client, message, args){
 	return message.channel.send(`Baka ${message.author.username}`);	
   }
   
-  let user = message.mentions.users.first()
+  let user = message.mentions.users.first();
   message.channel.send(`Baka ${user.username}! `);
-}
+};
 
 exports.conf = {
   enabled: true,
