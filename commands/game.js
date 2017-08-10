@@ -1,12 +1,13 @@
 const config = require("../settings.json");
+const moment = require("moment");
 
 exports.run = function(client, message, args){
   args = message.content.split(" ").slice(1).join(" ");
-  if(args === "") { args = null; }
+  if(!args) { args = null; }
 
-  console.log("Game status changed.");
+  console.log(`[${moment().format("YYYY-MM-DD HH:mm")}] Game status changed to ${args}.`);
   client.user.setGame(args);
-};
+}
 
 exports.conf = {
   enabled: true,
