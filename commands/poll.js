@@ -9,7 +9,7 @@ exports.run = function(client, message, args){
      .setColor("#FFFFFF")
      .setTimestamp()
      .setDescription(`${message.author.username} has started a poll!`)
-     .addField(`Question: `, `${args}`);
+     .addField("Question: ", `${args}`);
     return message.channel.send({embed})
       .then(message => {
         message.react("✅");
