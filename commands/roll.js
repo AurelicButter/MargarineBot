@@ -1,13 +1,12 @@
 exports.run = function(client, message, args){
-  var x = args;
+   if (args.length < 1) { 
+      return message.channel.send("I am sorry. Please specify the amount of sides on the die to roll from."); 
+   } else {
+      var x = args;
+      y = Math.floor(Math.random() * (Math.floor(x) - Math.ceil(1) + 1)) + Math.ceil(1);
 
-   if (args == "" || args == null) { 
-       return message.channel.send(`I am sorry. Please specify the amount of sides on the die to roll from.`); 
-   };
-
-   y = Math.floor(Math.random() * (Math.floor(x) - Math.ceil(1) + 1)) + Math.ceil(1);
-
-   message.channel.send(`🎲 You rolled a ${y}! 🎲`);
+      message.channel.send(`🎲 You rolled a ${y}! 🎲`);
+   }
 };
 
 exports.conf = {
