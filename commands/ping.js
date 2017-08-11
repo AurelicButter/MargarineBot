@@ -1,10 +1,10 @@
 exports.run = function(client, message){
-  let start = message.createdTimestamp
-  message.channel.send('Pinging...')
+  let start = message.createdTimestamp;
+  message.channel.send("Pinging...")
     .then(message => {
       message.edit(`🎉 Pong! (Took: ${message.createdTimestamp - start}ms) 🎉`);
     });
-}
+};
 
 exports.conf = {
   enabled: true,
