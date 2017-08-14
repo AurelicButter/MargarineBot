@@ -1,7 +1,5 @@
 exports.run = function(client, message){
-    min = Math.ceil(1);
-    max = Math.floor(75);
-    y = Math.floor(Math.random() * (max - min + 1)) + min;
+    let y = Math.floor(Math.random() * (Math.floor(75) - Math.ceil(1) + 1)) + Math.ceil(1);
 
     if (y < 15){
         console.log("B" + y);
@@ -19,7 +17,7 @@ exports.run = function(client, message){
     } else
 
     if (y > 45 && y < 60){
-        console.log('G' + y);
+        console.log("G" + y);
         message.channel.send("G" + y);
     } else {
         console.log("O" + y);
