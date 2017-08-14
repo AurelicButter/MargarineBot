@@ -8,7 +8,7 @@ exports.run = function(client, message, args){
 		return message.channel.send(`Hello ${message.author.username}`);	
 	}
 	
-	let user = message.mentions.users.first()
+	let user = message.mentions.users.first();
 	message.channel.send(`Hello ${user.username}! `);
 };
 
