@@ -1,6 +1,6 @@
 exports.run = function(client, message, args){
   if (args.length < 1) {
-	  return message.channel.send("You need to give me an emoji!");	
+    return message.channel.send("You need to give me an emoji!");	
   } else if (args.length > 1) {
     return message.channel.send("I can only do one emoji at a time!");
   } else {
