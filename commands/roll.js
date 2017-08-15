@@ -1,10 +1,7 @@
 exports.run = function(client, message, args){
-   if (args.length < 1) { 
-      var x = 6; 
-   } else { 
-      var x = args; 
-   }
+   if (args.length < 1) { args = 6; }
    
+   var x = args;
    var y = Math.floor(Math.random() * (Math.floor(x) - Math.ceil(1) + 1)) + Math.ceil(1);
 
    message.channel.send(`🎲 You rolled a ${y}! 🎲`);
