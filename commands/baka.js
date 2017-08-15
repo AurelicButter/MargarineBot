@@ -1,21 +1,21 @@
 exports.run = function(client, message, args){
   if (message.mentions.users.size === 0) {
-    return message.channel.send(message.author.avatarURL);	
+	return message.channel.send(`Baka ${message.author.username}`);	
   }
   
   let user = message.mentions.users.first();
-  return message.channel.send(user.avatarURL);
+  message.channel.send(`Baka ${user.username}! `);
 };
 
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ["avatar"],
+  aliases: ["baka"],
   permLevel: 0
 };
 
 exports.help = {
-  name: "Avatar",
-  description: "Avatar command.",
-  usage: "avatar <mentioned user [Optional]>"
+  name: "Baka",
+  description: "For the stupid people.",
+  usage: "baka <user [Optional]>"
 };
