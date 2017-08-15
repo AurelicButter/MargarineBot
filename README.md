@@ -1,6 +1,8 @@
 # MargarineBot - Current Version: Beta 0.5 User!
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f0cfd83063a4469b8e40bcc824c2600d)](https://www.codacy.com/app/Butterstroke/MargarineBot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Butterstroke/MargarineBot&amp;utm_campaign=Badge_Grade)
 
 A Discord bot coded in Node.js using the Discord.js Library.
+
 
 <b>Introduction:</b>
 
@@ -13,6 +15,7 @@ A Discord bot coded in Node.js using the Discord.js Library.
 - Poll command
 
 <b>Updates:</b>
+- August 15th, 2017: Beta 0.5 Released
 - July 14th, 2017: Beta 0.4 Released
 - June 6th, 2017: Beta 0.3 Released
 - May 30th, 2017: Beta 0.2 Released
