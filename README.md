@@ -3,6 +3,8 @@
 
 A Discord bot coded in Node.js using the Discord.js Library.
 
+<b>CURRENTLY, BETA 0.5 CODE ON GITHUB IS NOT DISCORD TOS LEGAL!</b> I am currently working on updating the code so that it is. Use code from the Beta 0.6 branch in the meantime!
+
 
 <b>Introduction:</b>
 
