@@ -1,9 +1,9 @@
-# MargarineBot - Current Version: Beta 0.5 User!
+# MargarineBot - Current Version: Beta 0.6 Economy!
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f0cfd83063a4469b8e40bcc824c2600d)](https://www.codacy.com/app/Butterstroke/MargarineBot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Butterstroke/MargarineBot&amp;utm_campaign=Badge_Grade)
 
-A Discord bot coded in Node.js using the Discord.js Library.
+A Discord bot coded in Node.js using the Discord.js Library and the Komada framework.
 
-<b>CURRENTLY, BETA 0.5 CODE ON GITHUB IS NOT DISCORD TOS LEGAL!</b> I am currently working on updating the code so that it is. Please wait until I push for the update.
+<b>This beta is Discord TOS legal!</b> You may use it. However, I will not do much support on this as this is the developmental branch. If you want the stable version, please wait until release.
 
 
 <b>Introduction:</b>
