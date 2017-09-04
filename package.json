@@ -1,11 +1,9 @@
 {
   "name": "margarine",
-  "version": "0.3",
+  "version": "0.6",
   "description": "Margarine Bot",
   "main": "index.js",
   "dependencies": {
-    "discord.js": "^11.1.0",
-    "return-deep-diff": "^0.2.7"
   },
   "devDependencies": {},
   "scripts": {
