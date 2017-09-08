@@ -9,7 +9,6 @@ A Discord bot coded in Node.js using the Discord.js Library and the Komada frame
 <b>Introduction:</b>
 
 <b>Features:</b>
-- Guild and Member events
 - Avatar command
 - Moderation commands
 - Permission levels
