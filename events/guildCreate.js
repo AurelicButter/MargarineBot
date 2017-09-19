@@ -19,6 +19,7 @@ exports.run = (client, guild) => {
     if (!guild.available) { return; }
 
     console.log(`[${moment().format("YYYY-MM-DD HH:mm")}] I have started working for ${guild.name}.`);
+    client.user.setPresence({ game:  { name:` m~help  | Playing around with Butter on ${client.guilds.size} servers`, type: 0 } });
     client.configuration.insert(client, guild);
     return client.channels.get(Channel.id).send({embed});
 };
