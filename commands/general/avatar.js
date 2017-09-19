@@ -1,15 +1,27 @@
-exports.run = async (client, msg, [args]) => {
-    if (msg.mentions.users.size === 0) {
-        return msg.channel.send(msg.author.avatarURL);	
+exports.run = function(client, message, [...args]) {
+    let guild = message.guild;
+
+    if (message.mentions.users.size === 0) {
+        if (args.length < 1) { user = message.author; }
+        user = client.users.find("username", `${args}`);
+        
+        if (user == null) {
+            var User = guild.members.find("nickname", `${args}`);
+            if (User == null) { return message.reply("User not found. Please try again!"); }
+            user = User.user;
+        }
+    } if (message.mentions.users.size > 0) {
+        user = message.mentions.users.first();
+    } if (!user || user === null) { 
+        return message.reply("User not found. Please try again!"); 
     }
-    
-    let user = msg.mentions.users.first();
-    return msg.channel.send(user.avatarURL);
+
+    return message.channel.send(user.avatarURL);
 };
   
 exports.conf = {
     enabled: true,
-    runIn: ["text", "dm", "group"],
+    runIn: ["text", "dm"],
     aliases: [],
     permLevel: 0,
     botPerms: [],
@@ -19,6 +31,7 @@ exports.conf = {
 exports.help = {
     name: "avatar",
     description: "Fetch a user's avatar!",
-    usage: "[mention]",
+    usage: "[user:str]",
     usageDelim: "",
+    extendedHelp: "Now featuring the ablity to search by username and nickname without the ping!"
 };
