@@ -1,26 +1,26 @@
-exports.run = function(client, message, [user]){
+exports.run = function(client, message, [person]){
     message.delete().catch();
 
     if (message.mentions.users.size === 0) {
-        if (args.length < 1) { user = message.author; }
-        user = client.users.find("username", `${args}`);
+        if (person.length < 1) { person = message.author; }
+        person = client.users.find("username", `${person}`);
         
-        if (user == null) {
-            var User = guild.members.find("nickname", `${args}`);
-            if (User == null) { return message.reply("User not found. Please try again!"); }
-            user = User.user;
+        if (person == null) {
+            var Person = guild.members.find("nickname", `${person}`);
+            if (Person == null) { return message.reply("User not found. Please try again!"); }
+            person = person.user;
         }
     } if (message.mentions.users.size > 0) {
-        user = message.mentions.users.first();
-    } if (!user || user === null) { 
+        person = message.mentions.users.first();
+    } if (!person || person === null) { 
         return message.reply("User not found. Please try again!"); 
     }
-	
-	if (message.mentions.users.has(client.user.id)) {
+
+	if (person.id == client.user.id) {
         return message.channel.send("Why would you try and make me greet myself? I'm not that lonely!");
     }
 
-	return message.channel.send(`Hello ${user.username}! `);
+	return message.channel.send(`Hello ${person.username}! `);
 };
 
 exports.conf = {
@@ -35,5 +35,5 @@ exports.conf = {
 exports.help = {
   name: "greet",
   description: "Have Margarine greet you or someone with a hello!",
-  usage: "[user:str]",
+  usage: "[person:str]",
 };
