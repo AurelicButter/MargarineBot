@@ -1,27 +1,12 @@
-exports.run = function(client, message, [...args]) {
-    let guild = message.guild;
+exports.run = (client, message, [args]) => {
+    let user = client.funcs.userSearch(client, message, args);
 
-    if (message.mentions.users.size === 0) {
-        if (args.length < 1) { user = message.author; }
-        user = client.users.find("username", `${args}`);
-        
-        if (user == null) {
-            var User = guild.members.find("nickname", `${args}`);
-            if (User == null) { return message.reply("User not found. Please try again!"); }
-            user = User.user;
-        }
-    } if (message.mentions.users.size > 0) {
-        user = message.mentions.users.first();
-    } if (!user || user === null) { 
-        return message.reply("User not found. Please try again!"); 
-    }
-
-    return message.channel.send(user.avatarURL);
+    return message.channel.send(`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`);
 };
   
 exports.conf = {
     enabled: true,
-    runIn: ["text", "dm"],
+    runIn: ["text"],
     aliases: [],
     permLevel: 0,
     botPerms: [],
