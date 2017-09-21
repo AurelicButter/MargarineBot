@@ -7,7 +7,7 @@ exports.run = function(client, message, args){
 exports.conf = {
     enabled: true,
     runIn: ["text"],
-    aliases: [""],
+    aliases: [],
     permLevel: 0,
     botPerms: [],
     requiredFuncs: [],
