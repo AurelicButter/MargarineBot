@@ -1,10 +1,7 @@
 exports.run = function(client, message, args){
-    if (message.mentions.users.size === 0) {
-        return message.channel.send(`Baka ${message.author.username}`);	
-    }
+    let user = client.funcs.userSearch(client, message, args);
     
-    let user = message.mentions.users.first();
-    message.channel.send(`Baka ${user.username}! `);
+    return message.channel.send(`Baka ${user.username}! `);
 };
 
 exports.conf = {
