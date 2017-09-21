@@ -1,20 +1,7 @@
-exports.run = function(client, message, [person]){
+exports.run = (client, message, [args]) => {
     message.delete().catch();
 
-    if (message.mentions.users.size === 0) {
-        if (person.length < 1) { person = message.author; }
-        person = client.users.find("username", `${person}`);
-        
-        if (person == null) {
-            var Person = guild.members.find("nickname", `${person}`);
-            if (Person == null) { return message.reply("User not found. Please try again!"); }
-            person = person.user;
-        }
-    } if (message.mentions.users.size > 0) {
-        person = message.mentions.users.first();
-    } if (!person || person === null) { 
-        return message.reply("User not found. Please try again!"); 
-    }
+    let person = client.funcs.userSearch(client, message, args);
 
 	if (person.id == client.user.id) {
         return message.channel.send("Why would you try and make me greet myself? I'm not that lonely!");
