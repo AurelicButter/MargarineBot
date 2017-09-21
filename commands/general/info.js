@@ -1,17 +1,16 @@
-exports.run = function(client, message, [kind, member]){
+exports.run = function(client, message, [kind, args]){
     let guild = message.guild;
-    const type = ["server", "user"];
-    let Args = kind.toLowerCase();
 
-    if (message.mentions.users.size === 0) { var user = message.author; }
-    else { var user = message.mentions.users.first(); } 
+    if (kind == "server" && member != null) { return message.reply("You can't ask information about a server and a user at the same time!"); } 
+
+    if (kind == "user") { user = client.funcs.userSearch(client, message, args); }
 
     if (user.presence.status === "online") { var Status = "Online"; }
     if (user.presence.status === "idle") { var Status = "Idle"; }
     if (user.presence.status === "dnd") { var Status = "Do not Disturb"; }
     if (user.presence.status === "offline") { var Status = "Offline"; }
 
-    if (user.bot === "true") { var Bot = "True" }
+    if (user.bot === true) { var Bot = "True" }
     else { var Bot = "False" }
 
     if (user.presence.game === null) { var Presence = Status; } 
@@ -38,13 +37,20 @@ exports.run = function(client, message, [kind, member]){
         .addField(`Joined: `, message.guild.members.get(user.id).joinedAt.toLocaleString(), true)
         .addField(`Bot user: `, Bot, true)
         .addField(`Status: `, Presence, true);
-    
-    if (type.some(word => type.includes(Args))) {
-        if (Args == type[0]){ return message.channel.send({embed: Sembed}); }
-        if (Args == type[1]){ return message.channel.send({embed: Uembed}); }
-    } else {
-        return message.reply("You did not provide the proper type. Please use either `server` or `user`.");
-    }
+
+    const Rembed = new client.methods.Embed()
+        .setTimestamp()
+        .setAuthor(guild.name, guild.iconURL)
+        .setColor("#4d5fd")
+        .addField(`Role: `, `${user.tag} - ${user.id}`)
+        .addField(`Position: `, user.createdAt.toLocaleString(), true)
+        .addField(`Hex Colour: `, message.guild.members.get(user.id).joinedAt.toLocaleString(), true)
+        .addField(`Users: `, Bot, true)
+        .addField(`Status: `, Presence, true);
+
+    if (kind == "server") { return message.channel.send({embed: Sembed}); }
+    if (kind == "user") { return message.channel.send({embed: Uembed}); }
+    // if (kind == "role") { return message.channel.send({embed: Rembed}); }
 };
 
 exports.conf = {
@@ -60,6 +66,7 @@ exports.conf = {
 exports.help = {
   name: "info",
   description: "Get the server or user information.",
-  usage: "<kind:kind> [member:member]",
+  usage: "<server|user> [member:str]",
   usageDelim: " ",
+  extendedHelp: "",
 };
