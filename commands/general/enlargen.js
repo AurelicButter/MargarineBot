@@ -10,7 +10,7 @@ exports.run = function(client, message, [name]){
 exports.conf = {
     enabled: true,
     runIn: ["text"],
-    aliases: ["see"],
+    aliases: ["see", "emoji"],
     permLevel: 0,
     botPerms: [],
     requiredFuncs: [],
