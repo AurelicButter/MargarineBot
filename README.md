@@ -1,4 +1,4 @@
-# MargarineBot - Current Version: Beta 0.6 Economy!
+# MargarineBot - Current Version: Beta 0.6 Komada Improvements!
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f0cfd83063a4469b8e40bcc824c2600d)](https://www.codacy.com/app/Butterstroke/MargarineBot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Butterstroke/MargarineBot&amp;utm_campaign=Badge_Grade)
 
 A Discord bot coded in Node.js using the Discord.js Library and the Komada framework.
@@ -12,8 +12,8 @@ A Discord bot coded in Node.js using the Discord.js Library and the Komada frame
 - Avatar command
 - Moderation commands
 - Permission levels
-- Bingo command
 - Poll command
+- User info commands
 
 <b>Updates:</b>
 - August 15th, 2017: Beta 0.5 Released
