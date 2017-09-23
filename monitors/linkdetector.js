@@ -6,7 +6,7 @@ exports.conf = {
   
 exports.run = (client, message) => {
   const links = [/*Insert blacklisted links here*/];
-  var Link = "https://discord.gg";
+  const Link = ["https://discord.gg"];
   if (links.some(word => message.content.includes(links))) {
       return;
   } else if(message.content.includes(Link)) {
