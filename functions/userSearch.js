@@ -1,19 +1,22 @@
-module.exports = (client, message, args) => {
+module.exports = (client, message, User) => {
     let guild = message.guild;
 
-    if (args == null) { user = message.author; }
+    if (User == null) { var user = message.author; }
 
-    if (args != null && message.mentions.users.size === 0) {
-        user = client.users.find("username", `${args}`);
-        
+    if (User != null && message.mentions.users.size === 0) {
+        var user = client.users.find("id", `${User}`);
+
         if (user == null) {
-            var User = guild.members.find("nickname", `${args}`);
-            if (User == null) { return message.reply("User not found. Please try again!"); }
-            user = User.user;
+            var user = client.users.find("username", `${User}`);
+            
+            if (user == null) {
+                var user = guild.members.find("nickname", `${User}`);
+                user = user.user;
+            }
         }
     } 
     
-    if (message.mentions.users.size > 0) { user = message.mentions.users.first(); } 
+    if (message.mentions.users.size > 0) { var user = message.mentions.users.first(); } 
     if (user == null) { return message.reply("User not found. Please try again!"); }
 
     return user;
