@@ -1,6 +1,6 @@
 exports.run = async (client, message) => {
     await message.delete().catch();
-    await message.channel.send("Good night, Butter!")
+    await message.channel.send("Good night, Butter!");
     await process.exit().catch((e) => { console.error(e); });
 };
   
