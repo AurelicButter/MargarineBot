@@ -1,5 +1,5 @@
 exports.run = function(client, message) {
-    let User = message.author.username
+    let User = message.author.username;
     let Message = message;
 
     message.channel.send(`${User} has died.`)
