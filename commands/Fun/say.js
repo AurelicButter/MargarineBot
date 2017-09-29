@@ -5,7 +5,7 @@ exports.run = (client, message, [Message]) => {
     if(Message.length < 1) { return message.reply("You need to provide a message."); }
     
     message.delete().catch();
-    if (message.author.id = config.ownerID) { return message.channel.send(Message); }
+    if (message.author.id === config.ownerID) { return message.channel.send(Message); }
     return message.channel.send(`${message.author.username} wanted to say: ${Message}`);
 };
   
