@@ -11,7 +11,7 @@ exports.run = async (client, message, [type, ...Message]) => {
     let Type = null;
 
     if (!Message) { return message.reply("Your report failed to include a message! Nothing gets done without an explaination!"); }
-    if (type === "todo" && message.author.id != settings.ownerID) { return message.reply("I'm sorry only the bot owner can add things to the todo list."); }
+    if (type === "todo" && message.author.id !== settings.ownerID) { return message.reply("I'm sorry only the bot owner can add things to the todo list."); }
 
     if (type === "issue") { 
         color = "#FF0000"; 
@@ -27,7 +27,7 @@ exports.run = async (client, message, [type, ...Message]) => {
         Type = "Complaint"; 
     } if (type === "todo") {
         color = "#4d5fd";
-        Type = "Todo"
+        Type = "Todo";
     } else { 
         return message.reply("You provided a false value. Please use either `issue`, `bug`, `improvement`, `complaint` as a type!");
     }
@@ -36,9 +36,9 @@ exports.run = async (client, message, [type, ...Message]) => {
 		.setColor(color)
         .setTimestamp()
         .setTitle(`${Type} Report: ${report.report}`)
-        .setDescription(`A user has filed a report!`)
+        .setDescription("A user has filed a report!")
         .addField(`User: ${user.tag}`, `From: ${message.guild.name}`)
-        .addField(`Message: `, `${Message}`)
+        .addField("Message:", `${Message}`)
         .setThumbnail(user.avatarURL());
     
     const DMembed = new client.methods.Embed()
