@@ -10,7 +10,7 @@ exports.run = (client, guild) => {
         \nIf you have any improvement ideas, found issues or bugs, or have any complaints, feel free to use my report command and let my creator know how to improve and make me better! However, if I am online, feel free to use me for fun and helpful commands!`)
         .addField("User notice!", "Currently, I have no way of storing permissions for user data based on the Discord's developer TOS. So, by using Margarine, users agree to have their info usable and manipulated for improving and usage of Margarine. Any data collected will be stored securely and safely and Margarine will not ask for any personal information such as a Discord password.");
 
-    let Channel = client.funcs.defaultChannel(client, Guild);
+    let Channel = client.funcs.defaultChannel(client, guild);
 
     if (!guild.available) { return; }
 
