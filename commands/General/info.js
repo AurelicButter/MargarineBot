@@ -43,7 +43,7 @@ exports.run = (client, message, [kind, User]) => {
         .addField("Region:", guild.region, true)
         .addField("Created:", guild.createdAt.toLocaleString(), true)
         .addField("Owner:", `${guild.owner.user.tag} - ${guild.owner.id}`)
-        .addField("Members:", `${guild.memberCount - guild.members.filter(m => m.user.bot).size} (${guild.members.filter(m=>m.user.bot).size} bots)`, true)
+        .addField("Members:", `${guild.memberCount - guild.members.filter(m => m.user.bot).size} (${guild.members.filter(m = >m.user.bot).size} bots)`, true)
         .addField("Roles:", guild.roles.size, true);
     }
 
