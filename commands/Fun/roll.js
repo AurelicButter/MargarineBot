@@ -1,6 +1,6 @@
 exports.run = (client, message, Sides) => {
     if (Sides.length < 1) { Sides = 6; }
-    if (Sides == 0) { return message.channel.send("You can't roll from 0!"); }
+    if (Sides === 0) { return message.channel.send("You can't roll from 0!"); }
 
     Sides = Number(Sides);
 
