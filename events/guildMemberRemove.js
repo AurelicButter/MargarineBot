@@ -1,5 +1,11 @@
-module.exports = (member => {
-    console.log(`User left: ${member.user.username}`);
-    let guild = member.guild;
-    member.guild.defaultChannel.send(`${member.user.username} has left the server.`);
+const moment = require("moment");
+
+exports.run = (client, guild) => {
+    var Guild = guild.guild;
+    var member = guild.user;
+  
+    let Channel = client.funcs.defaultChannel(client, Guild);
+
+    console.log(`[${moment().format("YYYY-MM-DD HH:mm")}] User left at ${Guild.name}!`);
+    client.channels.get(Channel.id).send(`${member.username} has left the server. Good luck out there!`); 
 };

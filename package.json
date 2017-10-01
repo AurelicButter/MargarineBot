@@ -1,11 +1,9 @@
 {
   "name": "margarine",
-  "version": "0.3",
-  "description": "Margarine Bot",
+  "version": "0.6",
+  "description": "A Discord bot using Komada, a Discord.js Framework",
   "main": "index.js",
   "dependencies": {
-    "discord.js": "^11.1.0",
-    "return-deep-diff": "^0.2.7"
   },
   "devDependencies": {},
   "scripts": {

@@ -3,7 +3,7 @@
     "ownerID": "<OWNER_ID>",
     "modrolename": "Moderator",
     "adminrolename": "Admin",
-    "mAvatar": "<BOT_AVATAR_URL>",
     "prefix": "<PREFIX>", 
-    "version": "Beta 0.5"
+    "version": "Beta 0.6",
+    "updateDate": "30 September 2017"
 }
