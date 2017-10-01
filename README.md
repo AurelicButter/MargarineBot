@@ -19,10 +19,11 @@ Created through part-desire, part-what can I do in Discord, part-I'm going to le
 - Server/User/role info commands
 
 <b>Updates:</b>
-- August 15th, 2017: Beta 0.5 Released
-- July 14th, 2017: Beta 0.4 Released
-- June 6th, 2017: Beta 0.3 Released
-- May 30th, 2017: Beta 0.2 Released
+- 30 September 2017: Beta 0.6 Released
+- 15 August 2017: Beta 0.5 Released
+- 14 July 2017: Beta 0.4 Released
+- 6 June 2017: Beta 0.3 Released
+- 30 May 2017: Beta 0.2 Released
 
 <b>Invite me!</b>
 <i>Not avalible at the current moment as the bot is in development.</i>
