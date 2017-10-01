@@ -3,8 +3,6 @@
 
 A Discord bot coded in Node.js using the Discord.js Library and the Komada framework.
 
-<b>This beta is Discord TOS legal!</b> You may use it. However, I will not do much support on this as this is the developmental branch. If you want the stable version, please wait until release.
-
 <b>Introduction:</b>
 Created through part-desire, part-what can I do in Discord, part-I'm going to learn Javascript, and part-it's only 12 am thoughts, Margarine has been my personal project for almost 6 months now. I am quite proud of the functionality and the time I have spend into Margarine. I have recieved plenty of support over the months of developing him and I can't thank those people enough as without that support, Margarine would have never been as big as he is today. I hope that you enjoy either looking at/learning/using Margarine as much as I do.
 
