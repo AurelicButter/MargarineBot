@@ -1,8 +1,8 @@
 exports.run = (client, message, [User]) => {
-    User = client.funcs.userSearch(client, message, User);
+    var user = client.funcs.userSearch(client, message, User);
     
-    if (!User) { return; } //If function returns a null value.
-    return message.channel.send(`Baka ${User.username}! `);
+    if (user.username != null || user.username != undefined) { return message.channel.send(`Baka ${user.username}! `); }
+    else { return; }
 };
 
 exports.conf = {
