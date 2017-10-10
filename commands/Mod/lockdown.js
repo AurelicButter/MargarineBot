@@ -4,7 +4,6 @@ exports.run = (client, message, [time, reason]) => {
   if (!client.lockit) { client.lockit = []; }
   let validUnlocks = ["release", "unlock"];
   let checked = message.channel.permissionsFor(message.author.id).has("MUTE_MEMBERS");
-  let guild = message.guild;
 
   if (!time) { return message.reply("I need a set time to lock the channel down for!"); }
 
