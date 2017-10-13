@@ -1,14 +1,12 @@
 const fs = require("fs");
 
-exports.run = async (client, message, [type, ...Message]) => {    
+exports.run = async (client, message, [option, Message]) => {    
     let records = JSON.parse(fs.readFileSync("records.json", "utf8"));
     let settings = require("../../settings.json");
-    type = type.toLowerCase();
+    let type = option.toLowerCase();
     let user = message.author;
-    let report = records[settings.ownerID];
-    Message = Message.join(" ");
-    let color = null;
-    let Type = null;
+    let report = records[settings.ownerID].report;
+    let color = null; let Type = null;
 
     if (!Message) { return message.reply("Your report failed to include a message! Nothing gets done without an explaination!"); }
     if (type === "todo" && message.author.id !== settings.ownerID) { return message.reply("I'm sorry only the bot owner can add things to the todo list."); }
@@ -16,16 +14,16 @@ exports.run = async (client, message, [type, ...Message]) => {
     if (type === "issue") { 
         color = "#FF0000"; 
         Type = "Issue";
-    } if (type === "bug") { 
+    } else if (type === "bug") { 
         color = "#FFFF00";
         Type = "Bug";
-    } if (type === "improvement") { 
+    } else if (type === "improvement") { 
         color = "#FFA500";
         Type = "Improvement";
-    } if (type === "complaint") { 
+    } else if (type === "complaint") { 
         color = "#DB3E17";
         Type = "Complaint"; 
-    } if (type === "todo") {
+    } else if (type === "todo") {
         color = "#4d5fd";
         Type = "Todo";
     } else { 
@@ -33,9 +31,9 @@ exports.run = async (client, message, [type, ...Message]) => {
     }
 
     const embed = new client.methods.Embed()
-		.setColor(color)
+	.setColor(color)
         .setTimestamp()
-        .setTitle(`${Type} Report: ${report.report}`)
+        .setTitle(`${Type} Report: ${report}`)
         .setDescription("A user has filed a report!")
         .addField(`User: ${user.tag}`, `From: ${message.guild.name}`)
         .addField("Message:", `${Message}`)
@@ -45,13 +43,11 @@ exports.run = async (client, message, [type, ...Message]) => {
       .setColor(0x00AE86)
       .setTimestamp()
       .setTitle("Report confirmation:")
-      .setDescription(`Your report has been sent! Report number: ${report.report}
+      .setDescription(`Your report has been sent! Report number: ${report}
       \nIssue: ${Message}
       \nAny more questions, please ask Butterstroke#7150!`);
-      /*.setDescription(`Your report has been sent! Report number: ${report.report}
-      \nIf you have any more questions, feel free to talk with our support team on my server! It's the best, fastest, and easiest way to get in contact! https://discord.gg/VQ4vrvt`);
-*/
-    await report.report++;
+
+    await records[settings.ownerID].report++;
     await message.delete().catch();
     await client.users.get(user.id).send({embed: DMembed});
     await client.channels.get("353381124250140682").send({embed});
@@ -77,6 +73,6 @@ exports.conf = {
 exports.help = {
       name: "report",
       description: "File a report to the bot developers about Margarine. (ie: Bug, issue, complaint)",
-      usage: "<type:str> [Message:str]",
-      usageDelim: " ",
+      usage: "<option:str> [Message:str]",
+      usageDelim: " | ",
 };
