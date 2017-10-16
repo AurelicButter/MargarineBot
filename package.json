@@ -1,6 +1,6 @@
 {
   "name": "margarine",
-  "version": "0.6",
+  "version": "0.7",
   "description": "A Discord bot using Komada, a Discord.js Framework",
   "main": "index.js",
   "dependencies": {
