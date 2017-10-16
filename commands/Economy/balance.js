@@ -19,8 +19,8 @@ exports.run = async (client, message, [member]) => {
             .setColor("#4d5fd")
             .addField("User:", `${user.username} (${user.id})`)
             .addField("Credits:", (row.credits).toLocaleString(), true)
-            if (Time >= 7) { embed.addField("Last Daily:", `${Time / 7} weeks ago`, true); }
-            if (Time >= 1) { embed.addField("Last Daily:", `${Time} days ago`, true); }
+            if (Time >= 14) { embed.addField("Last Daily:", `${Time / 7} weeks ago`, true); }
+            else if (Time >= 1) { embed.addField("Last Daily:", `${Time} days ago`, true); }
             else { embed.addField("Last Daily:", `${(Time * 24).toFixed(3)} hours ago`, true); }
         
         message.channel.send({embed});
