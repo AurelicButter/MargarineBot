@@ -1,4 +1,4 @@
-exports.run = async (client, message, [user, credit]) => {
+exports.run = async (client, message, [user, credit, text]) => {
     const sql = require("sqlite");
     sql.open("./bwd/data/score.sqlite");
 
@@ -16,7 +16,16 @@ exports.run = async (client, message, [user, credit]) => {
         return message.reply("Error in command. Please try again later.");
     });
 
-    message.reply(`${user.username} (${user.id}) have been awarded ${credit} credits!`);
+    const embed = new client.methods.Embed()
+        .setColor("#04d5fd")
+        .setTimestamp()
+        .setTitle(`Award Notification!`)
+        .addField(`User: ${user.tag}`, `For the reason of: ${text}`)
+        .addField("Award:", `${credit} credits`)
+        .setThumbnail(user.avatarURL());
+
+    message.reply(`<@${user.id}> (${user.id}) have been awarded ${credit} credits!`);
+    client.channels.get("364846541455753218").send({embed});
 };
 
 exports.conf = {
@@ -31,6 +40,6 @@ exports.conf = {
 exports.help = {
     name: "award",
     description: "Awards a user for finding an issue with Margarine.",
-    usage: "[user:str] [credit:int]",
-    usageDelim: " ",
+    usage: "[user:str] [credit:int] [text:str]",
+    usageDelim: " | ",
 };
