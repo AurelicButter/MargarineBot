@@ -11,8 +11,8 @@ exports.run = async (client, message, [member]) => {
         if (!row) {
             if (user.id == message.author.id) { 
                 sql.run("INSERT INTO scores (userId, credits, level, daily, rep, repDaily) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 100, 0, Date.now(), 0, 0]);
-                sql.run("INSERT INTO fish_inv (userId, common, uncommon, rare, ultraRare, trash) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0, 0]);
-                sql.run("INSERT INTO fish_stats (userId, common, uncommon, rare, ultraRare, trash) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0, 0]);
+                sql.run("INSERT INTO fish_inv (userId, common, uncommon, rare, epic, trash) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0, 0]);
+                sql.run("INSERT INTO fish_stats (userId, common, uncommon, rare, epic, trash) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0, 0]);
                 sql.run("INSERT INTO badges (userId, betaTester, bugSmasher) VALUES (?, ?, ?)", [user.id, "no", "no"]);  
                 return message.channel.send("You have recieved your daily amount of 100 credits."); 
             } else { 
