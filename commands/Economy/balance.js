@@ -11,6 +11,7 @@ exports.run = async (client, message, [member]) => {
         if (!row) { return message.reply("You haven't signed up yet! D: Use `m~daily` (Using default prefix) to earn your first amount of credits."); } 
 
         var Time = (((Date.now() - row.daily) / 86400000)).toFixed(3);
+        var time = (((Date.now() - row.repDaily) / 86400000)).toFixed(3);
 
         const embed = new client.methods.Embed()
             .setTimestamp()
@@ -18,10 +19,14 @@ exports.run = async (client, message, [member]) => {
             .setThumbnail(user.avatarURL())
             .setColor("#4d5fd")
             .addField("User:", `${user.username} (${user.id})`)
-            .addField("Credits:", (row.credits).toLocaleString(), true)
+            .addField("Credits:", (row.credits).toLocaleString(), true);
             if (Time >= 14) { embed.addField("Last Daily:", `${Time / 7} weeks ago`, true); }
             else if (Time >= 1) { embed.addField("Last Daily:", `${Time} days ago`, true); }
             else { embed.addField("Last Daily:", `${(Time * 24).toFixed(3)} hours ago`, true); }
+            embed.addField("Reputation:", row.rep, true);
+            if (time >= 14) { embed.addField("Last rep given:", `${(time / 7).toFixed(3)} weeks ago`, true); }
+            else if (time >= 1) { embed.addField("Last rep given:", `${time} days ago`, true); }
+            else { embed.addField("Last rep given:", `${(time * 24).toFixed(3)} hours ago`, true); }
         
         message.channel.send({embed});
     }).catch(error => { 
@@ -33,7 +38,7 @@ exports.run = async (client, message, [member]) => {
 exports.conf = {
     enabled: true,
     runIn: ["text"],
-    aliases: ["bal", "credits"],
+    aliases: ["bal", "credits", "profile"],
     permLevel: 0,
     botPerms: [],
     requiredFuncs: [],
