@@ -13,13 +13,13 @@ exports.run = async (client, message, [member]) => {
         if ((parseInt(row.repDaily) + 86400000) > Date.now()) { return message.reply("You've already have given someone else rep today!"); }
         else { 
             sql.get(`SELECT * FROM scores WHERE userId = "${user.id}"`).then(row => {
-                if (!row) { return message.channel.send(`That user has not gotten their first daily to start off with so you can not give them any rep at the moment. :sad:`); } 
+                if (!row) { return message.channel.send(`That user has not gotten their first daily to start off with so you can not give them any rep at the moment. :cry:`); } 
                 else {
                     sql.run(`UPDATE scores SET rep = ${row.rep + 1} WHERE userId = ${user.id}`);
+                    sql.run(`UPDATE scores SET repDaily = ${Date.now()} WHERE userId = ${message.author.id}`); 
                     return message.channel.send(`You have given <@${user.id}> a reputation point!`);
                 }
             });
-            sql.run(`UPDATE scores SET repDaily = ${Date.now()} WHERE userId = ${message.author.id}`); 
         }
     }).catch(error => { 
         console.log(error);
