@@ -17,6 +17,11 @@ module.exports = (client, message, user) => {
         sql.run("INSERT INTO badges (userId, betaTester, bugSmasher) VALUES (?, ?, ?)", [user.id, "no", "no"]);  
     });
 
+    sql.run("CREATE TABLE IF NOT EXISTS awards (userId TEXT, suggest INTEGER, bugs INTEGER, minor INTEGER, major INTEGER)").then(() => {
+        sql.run("INSERT INTO awards (userId, suggest, bugs, minor, major) VALUES (?, ?, ?, ?, ?)", ["Overall", 0, 0, 0, 0]);
+        sql.run("INSERT INTO awards (userId, suggest, bugs, minor, major) VALUES (?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0]);  
+    });
+
     console.log(`[${moment().format("YYYY-MM-DD HH:mm")}] Scores database created.`);
     Report = `Database has been created and is ready to collect.`;
     
