@@ -5,10 +5,10 @@ exports.run = async (client, message, [member]) => {
     var user = client.funcs.userSearch(client, message, member);
     
     if (user.username === null || user.username === undefined) { return; }
-    if (user.bot === true) { return message.reply("Bots don't have credits!"); }
+    if (user.bot === true) { return message.reply("Bots don't have any records!"); }
 
     sql.get(`SELECT * FROM scores WHERE userId = "${user.id}"`).then(row => {
-        if (!row) { return message.reply("You haven't signed up yet! D: Use `m~daily` (Using default prefix) to earn your first amount of credits."); } 
+        if (!row) { return message.reply("That person hasn't signed up with `m~daily` yet! D:"); } 
 
         var Time = (((Date.now() - row.daily) / 86400000)).toFixed(3);
         var time = (((Date.now() - row.repDaily) / 86400000)).toFixed(3);
