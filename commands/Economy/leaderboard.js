@@ -16,7 +16,7 @@ exports.run = async (client, message, [type]) => {
         .setThumbnail(message.guild.iconURL());
     
     db.all(`SELECT * FROM scores ORDER BY ${types[type.toLowerCase()]} DESC LIMIT 15`, [], (err, rows) => {
-        if (err) { throw err; }
+        if (err) { console.log(err); }
         var x = 1;
         if (type.toLowerCase() === "credits") {
             rows.forEach((row) => {
