@@ -14,6 +14,7 @@ exports.run = async (client, message, [member]) => {
                 sql.run("INSERT INTO fish_inv (userId, common, uncommon, rare, epic, trash) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0, 0]);
                 sql.run("INSERT INTO fish_stats (userId, common, uncommon, rare, epic, trash) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0, 0]);
                 sql.run("INSERT INTO badges (userId, betaTester, bugSmasher) VALUES (?, ?, ?)", [user.id, "no", "no"]);  
+                sql.run("INSERT INTO awards (userId, suggest, bugs, minor, major) VALUES (?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0]);  
                 return message.channel.send("You have recieved your daily amount of 100 credits."); 
             } else { 
                 sql.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`).then(row => { 
@@ -21,15 +22,22 @@ exports.run = async (client, message, [member]) => {
                 });
                 return message.channel.send(`That user has not gotten their first daily to start off with so you can not give them any credits at the moment. ):`); 
             }
-        } if ((parseInt(row.daily) + 86400000) > Date.now()) {
-            return message.reply("You have already redeemed your daily for today."); 
+        } if (user.id != message.author.id) {
+            credit = Number((100 * (1 + Math.random())).toFixed(0)); 
+            sql.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`).then(row => {
+                if ((parseInt(row.daily) + 86400000) > Date.now()) {
+                    return message.reply("You have already redeemed your daily for today."); 
+                } else {
+                    sql.run(`UPDATE scores SET daily = ${Date.now()} WHERE userId = ${message.author.id}`);
+                    sql.get(`SELECT * FROM scores WHERE userId = "${user.id}"`).then(row => {
+                        sql.run(`UPDATE scores SET credits = ${parseInt(row.credits) + credit} WHERE userId = ${user.id}`);
+                    });
+                    return message.channel.send(`${user.username} has recieved ${credit} credits.`);
+                }
+            });
         } else {
-            if (user.id == message.author.id) { 
-                credit = row.credits + 100;
-                sql.run(`UPDATE scores SET daily = ${Date.now()} WHERE userId = ${user.id}`);
-            } else { 
-                credit = row.credits + (100 * (1 + Math.random())); 
-            }
+            credit = row.credits + 100;
+            sql.run(`UPDATE scores SET daily = ${Date.now()} WHERE userId = ${user.id}`);
             sql.run(`UPDATE scores SET credits = ${row.credits + 100} WHERE userId = ${user.id}`);
             return message.channel.send(`${user.username} has recieved ${credit - row.credits} credits.`);
         }
