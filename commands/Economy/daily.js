@@ -1,51 +1,51 @@
 exports.run = async (client, message, [member]) => {
-    const sql = require("sqlite");
-    sql.open("./bwd/data/score.sqlite");
+    const sqlite3 = require("sqlite3").verbose();
+    let db = new sqlite3.Database("./bwd/data/score.sqlite");
 
     var user = client.funcs.userSearch(client, message, member);
     
     if (user.username === null || user.username === undefined) { return; }
     if (user.bot === true) { return message.reply("You can't give your credits to a bot user!"); }
 
-    sql.get(`SELECT * FROM scores WHERE userId = "${user.id}"`).then(row => {
+    db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
+        if (err) { return console.log(err); }
         if (!row) {
             if (user.id == message.author.id) { 
-                sql.run("INSERT INTO scores (userId, credits, level, daily, rep, repDaily) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 100, 0, Date.now(), 0, 0]);
-                sql.run("INSERT INTO fish_inv (userId, common, uncommon, rare, epic, trash) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0, 0]);
-                sql.run("INSERT INTO fish_stats (userId, common, uncommon, rare, epic, trash) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0, 0]);
-                sql.run("INSERT INTO badges (userId, betaTester, bugSmasher) VALUES (?, ?, ?)", [user.id, "no", "no"]);  
-                sql.run("INSERT INTO awards (userId, suggest, bugs, minor, major) VALUES (?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0]);  
+                db.run("INSERT INTO scores (userId, credits, level, daily, rep, repDaily) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 100, 0, Date.now(), 0, 0]);
+                db.run("INSERT INTO fish_inv (userId, common, uncommon, rare, epic, trash) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0, 0]);
+                db.run("INSERT INTO fish_stats (userId, common, uncommon, rare, epic, trash) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0, 0]);
+                db.run("INSERT INTO badges (userId, betaTester, bugSmasher) VALUES (?, ?, ?)", [user.id, "no", "no"]);  
+                db.run("INSERT INTO awards (userId, suggest, bugs, minor, major) VALUES (?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0]);  
                 return message.channel.send("You have recieved your daily amount of 100 credits."); 
             } else { 
-                sql.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`).then(row => { 
+                db.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`, [], (err, row) => { 
+                    if (err) { return console.log(err); }
                     if (!row) { return message.reply("You have not gotten your first daily yet. Before giving credits to others, you must recieve the daily!"); }
                 });
                 return message.channel.send(`That user has not gotten their first daily to start off with so you can not give them any credits at the moment. ):`); 
             }
         } if (user.id != message.author.id) {
             credit = Number((100 * (1 + Math.random())).toFixed(0)); 
-            sql.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`).then(row => {
+            db.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`, [], (err, row) => {
                 if ((parseInt(row.daily) + 86400000) > Date.now()) {
                     return message.reply("You have already redeemed your daily for today."); 
                 } else {
-                    sql.run(`UPDATE scores SET daily = ${Date.now()} WHERE userId = ${message.author.id}`);
-                    sql.get(`SELECT * FROM scores WHERE userId = "${user.id}"`).then(row => {
-                        sql.run(`UPDATE scores SET credits = ${parseInt(row.credits) + credit} WHERE userId = ${user.id}`);
+                    db.run(`UPDATE scores SET daily = ${Date.now()} WHERE userId = ${message.author.id}`);
+                    db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
+                        if (err) { return console.log(err); }
+                        db.run(`UPDATE scores SET credits = ${parseInt(row.credits) + credit} WHERE userId = ${user.id}`);
                     });
                     return message.channel.send(`${user.username} has recieved ${credit} credits.`);
                 }
             });
         } else {
             credit = row.credits + 100;
-            sql.run(`UPDATE scores SET daily = ${Date.now()} WHERE userId = ${user.id}`);
-            sql.run(`UPDATE scores SET credits = ${row.credits + 100} WHERE userId = ${user.id}`);
+            db.run(`UPDATE scores SET daily = ${Date.now()} WHERE userId = ${user.id}`);
+            db.run(`UPDATE scores SET credits = ${row.credits + 100} WHERE userId = ${user.id}`);
             return message.channel.send(`${user.username} has recieved ${credit - row.credits} credits.`);
         }
-    }).catch(error => { 
-        console.log(error);
-        var Report = client.funcs.sqlTables(client, message, user);
-        return message.reply(Report);
     });
+    db.close();
 };
 
 exports.conf = {
