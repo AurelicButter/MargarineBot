@@ -11,23 +11,22 @@ exports.run = async (client, message, [type]) => {
 
     const embed = new client.methods.Embed()
         .setTimestamp()
-        .setAuthor(`Leaderboards for ${message.guild.name}`, message.guild.iconURL())
-        .setColor("#4d5fd")
-        .setThumbnail(message.guild.iconURL());
+        .setAuthor("Global Leaderboards", message.guild.iconURL())
+        .setColor("#4d5fd");
     
     db.all(`SELECT * FROM scores ORDER BY ${types[type.toLowerCase()]} DESC LIMIT 10`, [], (err, rows) => {
-        if (err) { console.log(err); }
+        if (err) { return console.log(err); }
         var x = 1;
         if (type.toLowerCase() === "credits") {
             rows.forEach((row) => {
                 var user = client.funcs.userSearch(client, message, row.userID);
-                Leaders.push(`${x}) ${user.username} - ${types[type.toLowerCase()]}: ${row.credits.toLocaleString()}\n`);
+                Leaders.push(`${x}) ${user.tag} - ${types[type.toLowerCase()]}: ${row.credits.toLocaleString()}\n`);
                 x++;
             });
         } if (type.toLowerCase() === "rep") {
             rows.forEach((row) => {
                 var user = client.funcs.userSearch(client, message, row.userID);
-                Leaders.push(`${x}) ${user.username} - ${types[type.toLowerCase()]}: ${row.rep.toLocaleString()}\n`);
+                Leaders.push(`${x}) ${user.tag} - ${types[type.toLowerCase()]}: ${row.rep.toLocaleString()}\n`);
                 x++;
             });
         }
