@@ -1,13 +1,14 @@
 exports.run = async (client, message, [member]) => {
-    const sql = require("sqlite");
-    sql.open("./bwd/data/score.sqlite");
+    const sqlite3 = require("sqlite3").verbose();
+    let db = new sqlite3.Database("./bwd/data/score.sqlite");
 
     var user = client.funcs.userSearch(client, message, member);
     
     if (user.username === null || user.username === undefined) { return; }
     if (user.bot === true) { return message.reply("Bots don't have any records!"); }
 
-    sql.get(`SELECT * FROM scores WHERE userId = "${user.id}"`).then(row => {
+    db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
+        if (err) { return console.log(err); }
         if (!row) { return message.reply("That person hasn't signed up with `m~daily` yet! D:"); } 
 
         var Time = (((Date.now() - row.daily) / 86400000)).toFixed(3);
@@ -29,10 +30,8 @@ exports.run = async (client, message, [member]) => {
             else { embed.addField("Last rep given:", `${(time * 24).toFixed(3)} hours ago`, true); }
         
         message.channel.send({embed});
-    }).catch(error => { 
-        console.log(error);
-        return message.reply("Error in command. Please try again later.");
     });
+    db.close();
 };
 
 exports.conf = {
