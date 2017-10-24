@@ -43,4 +43,4 @@ exports.help = {
     description: "Bans the mentioned user.",
     usage: "<User:str> [reason:str] [...]",
     usageDelim: " ",
-};
+}; 
