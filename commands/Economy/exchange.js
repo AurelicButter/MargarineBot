@@ -8,13 +8,13 @@ exports.run = async (client, message, [user, credit]) => {
     if (user.bot === true) { return message.reply("You can't give your credits to a bot user!"); }
 
     db.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`, [], (err, row) => {
-        if (err) { throw err; }
+        if (err) { return console.log(err); }
         if (!row) { return message.reply("You haven't signed up and received your credits yet! D: Use `m~daily` (Using default prefix) to earn your first amount of credits."); } 
         if (row.credits < credit) { return message.reply("You don't have that many credits, baka!"); }
         if (!credit || credit < 1) { return message.reply("You can't just give an invisable amount of credits to someone!"); }
         else { 
             db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
-                if (err) { throw err; }
+                if (err) { return console.log(err); }
                 if (!row) { return message.reply("That user has not gotten their first daily yet!"); }
                 else { db.run(`UPDATE scores SET credits = ${parseInt(row.credits) + parseInt(credit)} WHERE userId = ${user.id}`); }
             });
