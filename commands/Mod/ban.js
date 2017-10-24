@@ -22,7 +22,7 @@ exports.run = async (client, message, [User, reason]) => {
         .setColor("#FF0000")
         .setTimestamp()
         .setTitle("Moderator Message:")
-        .setDescription(`You have been bannned from ${message.guild.name}!\n**Reason:** ${reason}`);
+        .setDescription(`You have been banned from ${message.guild.name}!\n**Reason:** ${reason}`);
 
     await user.send({embed: DMembed});
     await message.guild.member(user).ban(reason);
@@ -43,4 +43,4 @@ exports.help = {
     description: "Bans the mentioned user.",
     usage: "<User:str> [reason:str] [...]",
     usageDelim: " ",
-}; 
+};
