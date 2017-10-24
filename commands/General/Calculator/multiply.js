@@ -1,8 +1,18 @@
-exports.run = async (client, message, [x, y, z]) => {
-    if (!x || !y) { return message.reply("You need two numbers to do math, baka!"); }
-    
-    if (!z) { return message.channel.send(`Total:  ${Number(x * y)}`); } 
-    else { message.channel.send(`Total: ${Number(x * y * z)}`); }
+exports.run = async (client, message, [xa, ya, za]) => {
+  var x = client.funcs.constantMath(client, message, xa);
+  var y = client.funcs.constantMath(client, message, ya);
+
+  if (!za) { 
+    var z = 1; 
+  } else { 
+    var z = client.funcs.constantMath(client, message, za); 
+  }
+
+  if ((x === null) || (y === null) || (z === null)) { 
+    return message.reply("You are trying to multiply things that aren't numbers or imaginary, baka!"); 
+  }
+
+  message.channel.send(`Total: ${x * y * z}`);
 };
   
 exports.conf = {
@@ -17,6 +27,6 @@ exports.conf = {
 exports.help = {
   name: "multiply",
   description: "Multiply up to three numbers together.",
-  usage: "[x:int] [y:int] [z:int]",
+  usage: "[xa:str] [ya:str] [za:str]",
   usageDelim: " ",
 };
