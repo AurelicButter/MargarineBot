@@ -1,8 +1,9 @@
 exports.run = async (client, message, [credit, bet]) => {
-    const sql = require("sqlite");
-    sql.open("./bwd/data/score.sqlite");
+    const sqlite3 = require("sqlite3").verbose();
+    let db = new sqlite3.Database("./bwd/data/score.sqlite");
 
-    sql.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`).then(row => {
+    db.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`, [], (err, row) => {
+        if (err) { return console.log(err); }
         if (!row) { return message.reply("You haven't signed up and received your credits yet! D: Use `m~daily` (Using default prefix) to earn your first amount of credits."); } 
         if (row.credits < credit) { return message.reply("You don't have that many credits, baka!"); }
         if (!credit || credit < 1) { return message.reply("You need to bet some credits to play!"); }
@@ -18,22 +19,20 @@ exports.run = async (client, message, [credit, bet]) => {
 
             if (sum%2 == 0 && bet === "even") {
                 credit = (row.credits + (credit*1.5)).toFixed(0);
-                sql.run(`UPDATE scores SET credits = ${credit} WHERE userId = ${message.author.id}`);
+                db.run(`UPDATE scores SET credits = ${credit} WHERE userId = ${message.author.id}`);
                 return message.reply(`Sum: ${sum} Your Guess: ${bet} You have won ${credit - row.credits} credits!`);
             } else if (sum%2 !== 0 && bet === "odd") {
                 credit = (row.credits + (credit*1.5)).toFixed(0);
-                sql.run(`UPDATE scores SET credits = ${credit} WHERE userId = ${message.author.id}`);
+                db.run(`UPDATE scores SET credits = ${credit} WHERE userId = ${message.author.id}`);
                 return message.reply(`Sum: ${sum} Your Guess: ${bet} You have won ${credit - row.credits} credits!`);
             } else {
                 afterMath = (row.credits - credit).toFixed(0);
-                sql.run(`UPDATE scores SET credits = ${afterMath} WHERE userId = ${message.author.id}`);
+                db.run(`UPDATE scores SET credits = ${afterMath} WHERE userId = ${message.author.id}`);
                 return message.reply(`Sum: ${sum} Your Guess: ${bet} You have lost ${credit} credits.`);
             }
         }
-    }).catch(error => { 
-        console.log(error);
-        return message.reply("Error in command. Please try again later.");
     });
+    db.close();
 };
 
 exports.conf = {
