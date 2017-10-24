@@ -5,16 +5,22 @@ module.exports = (client, message, action, user, author, reason) => {
     kick: 0x00AE86,
   };
 
+  const actionTypes = {
+    ban: "Ban",
+    unban: "Unban",
+    kick: "Kick"
+  }
+
   var color = embedTypes[action.toLowerCase()];
+  var verb = actionTypes[action.toLowerCase()];
 
   const embed = new client.methods.Embed()
     .setColor(color)
     .setTimestamp()
-    .addField("**Action**", action)
-    .addField("**User**", user.tag)
-    .addField("**Moderator", author.tag)
-    .addField("**Reason**", reason)
-    setThumbnail(user.avatarURL());
+    .addField(`**Action:** ${verb}`, `**Moderator:** ${author.tag}`)
+    .addField("**User:**", user.tag)
+    .addField("**Reason:**", reason)
+    .setThumbnail(user.avatarURL());
 
   return embed;
 };
