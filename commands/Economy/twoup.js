@@ -1,14 +1,14 @@
 exports.run = async (client, message, [credit]) => {
-    const sql = require("sqlite");
-    sql.open("./bwd/data/score.sqlite");
+    const sqlite3 = require("sqlite3").verbose();
+    let db = new sqlite3.Database("./bwd/data/score.sqlite");
 
-    sql.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`).then(row => {
+    db.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`, [], (err, row) => {
+        if (err) { return console.log(err); }
         if (!row) { return message.reply("You haven't signed up and received your credits yet! D: Use `m~daily` (Using default prefix) to earn your first amount of credits."); }
         if (row.credits < credit) { return message.reply("You don't have that many credits, baka!"); }
         if (!credit || credit < 1) { return message.reply("You need to bet some credits to play!"); }
         else {
-            var z;
-            let rolls = [];
+            var z; let rolls = [];
             for (z = 0; z < 7; z++) {
                 y = Math.random();
                 rolls[z] = (y > .5) ? "heads" : "tails";
@@ -17,7 +17,7 @@ exports.run = async (client, message, [credit]) => {
             function winning() {
                 earnings = (credit * 1.25).toFixed(0);
                 credit = parseInt(row.credits) + parseInt(earnings);
-                sql.run(`UPDATE scores SET credits = ${credit} WHERE userId = ${message.author.id}`);
+                db.run(`UPDATE scores SET credits = ${credit} WHERE userId = ${message.author.id}`);
                 return text = `Coins ${rolls} You have won ${earnings} credits.`;
             }
 
@@ -53,13 +53,11 @@ exports.run = async (client, message, [credit]) => {
                 result = "lost";
             }
 
-            sql.run(`UPDATE scores SET credits = ${credit} WHERE userId = ${message.author.id}`);
+            db.run(`UPDATE scores SET credits = ${credit} WHERE userId = ${message.author.id}`);
             message.reply(`Coins ${rolls} You have ${result} ${earnings} credits.`); 
         }
-    }).catch(error => {
-        console.log(error);
-        return message.reply("Error in command. Please try again later.");
     });
+    db.close();
 };
 
 exports.conf = {
