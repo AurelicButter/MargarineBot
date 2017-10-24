@@ -1,15 +1,20 @@
-exports.run = async (client, message, [x, y, z]) => {
-    if (!x || !y && y != 0) { 
-        return message.reply("You need two numbers to do math, baka!"); 
-    }
-    
-    if (!z) { 
-        if (y == 0) { return message.channel.send("Total: Undefined. Error: Divided by zero."); }
-        else { return message.channel.send(`Total: ${Number(x / y)}`); }
+exports.run = async (client, message, [xa, ya, za]) => {
+    var x = client.funcs.constantMath(client, message, xa);
+    var y = client.funcs.constantMath(client, message, ya);
+  
+    if (!za) { 
+      var z = 1; 
     } else { 
-        if (z == 0 || y == 0) { return message.channel.send("Total: Undefined. Error: Divided by zero."); }
-        message.channel.send(`Total: ${Number(x / y / z)}`); 
+      var z = client.funcs.constantMath(client, message, za); 
     }
+  
+    if ((x === null) || (y === null) || (z === null)) { 
+      return message.reply("You are trying to add things that aren't numbers or imaginary, baka!"); 
+    }
+
+    if ((y === 0) || (z === 0)) { return message.channel.send("Total: Undefined. Error: Divided by zero."); }
+  
+    message.channel.send(`Total: ${x / y / z}`);
 };
   
 exports.conf = {
@@ -24,6 +29,6 @@ exports.conf = {
 exports.help = {
   name: "divide",
   description: "Divide up to three numbers together.",
-  usage: "[x:int] [y:int] [z:int]",
+  usage: "[xa:str] [ya:str] [za:str]",
   usageDelim: " ",
 };
