@@ -16,7 +16,7 @@ exports.run = async (client, message, [member]) => {
                 db.run("INSERT INTO fish_stats (userId, common, uncommon, rare, epic, trash) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0, 0]);
                 db.run("INSERT INTO badges (userId, betaTester, bugSmasher) VALUES (?, ?, ?)", [user.id, "no", "no"]);  
                 db.run("INSERT INTO awards (userId, suggest, bugs, minor, major) VALUES (?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0]);  
-                return message.channel.send("You have recieved your daily amount of 100 credits."); 
+                return message.channel.send("You have received your daily amount of 100 credits."); 
             } else { 
                 db.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`, [], (err, row) => { 
                     if (err) { return console.log(err); }
@@ -35,14 +35,14 @@ exports.run = async (client, message, [member]) => {
                         if (err) { return console.log(err); }
                         db.run(`UPDATE scores SET credits = ${parseInt(row.credits) + credit} WHERE userId = ${user.id}`);
                     });
-                    return message.channel.send(`${user.username} has recieved ${credit} credits.`);
+                    return message.channel.send(`${user.username} has received ${credit} credits.`);
                 }
             });
         } else {
             credit = row.credits + 100;
             db.run(`UPDATE scores SET daily = ${Date.now()} WHERE userId = ${user.id}`);
             db.run(`UPDATE scores SET credits = ${row.credits + 100} WHERE userId = ${user.id}`);
-            return message.channel.send(`${user.username} has recieved ${credit - row.credits} credits.`);
+            return message.channel.send(`${user.username} has received ${credit - row.credits} credits.`);
         }
     });
     db.close();
