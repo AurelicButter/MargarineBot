@@ -1,10 +1,11 @@
-exports.run = (client, message, [User]) => {
+exports.run = async (client, message, [User]) => {
     message.delete().catch();
     User = client.funcs.userSearch(client, message, User);
+	
+    if (User.username == null) { return; }
+	if (User.id === client.user.id) { return message.channel.send(`Why would you try and make me greet myself, ${message.author.username}? I'm not that lonely!`); }
 
-	if (User.id === client.user.id) { return message.channel.send("Why would you try and make me greet myself? I'm not that lonely!"); }
-
-	return message.channel.send(`Hello ${User.username}! `);
+	message.channel.send(`Hello ${User.username}! `);
 };
 
 exports.conf = {
