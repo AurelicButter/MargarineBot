@@ -8,26 +8,20 @@ exports.run = async (client, message, [credit, bet]) => {
         if (row.credits < credit) { return message.reply("You don't have that many credits, baka!"); }
         if (!credit || credit < 1) { return message.reply("You need to bet some credits to play!"); }
         else {
-            die1 = Math.floor(Math.random() * (Math.floor(6) - Math.ceil(1) + 1)) + Math.ceil(1);
-            die2 = Math.floor(Math.random() * (Math.floor(6) - Math.ceil(1) + 1)) + Math.ceil(1);
-            die3 = Math.floor(Math.random() * (Math.floor(6) - Math.ceil(1) + 1)) + Math.ceil(1);
-            die4 = Math.floor(Math.random() * (Math.floor(6) - Math.ceil(1) + 1)) + Math.ceil(1);
-            die5 = Math.floor(Math.random() * (Math.floor(6) - Math.ceil(1) + 1)) + Math.ceil(1);
-            die6 = Math.floor(Math.random() * (Math.floor(6) - Math.ceil(1) + 1)) + Math.ceil(1);
+            var z; let rolls = [];
+            for (z = 0; z < 6; z++) {
+                var x = Math.floor(Math.random() * (Math.floor(6) - Math.ceil(1) + 1)) + Math.ceil(1);
+                rolls.push(x);
+            }
 
-            sum = die1 + die2 + die3 + die4 + die5 + die6;
+            var sum = rolls[0] + rolls[1] + rolls[2] + rolls[3] + rolls[4] + rolls[5];
 
-            if (sum%2 == 0 && bet === "even") {
-                credit = (row.credits + (credit*1.5)).toFixed(0);
-                db.run(`UPDATE scores SET credits = ${credit} WHERE userId = ${message.author.id}`);
-                return message.reply(`Sum: ${sum} Your Guess: ${bet} You have won ${credit - row.credits} credits!`);
-            } else if (sum%2 !== 0 && bet === "odd") {
-                credit = (row.credits + (credit*1.5)).toFixed(0);
-                db.run(`UPDATE scores SET credits = ${credit} WHERE userId = ${message.author.id}`);
-                return message.reply(`Sum: ${sum} Your Guess: ${bet} You have won ${credit - row.credits} credits!`);
+            if ((sum%2 === 0 && bet === "even") || (sum%2 !== 0 && bet === "odd")) {
+                credit = Number(credit*1.5).toFixed(0);
+                db.run(`UPDATE scores SET credits = ${parseInt(row.credits) + credit} WHERE userId = ${message.author.id}`);
+                return message.reply(`Sum: ${sum} Your Guess: ${bet} You have won ${credit} credits!`);
             } else {
-                afterMath = (row.credits - credit).toFixed(0);
-                db.run(`UPDATE scores SET credits = ${afterMath} WHERE userId = ${message.author.id}`);
+                db.run(`UPDATE scores SET credits = ${parseInt(row.credits) - credit} WHERE userId = ${message.author.id}`);
                 return message.reply(`Sum: ${sum} Your Guess: ${bet} You have lost ${credit} credits.`);
             }
         }
