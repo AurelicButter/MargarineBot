@@ -5,7 +5,7 @@ exports.run = async (client, message, [type]) => {
     const types = {
         credits: "Credits",
         rep: "Rep"
-    }
+    };
 
     const Leaders = [];
 
@@ -18,29 +18,21 @@ exports.run = async (client, message, [type]) => {
     db.all(`SELECT * FROM scores ORDER BY ${types[type.toLowerCase()]} DESC LIMIT 15`, [], (err, rows) => {
         if (err) { return console.log(err); }
         var x = 1;
-        if (type.toLowerCase() === "credits") {
-            rows.forEach((row) => {
-                var user = message.guild.members.find("id", `${row.userID}`);
-                if (user === undefined) { x = x + 0; } 
-                else if (x < 10 && user != undefined) { 
+        rows.forEach((row) => {
+            var user = message.guild.members.find("id", `${row.userID}`);
+            if (user === null) { x = x + 0; } 
+            else if (x < 10 && user !== null) { 
+                if (type.toLowerCase() === "credits") {
                     Leaders.push(`${x}) ${user.user.username} - ${types[type.toLowerCase()]}: ${row.credits.toLocaleString()}\n`);
-                    x++; 
-                } else if (Leaders.length === 10) { return; }
-            });
-        } if (type.toLowerCase() === "rep") {
-            rows.forEach((row) => {
-                var user = message.guild.members.find("id", `${row.userID}`);
-                if (user === undefined) { x = x + 0; } 
-                else if (x < 10 && user != undefined) { 
+                } if (type.toLowerCase() === "rep") {
                     Leaders.push(`${x}) ${user.user.username} - ${types[type.toLowerCase()]}: ${row.rep.toLocaleString()}\n`);
-                    x++; 
-                } else if (Leaders.length === 10) { return; }
-            });
-        }
+                }
+                x++; 
+            } else if (Leaders.length === 10) { return; }
+        });
         embed.setDescription(Leaders);
         message.channel.send({embed});
     });
-
     db.close();
 };
 
