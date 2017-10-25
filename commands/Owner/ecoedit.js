@@ -1,21 +1,19 @@
 exports.run = async (client, message, [member, option, amount]) => {
-    const sql = require("sqlite");
-    sql.open("./bwd/data/score.sqlite");
+    const sqlite3 = require("sqlite3").verbose();
+    let db = new sqlite3.Database("./bwd/data/score.sqlite");
 
     var user = client.funcs.userSearch(client, message, member);
     
-    if (user.username === null || user.username === undefined) { return; }
+    if (user.username === null) { return; }
     if (user.bot === true) { return message.reply("You can't change or add data about a bot user!"); }
 
-    sql.get(`SELECT * FROM scores WHERE userId = "${user.id}"`).then(row => {
+    db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
+        if (err) { return console.log(err); }
         if (!row) { return message.reply("That user does not have any data within the database."); }
         else {
-            sql.run(`UPDATE scores SET ${option} = ${amount} WHERE userId ="${user.id}"`);
+            db.run(`UPDATE scores SET ${option} = ${amount} WHERE userId ="${user.id}"`);
             return message.reply(`Table updated. I have updated the table so that ${user.username}'s ${option} has been set to ${amount}!`);
         }
-    }).catch(error => { 
-        console.log(error);
-        return message.reply("Error in command. Please try again later.");
     });
 };
 
