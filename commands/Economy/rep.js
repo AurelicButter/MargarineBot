@@ -4,9 +4,9 @@ exports.run = async (client, message, [member]) => {
 
     var user = client.funcs.userSearch(client, message, member);
     
-    if (user.username === null || user.username === undefined) { return; }
-    if (user.bot === true) { return message.reply("You can't give reputation to a bot user!"); }
-    if (user.id === message.author.id) { return message.reply("You can't give reputation to yourself! That's like saying hire me for your nuclear plant because I'm a high school student!"); }
+    if (user.username === null) { return; }
+    if (user.bot === true) { return message.channel.send("You can't give reputation to a bot user!"); }
+    if (user.id === message.author.id) { return message.channel.send("You can't give reputation to yourself! That's like saying hire me for your nuclear plant because I'm a high school student!"); }
 
     db.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`, [], (err, row) => {
         if (err) { console.log(err); }
@@ -15,7 +15,7 @@ exports.run = async (client, message, [member]) => {
         else { 
             db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
                 if (err) { console.log(err); }
-                if (!row) { return message.channel.send(`That user has not gotten their first daily to start off with so you can not give them any rep at the moment. :cry:`); } 
+                if (!row) { return message.channel.send("That user has not gotten their first daily to start off with so you can not give them any rep at the moment. :cry:"); } 
                 else {
                     db.run(`UPDATE scores SET rep = ${row.rep + 1} WHERE userId = ${user.id}`);
                     db.run(`UPDATE scores SET repDaily = ${Date.now()} WHERE userId = ${message.author.id}`); 
