@@ -5,7 +5,7 @@ exports.run = async (client, message, [type]) => {
     const types = {
         credits: "Credits",
         rep: "Rep"
-    }
+    };
 
     const Leaders = [];
 
@@ -17,23 +17,18 @@ exports.run = async (client, message, [type]) => {
     db.all(`SELECT * FROM scores ORDER BY ${types[type.toLowerCase()]} DESC LIMIT 10`, [], (err, rows) => {
         if (err) { return console.log(err); }
         var x = 1;
-        if (type.toLowerCase() === "credits") {
-            rows.forEach((row) => {
-                var user = client.funcs.userSearch(client, message, row.userID);
+        rows.forEach((row) => {
+            var user = client.funcs.userSearch(client, message, row.userID);
+            if (type.toLowerCase() === "credits") {
                 Leaders.push(`${x}) ${user.tag} - ${types[type.toLowerCase()]}: ${row.credits.toLocaleString()}\n`);
-                x++;
-            });
-        } if (type.toLowerCase() === "rep") {
-            rows.forEach((row) => {
-                var user = client.funcs.userSearch(client, message, row.userID);
+            } if (type.toLowerCase() === "rep") {
                 Leaders.push(`${x}) ${user.tag} - ${types[type.toLowerCase()]}: ${row.rep.toLocaleString()}\n`);
-                x++;
-            });
-        }
+            }
+            x++;
+        });
         embed.setDescription(Leaders);
         message.channel.send({embed});
     });
-
     db.close();
 };
 
