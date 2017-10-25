@@ -1,14 +1,15 @@
 exports.run = async (client, message, [action, kind, amount]) => {
-    const sql = require("sqlite");
+    const sqlite3 = require("sqlite3").verbose();
+    let db = new sqlite3.Database("./bwd/data/score.sqlite");
     let user = message.author;
-    sql.open("./bwd/data/score.sqlite");
 
     if (!action) {
-        sql.get(`SELECT * FROM scores WHERE userId = "${user.id}"`).then(row => {
+        db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
+            if (err) { return console.log(err); }
             if (!row) { return message.reply("You haven't signed up and received your credits yet! D: Use `m~daily` (Using default prefix) to earn your first amount of credits."); } 
             if (row.credits < 5) { return message.reply("You don't have that many credits, baka!"); }
             else { 
-                sql.run(`UPDATE scores SET credits = ${row.credits - 5} WHERE userId = ${user.id}`); 
+                db.run(`UPDATE scores SET credits = ${row.credits - 5} WHERE userId = ${user.id}`); 
                 
                 die = Math.random();
                 
@@ -39,45 +40,45 @@ exports.run = async (client, message, [action, kind, amount]) => {
                     result = "You have placed the fish in your inventory";
                 }
                 
-                sql.get(`SELECT * FROM fish_inv WHERE userId = "${user.id}"`).then(row => {
+                db.get(`SELECT * FROM fish_inv WHERE userId = "${user.id}"`, [], (err, row) => {
+                    if (err) { return console.log(err); }
                     if (!row) { 
                         return message.reply("Error in finding your information. Fish_inv table is lacking your id!");    
                     } else if (kind === "common") {
-                        sql.run(`UPDATE fish_inv SET common = ${row.common + 1} WHERE userId = ${user.id}`); 
+                        db.run(`UPDATE fish_inv SET common = ${row.common + 1} WHERE userId = ${user.id}`); 
                     } else if (kind === "uncommon") {
-                        sql.run(`UPDATE fish_inv SET uncommon = ${row.uncommon + 1} WHERE userId = ${user.id}`); 
+                        db.run(`UPDATE fish_inv SET uncommon = ${row.uncommon + 1} WHERE userId = ${user.id}`); 
                     } else if (kind === "rare") {
-                        sql.run(`UPDATE fish_inv SET rare = ${row.rare + 1} WHERE userId = ${user.id}`); 
+                        db.run(`UPDATE fish_inv SET rare = ${row.rare + 1} WHERE userId = ${user.id}`); 
                     } else if (kind === "epic") {
-                        sql.run(`UPDATE fish_inv SET epic = ${row.epic + 1} WHERE userId = ${user.id}`); 
+                        db.run(`UPDATE fish_inv SET epic = ${row.epic + 1} WHERE userId = ${user.id}`); 
                     }
                 });
                 
-                sql.get(`SELECT * FROM fish_stats WHERE userId = "${user.id}"`).then(row => {
+                db.get(`SELECT * FROM fish_stats WHERE userId = "${user.id}"`, [], (err, row) => {
+                    if (err) { return console.log(err); }
                     if (!row) { 
                         return;
                     } else if (kind === "common") {
-                        sql.run(`UPDATE fish_stats SET common = ${row.common + 1} WHERE userId = ${user.id}`); 
+                        db.run(`UPDATE fish_stats SET common = ${row.common + 1} WHERE userId = ${user.id}`); 
                     } else if (kind === "uncommon") {
-                        sql.run(`UPDATE fish_stats SET uncommon = ${row.uncommon + 1} WHERE userId = ${user.id}`); 
+                        db.run(`UPDATE fish_stats SET uncommon = ${row.uncommon + 1} WHERE userId = ${user.id}`); 
                     } else if (kind === "rare") {
-                        sql.run(`UPDATE fish_stats SET rare = ${row.rare + 1} WHERE userId = ${user.id}`); 
+                        db.run(`UPDATE fish_stats SET rare = ${row.rare + 1} WHERE userId = ${user.id}`); 
                     } else if (kind === "epic") {
-                        sql.run(`UPDATE fish_stats SET epic = ${row.epic + 1} WHERE userId = ${user.id}`); 
+                        db.run(`UPDATE fish_stats SET epic = ${row.epic + 1} WHERE userId = ${user.id}`); 
                     } else if (kind === "trash") {
-                        sql.run(`UPDATE fish_stats SET trash = ${row.trash + 1} WHERE userId = ${user.id}`);
+                        db.run(`UPDATE fish_stats SET trash = ${row.trash + 1} WHERE userId = ${user.id}`);
                     }
                 
                     message.channel.send(`${user.username}, you have caught ${text}. ${image} ${result}.`);
                 });
             }
-        }).catch(error => { 
-            console.log(error);
-            return message.reply("Error in command: Scores table. Please try again later.");
         });
     } if (action === "inv" || action === "inventory") {
-        sql.get(`SELECT * FROM fish_inv WHERE userId = "${user.id}"`).then(row => {
-            if (!row) { return message.reply("You haven't caught any fish yet!"); } 
+        db.get(`SELECT * FROM fish_inv WHERE userId = "${user.id}"`, [], (err, row) => {
+            if (err) { return console.log(err); }
+            if (!row) { return message.channel.send("You haven't caught any fish yet!"); } 
             else {
                 const embed = new client.methods.Embed()
                     .setTimestamp()
@@ -93,60 +94,57 @@ exports.run = async (client, message, [action, kind, amount]) => {
                     if ((row.common == 0) && (row.uncommon == 0) && (row.rare == 0) && (row.epic == 0)) { embed.addField("There's a slight problem here...", "You don't actually have any fish in your inventory."); }
                 return message.channel.send({embed});
             }
-        }).catch(error => { 
-            console.log(error);
-            return message.reply("Error in command: Inventory section. Please try again later.");
         });
     } if (action === "sell") {
-        sql.get(`SELECT * FROM fish_inv WHERE userId = "${user.id}"`).then(row => {
-            if (!row) { return message.reply("You haven't caught any fish yet!"); }
+        db.get(`SELECT * FROM fish_inv WHERE userId = "${user.id}"`, [], (err, row) => {
+            if (err) { return console.log(err); }
+            if (!row) { return message.channel.send("You haven't caught any fish yet!"); }
             else {
                 if (kind === "common") {
                     if (!amount) { amount = row.common; }
-                    else if (row.common == 0) { return message.reply("You don't have any common fish to sell! D:"); }
-                    else if (row.common < amount) { return message.reply("You don't have that much fish to sell."); }
+                    else if (row.common == 0) { return message.channel.send("You don't have any common fish to sell! D:"); }
+                    else if (row.common < amount) { return message.channel.send("You don't have that much fish to sell."); }
                     income = (amount * 5).toFixed(0);
-                    sql.run(`UPDATE fish_inv SET common = ${row.common - amount} WHERE userId = ${user.id}`);
+                    db.run(`UPDATE fish_inv SET common = ${row.common - amount} WHERE userId = ${user.id}`);
                     message.channel.send(`You have sold ${amount} common fish and earned ${income} credits!`);
                 } if (kind === "uncommon") {
                     if (!amount) { amount = row.uncommon; }
-                    else if (row.uncommon == 0) { return message.reply("You don't have any uncommon fish to sell! D:"); }
-                    else if (row.uncommon < amount) { return message.reply("You don't have that much fish to sell."); }
+                    else if (row.uncommon == 0) { return message.channel.send("You don't have any uncommon fish to sell! D:"); }
+                    else if (row.uncommon < amount) { return message.channel.send("You don't have that much fish to sell."); }
                     income = (amount * 10).toFixed(0);
-                    sql.run(`UPDATE fish_inv SET uncommon = ${row.uncommon - amount} WHERE userId = ${user.id}`);
+                    db.run(`UPDATE fish_inv SET uncommon = ${row.uncommon - amount} WHERE userId = ${user.id}`);
                     message.channel.send(`You have sold ${amount} uncommon fish and earned ${income} credits!`);
                 } if (kind === "rare") {
                     if (!amount) { amount = row.rare; }
-                    else if (row.rare == 0) { return message.reply("You don't have any rare fish to sell! D:"); }
-                    else if (row.rare < amount) { return message.reply("You don't have that much fish to sell."); }
+                    else if (row.rare == 0) { return message.channel.send("You don't have any rare fish to sell! D:"); }
+                    else if (row.rare < amount) { return message.channel.send("You don't have that much fish to sell."); }
                     income = (amount * 25).toFixed(0);
-                    sql.run(`UPDATE fish_inv SET rare = ${row.rare - amount} WHERE userId = ${user.id}`);
+                    db.run(`UPDATE fish_inv SET rare = ${row.rare - amount} WHERE userId = ${user.id}`);
                     message.channel.send(`You have sold ${amount} rare fish and earned ${income} credits!`);
                 } if (kind === "epic") {
                     if (!amount) { amount = row.epic; }
-                    else if (row.epic == 0) { return message.reply("You don't have any epic fish to sell! D:"); }
-                    else if (row.epic < amount) { return message.reply("You don't have that much fish to sell."); }
+                    else if (row.epic == 0) { return message.channel.send("You don't have any epic fish to sell! D:"); }
+                    else if (row.epic < amount) { return message.channel.send("You don't have that much fish to sell."); }
                     income = (amount * 50).toFixed(0);
-                    sql.run(`UPDATE fish_inv SET epic = ${row.epic - amount} WHERE userId = ${user.id}`);
+                    db.run(`UPDATE fish_inv SET epic = ${row.epic - amount} WHERE userId = ${user.id}`);
                     message.channel.send(`You have sold ${amount} Epic fish and earned ${income} credits!`);
                 }
 
-                sql.get(`SELECT * FROM scores WHERE userId = "${user.id}"`).then(row => {
-                    sql.run(`UPDATE scores SET credits = ${parseInt(row.credits) + parseInt(income)} WHERE userId = ${user.id}`);
+                db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
+                    if (err) { return console.log(err); }
+                    db.run(`UPDATE scores SET credits = ${parseInt(row.credits) + parseInt(income)} WHERE userId = ${user.id}`);
                 });
             }
-        }).catch(error => { 
-            console.log(error);
-            return message.reply("Error in command: Sell section. Please try again later.");
         });        
     } if (action === "stats") {
         var User = client.funcs.userSearch(client, message, kind);
-        if (User.username === null || User.username === undefined) { return; }
+        if (User.username === null) { return; }
         if (User.bot === true) { return message.reply("Bots can't fish!"); }
         
-        sql.get(`SELECT * FROM fish_stats WHERE userId = "${User.id}"`).then(row => {
+        db.get(`SELECT * FROM fish_stats WHERE userId = "${User.id}"`, [], (err, row) => {
+            if (err) { return console.log(err); }
             if (!row) {
-                if (User.id == message.author.id) { return message.reply("You haven't caught any fish yet!"); } 
+                if (User.id == message.author.id) { return message.channel.send("You haven't caught any fish yet!"); } 
                 else { return message.channel.send("That user has not caught any fish yet!"); }
             } else {
                 sum = row.common + row.uncommon + row.rare + row.epic + row.trash;
@@ -161,16 +159,14 @@ exports.run = async (client, message, [action, kind, amount]) => {
                     .addField("Common fish:", row.common, true)
                     .addField("Uncommon fish:", row.uncommon, true)
                     .addField("Rare fish:", row.rare, true)
-                    .addField("Epic fish:", row.epic, true);    
+                    .addField("Epic fish:", row.epic, true);   
                 return message.channel.send({embed});
             }
-        }).catch(error => { 
-            console.log(error);
-            return message.reply("Error in command: Stats section. Please try again later.");
         });
     } if (action != undefined && action != "stats" && action != "inv" && action != "inventory" && action != "sell") { 
         return message.reply("You didn't provide a valid action. I can either provide you with selling `m~fish sell [type]`, showing your inventory `m~fish inv`, showing your stats `m~fish stats`, or fishing `m~fish`"); 
     }
+    db.close();
 };
 
 exports.conf = {
