@@ -5,7 +5,7 @@ module.exports = (client, message, number) => {
   else if (number.includes("sqrt")) { number = Math.sqrt(number.slice(4)); }
   else if (number.includes("abs")) { number = Math.abs(number.slice(3)); }
   else if (number.includes("ln")) { number = Math.LN(number.slice(2)); }
-  else if (number.includes("log")) { number = Math.LOG(number.slice(3))}
+  else if (number.includes("log")) { number = Math.LOG(number.slice(3)); }
   else { number = null; }
   return Number(number);
 };
