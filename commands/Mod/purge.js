@@ -1,9 +1,8 @@
 exports.run = async (client, message, [Amount, user]) => {
     let messagecount = Number(Amount) + 1;
-    let Channel = message.channel;
+    let Channel = message.channel; var member = null;
 
-    if (!user) { member = null; }
-    else { member = client.funcs.userSearch(client, message, user); }
+    if (user) { member = client.funcs.userSearch(client, message, user); }
     
     if (!Amount || (2 > Amount) || (Amount > 99)) { return message.reply("You didn't give me an amount between 2 and 99 to delete!"); }
     let checked = message.channel.permissionsFor(message.author.id).has("MANAGE_MESSAGES");
