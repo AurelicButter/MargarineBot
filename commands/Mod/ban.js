@@ -1,6 +1,6 @@
 exports.run = async (client, message, [User, reason]) => {
     let user = client.funcs.userSearch(client, message, User);
-    if (user.username === null || user.username === undefined) { return; }
+    if (user.username === null) { return; }
 
 	let checked = message.channel.permissionsFor(message.author.id).has("BAN_MEMBERS");
 
