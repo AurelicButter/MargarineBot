@@ -15,26 +15,26 @@ exports.run = async (client, message, [user, credit, text]) => {
             db.run(`UPDATE scores SET credits = ${parseInt(row.credits) + parseInt(credit)} WHERE userId = ${user.id}`); 
             db.get("SELECT * FROM awards WHERE userID = 'Overall'", [], (err, row) => {
                 if (err) { return console.log(err); }
-                if (credit == "150") { 
+                if (credit === "150") { 
                     db.run(`UPDATE awards SET suggest = ${parseInt(row.suggest) + 1} WHERE userId = "Overall"`);
-                } if (credit == "250") {
+                } if (credit === "250") {
                     db.run(`UPDATE awards SET bugs = ${parseInt(row.bugs) + 1} WHERE userId = "Overall"`);
-                } if (credit == "500") {
+                } if (credit === "500") {
                     db.run(`UPDATE awards SET minor = ${parseInt(row.minor) + 1} WHERE userId = "Overall"`);
-                } if (credit == "1000") {
+                } if (credit === "1000") {
                     db.run(`UPDATE awards SET major = ${parseInt(row.major) + 1} WHERE userId = "Overall"`);
                 }
             });
             db.get(`SELECT * FROM awards WHERE userID = "${user.id}"`, [], (err, row) => {
                 if (err) { return console.log(err); }
                 if (!row) { console.log(`No row for ${user.id}. Please manually add with the given amount ${credit}.`); }
-                if (credit == "150") { 
+                if (credit === "150") { 
                     db.run(`UPDATE awards SET suggest = ${parseInt(row.suggest) + 1} WHERE userId = "${user.id}"`); 
-                } if (credit == "250") {
+                } if (credit === "250") {
                     db.run(`UPDATE awards SET bugs = ${parseInt(row.bugs) + 1} WHERE userId = "${user.id}"`); 
-                } if (credit == "500") {
+                } if (credit === "500") {
                     db.run(`UPDATE awards SET minor = ${parseInt(row.minor) + 1} WHERE userId = "${user.id}"`); 
-                } if (credit == "1000") {
+                } if (credit === "1000") {
                     db.run(`UPDATE awards SET major = ${parseInt(row.major) + 1} WHERE userId = "${user.id}"`); 
                 }
             });
@@ -44,7 +44,7 @@ exports.run = async (client, message, [user, credit, text]) => {
     const embed = new client.methods.Embed()
         .setColor("#04d5fd")
         .setTimestamp()
-        .setTitle(`Award Notification!`)
+        .setTitle("Award Notification!")
         .addField(`User: ${user.tag}`, `For the reason of: ${text}`)
         .addField("Award:", `${credit} credits`)
         .setThumbnail(user.avatarURL());
