@@ -1,39 +1,70 @@
-exports.run = async (client, message) => {
+exports.run = async (client, message, [user, credit, text]) => {
     const sqlite3 = require("sqlite3").verbose();
     let db = new sqlite3.Database("./bwd/data/score.sqlite");
 
-    db.get(`SELECT * FROM awards WHERE userID = "Overall"`, [], (err, row) => {
-        if (err) { return console.log(err); }
-        var sum = row.suggest + row.bugs + row.minor + row.major;
-        var reward = (parseInt(row.suggest) * 150) + (parseInt(row.bugs) * 250) + (parseInt(row.minor) * 500) + (parseInt(row.major) * 1000);
+    var user = client.funcs.userSearch(client, message, user);
+    
+    if (user.username === null) { return; }
+    if (user.bot === true) { return message.reply("You can't give your credits to a bot user!"); }
 
-        const embed = new client.methods.Embed()
-            .setTimestamp()
-            .setAuthor(message.guild.name, message.guild.iconURL())
-            .setColor("#4d5fd")
-            .setTitle(`${client.user.username}'s Award System`)
-            .setDescription(`*Total awards: ${sum} Total amount given: ${reward}*`)
-            .addField("Description:", "For those who have signed up with `m~daily`, there is a way in which users can earn more credits. By suggesting or bug and issue finding and reporting them with the report command, users can earn an amount of credits once the item is added or fixed.")
-            .addField("Improvement Rewards (150):", row.suggest, true)
-            .addField("Bug Rewards (250):", row.bugs, true)
-            .addField("Minor Issues (500):", row.minor, true)
-            .addField("Major Issues (1000):", row.major, true);    
-        return message.channel.send({embed});
+    db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
+        if (err) { return console.log(err); }
+        if (!row) { return message.reply("That user has not gotten their first daily yet!"); }
+        if (!credit || credit < 1) { return message.reply("You can't just give an invisable amount of credits to someone!"); }
+        else { 
+            db.run(`UPDATE scores SET credits = ${parseInt(row.credits) + parseInt(credit)} WHERE userId = ${user.id}`); 
+            db.get("SELECT * FROM awards WHERE userID = 'Overall'", [], (err, row) => {
+                if (err) { return console.log(err); }
+                if (credit == "150") { 
+                    db.run(`UPDATE awards SET suggest = ${parseInt(row.suggest) + 1} WHERE userId = "Overall"`);
+                } if (credit == "250") {
+                    db.run(`UPDATE awards SET bugs = ${parseInt(row.bugs) + 1} WHERE userId = "Overall"`);
+                } if (credit == "500") {
+                    db.run(`UPDATE awards SET minor = ${parseInt(row.minor) + 1} WHERE userId = "Overall"`);
+                } if (credit == "1000") {
+                    db.run(`UPDATE awards SET major = ${parseInt(row.major) + 1} WHERE userId = "Overall"`);
+                }
+            });
+            db.get(`SELECT * FROM awards WHERE userID = "${user.id}"`, [], (err, row) => {
+                if (err) { return console.log(err); }
+                if (!row) { console.log(`No row for ${user.id}. Please manually add with the given amount ${credit}.`); }
+                if (credit == "150") { 
+                    db.run(`UPDATE awards SET suggest = ${parseInt(row.suggest) + 1} WHERE userId = "${user.id}"`); 
+                } if (credit == "250") {
+                    db.run(`UPDATE awards SET bugs = ${parseInt(row.bugs) + 1} WHERE userId = "${user.id}"`); 
+                } if (credit == "500") {
+                    db.run(`UPDATE awards SET minor = ${parseInt(row.minor) + 1} WHERE userId = "${user.id}"`); 
+                } if (credit == "1000") {
+                    db.run(`UPDATE awards SET major = ${parseInt(row.major) + 1} WHERE userId = "${user.id}"`); 
+                }
+            });
+        }
     });
+
+    const embed = new client.methods.Embed()
+        .setColor("#04d5fd")
+        .setTimestamp()
+        .setTitle(`Award Notification!`)
+        .addField(`User: ${user.tag}`, `For the reason of: ${text}`)
+        .addField("Award:", `${credit} credits`)
+        .setThumbnail(user.avatarURL());
+
+    message.reply(`<@${user.id}> (${user.id}) have been awarded ${credit} credits!`);
+    client.channels.get("364846541455753218").send({embed});
 };
 
 exports.conf = {
     enabled: true,
     runIn: ["text"],
     aliases: [],
-    permLevel: 0,
+    permLevel: 10,
     botPerms: [],
     requiredFuncs: [],
 };
   
 exports.help = {
-    name: "awards",
-    description: "Information on the awards given out.",
-    usage: "",
-    usageDelim: "",
+    name: "award",
+    description: "Awards a user for finding an issue with Margarine.",
+    usage: "[user:str] [credit:int] [text:str]",
+    usageDelim: " | ",
 };
