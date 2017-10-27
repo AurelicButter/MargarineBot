@@ -4,13 +4,13 @@ exports.run = async (client, message, [member]) => {
 
     var user = client.funcs.userSearch(client, message, member);
     
-    if (user.username === null || user.username === undefined) { return; }
+    if (user.username === null) { return; }
     if (user.bot === true) { return message.reply("You can't give your credits to a bot user!"); }
 
     db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
         if (err) { return console.log(err); }
         if (!row) {
-            if (user.id == message.author.id) { 
+            if (user.id === message.author.id) { 
                 db.run("INSERT INTO scores (userId, credits, level, daily, rep, repDaily) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 100, 0, Date.now(), 0, 0]);
                 db.run("INSERT INTO fish_inv (userId, common, uncommon, rare, epic, trash) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0, 0]);
                 db.run("INSERT INTO fish_stats (userId, common, uncommon, rare, epic, trash) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0, 0]);
@@ -22,10 +22,10 @@ exports.run = async (client, message, [member]) => {
                     if (err) { return console.log(err); }
                     if (!row) { return message.reply("You have not gotten your first daily yet. Before giving credits to others, you must recieve the daily!"); }
                 });
-                return message.channel.send(`That user has not gotten their first daily to start off with so you can not give them any credits at the moment. ):`); 
+                return message.channel.send("That user has not gotten their first daily to start off with so you can not give them any credits at the moment. :cry:"); 
             }
-        } if (user.id != message.author.id) {
-            credit = Number((100 * (1 + Math.random())).toFixed(0)); 
+        } if (user.id !== message.author.id) {
+            var credit = Number((100 * (1 + Math.random())).toFixed(0)); 
             db.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`, [], (err, row) => {
                 if ((parseInt(row.daily) + 86400000) > Date.now()) {
                     return message.reply("You have already redeemed your daily for today."); 
