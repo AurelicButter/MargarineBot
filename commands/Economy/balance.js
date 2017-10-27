@@ -4,7 +4,7 @@ exports.run = async (client, message, [member]) => {
 
     var user = client.funcs.userSearch(client, message, member);
     
-    if (user.username === null || user.username === undefined) { return; }
+    if (user.username === null) { return; }
     if (user.bot === true) { return message.reply("Bots don't have any records!"); }
 
     db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
