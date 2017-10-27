@@ -9,7 +9,7 @@ module.exports = (client, message, action, user, author, reason) => {
     ban: "Ban",
     unban: "Unban",
     kick: "Kick"
-  }
+  };
 
   var color = embedTypes[action.toLowerCase()];
   var verb = actionTypes[action.toLowerCase()];
