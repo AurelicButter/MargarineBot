@@ -1,6 +1,6 @@
 exports.run = async (client, message, [User]) => {
     var user = client.funcs.userSearch(client, message, User);
-    if (user.username === null) { return; }
+    if (user.username === undefined) { return; }
     
     message.channel.send(`Baka ${user.username}! `);
 };
