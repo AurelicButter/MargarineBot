@@ -96,33 +96,28 @@ exports.run = async (client, message, [action, kind, amount]) => {
             else {
                 if (kind === "common") {
                     if (!amount) { amount = row.common; }
-                    else if (row.common === 0) { return message.channel.send("You don't have any common fish to sell! D:"); }
-                    else if (row.common < amount) { return message.channel.send("You don't have that much fish to sell."); }
-                    income = (amount * 5).toFixed(0);
-                    db.run(`UPDATE fish_inv SET common = ${row.common - amount} WHERE userId = ${user.id}`);
-                    message.channel.send(`You have sold ${amount} common fish and earned ${income} credits!`);
+                    var rowAmount = row.common;
+                    var income = amount * 5;
                 } if (kind === "uncommon") {
                     if (!amount) { amount = row.uncommon; }
-                    else if (row.uncommon === 0) { return message.channel.send("You don't have any uncommon fish to sell! D:"); }
-                    else if (row.uncommon < amount) { return message.channel.send("You don't have that much fish to sell."); }
-                    income = (amount * 10).toFixed(0);
-                    db.run(`UPDATE fish_inv SET uncommon = ${row.uncommon - amount} WHERE userId = ${user.id}`);
-                    message.channel.send(`You have sold ${amount} uncommon fish and earned ${income} credits!`);
+                    var rowAmount = row.uncommon;
+                    var income = amount * 10;
                 } if (kind === "rare") {
                     if (!amount) { amount = row.rare; }
-                    else if (row.rare === 0) { return message.channel.send("You don't have any rare fish to sell! D:"); }
-                    else if (row.rare < amount) { return message.channel.send("You don't have that much fish to sell."); }
-                    income = (amount * 25).toFixed(0);
-                    db.run(`UPDATE fish_inv SET rare = ${row.rare - amount} WHERE userId = ${user.id}`);
-                    message.channel.send(`You have sold ${amount} rare fish and earned ${income} credits!`);
+                    var rowAmount = row.rare;
+                    var income = amount * 25;
                 } if (kind === "epic") {
                     if (!amount) { amount = row.epic; }
-                    else if (row.epic === 0) { return message.channel.send("You don't have any epic fish to sell! D:"); }
-                    else if (row.epic < amount) { return message.channel.send("You don't have that much fish to sell."); }
-                    income = (amount * 50).toFixed(0);
-                    db.run(`UPDATE fish_inv SET epic = ${row.epic - amount} WHERE userId = ${user.id}`);
-                    message.channel.send(`You have sold ${amount} Epic fish and earned ${income} credits!`);
+                    var rowAmount = row.epic;
+                    var income = amount * 50;
                 }
+
+                if (rowAmount === 0) { return message.channel.send(`You don't have any ${kind} fish to sell! D:`); }
+                if (rowAmount < amount) { return message.channel.send("You don't have that much fish to sell."); }
+                
+                db.run(`UPDATE fish_inv SET ${kind} = ${row.epic - amount} WHERE userId = ${user.id}`);
+
+                message.channel.send(`You have sold ${amount} ${kind} fish and earned ${income} credits!`);
 
                 db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
                     if (err) { return console.log(err); }
@@ -141,7 +136,7 @@ exports.run = async (client, message, [action, kind, amount]) => {
                 if (User.id === message.author.id) { return message.channel.send("You haven't caught any fish yet!"); } 
                 else { return message.channel.send("That user has not caught any fish yet!"); }
             } else {
-                sum = row.common + row.uncommon + row.rare + row.epic + row.trash;
+                var sum = row.common + row.uncommon + row.rare + row.epic + row.trash;
                 const embed = new client.methods.Embed()
                     .setTimestamp()
                     .setAuthor(message.guild.name, message.guild.iconURL())
@@ -157,7 +152,7 @@ exports.run = async (client, message, [action, kind, amount]) => {
                 return message.channel.send({embed});
             }
         });
-    } if (action !== undefined && action !== "stats" && action !== "inv" && action !== "inventory" && action !== "sell") { 
+    } if (action !== null && action !== "stats" && action !== "inv" && action !== "inventory" && action !== "sell") { 
         return message.reply("You didn't provide a valid action. I can either provide you with selling `m~fish sell [type]`, showing your inventory `m~fish inv`, showing your stats `m~fish stats`, or fishing `m~fish`"); 
     }
     db.close();
