@@ -4,7 +4,7 @@ exports.run = async (client, message, [member, option, amount]) => {
 
     if (member != null) {  
         var user = client.funcs.userSearch(client, message, member); 
-        if (user.username === null) { return; }
+        if (user.username === undefined) { return; }
         if (user.bot === true) { return message.reply("You can't change or add data about a bot user!"); }
     } else { return message.reply("You didn't provide me with a user!"); }
 
