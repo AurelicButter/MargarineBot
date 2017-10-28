@@ -4,7 +4,7 @@ exports.run = async (client, message, [user, credit]) => {
 
     var user = client.funcs.userSearch(client, message, user);
     
-    if (user.username === null) { return; }
+    if (user.username === undefined) { return; }
     if (user.bot === true) { return message.reply("You can't give your credits to a bot user!"); }
 
     db.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`, [], (err, row) => {
