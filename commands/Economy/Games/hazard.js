@@ -47,7 +47,7 @@ exports.run = async (client, message, [bet]) => {
                 do {
                     if (castMain === sumAll[i]) { var results = 0; var i = 4; } 
                     else if (chance === sumAll[i]) { var results = 1; var i = 4; } 
-                    else if (i = 4) { var results = 1; }
+                    else if (i === 4) { var results = 1; }
                     else { i += 1; } 
                 } while (i < 4);
             }
