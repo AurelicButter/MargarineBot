@@ -11,34 +11,28 @@ exports.run = async (client, message, [action, kind, amount]) => {
             else { 
                 db.run(`UPDATE scores SET credits = ${row.credits - 5} WHERE userId = ${user.id}`); 
                 
-                die = Math.random();
+                var die = Math.random();
+
+                const Fisher = [
+                    ["trash", "common", "uncommon", "rare", "epic"],
+                    ["some trash and threw it out", "a common fish. A bit small but still good", "an uncommon catch. This will catch some decent credits", "a rare catch! This will fund your gambling habits for awhile", "an epic fish! O: That's bound to buy you a house *(No guarantees)*"],
+                    [":wastebasket:", ":fish:", ":crab:", ":squid:", ":shark:"],
+                    ["You have lost 5 credits", "You have placed the fish in your inventory"]
+                ];
                 
-                if (0 < die && die < .5) {
-                    kind = "trash";
-                    text = "some trash and threw it out";
-                    image = ":wastebasket:";
-                    result = "You have lost 5 credits";
-                } if (.5 < die && die < .75) {
-                    kind = "common";
-                    text = "a nice fish. A bit small but still good";
-                    image = ":fish:";
-                    result = "You have placed the fish in your inventory";
-                } if (.75 < die && die < .88) {
-                    kind = "uncommon";
-                    text = "a decent catch. This will catch some decent credits";
-                    image = ":crab:";
-                    result = "You have placed the fish in your inventory";
-                } if (.88 < die && die < .98) {
-                    kind = "rare";
-                    text = "a fantastic catch! This will fund your gambling habits for awhile";
-                    image = ":squid:";
-                    result = "You have placed the fish in your inventory";
-                } if (.98 < die && die < 1) {
-                    kind = "epic";
-                    text = "an extremely rare fish! O: That's bound to buy you a house *(No guarantees)*";
-                    image = ":shark:";
-                    result = "You have placed the fish in your inventory";
-                }
+                if (0 < die && die < .5) { var results = 0; } 
+                if (.5 < die && die < .75) { var results = 1; } 
+                if (.75 < die && die < .88) { var results = 2; } 
+                if (.88 < die && die < .98) { var results = 3; } 
+                if (.98 < die && die < 1) { var results = 4; }
+
+                if (die > .5) { var Fisherbot = 1; }
+                else { var Fisherbot = 0;}
+
+                var kind = Fisher[0][results];
+                var text = Fisher[1][results];
+                var image = Fisher[2][results];
+                var result = Fisher[3][Fisherbot];
                 
                 db.get(`SELECT * FROM fish_inv WHERE userId = "${user.id}"`, [], (err, row) => {
                     if (err) { return console.log(err); }
@@ -58,7 +52,7 @@ exports.run = async (client, message, [action, kind, amount]) => {
                 db.get(`SELECT * FROM fish_stats WHERE userId = "${user.id}"`, [], (err, row) => {
                     if (err) { return console.log(err); }
                     if (!row) { 
-                        return;
+                        return message.reply("Error in finding your information. Fish_stats table is lacking your id!");    
                     } else if (kind === "common") {
                         db.run(`UPDATE fish_stats SET common = ${row.common + 1} WHERE userId = ${user.id}`); 
                     } else if (kind === "uncommon") {
