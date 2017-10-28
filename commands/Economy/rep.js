@@ -4,7 +4,7 @@ exports.run = async (client, message, [member]) => {
 
     var user = client.funcs.userSearch(client, message, member);
     
-    if (user.username === null) { return; }
+    if (user.username === undefined) { return; }
     if (user.bot === true) { return message.channel.send("You can't give reputation to a bot user!"); }
     if (user.id === message.author.id) { return message.channel.send("You can't give reputation to yourself! That's like saying hire me for your nuclear plant because I'm a high school student!"); }
 
