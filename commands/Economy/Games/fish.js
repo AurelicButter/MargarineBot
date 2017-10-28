@@ -127,7 +127,7 @@ exports.run = async (client, message, [action, kind, amount]) => {
         });        
     } if (action === "stats") {
         var User = client.funcs.userSearch(client, message, kind);
-        if (User.username === null) { return; }
+        if (User.username === undefined) { return; }
         if (User.bot === true) { return message.reply("Bots can't fish!"); }
         
         db.get(`SELECT * FROM fish_stats WHERE userId = "${User.id}"`, [], (err, row) => {
