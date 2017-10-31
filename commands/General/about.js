@@ -14,16 +14,16 @@ exports.run = async (client, message) => {
 };
 
 exports.conf = {
-    enabled: true,
-    runIn: ["text", "dm"],
-    aliases: [],
-    permLevel: 0,
-    botPerms: [],
-    requiredFuncs: [],
-};
-  
-exports.help = {
-    name: "about",
-    description: "General information about Margarine.",
-    usage: "",
-};
+     enabled: true,
+     runIn: ["text", "dm"],
+     aliases: [],
+     permLevel: 0,
+     botPerms: [],
+     requiredFuncs: [],
+ };
+   
+ exports.help = {
+     name: "about",
+     description: "General information about Margarine.",
+     usage: "",
+ };
