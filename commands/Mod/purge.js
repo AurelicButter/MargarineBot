@@ -1,13 +1,10 @@
-exports.run = (client, message, [Amount, User]) => {
-    let messagecount = Number(Amount);
-    let Channel = message.channel;
-    if (User != null) { 
-        var member = client.funcs.userSearch(client, message, User); 
-    } else { 
-        var member = null; 
-    }
+exports.run = async (client, message, [Amount, user]) => {
+    let messagecount = Number(Amount) + 1;
+    let Channel = message.channel; var member = null;
+
+    if (user) { member = client.funcs.userSearch(client, message, user); }
     
-    if (!Amount || 2 < messagecount > 100) { return message.reply("You didn't give me an amount between 2 and 100 to delete!"); }
+    if (!Amount || (2 > Amount) || (Amount > 99)) { return message.reply("You didn't give me an amount between 2 and 99 to delete!"); }
     let checked = message.channel.permissionsFor(message.author.id).has("MANAGE_MESSAGES");
   
     if (checked === false) { 
@@ -19,19 +16,19 @@ exports.run = (client, message, [Amount, User]) => {
       return message.channel.send({embed});  
     }
 
-    message.delete().catch();
     Channel.messages.fetch({ limit: messagecount }).then((messages) => {
-        if (member != null) {
+        if (user) {
+            message.delete();
             const filterBy = member ? member.id : client.user.id;
             messages = messages.filter(m => m.author.id === filterBy).array().slice(0, Amount);
         }
 
         message.channel.bulkDelete(messages).catch(error => console.log(error.stack));
 
-        if (member != null) { 
-            return message.reply(`Successfully purged ${messagecount} messages by ${member.tag} from the channel.`); 
+        if (user) { 
+            return message.reply(`Successfully purged ${Amount} messages by ${member.tag} from the channel.`); 
         } else { 
-            return message.reply(`Purge ${messagecount} messages from the channel.`); 
+            return message.reply(`Purged ${Amount} messages from the channel.`); 
         }
     });
 };
@@ -48,6 +45,6 @@ exports.conf = {
 exports.help = {
     name: "purge",
     description: "Purges X amount of messages from a given channel.",
-    usage: "[Amount:int] [User:str]",
+    usage: "[Amount:int] [user:str]",
     usageDelim: " ",
 };

@@ -1,4 +1,4 @@
-exports.run = (client, message, [color, title, description]) => {
+exports.run = async (client, message, [color, title, description]) => {
     let Color = color.toLowerCase();
 
     //Color Codes for embed
@@ -28,7 +28,7 @@ exports.run = (client, message, [color, title, description]) => {
     if (Color === "almost black") { Color = "0x23272A"; }
     if (Color === "default") { Color = "0x000000"; }
 
-    if(title.length || description.length < 1) { return message.reply("You need to provide a subject title and description!"); }
+    if(!title || !description) { return message.reply("You need to provide a subject title and description!"); }
   
     message.delete().catch();
     const embed = new client.methods.Embed()

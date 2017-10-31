@@ -1,10 +1,10 @@
-# MargarineBot - Current Version: Beta 0.6 Komada Improvements!
+# MargarineBot - Current Version: Beta 0.7 - Economy
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f0cfd83063a4469b8e40bcc824c2600d)](https://www.codacy.com/app/Butterstroke/MargarineBot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Butterstroke/MargarineBot&amp;utm_campaign=Badge_Grade)
 
 A Discord bot coded in Node.js using the Discord.js Library and the Komada framework.
 
 <b>Introduction:</b>
-Created through part-desire, part-what can I do in Discord, part-I'm going to learn Javascript, and part-it's only 12 am thoughts, Margarine has been my personal project for almost 6 months now. I am quite proud of the functionality and the time I have spend into Margarine. I have recieved plenty of support over the months of developing him and I can't thank those people enough as without that support, Margarine would have never been as big as he is today. I hope that you enjoy either looking at/learning/using Margarine as much as I do.
+Created through part-desire, part-what can I do in Discord, part-I'm going to learn Javascript, and part-it's only 12 am thoughts, Margarine has been my personal project for almost 6 months now. I am quite proud of the functionality and the time I have spend into Margarine. I have received plenty of support over the months of developing him and I can't thank those people enough as without that support, Margarine would have never been as big as he is today. I hope that you enjoy either looking at/learning/using Margarine as much as I do.
 
 *Name Origin:* My typical nickname is Butter. As in the stuff that you put on toast. His name comes from the artificial butter (I tends to call it 'Fake Butter') you can buy in stores called, Margarine.
      
@@ -15,8 +15,10 @@ Created through part-desire, part-what can I do in Discord, part-I'm going to le
 - Permission levels
 - Poll command
 - Server/User/role info commands
+- Economy system (No SQL or any other server needed! All data is local to the folder.)
 
 <b>Updates:</b>
+- 31 October 2017: Beta 0.7 Released
 - 30 September 2017: Beta 0.6 Released
 - 15 August 2017: Beta 0.5 Released
 - 14 July 2017: Beta 0.4 Released

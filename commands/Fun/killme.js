@@ -1,9 +1,7 @@
 exports.run = function(client, message) {
     let User = message.author.username;
-    let Message = message;
 
-    message.channel.send(`${User} has died.`)
-    .then(Message => {
+    message.channel.send(`${User} has died.`).then(Message => {
         setTimeout(() => { Message.edit("Respawning..."); }, 1000);
         setTimeout(() => { Message.edit(`Revival complete. Welcome back, ${User}`); }, 1000);
     });

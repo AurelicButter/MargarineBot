@@ -1,11 +1,21 @@
 {
   "name": "margarine",
-  "version": "0.6",
-  "description": "A Discord bot using Komada, a Discord.js Framework",
+  "version": "0.7.0",
+  "description": "Javascript bot using the Komada framework",
   "main": "index.js",
   "dependencies": {
+    "discord.js": "^11.2.1",
+    "komada": "0.20.10",
+    "moment": "^2.18.1",
+    "moment-duration-format": "^1.3.0",
+    "ms": "^2.0.0",
+    "sqlite3": "^3.1.13"
   },
   "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/butterstroke/MargarineBot"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

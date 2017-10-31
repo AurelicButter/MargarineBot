@@ -1,13 +1,11 @@
-exports.run = async (client, msg) => {
-  try {
-    const message = await msg.channel.send("Pinging...");
-    await message.edit(`🎉 Pong! (Took: ${message.createdTimestamp - msg.createdTimestamp}ms.) 🎉`);
-  } catch (e) { client.funcs.log(e, "error"); }
+exports.run = async (client, message) => {
+    const msg = await message.channel.send("Pinging...");
+    await msg.edit(`🎉 Pong! (Took: ${msg.createdTimestamp - message.createdTimestamp}ms.) 🎉`);
 };
   
 exports.conf = {
   enabled: true,
-  runIn: ["text", "dm"],
+  runIn: ["text"],
   aliases: [],
   permLevel: 0,
   botPerms: [],

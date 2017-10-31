@@ -1,8 +1,9 @@
 module.exports = (client, guild) => {
     let Channel = null;
   
+    if (guild.channels.exists("name", "general")) { Channel = guild.channels.find("name", "general"); }
+    if (guild.channels.exists("name", "off_topic")) { Channel = guild.channels.find("name", "off_topic"); } 
     if (guild.channels.exists("id", guild.id)) { Channel = guild.channels.find("id", guild.id); }
-    if (guild.channels.exists("name", "general")) { Channel = guild.channels.find("name", "general"); } 
     else { Channel = guild.channels.find(c => c.permissionsFor(guild.me).has("SEND_MESSAGES")); }
   
     return Channel;
