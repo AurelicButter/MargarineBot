@@ -1,4 +1,4 @@
-# MargarineBot - Current Version: Beta 0.7 - Economy!
+# MargarineBot - Current Version: Beta 0.7 - Economy
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f0cfd83063a4469b8e40bcc824c2600d)](https://www.codacy.com/app/Butterstroke/MargarineBot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Butterstroke/MargarineBot&amp;utm_campaign=Badge_Grade)
 
 A Discord bot coded in Node.js using the Discord.js Library and the Komada framework.
@@ -15,9 +15,10 @@ Created through part-desire, part-what can I do in Discord, part-I'm going to le
 - Permission levels
 - Poll command
 - Server/User/role info commands
-- Economy system
+- Economy system (No SQL or any other server needed! All data is local to the folder.)
 
 <b>Updates:</b>
+- 31 October 2017: Beta 0.7 Released
 - 30 September 2017: Beta 0.6 Released
 - 15 August 2017: Beta 0.5 Released
 - 14 July 2017: Beta 0.4 Released
