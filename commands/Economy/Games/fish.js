@@ -65,11 +65,11 @@ exports.run = async (client, message, [action, kind, amount]) => {
                         db.run(`UPDATE fish_stats SET trash = ${row.trash + 1} WHERE userId = ${user.id}`);
                     }
                 
-                    message.channel.send(`${user.username}, you have caught ${text}. ${image} ${result}.`);
+                    return message.channel.send(`${user.username}, you have caught ${text}. ${image} ${result}.`);
                 });
             }
         });
-    } if (action === "inv" || action === "inventory") {
+    } else if (action === "inv" || action === "inventory") {
         db.get(`SELECT * FROM fish_inv WHERE userId = "${user.id}"`, [], (err, row) => {
             if (err) { return console.log(err); }
             if (!row) { return message.channel.send("You haven't caught any fish yet!"); } 
@@ -89,7 +89,7 @@ exports.run = async (client, message, [action, kind, amount]) => {
                 return message.channel.send({embed});
             }
         });
-    } if (action === "sell") {
+    } else if (action === "sell") {
         db.get(`SELECT * FROM fish_inv WHERE userId = "${user.id}"`, [], (err, row) => {
             if (err) { return console.log(err); }
             if (!row) { return message.channel.send("You haven't caught any fish yet!"); }
@@ -115,8 +115,11 @@ exports.run = async (client, message, [action, kind, amount]) => {
                 if (rowAmount === 0) { return message.channel.send(`You don't have any ${kind} fish to sell! D:`); }
                 if (rowAmount < amount) { return message.channel.send("You don't have that much fish to sell."); }
                 
-                db.run(`UPDATE fish_inv SET ${kind} = ${row.epic - amount} WHERE userId = ${user.id}`);
-
+                if (kind === "common") { db.run(`UPDATE fish_inv SET ${kind} = ${row.common - amount} WHERE userId = ${user.id}`); } 
+                if (kind === "uncommon") { db.run(`UPDATE fish_inv SET ${kind} = ${row.uncommon - amount} WHERE userId = ${user.id}`); } 
+                if (kind === "rare") { db.run(`UPDATE fish_inv SET ${kind} = ${row.rare - amount} WHERE userId = ${user.id}`); } 
+                if (kind === "epic") { db.run(`UPDATE fish_inv SET ${kind} = ${row.epic - amount} WHERE userId = ${user.id}`); }
+                
                 message.channel.send(`You have sold ${amount} ${kind} fish and earned ${income} credits!`);
 
                 db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
@@ -125,9 +128,9 @@ exports.run = async (client, message, [action, kind, amount]) => {
                 });
             }
         });        
-    } if (action === "stats") {
+    } else if (action === "stats") {
         var User = client.funcs.userSearch(client, message, kind);
-        if (User.username === undefined) { return; }
+        if (User.username === null) { return; }
         if (User.bot === true) { return message.reply("Bots can't fish!"); }
         
         db.get(`SELECT * FROM fish_stats WHERE userId = "${User.id}"`, [], (err, row) => {
@@ -152,7 +155,7 @@ exports.run = async (client, message, [action, kind, amount]) => {
                 return message.channel.send({embed});
             }
         });
-    } if (action !== null && action !== "stats" && action !== "inv" && action !== "inventory" && action !== "sell") { 
+    } else { 
         return message.reply("You didn't provide a valid action. I can either provide you with selling `m~fish sell [type]`, showing your inventory `m~fish inv`, showing your stats `m~fish stats`, or fishing `m~fish`"); 
     }
     db.close();
