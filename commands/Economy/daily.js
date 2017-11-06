@@ -4,6 +4,7 @@ exports.run = async (client, message, [member]) => {
 
     var user = client.funcs.userSearch(client, message, member);
     
+    console.log(user.username);
     if (user.username === undefined) { return; }
     if (user.bot === true) { return message.reply("You can't give your credits to a bot user!"); }
 
@@ -39,10 +40,14 @@ exports.run = async (client, message, [member]) => {
                 }
             });
         } else {
-            credit = row.credits + 100;
-            db.run(`UPDATE scores SET daily = ${Date.now()} WHERE userId = ${user.id}`);
-            db.run(`UPDATE scores SET credits = ${row.credits + 100} WHERE userId = ${user.id}`);
-            return message.channel.send(`${user.username} has received ${credit - row.credits} credits.`);
+            if ((parseInt(row.daily) + 86400000) > Date.now()) {
+                return message.reply("You have already redeemed your daily for today."); 
+            } else {
+                credit = row.credits + 100;
+                db.run(`UPDATE scores SET daily = ${Date.now()} WHERE userId = ${user.id}`);
+                db.run(`UPDATE scores SET credits = ${row.credits + 100} WHERE userId = ${user.id}`);
+                return message.channel.send(`${user.username} has received ${credit - row.credits} credits.`);
+            }
         }
     });
     db.close();
