@@ -8,13 +8,11 @@ exports.run = async (client, message, [credit]) => {
         if (row.credits < credit) { return message.reply("You don't have that many credits, baka!"); }
         if (!credit || credit < 1) { return message.reply("You need to bet some credits to play!"); }
         else {
-            var z; let rolls = [];
+            var z; let rolls = []; var earnings; var result;
             for (z = 0; z < 7; z++) {
                 var x = (Math.random() > .5) ? "heads" : "tails";
                 rolls.push(x);
             }
-
-            var earnings; var result;
 
             if (((rolls[0] === rolls[1]) && (rolls[0] === "heads")) || 
                 ((rolls[1] === rolls[2]) && (rolls[1] === "heads")) ||
@@ -23,23 +21,22 @@ exports.run = async (client, message, [credit]) => {
                 ((rolls[4] === rolls[5]) && (rolls[4] === "heads")) ||
                 ((rolls[5] === rolls[6]) && (rolls[5] === "heads")) ||
                 ((rolls[6] === rolls[7]) && (rolls[6] === "heads"))) {  
-                earnings = (credit * 1.25).toFixed(0);
-                credit = parseInt(row.credits) + parseInt(earnings);
-                db.run(`UPDATE scores SET credits = ${credit} WHERE userId = ${message.author.id}`);
-                return message.reply(`Coins ${rolls} You have won ${earnings} credits.`);
+                earnings = (credit * .2).toFixed(0);
+                result = "won";
             }
-            if ((rolls[0] !== rolls[1]) && (rolls[0] === rolls[2]) && (rolls[0] !== rolls[3]) && (rolls[0] === rolls[4]) && (rolls[0] !== rolls[5]) && (rolls[0] === rolls[6]) && (rolls[0] !== rolls[7])) {
-                earnings = (credit * 2.25).toFixed(0);
-                credit = parseInt(row.credits) + parseInt(earnings);
+            else if ((rolls[0] !== rolls[1]) && (rolls[0] === rolls[2]) && (rolls[0] !== rolls[3]) && (rolls[0] === rolls[4]) && (rolls[0] !== rolls[5]) && (rolls[0] === rolls[6]) && (rolls[0] !== rolls[7])) {
+                earnings = (credit * .8).toFixed(0);
                 result = "won";
             } else {
                 earnings = credit;
-                credit = parseInt(row.credits) - parseInt(earnings);
                 result = "lost";
             }
 
+            if (result === "won") { credit = Number(row.credits) + Number(earnings); }
+            else { credit = Number(row.credits) - Number(earnings); } 
+
             db.run(`UPDATE scores SET credits = ${credit} WHERE userId = ${message.author.id}`);
-            message.reply(`Coins ${rolls} You have ${result} ${earnings} credits.`); 
+            message.channel.send(`**Coins:** ${rolls.join(", ")}\nYou have ${result} ${earnings} credits.`); 
         }
     });
     db.close();
