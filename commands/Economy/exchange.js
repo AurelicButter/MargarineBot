@@ -25,9 +25,9 @@ exports.run = async (client, message, [user, credit]) => {
         db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
             if (err) { return console.log(err); }
             if (!row) { return message.reply("That user has not gotten their first daily yet!"); }
-            else { db.run(`UPDATE scores SET credits = ${parseInt(row.credits) + parseInt(credit)} WHERE userId = ${user.id}`); }
+            else { db.run(`UPDATE scores SET credits = ${Number(row.credits) + credit} WHERE userId = ${user.id}`); }
         });
-        db.run(`UPDATE scores SET credits = ${parseInt(row.credits) - parseInt(credit)} WHERE userId = ${message.author.id}`); 
+        db.run(`UPDATE scores SET credits = ${Number(row.credits) - credit} WHERE userId = ${message.author.id}`); 
         message.reply(`You have given ${credit} credits to ${user.username}`);
     });
     db.close();
@@ -40,6 +40,7 @@ exports.conf = {
     permLevel: 0,
     botPerms: [],
     requiredFuncs: [],
+    cooldown: 10,
 };
   
 exports.help = {
