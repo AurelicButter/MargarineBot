@@ -76,9 +76,6 @@ exports.run = async (client, message) => {
     });
 };
 
-/*.setDescription(`Your report has been sent! Report number: ${report}
-\nIf you have any more questions, feel free to talk with our support team on my server! It's the best, fastest, and easiest way to get in contact! https://discord.gg/VQ4vrvt`); */    
-  
 exports.conf = {
     enabled: true,
     runIn: ["text"],
