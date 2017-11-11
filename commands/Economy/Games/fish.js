@@ -7,9 +7,9 @@ exports.run = async (client, message, [action, kind, amount]) => {
         db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
             if (err) { return console.log(err); }
             if (!row) { return message.reply("You haven't signed up and received your credits yet! D: Use `m~daily` (Using default prefix) to earn your first amount of credits."); } 
-            if (row.credits < 5) { return message.reply("You don't have that many credits, baka!"); }
+            if (row.credits < 10) { return message.reply("You don't have that many credits, baka!"); }
             else { 
-                db.run(`UPDATE scores SET credits = ${row.credits - 5} WHERE userId = ${user.id}`); 
+                db.run(`UPDATE scores SET credits = ${row.credits - 10} WHERE userId = ${user.id}`); 
                 
                 var die = Math.random();
 
@@ -17,7 +17,7 @@ exports.run = async (client, message, [action, kind, amount]) => {
                     ["trash", "common", "uncommon", "rare", "epic"],
                     ["some trash and threw it out", "a common fish. A bit small but still good", "an uncommon catch. This will catch some decent credits", "a rare catch! This will fund your gambling habits for awhile", "an epic fish! O: That's bound to buy you a house *(No guarantees)*"],
                     [":wastebasket:", ":fish:", ":crab:", ":squid:", ":shark:"],
-                    ["You have lost 5 credits", "You have placed the fish in your inventory"]
+                    ["You have lost 10 credits", "You have placed the fish in your inventory"]
                 ];
                 
                 if (0 < die && die < .5) { var results = 0; } 
@@ -97,11 +97,11 @@ exports.run = async (client, message, [action, kind, amount]) => {
                 if (kind === "common") {
                     if (!amount) { amount = row.common; }
                     var rowAmount = row.common;
-                    var income = amount * 5;
+                    var income = amount * 10;
                 } if (kind === "uncommon") {
                     if (!amount) { amount = row.uncommon; }
                     var rowAmount = row.uncommon;
-                    var income = amount * 10;
+                    var income = amount * 15;
                 } if (kind === "rare") {
                     if (!amount) { amount = row.rare; }
                     var rowAmount = row.rare;
@@ -109,8 +109,15 @@ exports.run = async (client, message, [action, kind, amount]) => {
                 } if (kind === "epic") {
                     if (!amount) { amount = row.epic; }
                     var rowAmount = row.epic;
-                    var income = amount * 50;
-                }
+                    var income = amount * 100;
+                } if (kind === "all") {
+                    var income = (row.common * 10) + (row.uncommon * 15) + (row.rare * 25) + (row.epic * 100);
+                    db.run(`UPDATE fish_inv SET common = 0 WHERE userId = ${user.id}`); 
+                    db.run(`UPDATE fish_inv SET uncommon = 0 WHERE userId = ${user.id}`); 
+                    db.run(`UPDATE fish_inv SET rare = 0 WHERE userId = ${user.id}`);  
+                    db.run(`UPDATE fish_inv SET epic = 0 WHERE userId = ${user.id}`); 
+                    message.channel.send(`You have sold all of your fish for ${income} credits.`);
+                } else { return message.channel.send("I'm sorry. I couldn't find that type of fish."); }
 
                 if (rowAmount === 0) { return message.channel.send(`You don't have any ${kind} fish to sell! D:`); }
                 if (rowAmount < amount) { return message.channel.send("You don't have that much fish to sell."); }
@@ -120,11 +127,11 @@ exports.run = async (client, message, [action, kind, amount]) => {
                 if (kind === "rare") { db.run(`UPDATE fish_inv SET ${kind} = ${row.rare - amount} WHERE userId = ${user.id}`); } 
                 if (kind === "epic") { db.run(`UPDATE fish_inv SET ${kind} = ${row.epic - amount} WHERE userId = ${user.id}`); }
                 
-                message.channel.send(`You have sold ${amount} ${kind} fish and earned ${income} credits!`);
+                if (kind !== "all") { message.channel.send(`You have sold ${amount} ${kind} fish and earned ${income} credits!`); }
 
                 db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
                     if (err) { return console.log(err); }
-                    db.run(`UPDATE scores SET credits = ${parseInt(row.credits) + parseInt(income)} WHERE userId = ${user.id}`);
+                    db.run(`UPDATE scores SET credits = ${Number(row.credits) + Number(income)} WHERE userId = ${user.id}`);
                 });
             }
         });        
