@@ -92,8 +92,8 @@ exports.buildHelp = (client, msg) => {
       if (this.runCommandInhibitors(client, msg, command)) {
         const cat = command.help.category;
         const subcat = command.help.subCategory;
-        if (!help.hasOwnProperty(cat)) help[cat] = {};
-        if (!help[cat].hasOwnProperty(subcat)) help[cat][subcat] = [];
+        if (!help.hasOwnProperty(cat)) { help[cat] = {}; }
+        if (!help[cat].hasOwnProperty(subcat)) { help[cat][subcat] = []; }
         help[cat][subcat].push(`\u00A0${prefix}${command.help.name.padEnd(longest)} :: ${command.help.description}`);
       }
     }
