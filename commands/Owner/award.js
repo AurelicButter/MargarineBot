@@ -4,7 +4,7 @@ exports.run = async (client, message, [user, credit, text]) => {
 
     var user = client.funcs.userSearch(client, message, user);
     
-    if (user.username === undefined) { return; }
+    if (user.username === null) { return; }
     if (user.bot === true) { return message.reply("You can't give your credits to a bot user!"); }
 
     db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
@@ -12,30 +12,30 @@ exports.run = async (client, message, [user, credit, text]) => {
         if (!row) { return message.reply("That user has not gotten their first daily yet!"); }
         if (!credit || credit < 1) { return message.reply("You can't just give an invisable amount of credits to someone!"); }
         else { 
-            db.run(`UPDATE scores SET credits = ${parseInt(row.credits) + parseInt(credit)} WHERE userId = ${user.id}`); 
+            db.run(`UPDATE scores SET credits = ${Number(row.credits) + Number(credit)} WHERE userId = ${user.id}`); 
             db.get("SELECT * FROM awards WHERE userID = 'Overall'", [], (err, row) => {
                 if (err) { return console.log(err); }
-                if (credit === "150") { 
-                    db.run(`UPDATE awards SET suggest = ${parseInt(row.suggest) + 1} WHERE userId = "Overall"`);
-                } if (credit === "250") {
-                    db.run(`UPDATE awards SET bugs = ${parseInt(row.bugs) + 1} WHERE userId = "Overall"`);
-                } if (credit === "500") {
-                    db.run(`UPDATE awards SET minor = ${parseInt(row.minor) + 1} WHERE userId = "Overall"`);
-                } if (credit === "1000") {
-                    db.run(`UPDATE awards SET major = ${parseInt(row.major) + 1} WHERE userId = "Overall"`);
+                if (credit === 150) { 
+                    db.run(`UPDATE awards SET suggest = ${Number(row.suggest) + 1} WHERE userId = "Overall"`);
+                } if (credit === 250) {
+                    db.run(`UPDATE awards SET bugs = ${Number(row.bugs) + 1} WHERE userId = "Overall"`);
+                } if (credit === 500) {
+                    db.run(`UPDATE awards SET minor = ${Number(row.minor) + 1} WHERE userId = "Overall"`);
+                } if (credit === 1000) {
+                    db.run(`UPDATE awards SET major = ${Number(row.major) + 1} WHERE userId = "Overall"`);
                 }
             });
             db.get(`SELECT * FROM awards WHERE userID = "${user.id}"`, [], (err, row) => {
                 if (err) { return console.log(err); }
                 if (!row) { console.log(`No row for ${user.id}. Please manually add with the given amount ${credit}.`); }
-                if (credit === "150") { 
-                    db.run(`UPDATE awards SET suggest = ${parseInt(row.suggest) + 1} WHERE userId = "${user.id}"`); 
-                } if (credit === "250") {
-                    db.run(`UPDATE awards SET bugs = ${parseInt(row.bugs) + 1} WHERE userId = "${user.id}"`); 
-                } if (credit === "500") {
-                    db.run(`UPDATE awards SET minor = ${parseInt(row.minor) + 1} WHERE userId = "${user.id}"`); 
-                } if (credit === "1000") {
-                    db.run(`UPDATE awards SET major = ${parseInt(row.major) + 1} WHERE userId = "${user.id}"`); 
+                if (credit === 150) { 
+                    db.run(`UPDATE awards SET suggest = ${Number(row.suggest) + 1} WHERE userId = "${user.id}"`); 
+                } if (credit === 250) {
+                    db.run(`UPDATE awards SET bugs = ${Number(row.bugs) + 1} WHERE userId = "${user.id}"`); 
+                } if (credit === 500) {
+                    db.run(`UPDATE awards SET minor = ${Number(row.minor) + 1} WHERE userId = "${user.id}"`); 
+                } if (credit === 1000) {
+                    db.run(`UPDATE awards SET major = ${Number(row.major) + 1} WHERE userId = "${user.id}"`); 
                 }
             });
         }

@@ -8,7 +8,7 @@ exports.run = function(client, message){
     else if (y > 45 && y < 60){ x = "G"; } 
     else { x = "O"; }
 
-    return message.channel.send(x + y);
+    message.channel.send(x + y);
 };
 
 exports.conf = {

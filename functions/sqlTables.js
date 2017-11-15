@@ -8,7 +8,7 @@ module.exports = (client, message, user) => {
         if (err) { return console.log(err); }
         db.run("INSERT INTO scores (userId, credits, level, daily, rep, repDaily) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0, 0]);
     });
-    db.run("CREATE TABLE IF NOT EXISTS fish_inv (userId TEXT, common INTEGER, uncommon INTEGER, rare INTEGER, epic INTEGER, trash INTERGER)"), [], (err, row) => {
+    db.run("CREATE TABLE IF NOT EXISTS fish_inv (userId TEXT, common INTEGER, uncommon INTEGER, rare INTEGER, epic INTEGER, trash INTERGER)", [], (err, row) => {
         if (err) { return console.log(err); }
         db.run("INSERT INTO fish_inv (userId, common, uncommon, rare, epic, trash) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0, 0]);
     });
@@ -25,6 +25,11 @@ module.exports = (client, message, user) => {
         if (err) { return console.log(err); }
         db.run("INSERT INTO awards (userId, suggest, bugs, minor, major) VALUES (?, ?, ?, ?, ?)", ["Overall", 0, 0, 0, 0]);
         db.run("INSERT INTO awards (userId, suggest, bugs, minor, major) VALUES (?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0]);  
+    });
+
+    db.run("CREATE TABLE IF NOT EXISTS stats (statName TEXT, reportNumber INTEGER)", [], (err, row) => {
+        if (err) { return console.log(err); }
+        db.run("INSERT INTO stats (statName, reportNumber) VALUES (?, ?)", ["report", 0]);
     });
 
     console.log(`[${moment().format("YYYY-MM-DD HH:mm")}] Scores database created.`);

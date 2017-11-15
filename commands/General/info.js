@@ -1,6 +1,6 @@
 exports.run = async (client, message, [kind, User]) => {
     let guild = message.guild;
-    let Status = null;
+    var Status;
     
     if (kind === "server" && User != null) { return message.reply("You can't ask information about a server and a user at the same time!"); } 
 
@@ -55,7 +55,7 @@ exports.run = async (client, message, [kind, User]) => {
 exports.conf = {
     enabled: true,
     runIn: ["text"],
-    aliases: ["server", "user", "role"],
+    aliases: [], //"server", "user", "role"
     permLevel: 0,
     botPerms: [],
     requiredFuncs: [],
@@ -64,7 +64,7 @@ exports.conf = {
 exports.help = {
   name: "info",
   description: "Get the server or user information.",
-  usage: "<server|user|role> [User:str]",
+  usage: "<server|user|role> [User:str][...]",
   usageDelim: " ",
   extendedHelp: "",
 };

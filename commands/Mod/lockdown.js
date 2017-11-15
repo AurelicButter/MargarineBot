@@ -1,6 +1,6 @@
 const ms = require("ms");
 
-exports.run = (client, message, [time, reason]) => {
+exports.run = async (client, message, [time, reason]) => {
   if (!client.lockit) { client.lockit = []; }
   let validUnlocks = ["release", "unlock"];
   let checked = message.channel.permissionsFor(message.author.id).has("MUTE_MEMBERS");

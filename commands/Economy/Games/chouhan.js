@@ -6,7 +6,6 @@ exports.run = async (client, message, [credit, bet]) => {
         if (err) { return console.log(err); }
         if (!row) { return message.reply("You haven't signed up and received your credits yet! D: Use `m~daily` (Using default prefix) to earn your first amount of credits."); } 
         if (row.credits < credit) { return message.reply("You don't have that many credits, baka!"); }
-        if (!credit || credit < 1) { return message.reply("You need to bet some credits to play!"); }
 
         credit = Number(credit);
         const checker = Number.isInteger(credit) ? true : false;

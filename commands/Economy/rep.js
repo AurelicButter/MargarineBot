@@ -2,17 +2,17 @@ exports.run = async (client, message, [member]) => {
     const sqlite3 = require("sqlite3").verbose();
     let db = new sqlite3.Database("./bwd/data/score.sqlite");
 
-    var user = client.funcs.userSearch(client, message, member);
-    
-    if (user.username === undefined) { return; }
-    if (user.bot === true) { return message.channel.send("You can't give reputation to a bot user!"); }
-    if (user.id === message.author.id) { return message.channel.send("You can't give reputation to yourself! That's like saying hire me for your nuclear plant because I'm a high school student!"); }
-
     db.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`, [], (err, row) => {
         if (err) { console.log(err); }
         if (!row) { return message.reply("You have not redeemed your first daily yet!"); }
         if ((parseInt(row.repDaily) + 86400000) > Date.now()) { return message.reply("You've already have given someone else rep today!"); }
         else { 
+            var user = client.funcs.userSearch(client, message, member);
+            
+            if (user.username === undefined) { return; }
+            if (user.bot === true) { return message.channel.send("You can't give reputation to a bot user!"); }
+            if (user.id === message.author.id) { return message.channel.send("You can't give reputation to yourself! That's like saying hire me for your nuclear plant because I'm a high school student!"); }
+        
             db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
                 if (err) { console.log(err); }
                 if (!row) { return message.channel.send("That user has not gotten their first daily to start off with so you can not give them any rep at the moment. :cry:"); } 

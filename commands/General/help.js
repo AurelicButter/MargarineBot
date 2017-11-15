@@ -10,7 +10,7 @@ exports.run = async (client, msg, [cmd]) => {
         
         const embed = new client.methods.Embed()
             .setColor("#4d5fd")
-            .setTitle("Margarine's Command Categories")
+            .setTitle(`${client.user.username}'s Command Categories`)
             .setDescription("*Do " + `\`${prefix}help module <module name>\`` + " for category commands.*")
             .addField("Categories:", helpMessage);
         return msg.send({embed});

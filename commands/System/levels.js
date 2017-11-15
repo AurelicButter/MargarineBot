@@ -38,7 +38,7 @@ exports.conf = {
   
 exports.help = {
   name: "levels",
-  description: "Check your permission level with Margarine.",
+  description: "Check your permission level.",
   usage: "",
   usageDelim: "",
 };

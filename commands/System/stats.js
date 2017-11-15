@@ -11,8 +11,8 @@ exports.run = async (client, message) => {
 • Users      :: ${client.users.size}
 • Servers    :: ${client.guilds.size}
 • Channels   :: ${client.channels.size.toLocaleString()}
-• Komada     :: v0.20.10 //Hard coded into the bot. Could not get the version straight from the npm package. Same for Discord.js.
-• Discord.js :: v12.0.0`, { code: "asciidoc" });
+• Komada     :: v0.21.1
+• Discord.js :: v12.0.0-dev`, { code: "asciidoc" });
 };
 
 exports.conf = {

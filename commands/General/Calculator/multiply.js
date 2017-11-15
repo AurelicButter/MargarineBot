@@ -1,16 +1,15 @@
-exports.run = async (client, message, [xa, ya, za]) => {
-  var x = client.funcs.constantMath(client, message, xa);
-  var y = client.funcs.constantMath(client, message, ya);
+exports.run = async (client, message, [x, ya, za]) => {
+  if (Number(x) != x) { x = client.funcs.constantMath(client, message, x); } 
+  else { x = Number(x); }
 
-  if (!za) { 
-    var z = 1; 
-  } else { 
-    var z = client.funcs.constantMath(client, message, za); 
-  }
+  if (Number(ya) != ya) { var y = client.funcs.constantMath(client, message, ya); } 
+  else { var y = Number(ya); }
 
-  if ((x === null) || (y === null) || (z === null)) { 
-    return message.reply("You are trying to multiply things that aren't numbers or imaginary, baka!"); 
-  }
+  if (!za) { var z = 1; } 
+  else if (Number(za) != za) { var z = client.funcs.constantMath(client, message, za); } 
+  else { var z = Number(za); }
+
+  if ((x === null) || (y === null) || (z === null)) { return message.reply("You are trying to multiply things that aren't numbers or imaginary, baka!"); }
 
   message.channel.send(`Total: ${x * y * z}`);
 };

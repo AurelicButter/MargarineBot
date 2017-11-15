@@ -1,5 +1,7 @@
-exports.run = (client, message, [User]) => {
+exports.run = async (client, message, [User]) => {
     let user = client.funcs.userSearch(client, message, User);
+    if (user.username == null || user.username == undefined) { return; }
+    
     return message.channel.send(`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`);
 };
   
@@ -17,5 +19,5 @@ exports.help = {
     description: "Fetch a user's avatar!",
     usage: "[User:str]",
     usageDelim: "",
-    extendedHelp: "Now featuring the ablity to search by username and nickname without the ping!"
+    extendedHelp: "Fetch someone's avatar image with these niffy command."
 };

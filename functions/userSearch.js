@@ -11,7 +11,8 @@ module.exports = (client, message, User) => {
             
             if (user == null) {
                 var user = guild.members.find("nickname", `${User}`);
-                user = user.user;
+                if (user) { user = user.user; }
+                else { user = null; }
             }
         }
     } 
