@@ -16,7 +16,7 @@ exports.run = async (client, guild) => {
     if (guild.available) { client.settings.guilds.create(guild).catch(e => client.emit("log", e, "error")); }
 
     await console.log(`[${moment().format("YYYY-MM-DD HH:mm")}] I have started working for ${guild.name}.`);
-    await client.user.setPresence({ activity:  { name:` m~help  | Playing around with Butter on ${client.guilds.size} servers`, type: 0 } });
+    await client.user.setPresence({ activity:  { name:` ${client.config.prefix}help  | Playing around with ${client.owner.username} on ${client.guilds.size} servers`, type: 0 } });
     const msg = await client.channels.get(Channel.id).send({embed});
     if (client.funcs.userSearch(client, msg, config.ownerID) !== undefined) {
         await client.channels.get(Channel.id).send(`Oh! こんにちは <@${config.ownerID}>. I'm ready to work here!`);

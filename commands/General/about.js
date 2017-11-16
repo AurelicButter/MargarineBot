@@ -1,6 +1,6 @@
 exports.run = async (client, message) => {
   const config = require("../../settings.json");
-  const prefix = msg.guildSettings.prefix || config.prefix;
+  const prefix = message.guildSettings.prefix || config.prefix;
   
   const embed = new client.methods.Embed()
      .setColor("#37FDFC")
