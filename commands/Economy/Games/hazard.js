@@ -81,6 +81,8 @@ exports.run = async (client, message, [credit]) => {
             earnings = (credit * Number(earnings)).toFixed(0);
         } else if (result === "won") { var earnings = (credit * 2); } 
         else if (result === "lost") { var earnings = (credit * -1); }
+
+        if (earnings < 1) { earnings = 1; }
         
         credit = Number(row.credits) + Number(earnings);
 

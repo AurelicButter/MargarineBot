@@ -3,7 +3,7 @@ exports.run = async (client, message, [member]) => {
     let db = new sqlite3.Database("./bwd/data/score.sqlite");
 
     var user = client.funcs.userSearch(client, message, member);
-    
+	
     if (user.username === undefined) { return; }
     if (user.bot === true) { return message.reply("You can't give your credits to a bot user!"); }
 
