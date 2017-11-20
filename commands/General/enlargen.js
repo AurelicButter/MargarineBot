@@ -3,14 +3,14 @@ exports.run = async (client, message, [Name]) => {
     else {
       let emote = client.emojis.find("name", Name);
       if (!emote) { return message.channel.send("I can't find that emoji. My searching capabilities are case-sensitive so be sure that the emoji Name is **exactly** the way it is spelled."); }
-      return message.channel.send(`https://cdn.discordapp.com/emojis/${emote.id}.png`);
+      return message.channel.send("", { files: [`https://cdn.discordapp.com/emojis/${emote.id}.png`]});
     }
 };
 
 exports.conf = {
     enabled: true,
     runIn: ["text"],
-    aliases: ["see", "emoji"],
+    aliases: ["see", "emoji", "emote"],
     permLevel: 0,
     botPerms: [],
     requiredFuncs: [],
