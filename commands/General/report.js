@@ -33,7 +33,7 @@ exports.run = async (client, message) => {
     .setTimestamp()
     .setTitle("Report confirmation:");
 
-    await message.reply("I'm going to be asking a couple of questions so I'll be taking this into the DMs.");
+    if (message.channel.type === "text"){ await message.reply("I'm going to be asking a couple of questions so I'll be taking this into the DMs."); }
     await message.author.send(text[0]).then(() => {
         message.author.dmChannel.awaitMessages(m => m.content, { max: 1, time: 60000, errors: ['time'], }).then((collected) => {
             var type = collected.first().content;
