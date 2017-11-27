@@ -18,7 +18,7 @@ exports.run = async (client, msg, [volume]) => {
   }
 
   dispatcher.setVolume(Math.min(volume) / 50, 2);
-  msg.send(`${emote} ${action} the volume! Volume: ${Math.round(dispatcher.volume * 50)}%`)
+  msg.send(`${emote} ${action} the volume! Volume: ${Math.round(dispatcher.volume * 50)}%`);
 };
 
 exports.conf = {
