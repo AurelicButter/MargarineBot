@@ -1,14 +1,22 @@
 exports.run = async (client, message, [kind, User]) => {
     let guild = message.guild;
     var Status;
-    
-    if (kind === "server" && User != null) { return message.reply("You can't ask information about a server and a user at the same time!"); } 
+    let msg = message.content.slice(2).split(" ");
+
+    if (msg[0] === "info") {
+        let kind = msg[1];
+        let User = msg.slice(2).join(" ");
+
+        console.log(kind);
+        console.log(User);
+    }
 
     const embed = new client.methods.Embed()
         .setTimestamp()
         .setAuthor(guild.name, guild.iconURL());
 
-    if (kind === "user") { 
+    if (kind === "user" || msg[0] === "user") {
+        if (msg[0] === "user") { User = msg.slice(1).join(" "); } 
         let user = client.funcs.userSearch(client, message, User); 
 
         if (user.presence.status === "online") { Status = "Online"; }
@@ -29,8 +37,11 @@ exports.run = async (client, message, [kind, User]) => {
         else { embed.addField("Status:", `${Status} - ${user.presence.activity.name}`, true); }
     }
 
-    if (kind === "role") { 
-        var role = guild.roles.find("name", User); 
+    else if (kind === "role" || msg[0] === "role") { 
+        if (msg[0] === "role") { User === msg.slice(0).join(); }
+        let role = guild.roles.find("name", User); 
+
+        if (!role) { return message.channel.send("Looks like I can't find the role. My searchs are case-sensitive so please check before retyping."); }
     
         embed.addField("Role:", `${role.name} - ${role.id}`)
         .setColor(role.hexColor)
@@ -39,7 +50,9 @@ exports.run = async (client, message, [kind, User]) => {
         .addField("Users:", role.members.size, true);
     }
 
-    if (kind === "server") {
+    else if (kind === "server" || msg[0] === "server") {
+        if (msg[1] !== null) { return message.reply("You can't ask information about a server with additional stuff!"); }
+
         embed.setThumbnail(guild.iconURL())
         .setColor("#4d5fd")
         .addField("Region:", guild.region, true)
@@ -55,7 +68,7 @@ exports.run = async (client, message, [kind, User]) => {
 exports.conf = {
     enabled: true,
     runIn: ["text"],
-    aliases: [], //"server", "user", "role"
+    aliases: ["server", "role", "user"],
     permLevel: 0,
     botPerms: [],
     requiredFuncs: [],
@@ -64,7 +77,7 @@ exports.conf = {
 exports.help = {
   name: "info",
   description: "Get the server or user information.",
-  usage: "<server|user|role> [User:str][...]",
-  usageDelim: " ",
+  usage: "[server|user|role] [User:str]",
+  usageDelim: "",
   extendedHelp: "",
 };

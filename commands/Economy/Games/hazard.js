@@ -94,8 +94,8 @@ exports.run = async (client, message, [credit]) => {
         if (chance) { embed.addField("Chance Number:", chance, true); }
         embed.addField("Sums:", sumAll.join(", "), true);
         if (sum[0] < 4) { embed.addField("Rolled less than a 4. Auto loss."); }
-        if (sum[0] > 10 && result === "won") { embed.addField(`Rolled higher than a 10! Sum and caster numbers determine a win!`); }
-        if (sum[0] > 10 && result === "won") { embed.addField(`Rolled higher than a 10! Sum and caster numbers determine a loss!`); }
+        if (sum[0] > 10 && result === "won") { embed.addField("Rolled higher than a 10! Sum and caster numbers determine a win!"); }
+        if (sum[0] > 10 && result === "won") { embed.addField("Rolled higher than a 10! Sum and caster numbers determine a loss!"); }
         embed.addField("Result:", `You have ${result} ${Math.abs(earnings)} credits`);
 
         db.run(`UPDATE scores SET credits = ${credit} WHERE userId = ${message.author.id}`); 

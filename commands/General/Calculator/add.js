@@ -1,17 +1,14 @@
-exports.run = async (client, message, [xa, ya, za]) => {
-  if (Number(xa) != xa) { var x = client.funcs.constantMath(client, message, xa); } 
-  else { var x = Number(xa); }
+exports.run = async (client, message, [x, y, z]) => {
+  if (!x || !y) { return message.channel.send("You need two numbers to add, baka!"); }
+  x === client.funcs.constantMath(client, message, x);
+  y === client.funcs.constantMath(client, message, y);
 
-  if (Number(ya) != ya) { var y = client.funcs.constantMath(client, message, ya); } 
-  else { var y = Number(ya); }
-
-  if (!za) { var z = 0; } 
-  if (Number(za) != za) { var x = client.funcs.constantMath(client, message, za); } 
-  else { var z = Number(za); }
+  if (!z) { z = "0"; } 
+  else { z = client.funcs.constantMath(client, message, z); }
 
   if ((x === null) || (y === null) || (z === null)) { return message.reply("You are trying to add things that aren't numbers or imaginary, baka!"); }
 
-  message.channel.send(`Total: ${x + y + z}`);
+  message.channel.send(`Total: ${Number(x) + Number(y) + Number(z)}`);
 };
   
 exports.conf = {
@@ -26,6 +23,6 @@ exports.conf = {
 exports.help = {
   name: "add",
   description: "Add up to three numbers together.",
-  usage: "[xa:str] [ya:str] [za:str]",
+  usage: "[x:str] [y:str] [z:str]",
   usageDelim: " ",
 };
