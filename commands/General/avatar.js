@@ -1,8 +1,8 @@
 exports.run = async (client, message, [User]) => {
     let user = client.funcs.userSearch(client, message, User);
-    if (user.username == null || user.username == undefined) { return; }
+    if (user.username === null) { return; }
     
-    return message.channel.send(`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`);
+    return message.channel.send("", { files: [`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`]});
 };
   
 exports.conf = {

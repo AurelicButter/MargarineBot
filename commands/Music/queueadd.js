@@ -4,17 +4,14 @@ const url = require("url");
 
 exports.run = async (client, msg, [song]) => {
   const YouTubeRegExp = new RegExp(/(?:v.|d\/|e\/)([\w-_]{11})/);
-  songID = url.parse(song).path.split("/")[1];
-  id = songID.match(YouTubeRegExp);
+  var songID = url.parse(song).path.split("/")[1];
+  var id = songID.match(YouTubeRegExp);
 
   if (id === null) { throw "You must provide a valid YouTube URL."; }
   const info = await getInfoAsync(`https://youtu.be/${id[1]}`);
 
   if (client.queue.has(msg.guild.id) === false) {
-    client.queue.set(msg.guild.id, { 
-      playing: false, 
-      songs: [], 
-    });
+    client.queue.set(msg.guild.id, { playing: false, songs: [], });
   }
 
   client.queue.get(msg.guild.id).songs.push({

@@ -11,7 +11,7 @@ exports.run = async (client, msg) => {
   }
 
   if (handler.playing) { 
-    if (msg.member.voiceConnection !== msg.guild.voiceConnection) { throw `I'm sorry. I'm already playing in another voice channel on your guild!`; }
+    if (msg.member.voiceConnection !== msg.guild.voiceConnection) { throw "I'm sorry. I'm already playing in another voice channel on your guild!"; }
 
     throw "I'm already playing in your channel.";
   } else { handler.playing = true; }

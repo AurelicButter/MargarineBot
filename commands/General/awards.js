@@ -2,7 +2,7 @@ exports.run = async (client, message) => {
     const sqlite3 = require("sqlite3").verbose();
     let db = new sqlite3.Database("./bwd/data/score.sqlite");
 
-    db.get(`SELECT * FROM awards WHERE userID = "Overall"`, [], (err, row) => {
+    db.get("SELECT * FROM awards WHERE userID = 'Overall'", [], (err, row) => {
         if (err) { return console.log(err); }
         var sum = row.suggest + row.bugs + row.minor + row.major;
         var reward = (Number(row.suggest) * 150) + (Number(row.bugs) * 250) + (Number(row.minor) * 500) + (Number(row.major) * 1000);
