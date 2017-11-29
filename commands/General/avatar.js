@@ -10,7 +10,7 @@ exports.conf = {
     runIn: ["text"],
     aliases: [],
     permLevel: 0,
-    botPerms: [],
+    botPerms: ["ATTACH_FILES"],
     requiredFuncs: [],
 };
   

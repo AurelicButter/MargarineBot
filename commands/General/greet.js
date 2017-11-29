@@ -13,7 +13,7 @@ exports.conf = {
     runIn: ["text"],
     aliases: [],
     permLevel: 0,
-    botPerms: [],
+    botPerms: ["MANAGE_MESSAGES"],
     requiredFuncs: [],
 };
 

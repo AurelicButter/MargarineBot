@@ -1,7 +1,7 @@
 exports.run = async (client, message, [args]) => {
-    let response = ["Yes", "Maybe", "No"];
+    let response = ["Yes", "Maybe", "No", "Try again later", "Possibly", "Absolutely"];
 
-    message.channel.send(`${response[~~(Math.random() * response.length)]} ${message.author.username}. Your question of \`${args}\` will act as predicted. I am ${(Math.random() * 100).toFixed(2)}% sure of this.`);    
+    message.channel.send(`${response[~~(Math.random() * response.length)]}, ${message.author.username}.`);    
 };
 
 exports.conf = {

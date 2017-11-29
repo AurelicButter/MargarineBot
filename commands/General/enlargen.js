@@ -12,7 +12,7 @@ exports.conf = {
     runIn: ["text"],
     aliases: ["see", "emoji", "emote"],
     permLevel: 0,
-    botPerms: [],
+    botPerms: ["ATTACH_FILES"],
     requiredFuncs: [],
 };
   

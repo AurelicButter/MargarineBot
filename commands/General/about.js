@@ -25,6 +25,6 @@ exports.conf = {
   
 exports.help = {
     name: "about",
-    description: "General information about Margarine.",
+    description: "General information.",
     usage: "",
 };
