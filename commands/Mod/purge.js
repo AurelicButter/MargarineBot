@@ -36,10 +36,11 @@ exports.run = async (client, message, [Amount, user]) => {
 exports.conf = {
     enabled: true,
     runIn: ["text"],
-    aliases: [""],
-    permLevel: 3,
+    aliases: [],
+    permLevel: 2,
     botPerms: ["MANAGE_MESSAGES"],
     requiredFuncs: [],
+    cooldown: 30,
 };
       
 exports.help = {
@@ -47,4 +48,5 @@ exports.help = {
     description: "Purges X amount of messages from a given channel.",
     usage: "[Amount:int] [user:str]",
     usageDelim: " ",
+    extendedHelp: "Due to limitations, purge can only delete between 2 and 100 messages. If you wish to purge more, please wait out the cooldown (30 seconds) and do it again."
 };
