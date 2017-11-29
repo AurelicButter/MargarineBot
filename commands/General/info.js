@@ -1,22 +1,21 @@
-exports.run = async (client, message, [kind, User]) => {
+exports.run = async (client, message, [kind, search]) => {
     let guild = message.guild;
     var Status;
     let msg = message.content.slice(2).split(" ");
 
     if (msg[0] === "info") {
-        let kind = msg[1];
-        let User = msg.slice(2).join(" ");
-
-        console.log(kind);
-        console.log(User);
+        var kind = msg[1];
+        var User = msg.slice(2).join(" ");
+    } else {
+        var kind = msg[0];
+        var User = msg.slice(1).join(" ");
     }
 
     const embed = new client.methods.Embed()
         .setTimestamp()
         .setAuthor(guild.name, guild.iconURL());
 
-    if (kind === "user" || msg[0] === "user") {
-        if (msg[0] === "user") { User = msg.slice(1).join(" "); } 
+    if (kind === "user") { 
         let user = client.funcs.userSearch(client, message, User); 
 
         if (user.presence.status === "online") { Status = "Online"; }
@@ -37,8 +36,7 @@ exports.run = async (client, message, [kind, User]) => {
         else { embed.addField("Status:", `${Status} - ${user.presence.activity.name}`, true); }
     }
 
-    else if (kind === "role" || msg[0] === "role") { 
-        if (msg[0] === "role") { User === msg.slice(0).join(); }
+    else if (kind === "role") { 
         let role = guild.roles.find("name", User); 
 
         if (!role) { return message.channel.send("Looks like I can't find the role. My searchs are case-sensitive so please check before retyping."); }
@@ -50,16 +48,17 @@ exports.run = async (client, message, [kind, User]) => {
         .addField("Users:", role.members.size, true);
     }
 
-    else if (kind === "server" || msg[0] === "server") {
-        if (msg[1] !== null) { return message.reply("You can't ask information about a server with additional stuff!"); }
-
-        embed.setThumbnail(guild.iconURL())
-        .setColor("#4d5fd")
-        .addField("Region:", guild.region, true)
-        .addField("Created:", guild.createdAt.toLocaleString(), true)
-        .addField("Owner:", `${guild.owner.user.tag} - ${guild.owner.id}`)
-        .addField("Members:", `${guild.memberCount - guild.members.filter(m => m.user.bot).size} (${guild.members.filter(m => m.user.bot).size} bots)`, true)
-        .addField("Roles:", guild.roles.size, true);
+    else if (kind === "server") {
+        if (!User) { 
+            embed.setThumbnail(guild.iconURL())
+            .setColor("#4d5fd")
+            .addField("Region:", guild.region, true)
+            .addField("Created:", guild.createdAt.toLocaleString(), true)
+            .addField("Owner:", `${guild.owner.user.tag} - ${guild.owner.id}`)
+            .addField("Members:", `${guild.memberCount - guild.members.filter(m => m.user.bot).size} (${guild.members.filter(m => m.user.bot).size} bots)`, true)
+            .addField("Roles:", guild.roles.size, true);
+        } 
+        else { return message.reply("You can't ask information about a server with additional stuff!"); }
     }
 
     return message.channel.send({embed});
@@ -77,7 +76,7 @@ exports.conf = {
 exports.help = {
   name: "info",
   description: "Get the server or user information.",
-  usage: "[server|user|role] [User:str]",
+  usage: "[server|user|role] [search:str]",
   usageDelim: "",
-  extendedHelp: "",
+  extendedHelp: "If using one of the aliases, you can skip [server|user|role] and define your search item!",
 };
