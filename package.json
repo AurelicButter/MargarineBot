@@ -4,7 +4,6 @@
   "description": "Javascript bot using the Komada framework",
   "main": "index.js",
   "dependencies": {
-    "canvas-prebuilt": "^1.6.5-prerelease.1",
     "cheerio": "^1.0.0-rc.2",
     "discord.js": "github:hydrabolt/discord.js",
     "ffmpeg": "0.0.4",
