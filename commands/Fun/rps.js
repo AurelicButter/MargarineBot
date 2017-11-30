@@ -33,12 +33,12 @@ exports.conf = {
     aliases: [],
     permLevel: 0,
     botPerms: [],
-    requiredFuncs: [],
+    requiredFuncs: ["userSearch"],
 };
     
 exports.help = {
     name: "rps",
-    description: "Play Rock, Paper, Scissors with someone or Margarine!",
+    description: "Play Rock, Paper, Scissors!",
     usage: "<paper|scissors|rock> [user:str]",
-    usageDelim: "",
+    usageDelim: " ",
 };
