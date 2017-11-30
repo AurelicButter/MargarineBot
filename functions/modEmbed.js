@@ -1,6 +1,6 @@
 module.exports = (client, message, action, user, author, reason) => {
   const embedTypes = {
-    ban: 0xFF0000,
+    ban: 0xDD2E44,
     unban: 0x21A321,
     kick: 0x00AE86,
   };
