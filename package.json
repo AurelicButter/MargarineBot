@@ -1,15 +1,22 @@
 {
   "name": "margarine",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Javascript bot using the Komada framework",
   "main": "index.js",
   "dependencies": {
-    "discord.js": "^11.2.1",
-    "komada": "0.20.10",
-    "moment": "^2.18.1",
+    "cheerio": "^1.0.0-rc.2",
+    "discord.js": "github:hydrabolt/discord.js",
+    "ffmpeg": "0.0.4",
+    "komada": "^0.21.1",
+    "moment": "^2.19.3",
     "moment-duration-format": "^1.3.0",
     "ms": "^2.0.0",
-    "sqlite3": "^3.1.13"
+    "node-opus": "^0.2.7",
+    "querystring": "^0.2.0",
+    "snekfetch": "^3.5.8",
+    "sqlite3": "^3.1.13",
+    "steamapi": "^1.3.5",
+    "ytdl-core": "^0.18.3"
   },
   "devDependencies": {},
   "repository": {

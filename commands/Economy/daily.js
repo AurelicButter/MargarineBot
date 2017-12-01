@@ -3,7 +3,7 @@ exports.run = async (client, message, [member]) => {
     let db = new sqlite3.Database("./bwd/data/score.sqlite");
 
     var user = client.funcs.userSearch(client, message, member);
-    
+	
     if (user.username === undefined) { return; }
     if (user.bot === true) { return message.reply("You can't give your credits to a bot user!"); }
 
@@ -27,22 +27,26 @@ exports.run = async (client, message, [member]) => {
         } if (user.id !== message.author.id) {
             var credit = Number((100 * (1 + Math.random())).toFixed(0)); 
             db.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`, [], (err, row) => {
-                if ((parseInt(row.daily) + 86400000) > Date.now()) {
+                if ((Number(row.daily) + 86400000) > Date.now()) {
                     return message.reply("You have already redeemed your daily for today."); 
                 } else {
                     db.run(`UPDATE scores SET daily = ${Date.now()} WHERE userId = ${message.author.id}`);
                     db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
                         if (err) { return console.log(err); }
-                        db.run(`UPDATE scores SET credits = ${parseInt(row.credits) + credit} WHERE userId = ${user.id}`);
+                        db.run(`UPDATE scores SET credits = ${Number(row.credits) + credit} WHERE userId = ${user.id}`);
                     });
                     return message.channel.send(`${user.username} has received ${credit} credits.`);
                 }
             });
         } else {
-            credit = row.credits + 100;
-            db.run(`UPDATE scores SET daily = ${Date.now()} WHERE userId = ${user.id}`);
-            db.run(`UPDATE scores SET credits = ${row.credits + 100} WHERE userId = ${user.id}`);
-            return message.channel.send(`${user.username} has received ${credit - row.credits} credits.`);
+            if ((Number(row.daily) + 86400000) > Date.now()) {
+                return message.reply("You have already redeemed your daily for today."); 
+            } else {
+                credit = row.credits + 100;
+                db.run(`UPDATE scores SET daily = ${Date.now()} WHERE userId = ${user.id}`);
+                db.run(`UPDATE scores SET credits = ${row.credits + 100} WHERE userId = ${user.id}`);
+                return message.channel.send(`${user.username} has received ${credit - row.credits} credits.`);
+            }
         }
     });
     db.close();

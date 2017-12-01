@@ -1,4 +1,4 @@
-# MargarineBot - Current Version: Beta 0.7 - Economy
+# MargarineBot - Current Version: Beta 0.8 - Music
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f0cfd83063a4469b8e40bcc824c2600d)](https://www.codacy.com/app/Butterstroke/MargarineBot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Butterstroke/MargarineBot&amp;utm_campaign=Badge_Grade)
 
 A Discord bot coded in Node.js using the Discord.js Library and the Komada framework.
@@ -10,14 +10,15 @@ Created through part-desire, part-what can I do in Discord, part-I'm going to le
      
 
 <b>Features:</b>
-- Avatar command
 - Moderation commands
 - Permission levels
-- Poll command
+- Fun, small games like Rock, Paper, Scissors
 - Server/User/role info commands
 - Economy system (No SQL or any other server needed! All data is local to the folder.)
+- Music commands (Play your favourite tunes through Youtube!)
 
 <b>Updates:</b>
+- 30 November 2017: Beta 0.8 Released
 - 31 October 2017: Beta 0.7 Released
 - 30 September 2017: Beta 0.6 Released
 - 15 August 2017: Beta 0.5 Released

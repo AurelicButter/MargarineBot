@@ -1,4 +1,4 @@
-exports.run = async (client, message, [user]) => {  
+exports.run = async (client, message, [choice, user]) => {  
     if (!user) { user = client.user; } 
     else {
         user = client.funcs.userSearch(client, message, user);
@@ -6,27 +6,25 @@ exports.run = async (client, message, [user]) => {
     }
 
     var types = ["rock", "paper", "scissors"];
+    var hand = types[Math.floor(Math.random() * (Math.floor(2) - Math.ceil(1) + 1)) + Math.ceil(1)];
 
-    var hand1 = types[Math.floor(Math.random() * (Math.floor(2) - Math.ceil(1) + 1)) + Math.ceil(1)];
-    var hand2 = types[Math.floor(Math.random() * (Math.floor(2) - Math.ceil(1) + 1)) + Math.ceil(1)];
-
-    if (hand1 === "rock" && hand2 === "scissors") {
-        return message.channel.send(`${message.author.username} plays ${hand1}! ${user.username} plays ${hand2}! **${message.author.username} wins!**`);
-    } if (hand1 === "paper" && hand2 === "rock") {
-        return message.channel.send(`${message.author.username} plays ${hand1}! ${user.username} plays ${hand2}! **${message.author.username} wins!**`);
-    } if (hand1 === "scissors" && hand2 === "paper") {
-        return message.channel.send(`${message.author.username} plays ${hand1}! ${user.username} plays ${hand2}! **${message.author.username} wins!**`);
+    if (choice === "rock" && hand === "scissors") {
+        return message.channel.send(`${message.author.username} plays ${choice}! ${user.username} plays ${hand}! **${message.author.username} wins!**`);
+    } if (choice === "paper" && hand === "rock") {
+        return message.channel.send(`${message.author.username} plays ${choice}! ${user.username} plays ${hand}! **${message.author.username} wins!**`);
+    } if (choice === "scissors" && hand === "paper") {
+        return message.channel.send(`${message.author.username} plays ${choice}! ${user.username} plays ${hand}! **${message.author.username} wins!**`);
     } 
     
-    if (hand1 === "rock" && hand2 === "paper") {
-        return message.channel.send(`${message.author.username} plays ${hand1}! ${user.username} plays ${hand2}! **${user.username} wins!**`);
-    } if (hand1 === "paper" && hand2 === "scissors") {
-        return message.channel.send(`${message.author.username} plays ${hand1}! ${user.username} plays ${hand2}! **${user.username} wins!**`);
-    } if (hand1 === "scissors" && hand2 === "rock") {
-        return message.channel.send(`${message.author.username} plays ${hand1}! ${user.username} plays ${hand2}! **${user.username} wins!**`);
+    if (choice === "rock" && hand === "paper") {
+        return message.channel.send(`${message.author.username} plays ${choice}! ${user.username} plays ${hand}! **${user.username} wins!**`);
+    } if (choice === "paper" && hand === "scissors") {
+        return message.channel.send(`${message.author.username} plays ${choice}! ${user.username} plays ${hand}! **${user.username} wins!**`);
+    } if (choice === "scissors" && hand === "rock") {
+        return message.channel.send(`${message.author.username} plays ${choice}! ${user.username} plays ${hand}! **${user.username} wins!**`);
     }
 
-    if (hand1 === hand2) { return message.channel.send(`${message.author.username} plays ${hand1}! ${user.username} plays ${hand2}! **Draw!**`); }
+    if (choice === hand) { return message.channel.send(`${message.author.username} plays ${choice}! ${user.username} plays ${hand}! **Draw!**`); }
 };
     
 exports.conf = {
@@ -35,12 +33,12 @@ exports.conf = {
     aliases: [],
     permLevel: 0,
     botPerms: [],
-    requiredFuncs: [],
+    requiredFuncs: ["userSearch"],
 };
     
 exports.help = {
     name: "rps",
-    description: "Play Rock, Paper, Scissors with someone or Margarine!",
-    usage: "[user:str]",
-    usageDelim: "",
+    description: "Play Rock, Paper, Scissors!",
+    usage: "<paper|scissors|rock> [user:str]",
+    usageDelim: " ",
 };

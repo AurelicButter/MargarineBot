@@ -1,78 +1,93 @@
-const fs = require("fs");
+exports.run = async (client, message) => {   
+    const sqlite3 = require("sqlite3").verbose();
+    let db = new sqlite3.Database("./bwd/data/score.sqlite");
 
-exports.run = async (client, message, [option, Message]) => {    
-    let records = JSON.parse(fs.readFileSync("records.json", "utf8"));
-    let settings = require("../../settings.json");
-    let type = option.toLowerCase();
-    let user = message.author;
-    let report = records[settings.ownerID].report;
-    let color = null; let Type = null;
+    var color; const reports = [];
+    
+    const reportTypes = {
+        issue: "Issue",
+        bug: "Bug", 
+        improvement: "Improvement", 
+        suggestion: "Suggestion", 
+        complaint: "Complaint", 
+        todo: "Todo"
+    };
 
-    if (!Message) { return message.reply("Your report failed to include a message! Nothing gets done without an explaination!"); }
-    if (type === "todo" && message.author.id !== settings.ownerID) { return message.reply("I'm sorry only the bot owner can add things to the todo list."); }
+    const text = [
+        "Alright. Let's get to the point. First question: What kind of issue is this?\nPlease answer `issue`, `bug`, `complaint`, `suggestion`, or `improvement`",
+        "Next: Please provide a decently sized message explaining what is wrong."
+    ];
 
-    if (type === "issue") { 
-        color = "#FF0000"; 
-        Type = "Issue";
-    } else if (type === "bug") { 
-        color = "#FFFF00";
-        Type = "Bug";
-    } else if (type === "improvement") { 
-        color = "#FFA500";
-        Type = "Improvement";
-    } else if (type === "complaint") { 
-        color = "#DB3E17";
-        Type = "Complaint"; 
-    } else if (type === "todo") {
-        color = "#4d5fd";
-        Type = "Todo";
-    } else { 
-        return message.reply("You provided a false value. Please use either `issue`, `bug`, `improvement`, `complaint` as a type!");
-    }
+    const issue = [
+        "It seems you have timed out with making a report. When you are ready, feel free to try again!",
+        "You didn't provide me with a description in time."
+    ];
 
     const embed = new client.methods.Embed()
-	.setColor(color)
-        .setTimestamp()
-        .setTitle(`${Type} Report: ${report}`)
-        .setDescription("A user has filed a report!")
-        .addField(`User: ${user.tag}`, `From: ${message.guild.name}`)
-        .addField("Message:", `${Message}`)
-        .setThumbnail(user.avatarURL());
-    
-    const DMembed = new client.methods.Embed()
-      .setColor(0x00AE86)
-      .setTimestamp()
-      .setTitle("Report confirmation:")
-      .setDescription(`Your report has been sent! Report number: ${report}
-      \nIssue: ${Message}
-      \nAny more questions, please ask Butterstroke#7150!`);
+    .setTimestamp()
+    .setDescription("A user has filed a report!")
+    .setThumbnail(message.author.avatarURL());
 
-    await records[settings.ownerID].report++;
-    await message.delete().catch();
-    await client.users.get(user.id).send({embed: DMembed});
-    await client.channels.get("353381124250140682").send({embed});
-    await fs.writeFile("records.json", JSON.stringify(records), (err) => {
-        if (err) { 
-            console.error(err);
-            return message.reply("There has been an error upon processing the report. I have sent an error log to the developers to fix. Please try reporting at a later time.");
-        } 
+    const DMembed = new client.methods.Embed()
+    .setColor(0x00AE86)
+    .setTimestamp()
+    .setTitle("Report confirmation:");
+
+    if (message.channel.type === "text"){ await message.reply("I'm going to be asking a couple of questions so I'll be taking this into the DMs."); }
+    await message.author.send(text[0]).then(() => {
+        message.author.dmChannel.awaitMessages(m => m.content, { max: 1, time: 60000, errors: ["time"], }).then((collected) => {
+            var type = collected.first().content;
+            if (type.toLowerCase() !== reportTypes[type.toLowerCase()].toLowerCase()) { return message.author.send("You have provided me with an invalid type of issue. Please try again with a valid one."); }
+            if (reportTypes[type.toLowerCase()] === "Todo" && message.author.id !== client.owner.id) { return message.author.send("You are not able to send todo reports. Only the bot owner can."); }
+            else {
+                reports.push(reportTypes[type.toLowerCase()]);
+                message.author.send(text[1]).then(() => {
+                    message.author.dmChannel.awaitMessages(m => m.content, { max: 1, time: 30000, errors: ["time"], }).then((collected) => {
+                        reports.push(collected.first().content);
+                        db.get("SELECT * FROM stats WHERE statName = 'report'", [], (err, row) => {
+                            if (err) { return console.log(err); }
+                            if (!row) { return message.reply("Error in table. Statistic not found in table."); }
+                            else {
+                                //Report Creation
+                                if (reports[0] === "Issue") { color = "#FF0000"; } 
+                                else if (reports[0] === "Bug") { color = "#FFFF00"; } 
+                                else if (reports[0] === "Improvement" || reports[0] === "Suggestion") { color = "#FFA500"; } 
+                                else if (reports[0] === "Complaint") { color = "#DB3E17"; } 
+                                else if (reports[0] === "Todo") { color = "#4d5fd"; }
+
+                                embed.setColor(color)
+                                .setTitle(`${reports[0]} Report: ${row.reportNumber}`)
+                                .addField(`User: ${message.author.tag}`, `From: ${message.guild.name}`)
+                                .addField("Message:", `${reports[1]}`);
+    
+                                DMembed.setDescription(`Your report has been sent! Report number: ${row.reportNumber}
+                                \nIssue: ${reports[1]} \nAny more questions, please ask Butterstroke#7150!`);
+   
+                                db.run(`UPDATE stats SET reportNumber = ${row.reportNumber + 1} WHERE statName = "report"`); 
+                                client.channels.get("353381124250140682").send({embed});
+                                message.author.send({embed: DMembed});       
+                            }
+                        });
+                        db.close();
+                    }).catch(() => { message.author.send(issue[1]); }); 
+                }); 
+            }
+        }).catch(() => { message.author.send(issue[0]); }); 
     });
-    return await message.reply("Report sent! A DM has been sent with your report number.");
-};
+};  
   
 exports.conf = {
-      enabled: true,
-      runIn: ["text"],
-      aliases: ["issue"],
-      permLevel: 0,
-      botPerms: [],
-      requiredFuncs: [],
-      cooldown: 300,
+    enabled: true,
+    runIn: ["text"],
+    aliases: [],
+    permLevel: 0,
+    botPerms: [],
+    requiredFuncs: [],
 };
     
 exports.help = {
-      name: "report",
-      description: "File a report to the bot developers about Margarine. (ie: Bug, issue, complaint)",
-      usage: "<option:str> [Message:str]",
-      usageDelim: " | ",
+    name: "report",
+    description: "File a report to the bot developers. (ie: Bug, issue, complaint)",
+    usage: "",
+    usageDelim: "",
 };

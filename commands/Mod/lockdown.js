@@ -1,6 +1,6 @@
 const ms = require("ms");
 
-exports.run = (client, message, [time, reason]) => {
+exports.run = async (client, message, [time, reason]) => {
   if (!client.lockit) { client.lockit = []; }
   let validUnlocks = ["release", "unlock"];
   let checked = message.channel.permissionsFor(message.author.id).has("MUTE_MEMBERS");
@@ -8,14 +8,14 @@ exports.run = (client, message, [time, reason]) => {
   if (!time) { return message.reply("I need a set time to lock the channel down for!"); }
 
   const Lockembed = new client.methods.Embed()
-    .setColor("#FF0000")
+    .setColor(0xDD2E44)
     .setTimestamp()
     .setTitle("🔒 LOCKDOWN NOTICE 🔒")
     .setDescription(`This channel has been lockdown by ${message.author.tag} for ${time}`);
     if (reason != null) { Lockembed.addField("Reason: ", reason); }
 
   const Unlockembed = new client.methods.Embed()
-    .setColor("#FF0000")
+    .setColor(0xDD2E44)
     .setTimestamp()
     .setTitle("🔓 LOCKDOWN NOTICE 🔓")
     .setDescription("This channel is now unlocked.");
@@ -23,7 +23,7 @@ exports.run = (client, message, [time, reason]) => {
   //Permissions check
   if (checked === false) { 
     const embed = new client.methods.Embed()
-        .setColor("#FF0000")
+        .setColor(0xDD2E44)
         .setTimestamp()
         .setTitle("❌ ERROR: MISSING PERMISSIONS! ❌")
         .setDescription("You do not have the correct permissions for this command!");

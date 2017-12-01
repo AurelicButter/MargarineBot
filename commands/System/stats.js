@@ -1,18 +1,25 @@
+const { version: discordVersion } = require("discord.js");
 const moment = require("moment");
 require("moment-duration-format");
+const { version: komadaVersion } = require("komada");
 
 exports.run = async (client, message) => {
   const config = require("../../settings.json");
   const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
-  message.channel.send(`= STATISTICS =
+  message.channel.send(`= GENERAL =
 • Margarine  :: ${config.version}
 • Mem Usage  :: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
 • Uptime     :: ${duration}
+
+= USERS =
 • Users      :: ${client.users.size}
 • Servers    :: ${client.guilds.size}
 • Channels   :: ${client.channels.size.toLocaleString()}
-• Komada     :: v0.20.10 //Hard coded into the bot. Could not get the version straight from the npm package. Same for Discord.js.
-• Discord.js :: v12.0.0`, { code: "asciidoc" });
+
+= DEPENDENCIES =
+• Komada     :: v${komadaVersion}
+• Discord.js :: v${discordVersion}
+• Node.js    :: ${process.version}`, { code: "asciidoc" });
 };
 
 exports.conf = {

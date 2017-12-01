@@ -51,4 +51,10 @@ jspm_packages/
 # dotenv environment variables file
 .env
 
+.vs/
+.vscode/
 settings.json
+bwd/
+Storage/
+developers.json
+package-lock.json

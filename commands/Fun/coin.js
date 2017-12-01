@@ -1,4 +1,4 @@
-exports.run = function(client, message){
+exports.run = async (client, message) => {
     let y = Math.random();
 
     if (y > 0.5) { return message.channel.send("Heads!"); }

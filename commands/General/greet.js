@@ -1,7 +1,7 @@
 exports.run = async (client, message, [User]) => {
     message.delete().catch();
     User = client.funcs.userSearch(client, message, User);
-	
+
     if (User.username == null) { return; }
 	if (User.id === client.user.id) { return message.channel.send(`Why would you try and make me greet myself, ${message.author.username}? I'm not that lonely!`); }
 
@@ -13,7 +13,7 @@ exports.conf = {
     runIn: ["text"],
     aliases: [],
     permLevel: 0,
-    botPerms: [],
+    botPerms: ["MANAGE_MESSAGES"],
     requiredFuncs: [],
 };
 

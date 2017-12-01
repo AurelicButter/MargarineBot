@@ -1,9 +1,0 @@
-{
-    "token": "<BOT_TOKEN>",
-    "ownerID": "<OWNER_ID>",
-    "modrolename": "Moderator",
-    "adminrolename": "Admin",
-    "prefix": "<PREFIX>", 
-    "version": "Beta 0.7",
-    "updateDate": "31 October 2017"
-}

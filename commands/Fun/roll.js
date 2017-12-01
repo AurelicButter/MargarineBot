@@ -1,11 +1,11 @@
-exports.run = (client, message, Sides) => {
-    if (Sides.length < 1) { Sides = 6; }
-    if (Sides === 0) { return message.channel.send("You can't roll from 0!"); }
+exports.run = (client, message, sides) => {
+    if (sides.length < 1) { sides = 6; }
+    if (sides === 0) { return message.channel.send("You can't roll from 0!"); }
 
-    Sides = Number(Sides);
+    //sides = Number(sides);
 
-    if (Number.isInteger(Sides)) { 
-        var y = Math.floor(Math.random() * (Math.floor(Sides) - Math.ceil(1) + 1)) + Math.ceil(1);
+    if (Number.isInteger(Number(sides))) { 
+        var y = Math.floor(Math.random() * (Math.floor(sides) - Math.ceil(1) + 1)) + Math.ceil(1);
         return message.channel.send(`🎲 You rolled a ${y}! 🎲`);
     } else {
         return message.channel.send("It seems you added some letters into your number. Please try again!");
@@ -24,6 +24,6 @@ exports.conf = {
 exports.help = {
     name: "roll",
     description: "Roll a die!",
-    usage: "[Sides:str]",
+    usage: "[sides:str]",
     usageDelim: "",
 };
