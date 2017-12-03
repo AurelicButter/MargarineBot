@@ -32,7 +32,6 @@ module.exports = (client, message, user) => {
         db.run("INSERT INTO stats (statName, reportNumber) VALUES (?, ?)", ["report", 0]);
     });
 
-    console.log(`[${moment().format("YYYY-MM-DD HH:mm")}] Scores database created.`);
     let Report = "Database has been created and is ready to collect.";
     db.close();
     

@@ -1,14 +1,14 @@
 <h1>Margarine's Terms and Services</h1>
-The agreements for the users of Margarine as somethings do need permissions for Discord's Developer Terms of Service.
+The agreements for the users of Margarine as some items do need permissions because of Discord's Developer Terms of Service.
 
-**Last Updated:** 30 November, 2017
+**Last Updated:** 1 December, 2017
 
 **Usage:**
 By using Margarine, users agree to have their info usable and manipulated for improving and usage of Margarine. Any data collected will be collected anonymously and in most cases will not be stored.
 
 All economy commands will require the user's activation upon sending the daily command in a text channel. Only the user's ID and the timestamp in which the message was recieved will be stored. All credits, rep, inventory items are generated and have no real value. Users who are using credits, rep, or inventory items for sales and profits are to be reported and may lead to being blacklisted for the bot.
 
-The report command does not fall under requested permissions for Discord Terms of Service as they are sent between guilds and do not store any data outside of the Discord application. However, if abused, the user may see themselves blacklisted from said command.
+The report command does not fall under requested permissions for Discord Terms of Service as all collected information in the reports are sent between guilds and do not store any data outside of the Discord application. However, if abused, the user may see themselves blacklisted from said command.
 
 **Developer Usage:**
 For users of the developer version of Margarine, a command may be reload with `console.log()` to check variables as they pass through the command. This data is not stored, however, users of the developer version are required to know and accept that their data maybe logged for developmental reason during fixes and improvements.
