@@ -1,6 +1,6 @@
 {
   "name": "margarine",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "Javascript bot using the Komada framework",
   "main": "index.js",
   "dependencies": {
