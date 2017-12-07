@@ -1,7 +1,7 @@
 const { version: discordVersion } = require("discord.js");
+const { version: komadaVersion } = require("komada");
 const moment = require("moment");
 require("moment-duration-format");
-const { version: komadaVersion } = require("komada");
 
 exports.run = async (client, message) => {
   const config = require("../../settings.json");

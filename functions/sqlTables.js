@@ -1,5 +1,3 @@
-const moment = require("moment");
-
 module.exports = (client, message, user) => {
     const sqlite3 = require("sqlite3").verbose();
     let db = new sqlite3.Database("./bwd/data/score.sqlite");
@@ -32,10 +30,8 @@ module.exports = (client, message, user) => {
         db.run("INSERT INTO stats (statName, reportNumber) VALUES (?, ?)", ["report", 0]);
     });
 
-    let Report = "Database has been created and is ready to collect.";
     db.close();
-    
-    return Report;
+    return "Database has been created and is ready to collect.";
 };
 
 module.exports.conf = { requiredModules: [] };
