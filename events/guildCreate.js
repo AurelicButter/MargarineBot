@@ -9,7 +9,7 @@ exports.run = async (client, guild) => {
         .setDescription(`To the users of ${guild.name},`)
         .addField("Margarine's Message:", `Hello and thank you for inviting me to ${guild.name}! I am a somewhat helpful and lovely bot created using Komada, a Discord.js framework. To see how I will be able to assist you with, feel free to do m~help. I will send you a list of commands in which you can use.
         \nIf you have any improvement ideas, found issues or bugs, or have any complaints, feel free to use my report command and let my creator know how to improve and make me better! If I am online, feel free to use me for fun and helpful commands!`)
-        .addField("Margarine's TOS:", "For information on this, please refer to this file: https://github.com/Butterstroke/MargarineBot/blob/master/TermsAndService.md");
+        .addField("Margarine's TOS:", "For information on this, please refer to this file: https://github.com/Butterstroke/MargarineBot/blob/master/TermsOfService.md");
 
     let Channel = client.funcs.defaultChannel(client, guild);
 
