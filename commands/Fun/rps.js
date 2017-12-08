@@ -8,23 +8,11 @@ exports.run = async (client, message, [choice, user]) => {
     var types = ["rock", "paper", "scissors"];
     var hand = types[Math.floor(Math.random() * (Math.floor(2) - Math.ceil(1) + 1)) + Math.ceil(1)];
 
-    if (choice === "rock" && hand === "scissors") {
-        return message.channel.send(`${message.author.username} plays ${choice}! ${user.username} plays ${hand}! **${message.author.username} wins!**`);
-    } if (choice === "paper" && hand === "rock") {
-        return message.channel.send(`${message.author.username} plays ${choice}! ${user.username} plays ${hand}! **${message.author.username} wins!**`);
-    } if (choice === "scissors" && hand === "paper") {
-        return message.channel.send(`${message.author.username} plays ${choice}! ${user.username} plays ${hand}! **${message.author.username} wins!**`);
-    } 
-    
-    if (choice === "rock" && hand === "paper") {
-        return message.channel.send(`${message.author.username} plays ${choice}! ${user.username} plays ${hand}! **${user.username} wins!**`);
-    } if (choice === "paper" && hand === "scissors") {
-        return message.channel.send(`${message.author.username} plays ${choice}! ${user.username} plays ${hand}! **${user.username} wins!**`);
-    } if (choice === "scissors" && hand === "rock") {
-        return message.channel.send(`${message.author.username} plays ${choice}! ${user.username} plays ${hand}! **${user.username} wins!**`);
-    }
+    if ((choice === "rock" && hand === "scissors") || (choice === "paper" && hand === "rock") || (choice === "scissors" && hand === "paper")) { var result = `**${message.author.username} wins!**`; } 
+    if ((choice === "rock" && hand === "paper") || (choice === "paper" && hand === "scissors") || (choice === "scissors" && hand === "rock")) { var result = `**${user.username} wins!**`; }
+    if (choice === hand) { var result = `**Draw!**`; }
 
-    if (choice === hand) { return message.channel.send(`${message.author.username} plays ${choice}! ${user.username} plays ${hand}! **Draw!**`); }
+    message.channel.send(`${message.author.username} plays ${choice}! ${user.username} plays ${hand}! ${result}`);
 };
     
 exports.conf = {

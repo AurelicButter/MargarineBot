@@ -14,7 +14,6 @@ exports.conf = {
     aliases: ["echo", "talk"],
     permLevel: 0,
     botPerms: [],
-    requiredFuncs: [],
 };
   
 exports.help = {
