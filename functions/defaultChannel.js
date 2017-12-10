@@ -1,6 +1,9 @@
 module.exports = (client, guild) => {
     let Channel = null;
+
+    if (!client.settings.guilds.schema.defaultChannel) { client.funcs.confAdd(client); }
   
+    if (client.settings.guilds.schema.defaultChannel !== null) { Channel = guild.channels.find("id", client.settings.guilds.defaultChannel); }
     if (guild.channels.exists("name", "general")) { Channel = guild.channels.find("name", "general"); }
     if (guild.channels.exists("name", "off_topic")) { Channel = guild.channels.find("name", "off_topic"); } 
     if (guild.channels.exists("id", guild.id)) { Channel = guild.channels.find("id", guild.id); }

@@ -1,23 +1,12 @@
 exports.run = async (client, message, [User, reason]) => {
+    let guild = message.guild;
     let user = client.funcs.userSearch(client, message, User);
     if (user.username === null) { return; }
-
-    let guild = message.guild;
-    let checked = message.channel.permissionsFor(message.author.id).has("KICK_MEMBERS");
-
-    if (checked === false) { 
-      const Checkembed = new client.methods.Embed()
-        .setColor("#FF0000")
-        .setTimestamp()
-        .setTitle("❌ ERROR: MISSING PERMISSIONS! ❌")
-        .setDescription("You do not have the correct permissions for this command!");
-      return message.channel.send({embed: Checkembed});  
-    }
 
     if (!reason) { return message.reply("You must supply a reason!"); }
     if (!guild.member(user).kickable) { return message.reply("I cannot kick that member"); }
 
-    const embed = client.funcs.modEmbed(client, message, "kick", user, message.author, reason);
+    const embed = client.funcs.modEmbed(client, message, "kick", user, reason);
     
     const DMembed = new client.methods.Embed()
       .setColor(0x00AE86)
@@ -27,7 +16,20 @@ exports.run = async (client, message, [User, reason]) => {
 
     await user.send({embed: DMembed});
     await guild.member(user).kick(reason);
-    return await message.channel.send({embed});
+    
+    if (embed.title.startsWith(":x:")) { message.channel.send({embed}); } 
+    else {
+      if ((!client.settings.guilds.schema.modlog) || (!client.settings.guilds.schema.defaultChannel)) { 
+        client.funcs.confAdd(client);
+        message.channel.send("Whoops! Looks like some settings were missing! I've fixed these issues for you. Please check the confs and set the channel.");
+      } if ((guild.settings.defaultChannel !== null) && (guild.settings.modlog === null)) {
+        var Channel = guild.channels.find("id", guild.settings.defaultChannel);
+        return message.Channel.send({embed});
+      } if (guild.settings.modlog !== null) {
+        var Channel = guild.channels.find("id", guild.settings.modlog);
+        return message.Channel.send({embed});
+      } else { return message.channel.send({embed}); }
+    }
 };
 
 exports.conf = {
@@ -36,7 +38,7 @@ exports.conf = {
     aliases: ["k"],
     permLevel: 2,
     botPerms: ["KICK_MEMBERS", "EMBED_LINKS"],
-    requiredFuncs: [],
+    requiredFuncs: ["modEmbed", "userSearch", "confAdd"],
 };
       
 exports.help = {

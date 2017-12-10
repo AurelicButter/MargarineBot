@@ -1,4 +1,4 @@
-module.exports = (client, message, action, user, author, reason) => {
+module.exports = (client, message, action, user, reason) => {
   const embedTypes = {
     ban: 0xDD2E44,
     unban: 0x21A321,
@@ -11,16 +11,29 @@ module.exports = (client, message, action, user, author, reason) => {
     kick: "Kick"
   };
 
+  const permissionType = {
+    Ban: "BAN_MEMBERS",
+    Kick: "KICK_MEMBERS"
+  };
+
   var color = embedTypes[action.toLowerCase()];
   var verb = actionTypes[action.toLowerCase()];
+  var perm = permissionType[verb];
 
   const embed = new client.methods.Embed()
-    .setColor(color)
-    .setTimestamp()
-    .addField(`**Action:** ${verb}`, `**Moderator:** ${author.tag}`)
-    .addField("**User:**", user.tag)
-    .addField("**Reason:**", reason)
-    .setThumbnail(user.avatarURL());
+    .setTimestamp();
+  
+  if (message.channel.permissionsFor(message.author).has(perm) === false) { 
+    embed.setColor(0xDD2E44)
+      .setTitle("❌ ERROR: MISSING PERMISSIONS! ❌")
+      .setDescription("You do not have the correct permissions for this command!");
+  } else {
+    embed.setColor(color)
+      .addField(`**Action:** ${verb}`, `**Moderator:** ${message.author.tag}`)
+      .addField("**User:**", user.tag)
+      .addField("**Reason:**", reason)
+      .setThumbnail(message.author.avatarURL());
+  }
 
   return embed;
 };
