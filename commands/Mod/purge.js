@@ -5,9 +5,8 @@ exports.run = async (client, message, [Amount, user]) => {
     if (user) { member = client.funcs.userSearch(client, message, user); }
     
     if (!Amount || (2 > Amount) || (Amount > 99)) { return message.reply("You didn't give me an amount between 2 and 99 to delete!"); }
-    let checked = message.channel.permissionsFor(message.author.id).has("MANAGE_MESSAGES");
   
-    if (checked === false) { 
+    if (message.channel.permissionsFor(message.author.id).has("MANAGE_MESSAGES") === false) { 
       const embed = new client.methods.Embed()
         .setColor("#FF0000")
         .setTimestamp()
@@ -39,7 +38,7 @@ exports.conf = {
     aliases: [],
     permLevel: 2,
     botPerms: ["MANAGE_MESSAGES"],
-    requiredFuncs: [],
+    requiredFuncs: ["userSearch"],
     cooldown: 30,
 };
       
