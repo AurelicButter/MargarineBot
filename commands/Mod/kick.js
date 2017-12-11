@@ -17,18 +17,15 @@ exports.run = async (client, message, [User, reason]) => {
     await user.send({embed: DMembed});
     await guild.member(user).kick(reason);
     
-    if (embed.title.startsWith(":x:")) { message.channel.send({embed}); } 
+    if (!embed.thumbnail) { message.channel.send({embed}); } 
     else {
       if ((!client.settings.guilds.schema.modlog) || (!client.settings.guilds.schema.defaultChannel)) { 
         client.funcs.confAdd(client);
         message.channel.send("Whoops! Looks like some settings were missing! I've fixed these issues for you. Please check the confs and set the channel.");
-      } if ((guild.settings.defaultChannel !== null) && (guild.settings.modlog === null)) {
-        var Channel = guild.channels.find("id", guild.settings.defaultChannel);
-        return message.Channel.send({embed});
-      } if (guild.settings.modlog !== null) {
-        var Channel = guild.channels.find("id", guild.settings.modlog);
-        return message.Channel.send({embed});
-      } else { return message.channel.send({embed}); }
+      } 
+      if ((guild.settings.defaultChannel !== null) && (guild.settings.modlog === null)) { return guild.channels.find("id", guild.settings.defaultChannel).send({embed}); } 
+      if (guild.settings.modlog !== null) { return guild.channels.find("id", guild.settings.modlog).send({embed}); } 
+      else { return message.channel.send({embed}); }
     }
 };
 
