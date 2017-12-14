@@ -6,27 +6,14 @@ exports.run = async (client, message, [User, reason]) => {
 	if (!reason) { return message.reply("You must supply a reason for the ban."); }
     if (!guild.member(user).bannable) { return message.reply("I cannot ban that member"); }
     
-    const embed = client.funcs.modEmbed(client, message, "ban", user, reason);
-    
-    const DMembed = new client.methods.Embed()
-        .setColor("#FF0000")
-        .setTimestamp()
-        .setTitle("Moderator Message:")
-        .setDescription(`You have been banned from ${guild.name}!\n**Reason:** ${reason}`);
+    var Toast = client.funcs.modEmbed(client, message, "ban", user, reason);
 
-    await user.send({embed: DMembed});
-    await guild.member(user).ban(reason);
-
-    if (!embed.thumbnail) { message.channel.send({embed}); } 
-    else {
-      if ((!client.settings.guilds.schema.modlog) || (!client.settings.guilds.schema.defaultChannel)) { 
-        client.funcs.confAdd(client);
-        message.channel.send("Whoops! Looks like some settings were missing! I've fixed these issues for you. Please check the confs and set the channel.");
-      } 
-      if ((guild.settings.defaultChannel !== null) && (guild.settings.modlog === null)) { return guild.channels.find("id", guild.settings.defaultChannel).send({embed}); } 
-      if (guild.settings.modlog !== null) { return guild.channels.find("id", guild.settings.modlog).send({embed}); } 
-      else { return message.channel.send({embed}); }
+    if (Toast[0].thumbnail) {
+        await user.send({embed: Toast[2]});
+        await guild.member(user).ban(reason);
     }
+
+    await Toast[1].send({embed: Toast[0]});
 };
 
 exports.conf = {

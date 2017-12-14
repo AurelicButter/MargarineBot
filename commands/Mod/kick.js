@@ -1,46 +1,32 @@
 exports.run = async (client, message, [User, reason]) => {
-    let guild = message.guild;
-    let user = client.funcs.userSearch(client, message, User);
-    if (user.username === null) { return; }
+  let user = client.funcs.userSearch(client, message, User);
+  if (user.username === null) { return; }
 
-    if (!reason) { return message.reply("You must supply a reason!"); }
-    if (!guild.member(user).kickable) { return message.reply("I cannot kick that member"); }
+  if (!reason) { return message.reply("You must supply a reason!"); }
+  if (!message.guild.member(user).kickable) { return message.reply("I cannot kick that member"); }
 
-    const embed = client.funcs.modEmbed(client, message, "kick", user, reason);
+  var Toast = client.funcs.modEmbed(client, message, "kick", user, reason);
     
-    const DMembed = new client.methods.Embed()
-      .setColor(0x00AE86)
-      .setTimestamp()
-      .setTitle("Moderator Message:")
-      .setDescription(`You have been kicked from ${guild.name}!\n**Reason:** ${reason}`);
-
-    await user.send({embed: DMembed});
-    await guild.member(user).kick(reason);
+  if (Toast[0].thumbnail) {
+    await user.send({embed: Toast[2]});
+    await message.guild.member(user).kick(reason);
+  }
     
-    if (!embed.thumbnail) { message.channel.send({embed}); } 
-    else {
-      if ((!client.settings.guilds.schema.modlog) || (!client.settings.guilds.schema.defaultChannel)) { 
-        client.funcs.confAdd(client);
-        message.channel.send("Whoops! Looks like some settings were missing! I've fixed these issues for you. Please check the confs and set the channel.");
-      } 
-      if ((guild.settings.defaultChannel !== null) && (guild.settings.modlog === null)) { return guild.channels.find("id", guild.settings.defaultChannel).send({embed}); } 
-      if (guild.settings.modlog !== null) { return guild.channels.find("id", guild.settings.modlog).send({embed}); } 
-      else { return message.channel.send({embed}); }
-    }
+  await Toast[1].send({embed: Toast[0]});
 };
 
 exports.conf = {
-    enabled: true,
-    runIn: ["text"],
-    aliases: ["k"],
-    permLevel: 2,
-    botPerms: ["KICK_MEMBERS", "EMBED_LINKS"],
-    requiredFuncs: ["modEmbed", "userSearch", "confAdd"],
+  enabled: true,
+  runIn: ["text"],
+  aliases: ["k"],
+  permLevel: 2,
+  botPerms: ["KICK_MEMBERS", "EMBED_LINKS"],
+  requiredFuncs: ["modEmbed", "userSearch", "confAdd"],
 };
       
 exports.help = {
-    name: "kick",
-    description: "Kicks the mentioned user.",
-    usage: "[User:str] [reason:str] [...]",
-    usageDelim: " ",
+  name: "kick",
+  description: "Kicks the mentioned user.",
+  usage: "[User:str] [reason:str] [...]",
+  usageDelim: " ",
 };

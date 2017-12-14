@@ -7,7 +7,7 @@ exports.run = async (client, message, [time, reason]) => {
 
   const embed = new client.methods.Embed()
     .setColor(0xDD2E44)
-    .setTimestamp()
+    .setTimestamp();
 
   const Lockembed = embed.setTitle("🔒 LOCKDOWN NOTICE 🔒")
     .setDescription(`This channel has been lockdown by ${message.author.tag} for ${time}`);
