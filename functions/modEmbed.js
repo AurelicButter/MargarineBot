@@ -29,7 +29,7 @@ module.exports = (client, message, action, user, reason) => {
     .setColor(color)
     .setTimestamp()
     .setTitle("Moderator Message:")
-    .setDescription(`You have been ${past} from ${guild.name}!\n**Reason:** ${reason}`);
+    .setDescription(`You have been ${past} from ${message.guild.name}!\n**Reason:** ${reason}`);
 
   if (!embed.thumbnail) { var channel = message.channel; } 
   else {

@@ -21,7 +21,7 @@ exports.conf = {
   aliases: ["k"],
   permLevel: 2,
   botPerms: ["KICK_MEMBERS", "EMBED_LINKS"],
-  requiredFuncs: ["modEmbed", "userSearch", "confAdd"],
+  requiredFuncs: ["modEmbed", "userSearch"],
 };
       
 exports.help = {
