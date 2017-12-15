@@ -5,16 +5,14 @@ exports.run = async (client, message, [Name, type, ID]) => {
         var type = array[0];
         var Name = array[1];
         var ID = array[2];
-    } else {
-        var Name = array[0];
-        var type = array[1];
-        var ID = array[2];
     }
 
     if (!Name) { return message.channel.send("You need to give me an emoji!"); }
     message.delete();
     let emote = client.emojis.find("name", Name);
-    if (!emote) { return message.channel.send("I can't find that emoji. My searching capabilities are case-sensitive so be sure that the emoji Name is **exactly** the way it is spelled."); }
+    if (!emote) { return message.channel.send("I can't find that emoji. My searching capabilities are case-sensitive so be sure that the emoji name is **exactly** the way it is spelled.").then(Message => {
+        setTimeout(() => { Message.delete(); }, 4000);
+    }); }
     
     if (type === "react") { 
 		if (!ID) { return message.channel.send("You need to specify a message's ID so that I can find it!") }
@@ -29,7 +27,6 @@ exports.conf = {
     aliases: ["see", "emoji", "emote", "react"],
     permLevel: 0,
     botPerms: ["ATTACH_FILES", "ADD_REACTIONS", "MANAGE_MESSAGES"],
-    requiredFuncs: [],
 };
   
 exports.help = {
