@@ -19,12 +19,13 @@ exports.run = async (client, message) => {
     if (permLevel === 9) { var permissionLevel = "level 9: Toast & Butter"; }
     if (permLevel === 10) { var permissionLevel = "level 10: Bot Owner"; }
 
-    if (addPerms === 4) { var addPerms = "with Guild Owner permissions"; }
-    if (addPerms === 3) { var addPerms = "with Guild Admin permissions"; }
-    if (addPerms === 2) { var addPerms = "with Guild Moderator permissions"; }
+    if (addPerms === 4) { var addPerms = "with guild owner permissions"; }
+    if (addPerms === 3) { var addPerms = "with guild admin permissions"; }
+    if (addPerms === 2) { var addPerms = "with guild moderator permissions"; }
     if (addPerms === 0) { var addPerms = "with no additional permissions"; }
+    if (!addPerms) { var addPerms = ""; }
 
-    message.channel.send(`Your level is ${permissionLevel} ${addPerms}`);
+    message.channel.send(`Your permission level is ${permissionLevel} ${addPerms}`);
 };
   
 exports.conf = {
@@ -33,11 +34,10 @@ exports.conf = {
   aliases: [],
   permLevel: 0,
   botPerms: [],
-  requiredFuncs: [],
 };
   
 exports.help = {
-  name: "levels",
+  name: "permlevel",
   description: "Check your permission level.",
   usage: "",
   usageDelim: "",

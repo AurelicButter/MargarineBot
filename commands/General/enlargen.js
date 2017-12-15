@@ -16,7 +16,6 @@ exports.run = async (client, message, [Name, type, ID]) => {
     
     if (type === "react") { 
 		if (!ID) { return message.channel.send("You need to specify a message's ID so that I can find it!") }
-		
 		message.channel.messages.fetch(ID).then(msg => msg.react(emote)); 
 	} else { return message.channel.send("", { files: [`https://cdn.discordapp.com/emojis/${emote.id}.png`]}); }
 };
@@ -32,7 +31,7 @@ exports.conf = {
 exports.help = {
     name: "enlargen",
     description: "Displays an enlargened emoji.",
-    usage: "[Name:str] [react] [channelID:str]",
+    usage: "[Name:str] [react] [messageID:str]",
     usageDelim: " ",
     extendedHelp: "Users using `react` do not have to specify react as that is already defined with the alias. Users using any other alias or name must specify react if they wish for a reaction.",
 };
