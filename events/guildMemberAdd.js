@@ -1,4 +1,11 @@
 exports.run = (client, guild) => {
-  var channel = client.funcs.defaultChannel(client, guild.guild);
+  if (!client.settings.guilds.schema.welcomeChannel) { 
+    client.funcs.confAdd(client); 
+  } if (client.settings.guilds.schema.welcomeChannel === null) { 
+    var channel = client.funcs.defaultChannel(client, guild.guild); 
+  } if (client.settings.guilds.schema.welcomeChannel !== null) { 
+    var channel = guild.guild.channels.find("id", guild.guild.settings.welcomeChannel); 
+  }
+
   client.channels.get(channel.id).send(`${guild.user.username} is buttered up and has joined the server!`); 
 };
