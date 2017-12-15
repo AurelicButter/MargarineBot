@@ -39,7 +39,7 @@ exports.conf = {
     aliases: [],
     permLevel: 0,
     botPerms: [],
-    requiredFuncs: [],
+    requiredFuncs: ["userSearch"],
     cooldown: 10,
 };
   

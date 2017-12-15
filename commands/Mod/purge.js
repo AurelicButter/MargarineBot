@@ -1,6 +1,5 @@
 exports.run = async (client, message, [Amount, user]) => {
-    let messagecount = Number(Amount) + 1;
-    let Channel = message.channel; var member = null;
+    let messagecount = Number(Amount) + 1; var member = null;
 
     if (user) { member = client.funcs.userSearch(client, message, user); }
     
@@ -15,7 +14,7 @@ exports.run = async (client, message, [Amount, user]) => {
       return message.channel.send({embed});  
     }
 
-    Channel.messages.fetch({ limit: messagecount }).then((messages) => {
+    message.channel.messages.fetch({ limit: messagecount }).then((messages) => {
         if (user) {
             message.delete();
             const filterBy = member ? member.id : client.user.id;

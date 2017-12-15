@@ -10,7 +10,9 @@ exports.run = async (client, message, [Name, type, ID]) => {
     if (!Name) { return message.channel.send("You need to give me an emoji!"); }
     message.delete();
     let emote = client.emojis.find("name", Name);
-    if (!emote) { return message.channel.send("I can't find that emoji. My searching capabilities are case-sensitive so be sure that the emoji Name is **exactly** the way it is spelled."); }
+    if (!emote) { return message.channel.send("I can't find that emoji. My searching capabilities are case-sensitive so be sure that the emoji name is **exactly** the way it is spelled.").then(Message => {
+        setTimeout(() => { Message.delete(); }, 4000);
+    }); }
     
     if (type === "react") { 
 		if (!ID) { return message.channel.send("You need to specify a message's ID so that I can find it!") }

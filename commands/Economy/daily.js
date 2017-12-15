@@ -11,11 +11,7 @@ exports.run = async (client, message, [member]) => {
         if (err) { return console.log(err); }
         if (!row) {
             if (user.id === message.author.id) { 
-                db.run("INSERT INTO scores (userId, credits, level, daily, rep, repDaily) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 100, 0, Date.now(), 0, 0]);
-                db.run("INSERT INTO fish_inv (userId, common, uncommon, rare, epic, trash) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0, 0]);
-                db.run("INSERT INTO fish_stats (userId, common, uncommon, rare, epic, trash) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0, 0]);
-                db.run("INSERT INTO badges (userId, betaTester, bugSmasher) VALUES (?, ?, ?)", [user.id, "no", "no"]);  
-                db.run("INSERT INTO awards (userId, suggest, bugs, minor, major) VALUES (?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0]);  
+                client.funcs.sqlTables(client, message, user, "add");
                 return message.channel.send("You have received your daily amount of 100 credits."); 
             } else { 
                 db.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`, [], (err, row) => { 
@@ -24,12 +20,11 @@ exports.run = async (client, message, [member]) => {
                 });
                 return message.channel.send("That user has not gotten their first daily to start off with so you can not give them any credits at the moment. :cry:"); 
             }
-        } if (user.id !== message.author.id) {
-            var credit = Number((100 * (1 + Math.random())).toFixed(0)); 
+        } else if (user.id !== message.author.id) {
             db.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`, [], (err, row) => {
-                if ((Number(row.daily) + 86400000) > Date.now()) {
-                    return message.reply("You have already redeemed your daily for today."); 
-                } else {
+                if ((Number(row.daily) + 86400000) > Date.now()) { return message.reply("You have already redeemed your daily for today."); } 
+                else {
+                    var credit = Number((100 * (1 + Math.random())).toFixed(0)); 
                     db.run(`UPDATE scores SET daily = ${Date.now()} WHERE userId = ${message.author.id}`);
                     db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
                         if (err) { return console.log(err); }
@@ -39,13 +34,11 @@ exports.run = async (client, message, [member]) => {
                 }
             });
         } else {
-            if ((Number(row.daily) + 86400000) > Date.now()) {
-                return message.reply("You have already redeemed your daily for today."); 
-            } else {
-                credit = row.credits + 100;
+            if ((Number(row.daily) + 86400000) > Date.now()) { return message.reply("You have already redeemed your daily for today."); } 
+            else {
                 db.run(`UPDATE scores SET daily = ${Date.now()} WHERE userId = ${user.id}`);
-                db.run(`UPDATE scores SET credits = ${row.credits + 100} WHERE userId = ${user.id}`);
-                return message.channel.send(`${user.username} has received ${credit - row.credits} credits.`);
+                db.run(`UPDATE scores SET credits = ${Number(row.credits) + 100} WHERE userId = ${user.id}`);
+                return message.channel.send(`${user.username} has received 100 credits.`);
             }
         }
     });
@@ -58,7 +51,7 @@ exports.conf = {
     aliases: [],
     permLevel: 0,
     botPerms: [],
-    requiredFuncs: [],
+    requiredFuncs: ["sqlTables"],
 };
   
 exports.help = {
