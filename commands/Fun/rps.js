@@ -10,7 +10,7 @@ exports.run = async (client, message, [choice, user]) => {
 
     if ((choice === "rock" && hand === "scissors") || (choice === "paper" && hand === "rock") || (choice === "scissors" && hand === "paper")) { var result = `**${message.author.username} wins!**`; } 
     if ((choice === "rock" && hand === "paper") || (choice === "paper" && hand === "scissors") || (choice === "scissors" && hand === "rock")) { var result = `**${user.username} wins!**`; }
-    if (choice === hand) { var result = `**Draw!**`; }
+    if (choice === hand) { var result = "**Draw!**"; }
 
     message.channel.send(`${message.author.username} plays ${choice}! ${user.username} plays ${hand}! ${result}`);
 };

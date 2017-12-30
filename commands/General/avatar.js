@@ -11,7 +11,7 @@ exports.conf = {
     aliases: [],
     permLevel: 0,
     botPerms: ["ATTACH_FILES"],
-    requiredFuncs: [],
+    requiredFuncs: ["usersearch"],
 };
   
 exports.help = {
@@ -19,5 +19,5 @@ exports.help = {
     description: "Fetch a user's avatar!",
     usage: "[User:str]",
     usageDelim: "",
-    extendedHelp: "Fetch someone's avatar image with these niffy command."
+    extendedHelp: "Fetch someone's avatar image."
 };

@@ -11,8 +11,8 @@ exports.run = async (client, message, [type]) => {
 
     const embed = new client.methods.Embed()
         .setTimestamp()
-        .setAuthor(`Leaderboards for ${message.guild.name}`, message.guild.iconURL())
-        .setColor("#4d5fd")
+        .setFooter(`${message.guild.name} Leaderboards`, message.guild.iconURL())
+        .setColor(0x04d5fd)
         .setThumbnail(message.guild.iconURL());
     
     db.all(`SELECT * FROM scores ORDER BY ${types[type.toLowerCase()]} DESC LIMIT 15`, [], (err, rows) => {
@@ -42,7 +42,6 @@ exports.conf = {
     aliases: ["lb"],
     permLevel: 0,
     botPerms: [],
-    requiredFuncs: [],
 };
   
 exports.help = {

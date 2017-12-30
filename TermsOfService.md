@@ -1,7 +1,7 @@
-<h1>Margarine's Terms and Services</h1>
+<h1>Margarine's Terms of Service</h1>
 The agreements for the users of Margarine as some items do need permissions because of Discord's Developer Terms of Service.
 
-**Last Updated:** 1 December, 2017
+**Last Updated:** 30 December, 2017
 
 **Usage:**
 By using Margarine, users agree to have their info usable and manipulated for improving and usage of Margarine. Any data collected will be collected anonymously and in most cases will not be stored.
@@ -19,10 +19,10 @@ If for any reason Margarine needs to store more data, these terms will change wi
 **Agreement:**
 
 *For Stable (also known as "Master Branch" in the Github Repository) release:*
-Users are aware and agree to the following terms defined above. They are also aware that changes in the Terms and Services will be announced in the changelogs for each release. 
+Users are aware and agree to the following terms defined above. They are also aware that changes in the Terms of Service will be announced in the changelogs for each release. 
 
 *For Development (also defined as any other branch):*
-Users are aware and agree to the following terms defined above. They are also aware that changes in the Terms and Services can change overnight and will be notified of these changes as soon as humanly possible. Users are also aware of the potential of `console.log()` in which data will be logged for development purposes defined in the Developer Usage section.
+Users are aware and agree to the following terms defined above. They are also aware that changes in the Terms of Service can change overnight and will be notified of these changes as soon as humanly possible. Users are also aware of the potential of `console.log()` in which data will be logged for development purposes defined in the Developer Usage section.
 
 **Contact:**
 For any questions, either find Butterstroke#7150 on Discord or send me an email at konirosen@protonmail.ch.

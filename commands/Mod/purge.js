@@ -1,7 +1,17 @@
 exports.run = async (client, message, [Amount, user]) => {
-    let messagecount = Number(Amount) + 1; var member = null;
+    message.delete();
+    let messagecount = Number(Amount);
 
-    if (user) { member = client.funcs.userSearch(client, message, user); }
+    if (user) { 
+        user = client.funcs.userSearch(client, message, user);
+        if (user.username === null) {
+            const embed = new client.methods.Embed()
+                .setTimestamp()
+                .setAuthor(guild.name, guild.iconURL())
+                .addField(":x: No User found! :x:");
+            return message.channel.send({embed});
+        }
+    }
     
     if (!Amount || (2 > Amount) || (Amount > 99)) { return message.reply("You didn't give me an amount between 2 and 99 to delete!"); }
   
@@ -17,17 +27,13 @@ exports.run = async (client, message, [Amount, user]) => {
     message.channel.messages.fetch({ limit: messagecount }).then((messages) => {
         if (user) {
             message.delete();
-            const filterBy = member ? member.id : client.user.id;
+            const filterBy = user ? user.id : client.user.id;
             messages = messages.filter(m => m.author.id === filterBy).array().slice(0, Amount);
+            var extra = `by ${user.tag} `;
         }
 
         message.channel.bulkDelete(messages).catch(error => console.log(error.stack));
-
-        if (user) { 
-            return message.reply(`Successfully purged ${Amount} messages by ${member.tag} from the channel.`); 
-        } else { 
-            return message.reply(`Purged ${Amount} messages from the channel.`); 
-        }
+        return message.reply(`Purged ${Amount} messages ` + (extra || "") + "from the channel.");
     });
 };
 
@@ -46,5 +52,5 @@ exports.help = {
     description: "Purges X amount of messages from a given channel.",
     usage: "[Amount:int] [user:str]",
     usageDelim: " ",
-    extendedHelp: "Due to limitations, purge can only delete between 2 and 100 messages. If you wish to purge more, please wait out the cooldown (30 seconds) and do it again."
+    extendedHelp: "Due to limitations, purge can only delete between 2 and 99 messages. If you wish to purge more, please wait out the cooldown (30 seconds) and do it again."
 };
