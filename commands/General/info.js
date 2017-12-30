@@ -1,6 +1,5 @@
 exports.run = async (client, message, [kind, search]) => {
     let guild = message.guild;
-    var Status;
     let msg = message.content.slice(2).split(" ");
 
     if (msg[0] === "info") {
@@ -16,12 +15,20 @@ exports.run = async (client, message, [kind, search]) => {
         .setAuthor(guild.name, guild.iconURL());
 
     if (kind === "user") { 
-        let user = client.funcs.userSearch(client, message, User); 
+        let user = client.funcs.userSearch(client, message, User);
+        if (user.username === null) {
+            embed.addField(":x: No User found! :x:");
+            return message.channel.send({embed});
+        }
 
-        if (user.presence.status === "online") { Status = "Online"; }
-        else if (user.presence.status === "idle") { Status = "Idle"; }
-        else if (user.presence.status === "dnd") { Status = "Do not Disturb"; }
-        else { Status = "Offline"; } 
+        const statusList = {
+            online: "Online",
+            idle: "Idle",
+            dnd: "Do not Disturb"
+        };
+
+        var Status = statusList[user.presence.status];
+        if (!Status) { var Status = "Offline"; } 
         
         embed.setThumbnail(user.avatarURL())
         .setColor("#4d5fd")
@@ -70,7 +77,7 @@ exports.conf = {
     aliases: ["server", "role", "user"],
     permLevel: 0,
     botPerms: [],
-    requiredFuncs: [],
+    requiredFuncs: ["userSearch"],
 };
 
 exports.help = {

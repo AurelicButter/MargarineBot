@@ -12,8 +12,8 @@ module.exports = (client, message, user, type) => {
             if (err) { return console.log(err); }
             db.run("INSERT INTO stats (statName, reportNumber) VALUES (?, ?)", ["report", 0]);
         });
-        db.close();
-        return this.run(client, message, user, "add");
+        console.log("Database created!");
+        return db.close();
     } 
 
     if (type === "add") {

@@ -1,5 +1,3 @@
-const moment = require("moment");
-
 exports.run = async (client, message, [status, ...game]) => {
   game = game.join(" ");
 
@@ -11,7 +9,7 @@ exports.run = async (client, message, [status, ...game]) => {
 
   if (game.length < 1) { game = `m~help  | Playing around with ${client.user.username}`; } 
   if (game.toLowerCase() === "null") { game = null; } 
-  else { var Game = `m~help | ${game}`; }
+  else { game = `m~help | ${game}`; }
 
   client.user.setPresence({ activity: { name: game, type: 0 } }); 
 };

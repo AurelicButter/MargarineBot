@@ -14,7 +14,7 @@ exports.conf = {
     aliases: [],
     permLevel: 0,
     botPerms: ["MANAGE_MESSAGES"],
-    requiredFuncs: [],
+    requiredFuncs: ["userSearch"],
 };
 
 exports.help = {
