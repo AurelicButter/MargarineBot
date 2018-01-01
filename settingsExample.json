@@ -2,6 +2,6 @@
     "token": "<BOT_TOKEN>",
     "ownerID": "<OWNER_ID>",
     "prefix": "<PREFIX>", 
-    "version": "Beta 0.9",
-    "updateDate": "TBD"
+    "version": "Beta 0.8.5",
+    "updateDate": "31 December 2017"
 }
