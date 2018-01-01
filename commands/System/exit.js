@@ -10,7 +10,6 @@ exports.conf = {
   aliases: ["sleep"],
   permLevel: 10,
   botPerms: [], 
-  requiredFuncs: [],
 };
   
 exports.help = {

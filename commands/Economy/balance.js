@@ -16,10 +16,11 @@ exports.run = async (client, message, [member]) => {
 
         const embed = new client.methods.Embed()
             .setTimestamp()
-            .setAuthor(message.guild.name, message.guild.iconURL())
+            .setFooter(message.guild.name, message.guild.iconURL())
             .setThumbnail(user.avatarURL())
-            .setColor("#4d5fd")
-            .addField("User:", `${user.username} (${user.id})`)
+            .setColor(0x04d5fd)
+            .setAuthor(`User: ${user.username}`, user.avatarURL())
+            .setDescription(`ID: ${user.id}`)
             .addField("Credits:", (row.credits).toLocaleString(), true);
             if (Time >= 14) { embed.addField("Last Daily:", `${(Time / 7).toFixed(3)} weeks ago`, true); }
             else if (Time >= 1) { embed.addField("Last Daily:", `${Time} days ago`, true); }
@@ -40,7 +41,7 @@ exports.conf = {
     aliases: ["bal", "credits", "profile"],
     permLevel: 0,
     botPerms: [],
-    requiredFuncs: [],
+    requiredFuncs: ["userSearch"],
 };
   
 exports.help = {

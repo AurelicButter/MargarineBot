@@ -14,9 +14,7 @@ const permStructure = new Komada.PermLevels()
     return adminRole && msg.member.roles.has(adminRole.id);
   })
   .addLevel(4, false, (client,msg) => msg.guild && msg.author.id === msg.guild.owner.id)
-  //.addLevel(6, false, (client,msg) => <Detect people on a JSON array list for Support Team>)
-  //.addLevel(8, false, (client,msg) => <Detect people on a JSON array list for Developers>)
-  .addLevel(9, false, (client,msg) => msg.author.id === "347268970312892416")
+  .addLevel(9, false, (client,msg) => msg.author.id === config.secondary)
   .addLevel(10, false, (client,msg) => msg.author === client.owner);
 
 const client = new Komada.Client({

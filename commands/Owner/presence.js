@@ -1,28 +1,17 @@
-const moment = require("moment");
-
 exports.run = async (client, message, [status, ...game]) => {
   game = game.join(" ");
 
   client.user.setStatus(status);
 
   if (game === "list") {
-    return message.reply("Here are the possible terms that you can use for my presence. `status` will just change my status colour. Not defining a second arguement will bring my status back to the way it would be when I first start up. `null` will make my status blank.");
+    return message.reply("Here are the possible terms that you can use for my presence. Not defining a second arguement will bring my status back to the way it would be when I first start up. `null` will make my status blank.");
   }
 
-  if (game.length < 1) { 
-    console.log(`[${moment().format("YYYY-MM-DD HH:mm")}] Presence has been set to ${status} with the default game status.`);
-    return client.user.setPresence({ activity: { name: `m~help  | Playing around with Butter on ${client.guilds.size} servers`, type: 0 } }); 
-  } if (game === "status") {
-    return console.log(`[${moment().format("YYYY-MM-DD HH:mm")}] Status changed to ${status}.`);
-  } if (game.toLowerCase() === "null") {
-    game = null;
-    client.user.setPresence({ activity:  { name: game, type: 0 } });
-    return console.log(`[${moment().format("YYYY-MM-DD HH:mm")}] Presence has been set to ${status} while setting the game back to default.`);  
-  } else {
-    var Game = `m~help | ${game} on ${client.guilds.size} servers`;
-    client.user.setPresence({ activity: { name: Game, type: 0 } }); 
-    return console.log(`[${moment().format("YYYY-MM-DD HH:mm")}] Presence has been set to ${status} while playing ${Game}.`);
-  }
+  if (game.length < 1) { game = `m~help  | Playing around with ${client.user.username}`; } 
+  if (game.toLowerCase() === "null") { game = null; } 
+  else { game = `m~help | ${game}`; }
+
+  client.user.setPresence({ activity: { name: game, type: 0 } }); 
 };
 
 exports.conf = {
@@ -31,7 +20,6 @@ exports.conf = {
     aliases: [],
     permLevel: 9,
     botPerms: [],
-    requiredFuncs: [],
 };
   
   exports.help = {

@@ -8,10 +8,9 @@ exports.run = async (client, message) => {
 exports.conf = {
     enabled: true,
     runIn: ["text"],
-    aliases: [""],
+    aliases: [],
     permLevel: 0,
     botPerms: [],
-    requiredFuncs: [],
 };
       
 exports.help = {

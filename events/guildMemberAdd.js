@@ -1,11 +1,11 @@
-const moment = require("moment");
-
 exports.run = (client, guild) => {
-  var Guild = guild.guild;
-  var member = guild.user;
+  if (!client.settings.guilds.schema.welcomeChannel) { 
+    client.funcs.confAdd(client); 
+  } if (client.settings.guilds.schema.welcomeChannel === null) { 
+    var channel = client.funcs.defaultChannel(client, guild.guild); 
+  } if (client.settings.guilds.schema.welcomeChannel !== null) { 
+    var channel = guild.guild.channels.find("id", guild.guild.settings.welcomeChannel); 
+  }
 
-  var Channel = client.funcs.defaultChannel(client, Guild);
-
-  console.log(`[${moment().format("YYYY-MM-DD HH:mm")}] New User at ${Guild.name}!`);
-  client.channels.get(Channel.id).send(`${member.username} is buttered up and has joined the server!`); 
+  client.channels.get(channel.id).send(`${guild.user.username} is buttered up and has joined the server!`); 
 };

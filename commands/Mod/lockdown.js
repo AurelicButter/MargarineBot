@@ -2,26 +2,21 @@ const ms = require("ms");
 
 exports.run = async (client, message, [time, reason]) => {
   if (!client.lockit) { client.lockit = []; }
-  let validUnlocks = ["release", "unlock"];
-  let checked = message.channel.permissionsFor(message.author.id).has("MUTE_MEMBERS");
-
+  let validUnlocks = ["release", "unlock", "u"];
   if (!time) { return message.reply("I need a set time to lock the channel down for!"); }
 
-  const Lockembed = new client.methods.Embed()
+  const embed = new client.methods.Embed()
     .setColor(0xDD2E44)
-    .setTimestamp()
-    .setTitle("🔒 LOCKDOWN NOTICE 🔒")
+    .setTimestamp();
+
+  const Lockembed = embed.setTitle("🔒 LOCKDOWN NOTICE 🔒")
     .setDescription(`This channel has been lockdown by ${message.author.tag} for ${time}`);
     if (reason != null) { Lockembed.addField("Reason: ", reason); }
 
-  const Unlockembed = new client.methods.Embed()
-    .setColor(0xDD2E44)
-    .setTimestamp()
-    .setTitle("🔓 LOCKDOWN NOTICE 🔓")
+  const Unlockembed = embed.setTitle("🔓 LOCKDOWN NOTICE 🔓")
     .setDescription("This channel is now unlocked.");
 
-  //Permissions check
-  if (checked === false) { 
+  if (message.channel.permissionsFor(message.author.id).has("MUTE_MEMBERS") === false) { 
     const embed = new client.methods.Embed()
         .setColor(0xDD2E44)
         .setTimestamp()
@@ -30,7 +25,6 @@ exports.run = async (client, message, [time, reason]) => {
     return message.channel.send({embed});  
   }  
 
-  //Action
   if (validUnlocks.includes(time)) {
     message.channel.overwritePermissions(message.guild.id, { SEND_MESSAGES: null }).then(() => {
       message.channel.send({embed: Unlockembed});

@@ -1,12 +1,12 @@
 module.exports = (client, guild) => {
-    let Channel = null;
+    if (!client.settings.guilds.schema.defaultChannel) { client.funcs.confAdd(client); }
   
-    if (guild.channels.exists("name", "general")) { Channel = guild.channels.find("name", "general"); }
-    if (guild.channels.exists("name", "off_topic")) { Channel = guild.channels.find("name", "off_topic"); } 
-    if (guild.channels.exists("id", guild.id)) { Channel = guild.channels.find("id", guild.id); }
-    else { Channel = guild.channels.find(c => c.permissionsFor(guild.me).has("SEND_MESSAGES")); }
+    if (client.settings.guilds.schema.defaultChannel !== null) { var channel = guild.channels.find("id", guild.settings.defaultChannel); }
+    else if (guild.channels.exists("name", "general")) { var channel = guild.channels.find("name", "general"); }
+    else if (guild.channels.exists("id", guild.id)) { var channel = guild.channels.find("id", guild.id); }
+    else { var channel = guild.channels.find(c => c.permissionsFor(guild.me).has("SEND_MESSAGES")); }
   
-    return Channel;
+    return channel;
 };
   
 module.exports.conf = { requiredModules: [] };

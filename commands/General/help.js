@@ -40,14 +40,12 @@ exports.run = async (client, msg, [cmd]) => {
             cmd = client.commands.get(cmd[0]) || client.commands.get(client.aliases.get(cmd[0]));
             if (!cmd) { return msg.send("❌ | Unknown command, please run the help command with no arguments to get a list of categories."); }
     
-            if (!this.runCommandInhibitors(client, msg, cmd)) { return; } // eslint-disable-line
+            if (!this.runCommandInhibitors(client, msg, cmd)) { return; }
             
             if (cmd.conf.permLevel === 0) { var permissionLevel = "Level 0: Everyone"; }
             if (cmd.conf.permLevel === 2) { var permissionLevel = "Level 2: Guild Moderators/Guild Moderator permissions "; }
             if (cmd.conf.permLevel === 3) { var permissionLevel = "Level 3: Guild Admins/Guild Admin permissions"; }
             if (cmd.conf.permLevel === 4) { var permissionLevel = "Level 4: Guild Owners/Guild owner permissions"; }
-            if (cmd.conf.permLevel === 6) { var permissionLevel = "Level 6: Support Team"; }
-            if (cmd.conf.permLevel === 8) { var permissionLevel = "Level 8: Developer Team"; }
             if (cmd.conf.permLevel === 9) { var permissionLevel = "Level 9: Toast & Butter"; }
             if (cmd.conf.permLevel === 10) { var permissionLevel = "Level 10: Bot Owner"; }
 

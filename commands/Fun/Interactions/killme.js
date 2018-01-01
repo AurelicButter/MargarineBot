@@ -13,7 +13,6 @@ exports.conf = {
     aliases: ["kms", "killmepermanently"],
     permLevel: 0,
     botPerms: [],
-    requiredFuncs: [],
 };
       
 exports.help = {

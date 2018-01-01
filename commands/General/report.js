@@ -35,14 +35,14 @@ exports.run = async (client, message) => {
 
     if (message.channel.type === "text"){ await message.reply("I'm going to be asking a couple of questions so I'll be taking this into the DMs."); }
     await message.author.send(text[0]).then(() => {
-        message.author.dmChannel.awaitMessages(m => m.content, { max: 1, time: 60000, errors: ["time"], }).then((collected) => {
+        message.author.dmChannel.awaitMessages(m => m.content, { max: 1, time: 160000, errors: ["time"], }).then((collected) => {
             var type = collected.first().content;
             if (type.toLowerCase() !== reportTypes[type.toLowerCase()].toLowerCase()) { return message.author.send("You have provided me with an invalid type of issue. Please try again with a valid one."); }
             if (reportTypes[type.toLowerCase()] === "Todo" && message.author.id !== client.owner.id) { return message.author.send("You are not able to send todo reports. Only the bot owner can."); }
             else {
                 reports.push(reportTypes[type.toLowerCase()]);
                 message.author.send(text[1]).then(() => {
-                    message.author.dmChannel.awaitMessages(m => m.content, { max: 1, time: 30000, errors: ["time"], }).then((collected) => {
+                    message.author.dmChannel.awaitMessages(m => m.content, { max: 1, time: 130000, errors: ["time"], }).then((collected) => {
                         reports.push(collected.first().content);
                         db.get("SELECT * FROM stats WHERE statName = 'report'", [], (err, row) => {
                             if (err) { return console.log(err); }
@@ -87,7 +87,7 @@ exports.conf = {
     
 exports.help = {
     name: "report",
-    description: "File a report to the bot developers. (ie: Bug, issue, complaint)",
+    description: "File a report to the bot developer. (ie: Bug, issue, complaint)",
     usage: "",
     usageDelim: "",
 };

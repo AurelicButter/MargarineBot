@@ -11,8 +11,8 @@ exports.run = async (client, message, [type]) => {
 
     const embed = new client.methods.Embed()
         .setTimestamp()
-        .setAuthor("Global Leaderboards", message.guild.iconURL())
-        .setColor("#4d5fd");
+        .setFooter("Global Leaderboards", message.guild.iconURL())
+        .setColor(0x04d5fd);
     
     db.all(`SELECT * FROM scores ORDER BY ${types[type.toLowerCase()]} DESC LIMIT 10`, [], (err, rows) => {
         if (err) { return console.log(err); }
@@ -38,7 +38,7 @@ exports.conf = {
     aliases: ["glb"],
     permLevel: 0,
     botPerms: [],
-    requiredFuncs: [],
+    requiredFuncs: ["userSearch"],
 };
   
 exports.help = {
