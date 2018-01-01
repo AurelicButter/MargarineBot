@@ -1,17 +1,19 @@
-exports.run = async (client, message, [member]) => {
+exports.run = async (client, message, [user, note]) => {
     const sqlite3 = require("sqlite3").verbose();
     let db = new sqlite3.Database("./bwd/data/score.sqlite");
+    const prefix = message.guildSettings.prefix || client.config.prefix;
+    var text = message.content.slice(prefix.length + user.length + 5);
 
     db.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`, [], (err, row) => {
         if (err) { console.log(err); }
         if (!row) { return message.reply("You have not redeemed your first daily yet!"); }
         if ((parseInt(row.repDaily) + 86400000) > Date.now()) { return message.reply("You've already have given someone else rep today!"); }
         else { 
-            var user = client.funcs.userSearch(client, message, member);
+            user = client.funcs.userSearch(client, message, user);
             
             if (user.username === undefined) { return; }
-            if (user.bot === true) { return message.channel.send("You can't give reputation to a bot user!"); }
-            if (user.id === message.author.id) { return message.channel.send("You can't give reputation to yourself! That's like saying hire me for your nuclear plant because I'm a high school student!"); }
+            if (user.bot === true) { return message.channel.send("You can't give rep to a bot user!"); }
+            if (user.id === message.author.id) { return message.channel.send("You can't give rep to yourself! That's like saying hire me for your nuclear plant because I'm a high school student!"); }
         
             db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
                 if (err) { console.log(err); }
@@ -19,7 +21,10 @@ exports.run = async (client, message, [member]) => {
                 else {
                     db.run(`UPDATE scores SET rep = ${row.rep + 1} WHERE userId = ${user.id}`);
                     db.run(`UPDATE scores SET repDaily = ${Date.now()} WHERE userId = ${message.author.id}`); 
-                    return message.channel.send(`You have given <@${user.id}> a reputation point!`);
+                    if (note) { 
+                        user.send("Delivery here! Someone has included a note with your rep!\n\n" + text + "\n-" + message.author.tag); 
+                        return message.channel.send(`You have given ${user.tag} a reputation point!`);
+                    } else { return message.channel.send(`You have given <@${user.id}> a reputation point!`); }
                 }
             });
         }
@@ -38,6 +43,6 @@ exports.conf = {
 exports.help = {
     name: "rep",
     description: "Give someone a reputation point!",
-    usage: "[member:str]",
-    usageDelim: "",
+    usage: "[user:str] [note:str] [...]",
+    usageDelim: " ",
 };

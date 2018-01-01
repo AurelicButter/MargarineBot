@@ -12,7 +12,6 @@ exports.conf = {
     aliases: ["echo", "talk"],
     permLevel: 0,
     botPerms: [],
-    requiredFuncs: [],
 };
   
 exports.help = {
@@ -20,5 +19,4 @@ exports.help = {
     description: "Have Margarine echo what you said.",
     usage: "[Message:str]",
     usageDelim: "",
-    extendedHelp: "",
 };

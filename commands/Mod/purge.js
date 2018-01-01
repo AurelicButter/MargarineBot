@@ -7,7 +7,7 @@ exports.run = async (client, message, [Amount, user]) => {
         if (user.username === null) {
             const embed = new client.methods.Embed()
                 .setTimestamp()
-                .setAuthor(guild.name, guild.iconURL())
+                .setAuthor(message.guild.name, message.guild.iconURL())
                 .addField(":x: No User found! :x:");
             return message.channel.send({embed});
         }
