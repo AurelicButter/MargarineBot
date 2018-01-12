@@ -1,6 +1,6 @@
 exports.run = async (client, message, [member, option, amount]) => {
     const sqlite3 = require("sqlite3").verbose();
-    let db = new sqlite3.Database("./bwd/data/score.sqlite");
+    let db = new sqlite3.Database("./assets/data/score.sqlite");
 
     var user = client.funcs.userSearch(client, message, member);
     

@@ -1,5 +1,5 @@
 exports.run = async (client, message, [args]) => {
-    let response = ["Yes", "Maybe", "No", "Try again later", "Possibly", "Absolutely"];
+    let response = ["Yes", "Maybe", "No", "Try again later", "Possibly", "Absolutely", "Probably not", "Outcome is looking good", "Outcome not looking good", "The stars say yes"];
 
     message.channel.send(`${response[~~(Math.random() * response.length)]}, ${message.author.username}.`);    
 };

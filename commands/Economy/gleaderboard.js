@@ -1,6 +1,6 @@
 exports.run = async (client, message, [type]) => {
     const sqlite3 = require("sqlite3").verbose();
-    let db = new sqlite3.Database("./bwd/data/score.sqlite");
+    let db = new sqlite3.Database("./assets/data/score.sqlite");
 
     const types = {
         credits: "Credits",
@@ -14,16 +14,17 @@ exports.run = async (client, message, [type]) => {
         .setFooter("Global Leaderboards", message.guild.iconURL())
         .setColor(0x04d5fd);
     
-    db.all(`SELECT * FROM scores ORDER BY ${types[type.toLowerCase()]} DESC LIMIT 10`, [], (err, rows) => {
+    db.all(`SELECT credits, rep, userID FROM scores ORDER BY ${types[type.toLowerCase()]} DESC`, [], (err, rows) => {
         if (err) { return console.log(err); }
         var x = 1;
         rows.forEach((row) => {
-            var user = client.funcs.userSearch(client, message, row.userID);
+            var user = client.users.find("id", row.userID);
+            user = user ? user.tag : "User abandoned me";
             if (type.toLowerCase() === "credits") {
-                Leaders.push(`${x}) ${user.tag} - ${types[type.toLowerCase()]}: ${row.credits.toLocaleString()}\n`);
+                Leaders.push(`${x}) ${user} - ${types[type.toLowerCase()]}: ${row.credits.toLocaleString()}\n`);
             } if (type.toLowerCase() === "rep") {
-                Leaders.push(`${x}) ${user.tag} - ${types[type.toLowerCase()]}: ${row.rep.toLocaleString()}\n`);
-            }
+                Leaders.push(`${x}) ${user} - ${types[type.toLowerCase()]}: ${row.rep.toLocaleString()}\n`);
+            } if (Leaders.length === 10) { return; }
             x++;
         });
         embed.setDescription(Leaders);
@@ -38,7 +39,6 @@ exports.conf = {
     aliases: ["glb"],
     permLevel: 0,
     botPerms: [],
-    requiredFuncs: ["userSearch"],
 };
   
 exports.help = {

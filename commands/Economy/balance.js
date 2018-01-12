@@ -1,8 +1,8 @@
-exports.run = async (client, message, [member]) => {
+exports.run = async (client, message, [user]) => {
     const sqlite3 = require("sqlite3").verbose();
-    let db = new sqlite3.Database("./bwd/data/score.sqlite");
+    let db = new sqlite3.Database("./assets/data/score.sqlite");
 
-    var user = client.funcs.userSearch(client, message, member);
+    user = client.funcs.userSearch(client, message, user);
     
     if (user.username === undefined) { return; }
     if (user.bot === true) { return message.reply("Bots don't have any records!"); }
@@ -13,6 +13,13 @@ exports.run = async (client, message, [member]) => {
 
         var Time = (((Date.now() - row.daily) / 86400000)).toFixed(3);
         var time = (((Date.now() - row.repDaily) / 86400000)).toFixed(3);
+        if (Time >= 14) { Time = (Time / 7).toFixed(3) + " weeks ago"; }
+        else if (Time >=1) { Time = Time + " days ago"; }
+        else { Time = (Time * 24).toFixed(3) + " hours ago"; }
+
+        if (time >= 14) { time = (time / 7).toFixed(3) + " weeks ago"; }
+        else if (time >=1) { time = time + " days ago"; }
+        else { time = (time * 24).toFixed(3) + " hours ago"; }
 
         const embed = new client.methods.Embed()
             .setTimestamp()
@@ -21,14 +28,10 @@ exports.run = async (client, message, [member]) => {
             .setColor(0x04d5fd)
             .setAuthor(`User: ${user.username}`, user.avatarURL())
             .setDescription(`ID: ${user.id}`)
-            .addField("Credits:", (row.credits).toLocaleString(), true);
-            if (Time >= 14) { embed.addField("Last Daily:", `${(Time / 7).toFixed(3)} weeks ago`, true); }
-            else if (Time >= 1) { embed.addField("Last Daily:", `${Time} days ago`, true); }
-            else { embed.addField("Last Daily:", `${(Time * 24).toFixed(3)} hours ago`, true); }
-            embed.addField("Reputation:", row.rep, true);
-            if (time >= 14) { embed.addField("Last rep given:", `${(time / 7).toFixed(3)} weeks ago`, true); }
-            else if (time >= 1) { embed.addField("Last rep given:", `${time} days ago`, true); }
-            else { embed.addField("Last rep given:", `${(time * 24).toFixed(3)} hours ago`, true); }
+            .addField("Credits:", (row.credits).toLocaleString(), true)
+            .addField("Last Daily:", Time, true)
+            .addField("Reputation:", row.rep, true)
+            .addField("Last Rep:", time, true);
         
         message.channel.send({embed});
     });
@@ -47,6 +50,6 @@ exports.conf = {
 exports.help = {
     name: "balance",
     description: "Check credit amount and the last time the user recieved their daily.",
-    usage: "[member:str]",
+    usage: "[user:str]",
     usageDelim: "",
 };

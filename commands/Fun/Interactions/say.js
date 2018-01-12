@@ -1,5 +1,5 @@
-exports.run = (client, message, [Message]) => { 
-    if (!Message) { return message.reply("You need to provide a message."); }
+exports.run = (client, message, [Msg]) => { 
+    if (!Msg) { return message.reply("You need to provide a message."); }
     
     message.delete().catch();
     if (message.author.id === client.owner.id) { return message.channel.send(Message); }

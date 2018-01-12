@@ -12,7 +12,7 @@ exports.run = async (client, message, [kind, search]) => {
 
     const embed = new client.methods.Embed()
         .setTimestamp()
-        .setAuthor(guild.name, guild.iconURL());
+        .setFooter(guild.name, guild.iconURL());
 
     if (kind === "user") { 
         let user = client.funcs.userSearch(client, message, User);
@@ -27,20 +27,18 @@ exports.run = async (client, message, [kind, search]) => {
             dnd: "Do not Disturb"
         };
 
-        var Status = statusList[user.presence.status];
-        if (!Status) { var Status = "Offline"; } 
+        var Status = statusList[user.presence.status] ? statusList[user.presence.status]: "Offline";
+        var botUser = user.bot ? "True": "False";
+        var activity = user.presence.activity !== null ? Status + " - " + user.presence.activity.name: Status;
         
         embed.setThumbnail(user.avatarURL())
-        .setColor("#4d5fd")
-        .addField("User:", `${user.tag} - ${user.id}`)
+        .setColor(0x04d5fd)
+        .setAuthor("User: " + user.tag)
+        .setDescription("ID: " + user.id)
         .addField("Created:", user.createdAt.toLocaleString(), true)
-        .addField("Joined:", guild.members.get(user.id).joinedAt.toLocaleString(), true);
-
-        if (user.bot === true) { embed.addField("Bot user:", "True", true); } 
-        else { embed.addField("Bot user:", "False", true); }
-
-        if (user.presence.activity === null) { embed.addField("Status:", Status, true); } 
-        else { embed.addField("Status:", `${Status} - ${user.presence.activity.name}`, true); }
+        .addField("Joined:", guild.members.get(user.id).joinedAt.toLocaleString(), true)
+        .addField("Bot user:", botUser, true)
+        .addField("Status:", activity, true);
     }
 
     else if (kind === "role") { 
@@ -58,7 +56,7 @@ exports.run = async (client, message, [kind, search]) => {
     else if (kind === "server") {
         if (!User) { 
             embed.setThumbnail(guild.iconURL())
-            .setColor("#4d5fd")
+            .setColor(0x04d5fd)
             .addField("Region:", guild.region, true)
             .addField("Created:", guild.createdAt.toLocaleString(), true)
             .addField("Owner:", `${guild.owner.user.tag} - ${guild.owner.id}`)
@@ -84,6 +82,7 @@ exports.help = {
   name: "info",
   description: "Get the server or user information.",
   usage: "[server|user|role] [search:str]",
-  usageDelim: "",
+  usageDelim: " ",
   extendedHelp: "If using one of the aliases, you can skip [server|user|role] and define your search item!",
+  humanUse: "([If not specified] server|user|role)_(search content)"
 };

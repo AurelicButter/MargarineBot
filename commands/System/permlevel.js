@@ -10,14 +10,16 @@ exports.run = async (client, message) => {
         else if (client.permStructure[i].check(client, message)) { var permLevel = i; }
     }
 
-    if (permLevel === 0) { var permissionLevel = "level 0: Everyone"; }
-    if (permLevel === 2) { var permissionLevel = "level 2: Guild Moderators"; }
-    if (permLevel === 3) { var permissionLevel = "level 3: Guild Admins"; }
-    if (permLevel === 4) { var permissionLevel = "level 4: Guild Owners"; }
-    if (permLevel === 6) { var permissionLevel = "level 6: Support Team"; }
-    if (permLevel === 8) { var permissionLevel = "level 8: Developer Team"; }
-    if (permLevel === 9) { var permissionLevel = "level 9: Toast & Butter"; }
-    if (permLevel === 10) { var permissionLevel = "level 10: Bot Owner"; }
+    var permissionLevel = [
+      "Level 0: Everyone",
+      "Level 1: Placeholder",
+      "Level 2: Guild Moderators",
+      "Level 3: Guild Admins",
+      "Level 4: Guild Owners",
+      "Level 5: Placeholder", "Level 6: Placeholder", "Level 7: Placeholder", "Level 8: Placeholder",
+      "Level 9: Toast & Butter",
+      "Level 10: Bot Owner"
+    ];
 
     if (addPerms === 4) { var addPerms = "with guild owner permissions"; }
     if (addPerms === 3) { var addPerms = "with guild admin permissions"; }
@@ -25,7 +27,7 @@ exports.run = async (client, message) => {
     if (addPerms === 0) { var addPerms = "with no additional permissions"; }
     if (!addPerms) { var addPerms = ""; }
 
-    message.channel.send(`Your permission level is ${permissionLevel} ${addPerms}`);
+    message.channel.send(`Your permission level is ${permissionLevel[permLevel]} ${addPerms}`);
 };
   
 exports.conf = {

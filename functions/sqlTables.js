@@ -1,6 +1,6 @@
 module.exports = (client, message, user, type) => {
     const sqlite3 = require("sqlite3").verbose();
-    let db = new sqlite3.Database("./bwd/data/score.sqlite");
+    let db = new sqlite3.Database("./assets/data/score.sqlite");
 
     if (type === "init") {
         db.run("CREATE TABLE IF NOT EXISTS scores (userId TEXT, credits INTEGER, level INTEGER, daily TEXT, rep INTEGER, repDaily TEXT)");

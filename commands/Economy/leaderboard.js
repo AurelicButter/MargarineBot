@@ -1,6 +1,6 @@
 exports.run = async (client, message, [type]) => {
     const sqlite3 = require("sqlite3").verbose();
-    let db = new sqlite3.Database("./bwd/data/score.sqlite");
+    let db = new sqlite3.Database("./assets/data/score.sqlite");
 
     const types = {
         credits: "Credits",
@@ -12,15 +12,14 @@ exports.run = async (client, message, [type]) => {
     const embed = new client.methods.Embed()
         .setTimestamp()
         .setFooter(`${message.guild.name} Leaderboards`, message.guild.iconURL())
-        .setColor(0x04d5fd)
-        .setThumbnail(message.guild.iconURL());
+        .setColor(0x04d5fd);
     
-    db.all(`SELECT * FROM scores ORDER BY ${types[type.toLowerCase()]} DESC LIMIT 15`, [], (err, rows) => {
+    db.all(`SELECT credits, rep, userID FROM scores ORDER BY ${types[type.toLowerCase()]} DESC`, [], (err, rows) => {
         if (err) { return console.log(err); }
         var x = 1;
         rows.forEach((row) => {
             var user = message.guild.members.find("id", `${row.userID}`);
-            if (user === null) { x = x + 0; } 
+            if (user === null) { x = x; } 
             else if (x < 10 && user !== null) { 
                 if (type.toLowerCase() === "credits") {
                     Leaders.push(`${x}) ${user.user.username} - ${types[type.toLowerCase()]}: ${row.credits.toLocaleString()}\n`);

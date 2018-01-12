@@ -1,16 +1,15 @@
-module.exports = (client, message, User) => {
+module.exports = (client, message, user) => {
     let guild = message.guild;
 
-    if (User == null) { user = message.author; }
-
-    if (User != null && message.mentions.users.size === 0) {
-        user = client.users.find("id", `${User}`);
+    if (user == null) { user = message.author; }
+    else if (user != null && message.mentions.users.size === 0) {
+        user = client.users.find("id", `${user}`);
 
         if (user == null) {
-            user = client.users.find("username", `${User}`);
+            user = client.users.find("username", `${user}`);
             
-            if (user == null) {
-                var user = guild.members.find("nickname", `${User}`);
+            if (user == null && guild !== undefined) {
+                user = guild.members.find("nickname", `${user}`);
                 if (user) { user = user.user; }
                 else { user = null; }
             }
