@@ -1,4 +1,5 @@
-exports.run = async (client, msg, [cmd]) => {
+/* Base command is from the default Komada help command. This has been modified a bit */
+exports.run = async (client, msg, [cmd, mod]) => {
     const method = client.user.bot ? "author" : "channel";
     const help = this.buildHelp(client, msg);
     const categories = Object.keys(help);
@@ -9,22 +10,17 @@ exports.run = async (client, msg, [cmd]) => {
         for (let cat = 0; cat < categories.length; cat++) { helpMessage.push(`- ${categories[cat]}`); }
         
         const embed = new client.methods.Embed()
-            .setColor("#4d5fd")
+            .setColor(0x04d5fd)
             .setTitle(`${client.user.username}'s Command Categories`)
             .setDescription("*Do " + `\`${prefix}help module <module name>\`` + " for category commands.*")
             .addField("Categories:", helpMessage);
         return msg.send({embed});
     } if (cmd) {
-        cmd = msg.content.slice(prefix.length + 5).split(" ");
-        Array.from(cmd);
-
-        if (cmd[2]) { return msg.send("You have provided too many words. All categories are one word. Why do you give me two?"); }
-
-        if (cmd[0] === "categories" || cmd[0] === "modules" || cmd[0] === "category" || cmd[0] === "module") {
-            if (!cmd[1]) { return msg.send("You did not supply me with a category!"); }
+        if (cmd === "category" || cmd === "module") {
+            if (!mod) { return msg.send("You did not supply me with a category!"); }
     
             for (let cat = 0; cat < categories.length; cat++) {
-                if (categories[cat].toLowerCase() === cmd[1].toLowerCase()) {
+                if (categories[cat].toLowerCase() === mod.toLowerCase()) {
                     helpMessage.push(`**${categories[cat]} Commands**: \`\`\`asciidoc`);
                     const subCategories = Object.keys(help[categories[cat]]);
                     for (let subCat = 0; subCat < subCategories.length; subCat++) {
@@ -34,28 +30,37 @@ exports.run = async (client, msg, [cmd]) => {
     
                     msg.send(helpMessage, { split: { char: "\u200b" } }); break;
                 }
-                if (Number(cat) + 1 === Number(categories.length)) { msg.send("The category you were looking for does not exist."); break; }
+                if (Number(cat) + 1 === categories.length) { msg.send("The category you were looking for does not exist."); break; }
             }
         } else {
-            cmd = client.commands.get(cmd[0]) || client.commands.get(client.aliases.get(cmd[0]));
+            cmd = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
             if (!cmd) { return msg.send("❌ | Unknown command, please run the help command with no arguments to get a list of categories."); }
     
             if (!this.runCommandInhibitors(client, msg, cmd)) { return; }
-            
-            if (cmd.conf.permLevel === 0) { var permissionLevel = "Level 0: Everyone"; }
-            if (cmd.conf.permLevel === 2) { var permissionLevel = "Level 2: Guild Moderators/Guild Moderator permissions "; }
-            if (cmd.conf.permLevel === 3) { var permissionLevel = "Level 3: Guild Admins/Guild Admin permissions"; }
-            if (cmd.conf.permLevel === 4) { var permissionLevel = "Level 4: Guild Owners/Guild owner permissions"; }
-            if (cmd.conf.permLevel === 9) { var permissionLevel = "Level 9: Toast & Butter"; }
-            if (cmd.conf.permLevel === 10) { var permissionLevel = "Level 10: Bot Owner"; }
 
+            var permissionLevel = [
+                "Level 0: Everyone",
+                "Level 1: Placeholder",
+                "Level 2: Guild Moderators/Guild Moderator permissions",
+                "Level 3: Guild Admins/Guild Admin permissions",
+                "Level 4: Guild Owners/Guild owner permissions",
+                "Level 5: Placeholder", "Level 6: Placeholder", "Level 7: Placeholder", "Level 8: Placeholder",
+                "Level 9: Toast & Butter",
+                "Level 10: Bot Owner"
+            ];
+
+            var usage = cmd.help.humanUse || cmd.help.usage;
+            var spliter = cmd.help.humanUse ? "_": " ";
+            var usageAct = usage.length < 1 ? "": usage.split(spliter).join(cmd.help.usageDelim);
+            var alias = cmd.conf.aliases.length > 1 ? ` aka: (${cmd.conf.aliases.join(", ")})`: "";
+            
             const embed = new client.methods.Embed()
-                .setColor("#4d5fd")
-                .setTitle(cmd.help.name)
+                .setColor(0x04d5fd)
+                .setTitle(cmd.help.name + alias)
                 .setDescription(cmd.help.description)
-                .addField("Usage:", `\`${cmd.usage.fullUsage(msg)}\``)
-                .addField("Permission level:", permissionLevel)
-                .addField("Extended Help:", cmd.help.extendedHelp || "No extended help is available");
+                .addField("Usage:", `\`${prefix + cmd.help.name + " " + usageAct}\``)
+                .addField("Permission level:", permissionLevel[cmd.conf.permLevel]);
+            if (cmd.help.extendedHelp) { embed.addField("Extended Help:", cmd.help.extendedHelp); }
             return msg.send({embed});
         }
     }
@@ -74,8 +79,9 @@ exports.conf = {
 exports.help = {
     name: "help",
     description: "Display help for a command.",
-    usage: "[command:str]",
-    usageDelim: "",
+    usage: "[command:str] [mod:str]",
+    usageDelim: " ",
+    humanUse: "(command|module)_ ([If module] command)"
 };
   
 /* eslint-disable no-restricted-syntax, no-prototype-builtins */

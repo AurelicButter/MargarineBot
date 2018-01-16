@@ -29,4 +29,5 @@ exports.help = {
     description: "Play Rock, Paper, Scissors!",
     usage: "<paper|scissors|rock> [user:str]",
     usageDelim: " ",
+    humanUse: "(paper|scissors|rock) (user)"
 };

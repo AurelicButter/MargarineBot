@@ -22,7 +22,8 @@ exports.run = async (client, message, [action, kind, amount]) => {
                     ["trash", "common", "uncommon", "rare", "epic"],
                     ["some trash and threw it out", "a common fish. A bit small but still good", "an uncommon catch. This will catch some decent credits", "a rare catch! This will fund your gambling habits for awhile", "an epic fish! O: That's bound to buy you a house *(No guarantees)*"],
                     [":wastebasket:", ":fish:", ":crab:", ":squid:", ":shark:"],
-                    ["You have lost 10 credits", "You have placed the fish in your inventory"]
+                    ["You have lost 10 credits", "You have placed the fish in your inventory"],
+                    [row.trash, row.common, row.uncommon, row.rare, row.epic]
                 ];
                 
                 if (0 < die && die < .5) { var results = 0; } 
@@ -31,44 +32,29 @@ exports.run = async (client, message, [action, kind, amount]) => {
                 if (.88 < die && die < .98) { var results = 3; } 
                 if (.98 < die && die < 1) { var results = 4; }
 
-                var Fisherbot = die > .5 ? 1:0;
+                var Fisherbot = die > .5 ? 1 : 0;
 
                 var kind = Fisher[0][results];
                 var text = Fisher[1][results];
                 var image = Fisher[2][results];
                 var result = Fisher[3][Fisherbot];
+                var amount = Number(Fisher[4][results]) + 1;
                 
                 db.get(`SELECT * FROM fish_inv WHERE userId = "${user.id}"`, [], (err, row) => {
                     if (err) { return console.log(err); }
                     if (!row) { 
                         return message.reply("Error in finding your information. Fish_inv table is lacking your id!");    
-                    } else if (kind === "common") {
-                        db.run(`UPDATE fish_inv SET common = ${row.common + 1} WHERE userId = ${user.id}`); 
-                    } else if (kind === "uncommon") {
-                        db.run(`UPDATE fish_inv SET uncommon = ${row.uncommon + 1} WHERE userId = ${user.id}`); 
-                    } else if (kind === "rare") {
-                        db.run(`UPDATE fish_inv SET rare = ${row.rare + 1} WHERE userId = ${user.id}`); 
-                    } else if (kind === "epic") {
-                        db.run(`UPDATE fish_inv SET epic = ${row.epic + 1} WHERE userId = ${user.id}`); 
-                    }
+                    } 
+                    else if (kind !== "trash") { db.run(`UPDATE fish_inv SET ${kind} = ${amount} WHERE userId = ${user.id}`); }
                 });
                 
                 db.get(`SELECT * FROM fish_stats WHERE userId = "${user.id}"`, [], (err, row) => {
                     if (err) { return console.log(err); }
                     if (!row) { 
                         return message.reply("Error in finding your information. Fish_stats table is lacking your id!");    
-                    } else if (kind === "common") {
-                        db.run(`UPDATE fish_stats SET common = ${row.common + 1} WHERE userId = ${user.id}`); 
-                    } else if (kind === "uncommon") {
-                        db.run(`UPDATE fish_stats SET uncommon = ${row.uncommon + 1} WHERE userId = ${user.id}`); 
-                    } else if (kind === "rare") {
-                        db.run(`UPDATE fish_stats SET rare = ${row.rare + 1} WHERE userId = ${user.id}`); 
-                    } else if (kind === "epic") {
-                        db.run(`UPDATE fish_stats SET epic = ${row.epic + 1} WHERE userId = ${user.id}`); 
-                    } else if (kind === "trash") {
-                        db.run(`UPDATE fish_stats SET trash = ${row.trash + 1} WHERE userId = ${user.id}`);
                     }
-                
+                        
+                    db.run(`UPDATE fish_stats SET ${kind} = ${amount} WHERE userId = ${user.id}`); 
                     return message.channel.send(`${user.username}, you have caught ${text}. ${image} ${result}.`);
                 });
             }

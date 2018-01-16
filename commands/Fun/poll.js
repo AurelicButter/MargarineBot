@@ -36,4 +36,5 @@ exports.help = {
     description: "Poll users",
     usage: "[question:str] [option1:str] [option2:str] [option3:str] [option4:str] [option5:str]",
     usageDelim: " | ",
+    humanUse: "(question) (option1) (option2) (etc...->option5)"
 };

@@ -1,8 +1,6 @@
 exports.run = async (client, message) => {
-    let y = Math.random();
-
-    if (y > 0.5) { return message.channel.send("Heads!"); }
-    else { return message.channel.send("Tails!"); }
+    let y = Math.random() > .5 ? "Heads!": "Tails!";
+    message.channel.send(y);
 };
 
 exports.conf = {

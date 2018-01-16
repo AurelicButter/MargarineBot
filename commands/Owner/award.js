@@ -1,6 +1,6 @@
 exports.run = async (client, message, [user, credit, text]) => {
     const sqlite3 = require("sqlite3").verbose();
-    let db = new sqlite3.Database("./bwd/data/score.sqlite");
+    let db = new sqlite3.Database("./assets/data/score.sqlite");
 
     var user = client.funcs.userSearch(client, message, user);
     
@@ -59,7 +59,7 @@ exports.conf = {
     aliases: [],
     permLevel: 10,
     botPerms: [],
-    requiredFuncs: [],
+    requiredFuncs: ["userSearch"],
 };
   
 exports.help = {
