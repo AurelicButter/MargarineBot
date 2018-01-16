@@ -1,5 +1,5 @@
 exports.run = async (client, message) => {
-  const config = require("../../settings.json");
+  const config = require("../../assets/settings/settings.json");
   const prefix = message.guildSettings.prefix || config.prefix;
   
   const embed = new client.methods.Embed()

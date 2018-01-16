@@ -15,7 +15,7 @@ exports.run = async (client, message) => {
 
     const text = [
         "Alright. Let's get to the point. First question: What kind of issue is this?\nPlease answer `issue`, `bug`, `complaint`, `suggestion`, or `improvement`",
-        "Next: Please provide a decently sized message explaining what is wrong."
+        "Next: Please provide a decently sized message explaining the item."
     ];
 
     const issue = [

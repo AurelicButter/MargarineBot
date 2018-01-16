@@ -23,7 +23,7 @@ exports.conf = {
     aliases: [],
     permLevel: 10,
     botPerms: [],
-    requiredFuncs: [],
+    requiredFuncs: ["userSearch"],
 };
   
 exports.help = {

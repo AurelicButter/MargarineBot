@@ -52,7 +52,7 @@ exports.run = async (client, msg, [cmd, mod]) => {
             var usage = cmd.help.humanUse || cmd.help.usage;
             var spliter = cmd.help.humanUse ? "_": " ";
             var usageAct = usage.length < 1 ? "": usage.split(spliter).join(cmd.help.usageDelim);
-            var alias = cmd.conf.aliases.length > 1 ? ` aka: (${cmd.conf.aliases.join(", ")})`: "";
+            var alias = cmd.conf.aliases.length > 0 ? ` aka: (${cmd.conf.aliases.join(", ")})`: "";
             
             const embed = new client.methods.Embed()
                 .setColor(0x04d5fd)

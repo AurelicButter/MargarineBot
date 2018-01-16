@@ -7,8 +7,10 @@ jspm_packages/
 
 .vs/
 .vscode/
-settings.json
 bwd/
 Storage/
 package-lock.json
-assets/data/score.sqlite
+assets/data/
+assets/images
+assets/fonts
+assets/settings/settings.json

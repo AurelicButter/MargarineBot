@@ -1,10 +1,11 @@
+/* Base command taken from Komada. Modified slightly*/
 const { version: discordVersion } = require("discord.js");
 const { version: komadaVersion } = require("komada");
 const moment = require("moment");
 require("moment-duration-format");
 
 exports.run = async (client, message) => {
-  const config = require("../../settings.json");
+  const config = require("../../assets/settings/settings.json");
   const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
   message.channel.send(`= GENERAL =
 • Margarine  :: ${config.version}
