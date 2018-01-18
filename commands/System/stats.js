@@ -35,5 +35,4 @@ exports.help = {
   name: "stats",
   description: "Provides some details about the bot and stats.",
   usage: "",
-  usageDelim: "",
 };

@@ -16,7 +16,7 @@ exports.run = async (client, message, [user, note]) => {
         if (!row) { return message.reply("You have not redeemed your first daily yet!"); }
         if ((parseInt(row.repDaily) + 86400000) > Date.now()) { return message.reply("You've already have given someone else rep today!"); }
         else {        
-            db.get(`SELECT repDaily, rep FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
+            db.get(`SELECT rep FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
                 if (!row) { return message.channel.send("That user has not gotten their first daily to start off with so you can not give them any rep at the moment. :cry:"); } 
                 else {
                     db.run(`UPDATE scores SET rep = ${row.rep + 1} WHERE userId = ${user.id}`);

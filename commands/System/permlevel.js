@@ -42,5 +42,4 @@ exports.help = {
   name: "permlevel",
   description: "Check your permission level.",
   usage: "",
-  usageDelim: "",
 };

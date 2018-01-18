@@ -25,9 +25,7 @@ module.exports = (client, message, action, user, reason) => {
       .setThumbnail(message.author.avatarURL());
   }
 
-  const DMembed = new client.methods.Embed()
-    .setColor(color)
-    .setTimestamp()
+  const DMembed = embed.setColor(color)
     .setTitle("Moderator Message:")
     .setDescription(`You have been ${past} from ${message.guild.name}!\n**Reason:** ${reason}`);
 

@@ -26,7 +26,7 @@ exports.run = async (client, message, [user]) => {
             if ((Number(row.daily) + 86400000) > Date.now()) { return message.reply("You have already redeemed your daily for today."); }
         });
 
-        db.get(`SELECT daily, credits FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
+        db.get(`SELECT credits FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
             if (!row) { return message.channel.send("That user has not gotten their first daily to start off with so you can not give them any credits at the moment. :cry:"); } 
             else {
                 var credit = Number((100 * (1 + Math.random())).toFixed(0)); 

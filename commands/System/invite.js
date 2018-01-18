@@ -15,5 +15,4 @@ exports.help = {
     name: "invite",
     description: "Displays the join server link of the bot.",
     usage: "",
-    usageDelim: "",
 };

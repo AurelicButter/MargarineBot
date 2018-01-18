@@ -12,7 +12,7 @@ exports.run = async (client, message, [credit, bet]) => {
         if (!row) { return message.reply("You haven't signed up and received your credits yet! D: Use `m~daily` (Using default prefix) to earn your first amount of credits."); } 
         if (row.credits < credit) { return message.reply("You don't have that many credits, baka!"); }
 
-        let rolls = []; var result;
+        let rolls = [];
         for (var z = 0; z < 6; z++) {
             var x = Math.floor(Math.random() * (Math.floor(6) - Math.ceil(1) + 1)) + Math.ceil(1);
             rolls.push(x);
@@ -21,11 +21,11 @@ exports.run = async (client, message, [credit, bet]) => {
         var sum = rolls[0] + rolls[1] + rolls[2] + rolls[3] + rolls[4] + rolls[5];
 
         if ((sum%2 === 0 && bet === "even") || (sum%2 !== 0 && bet === "odd")) {
-            result = "won";
-            credit = Number(credit * .5).toFixed(0);
+            var result = "won";
+            credit = (credit * .5).toFixed(0);
         } else {
-            result = "lost";
-            credit = Number(credit * -1);
+            var result = "lost";
+            credit = credit * -1;
         }
         db.run(`UPDATE scores SET credits = ${Number(row.credits) + credit} WHERE userId = ${message.author.id}`);
         message.channel.send(`**Sum:** ${sum} \n**Your Guess:** ${bet} \n*You have ${result} ${Math.abs(credit)} credits.*`);

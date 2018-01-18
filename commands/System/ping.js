@@ -16,5 +16,4 @@ exports.help = {
   name: "ping",
   description: "Ping/Pong command.",
   usage: "",
-  usageDelim: "",
 };
