@@ -1,4 +1,5 @@
 exports.run = async (client, message, [Name, ID]) => {
+    const prefix = message.guild.settings.prefix || client.config.prefix;
     message.delete();   
     if (!Name) { return message.channel.send("You need to give me an emoji!").then(Message => {
         setTimeout(() => { Message.delete(); }, 4000);
@@ -9,15 +10,13 @@ exports.run = async (client, message, [Name, ID]) => {
         setTimeout(() => { Message.delete(); }, 4000);
     }); }
     
-    else if (message.content.slice(message.guild.settings.prefix.length).startWith("react")) {
+    else if (message.content.slice(prefix.length).startsWith("react")) {
         if (!ID) { return message.channel.send("You need to specify a message's ID so that I can find it!").then(Message => {
             setTimeout(() => { Message.delete(); }, 4000);
         }); }
 		message.channel.messages.fetch(ID).then(msg => msg.react(emote)); 
     } else { 
-        console.log(emote);
-        var fileType = emote.url.endsWith(".gif") ? "gif" : "png";
-        return message.channel.send("", { files: [`https://cdn.discordapp.com/emojis/${emote.id}.${fileType}`]}); 
+        return message.channel.send("", { files: [emote.url]}); 
     }
 };
 

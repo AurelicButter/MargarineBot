@@ -1,15 +1,18 @@
-exports.run = async (client, message, [status, game]) => {
+exports.run = async (client, message, [status, game, type]) => {
   client.user.setStatus(status);
 
-  if (game === "list") {
-    return message.reply("Here are the possible terms that you can use for my presence. Not defining a second arguement will bring my status back to the way it would be when I first start up. `null` will make my status blank.");
-  }
+  const list = {
+    play: "PLAYING", 
+    stream: "STREAMING", 
+    listen: "LISTENING", 
+    watch: "WATCHING"
+  };
 
   if (!game) { game = `Playing around with ${client.owner.username}`; } 
   if (game.toLowerCase() === "null") { game = null; } 
   else { game = `m~help | ${game}`; }
 
-  client.user.setPresence({ activity: { name: game, type: 0 } }); 
+  client.user.setPresence({ activity: { name: game, type: list[type] } }); 
 };
 
 exports.conf = {
@@ -23,7 +26,7 @@ exports.conf = {
 exports.help = {
   name: "presence",
   description: "Sets Margarine's status entirely",
-  usage: "<online|idle|dnd|invisible> [game:str]",
+  usage: "<online|idle|dnd|invisible> [game:str] [play|stream|listen|watch]",
   usageDelim: " | ",
-  humanUse: "(online|idle|dnd|invisible)_(game)"
+  humanUse: "(online|idle|dnd|invisible)_(game)_(play|stream|listen|watch)"
 };
