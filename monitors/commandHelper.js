@@ -5,16 +5,19 @@ exports.conf = {
 };
   
 exports.run = (client, msg) => {
-	if (msg.content === "/shrug") { 
-        msg.delete();
-        msg.channel.send("*" + msg.author.tag + "*: ¯\\_(ツ)_/¯"); 
-    }
-	if (msg.content === "/tableflip") { 
-        msg.delete();
-        msg.channel.send("*" + msg.author.tag + "*: (╯°□°）╯︵ ┻━┻"); 
-    }
-	if (msg.content === "/unflip") { 
-        msg.delete();
-        msg.channel.send("*" + msg.author.tag + "*: ┬─┬ ノ( ゜-゜ノ)"); 
+    switch (msg.content) {
+        case "/shrug":
+            msg.delete();
+            msg.channel.send("*" + msg.author.tag + "* : ¯\\_(ツ)_/¯"); 
+            break;
+        case "/tableflip":
+            msg.delete();
+            msg.channel.send("*" + msg.author.tag + "* : (╯°□°）╯︵ ┻━┻"); 
+        case "/unflip":
+            msg.delete();
+            msg.channel.send("*" + msg.author.tag + "* : ┬─┬ ノ( ゜-゜ノ)"); 
+        case "/lenny":
+            msg.delete();
+            msg.channel.send("*" + msg.author.tag + "* : ( ͡° ͜ʖ ͡°)")
     }
 };

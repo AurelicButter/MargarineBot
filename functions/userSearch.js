@@ -3,7 +3,7 @@ module.exports = (client, message, user) => {
 
     if (user == null) { user = message.author; }
     else if (user != null && message.mentions.users.size === 0) {
-        user = client.users.find("id", `${user}`);
+        user = client.users.fetch(user);
 
         if (user == null) {
             user = client.users.find("username", `${user}`);

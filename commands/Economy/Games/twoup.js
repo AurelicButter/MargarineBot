@@ -32,15 +32,12 @@ exports.run = async (client, message, [credit]) => {
             earnings = (credit * .8).toFixed(0);
             result = "won";
         } else {
-            earnings = credit;
+            earnings = credit * -1;
             result = "lost";
         }
 
-        if (result === "won") { credit = Number(row.credits) + earnings; }
-        else { credit = Number(row.credits) - earnings; } 
-
-        db.run(`UPDATE scores SET credits = ${credit} WHERE userId = ${message.author.id}`);
-        message.channel.send(`**Coins:** ${rolls.join(", ")}\nYou have ${result} ${earnings} credits.`); 
+        db.run(`UPDATE scores SET credits = ${Number(row.credits) + earnings} WHERE userId = ${message.author.id}`);
+        message.channel.send(`**Coins:** ${rolls.join(", ")}\nYou have ${result} ${Math.abs(earnings)} credits.`); 
     });
     db.close();
 };
@@ -59,4 +56,5 @@ exports.help = {
     usage: "[credits:int]",
     usageDelim: "",
     extendedHelp: "Two-up is a traditional Australian gambling game, involving a designated 'spinner' throwing two coins into the air. Players bet on whether the coins will fall with both heads up, both tails up, or with one head and one tail up (known as 'odds'). It is traditionally played on Anzac Day in pubs and clubs throughout Australia, in part to mark a shared experience with Diggers through the ages.",
+    humanUse: "(Amount of credits)"
 };
