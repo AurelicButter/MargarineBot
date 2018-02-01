@@ -1,6 +1,6 @@
 {
   "name": "margarine",
-  "version": "0.9.0",
+  "version": "0.8.7",
   "description": "Javascript bot using the Komada framework",
   "main": "index.js",
   "dependencies": {
@@ -8,15 +8,15 @@
     "discord.js": "github:hydrabolt/discord.js",
     "ffmpeg": "0.0.4",
     "komada": "^0.21.1",
-    "moment": "^2.19.3",
+    "moment": "^2.20.1",
     "moment-duration-format": "^1.3.0",
-    "ms": "^2.0.0",
+    "ms": "^2.1.1",
     "node-opus": "^0.2.7",
     "querystring": "^0.2.0",
     "snekfetch": "^3.5.8",
     "sqlite3": "^3.1.13",
     "steamapi": "^1.3.5",
-    "ytdl-core": "^0.18.3"
+    "ytdl-core": "^0.18.5"
   },
   "devDependencies": {},
   "repository": {
