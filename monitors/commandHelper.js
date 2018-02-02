@@ -13,11 +13,14 @@ exports.run = (client, msg) => {
         case "/tableflip":
             msg.delete();
             msg.channel.send("*" + msg.author.tag + "* : (╯°□°）╯︵ ┻━┻"); 
+            break;
         case "/unflip":
             msg.delete();
             msg.channel.send("*" + msg.author.tag + "* : ┬─┬ ノ( ゜-゜ノ)"); 
+            break;
         case "/lenny":
             msg.delete();
-            msg.channel.send("*" + msg.author.tag + "* : ( ͡° ͜ʖ ͡°)")
+            msg.channel.send("*" + msg.author.tag + "* : ( ͡° ͜ʖ ͡°)");
+            break;
     }
 };
