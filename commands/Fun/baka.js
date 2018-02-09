@@ -1,7 +1,7 @@
-exports.run = async (client, message, [User]) => {
-    var user = client.funcs.userSearch(client, message, User);
-    if (user.username === undefined) { return; }
-    
+exports.run = async (client, message, [user]) => {
+    user = client.funcs.userSearch(client, message, {user: user});
+    if (user === undefined) { return; }
+
     message.channel.send(`Baka ${user.username}! `);
 };
 
@@ -17,6 +17,6 @@ exports.conf = {
 exports.help = {
     name: "baka",
     description: "For the stupid people.",
-    usage: "[User:str]",
+    usage: "[user:str]",
     usageDelim: "",
 };

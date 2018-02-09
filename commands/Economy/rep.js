@@ -4,10 +4,9 @@ exports.run = async (client, message, [user, note]) => {
     const prefix = message.guildSettings.prefix || client.config.prefix;
     var text = message.content.slice(prefix.length + user.length + 5);
 
-    user = client.funcs.userSearch(client, message, user);
+    user = client.funcs.userSearch(message, {user: user, bot: true});
             
-    if (user.username === undefined) { return; }
-    if (user.bot === true) { return message.channel.send("You can't give rep to a bot user!"); }
+    if (user === undefined) { return; }
     if (user.id === message.author.id) { return message.channel.send("You can't give rep to yourself! That's like saying hire me for your nuclear plant because I'm a high school student!"); }
     var mention = note ? user.tag : "<@" + user.id + ">"; 
 
@@ -22,7 +21,7 @@ exports.run = async (client, message, [user, note]) => {
                     db.run(`UPDATE scores SET rep = ${row.rep + 1} WHERE userId = ${user.id}`);
                     db.run(`UPDATE scores SET repDaily = ${Date.now()} WHERE userId = ${message.author.id}`);
                     if (note) { user.send("Delivery here! Someone has included a note with your rep!\n\n" + text + "\n-" + message.author.tag); } 
-                    message.channel.send("You have given" + mention + "a reputation point!"); 
+                    message.channel.send("You have given " + mention + " a reputation point!"); 
                 }
             });
         }
@@ -43,5 +42,5 @@ exports.help = {
     description: "Give someone a reputation point!",
     usage: "[user:str] [note:str] [...]",
     usageDelim: " ",
-    humanUse: "(Required: User)_(Optional: Note)"
+    humanUse: "(Required: User)_(Note)"
 };

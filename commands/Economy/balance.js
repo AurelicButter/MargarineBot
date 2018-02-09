@@ -2,10 +2,8 @@ exports.run = async (client, message, [user]) => {
     const sqlite3 = require("sqlite3").verbose();
     let db = new sqlite3.Database("./assets/data/score.sqlite");
 
-    user = client.funcs.userSearch(client, message, user);
-    
-    if (user.username === undefined) { return; }
-    if (user.bot === true) { return message.reply("Bots don't have any records!"); }
+    user = client.funcs.userSearch(client, message, {user: user, bot: true});
+    if (user === undefined) { return; }
 
     db.get(`SELECT * FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
         if (err) { return console.log(err); }
@@ -52,4 +50,5 @@ exports.help = {
     description: "Check credit amount and the last time the user recieved their daily.",
     usage: "[user:str]",
     usageDelim: "",
+    humanUse: "(user)"
 };

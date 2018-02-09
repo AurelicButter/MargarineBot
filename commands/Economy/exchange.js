@@ -2,11 +2,10 @@ exports.run = async (client, message, [user, credit]) => {
     const sqlite3 = require("sqlite3").verbose();
     let db = new sqlite3.Database("./assets/data/score.sqlite");
 
-    user = client.funcs.userSearch(client, message, user);
+    user = client.funcs.userSearch(client, message, {user: user, bot: true});
+    if (user === undefined) { return; }
     
-    if (user.username === undefined) { return; }
     if (user.id === message.author.id) { return message.channel.send("Why are you trying to exchange credits to yourself? I doubt you are that lonely in life."); }
-    if (user.bot === true) { return message.reply("You can't give your credits to a bot user!"); }
 
     if (!credit) { return message.reply("Credits? Hello? I need an amount of credits!"); }
     else if (credit < 0) { return message.reply("What are you trying to do? Steal someone's credits? That's illegal, you know."); }

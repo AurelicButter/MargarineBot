@@ -1,0 +1,117 @@
+{
+    "item1": {
+        "type": "item_type",
+        "price": ["buy", "sell"],
+        "name": "item_name",
+        "emote": "item_emote"
+    },
+    "trash": {
+        "type": "material",
+        "price": ["N/A", 0],
+        "name": "trash",
+        "emote": "🗑"
+    },
+    "fish": {
+        "type": "material",
+        "price": ["N/A", 5],
+        "name": "fish",
+        "emote": "🐟"
+    },
+    "crab": {
+        "type": "material",
+        "price": ["N/A", 15],
+        "name": "crab",
+        "emote": "🦀" 
+    },
+    "squid": {
+        "type": "material",
+        "price": ["N/A", 25],
+        "name": "squid",
+        "emote": "🦑"
+    },
+    "shark": {
+        "type": "material",
+        "price": ["N/A", 75],
+        "name": "shark",
+        "emote": "🦈"
+    }, 
+    "potato": {
+        "type": "material",
+        "price": ["N/A", 15],
+        "name": "potato",
+        "emote": "🥔"
+    },
+    "egg": {
+        "type": "material",
+        "price": ["N/A", 5],
+        "name": "egg",
+        "emote": "🥚"
+    },
+    "bread": {
+        "type": "material",
+        "price": ["N/A", 15],
+        "name": "bread",
+        "emote": "🍞"
+    },
+    "chocolate": {
+        "type": "material",
+        "price": ["N/A", 15],
+        "name": "chocolate",
+        "emote": "🍫"
+    },
+    "greenapple": {
+        "type": "material",
+        "price": ["N/A", 10],
+        "name": "green apple",
+        "emote": "🍏"
+    },
+    "apple": {
+        "type": "material",
+        "price": ["N/A", 10],
+        "name": "apple",
+        "emote": "🍎"
+    },
+    "lemon": {
+        "type": "material",
+        "price": ["N/A", 15],
+        "name": "lemon",
+        "emote": "🍋"
+    },
+    "sake": {
+        "type": "material",
+        "price": ["N/A", 25],
+        "name": "sake",
+        "emote": "🍶"
+    },
+    "rice": {
+        "type": "material",
+        "price": ["N/A", 10],
+        "name": "rice",
+        "emote": "🍚"
+    },
+
+    "fishcake": {
+        "type": "product",
+        "price": ["N/A", 30],
+        "name": "fishcake",
+        "emote": "🍥"
+    },
+    "cookie": {
+        "type": "product",
+        "price": ["N/A", 25],
+        "name": "cookie",
+        "emote": "🍪"
+    },
+    "oden": {
+        "type": "product",
+        "price": ["N/A", 125],
+        "name": "oden",
+        "emote": "🍢"
+    },
+    "sushi": {
+        "type": "product",
+        "price": ["N/A", 75],
+        "name": "sushi",
+        "emote": "🍣"
+    }
+}

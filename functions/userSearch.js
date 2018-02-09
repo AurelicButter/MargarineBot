@@ -1,23 +1,28 @@
-module.exports = (client, message, user) => {
-    let guild = message.guild;
+const speech = require("../assets/values/userSearch.json");
 
-    if (user == null) { user = message.author; }
-    else if (user != null && message.mentions.users.size === 0) {
+module.exports = (client, msg, args) => {
+    var user = args ? args.user : undefined;
+    var botCheck = args ? args.bot : undefined;
+    let prefix = msg.guild.settings.prefix || client.config.prefix;
+    let cmd = msg.content.split(" ")[0].slice(prefix.length);
+    cmd = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
+
+    if (user == null) { user = msg.author; }
+    else if (user != null && msg.mentions.users.size === 0) {
         user = client.users.fetch(user);
 
         if (user == null) {
             user = client.users.find("username", `${user}`);
             
-            if (user == null && guild !== undefined) {
-                user = guild.members.find("nickname", `${user}`);
-                if (user) { user = user.user; }
-                else { user = null; }
+            if (user == null && msg.guild !== undefined) {
+                user = msg.guild.members.find("nickname", `${user}`);
+                user = user ? user.user : null;
             }
         }
-    } 
-    
-    if (message.mentions.users.size > 0) { user = message.mentions.users.first(); } 
-    if (user == null) { return message.reply("User not found. Please try again!"); }
+    } else if (msg.mentions.users.size > 0) { user = msg.mentions.users.first(); } 
+
+    if (user == null) { msg.reply("User not found. Please try again!"); } 
+    else if (botCheck && user.bot === true) { msg.channel.send(speech[cmd.help.name][Math.floor(Math.random() * speech[cmd.help.name].length)]); }
 
     return user;
 };

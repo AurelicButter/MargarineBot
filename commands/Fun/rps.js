@@ -1,8 +1,8 @@
 exports.run = async (client, message, [choice, user]) => {  
     if (!user) { user = client.user; } 
     else {
-        user = client.funcs.userSearch(client, message, user);
-        if (user.username === null) { return; }  
+        user = client.funcs.userSearch(client, message, {user: user});
+        if (user === null) { return; }  
     }
 
     var types = ["rock", "paper", "scissors"];

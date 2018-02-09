@@ -2,10 +2,8 @@ exports.run = async (client, message, [user]) => {
     const sqlite3 = require("sqlite3").verbose();
     let db = new sqlite3.Database("./assets/data/score.sqlite");
 
-    user = client.funcs.userSearch(client, message, user);
-	
-    if (user.username === undefined) { return; }
-    if (user.bot === true) { return message.reply("You can't give your credits to a bot user!"); }
+    user = client.funcs.userSearch(message, {user: user, bot: true});	
+    if (user === undefined) { return; }
 
     if (user.id === message.author.id) {
         db.get(`SELECT daily, credits FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
@@ -32,7 +30,7 @@ exports.run = async (client, message, [user]) => {
                 var credit = Number((100 * (1 + Math.random())).toFixed(0)); 
                 db.run(`UPDATE scores SET daily = ${Date.now()} WHERE userId = ${message.author.id}`);
                 db.run(`UPDATE scores SET credits = ${Number(row.credits) + credit} WHERE userId = ${user.id}`);
-                return message.channel.send(`${user.username} has received ${credit} credits.`);
+                message.channel.send(`${user.username} has received ${credit} credits.`);
             }
         });
     }
@@ -53,5 +51,5 @@ exports.help = {
     description: "Get a daily amount of credits or give them to someone else.",
     usage: "[user:str]",
     usageDelim: "",
-    humanUse: "(Optional: User)"
+    humanUse: "(user)"
 };

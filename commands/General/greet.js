@@ -1,11 +1,11 @@
-exports.run = async (client, message, [User]) => {
+exports.run = async (client, message, user) => {
     message.delete().catch();
-    User = client.funcs.userSearch(client, message, User);
+    user = client.funcs.userSearch(message, {user: user});
+    if (user == null) { return; }
+    
+	if (user.id === client.user.id) { return message.channel.send(`Why would you try and make me greet myself, ${message.author.username}? I'm not that lonely!`); }
 
-    if (User.username == null) { return; }
-	if (User.id === client.user.id) { return message.channel.send(`Why would you try and make me greet myself, ${message.author.username}? I'm not that lonely!`); }
-
-	message.channel.send(`Hello ${User.username}! `);
+	message.channel.send(`Hello ${user.username}! `);
 };
 
 exports.conf = {
@@ -20,5 +20,5 @@ exports.conf = {
 exports.help = {
   name: "greet",
   description: "Have Margarine greet you or someone with a hello!",
-  usage: "[User:str]",
+  usage: "[user:str]",
 };

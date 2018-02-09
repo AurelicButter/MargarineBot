@@ -1,0 +1,24 @@
+{
+    "recipe_name": [
+        ["material_name", "amount"]
+    ],
+    "fishcake": [
+        ["fish", 1],
+        ["potato", 1]
+    ],
+    "cookie": [
+        ["egg", 1],
+        ["bread", 1],
+        ["chocolate", 2]
+    ],
+    "oden": [
+        ["sake", 1],
+        ["egg", 5],
+        ["squid", 1]
+    ],
+    "sushi": [
+        ["fish", 1],
+        ["squid", 1],
+        ["rice", 2]
+    ]
+}
