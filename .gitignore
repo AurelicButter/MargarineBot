@@ -1,16 +1,7 @@
-# Dependency directories
 node_modules/
-jspm_packages/
-
-# Optional npm cache directory
-.npm
-
 .vs/
 .vscode/
 bwd/
-Storage/
-package-lock.json
 assets/data/
-assets/images
-assets/fonts
 assets/settings/settings.json
+assets/settings/owner.json
