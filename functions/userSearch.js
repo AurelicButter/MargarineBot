@@ -1,17 +1,14 @@
-const speech = require("../assets/values/userSearch.json");
+const speech = require("../assets/values/speech.json")["userSearch"];
 
-module.exports = (client, msg, args) => {
-    var user = args ? args.user : undefined;
-    var botCheck = args ? args.bot : undefined;
-    let prefix = msg.guild.settings.prefix || client.config.prefix;
-    let cmd = msg.content.split(" ")[0].slice(prefix.length);
-    cmd = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
+module.exports = (client, msg, args, callback) => {
+    var user = args.user ? args.user : undefined;
+    var tags = args.tags ? args.tags : ["None"];
 
     if (user == null) { user = msg.author; }
     else if (user != null && msg.mentions.users.size === 0) {
-        user = client.users.fetch(user);
-
-        if (user == null) {
+        var idTest = new RegExp(/^(\d{17,21})$/);
+        if (idTest.test(user) === true) { client.users.fetch(user); }
+        else {
             user = client.users.find("username", `${user}`);
             
             if (user == null && msg.guild !== undefined) {
@@ -21,10 +18,12 @@ module.exports = (client, msg, args) => {
         }
     } else if (msg.mentions.users.size > 0) { user = msg.mentions.users.first(); } 
 
-    if (user == null) { msg.reply("User not found. Please try again!"); } 
-    else if (botCheck && user.bot === true) { msg.channel.send(speech[cmd.help.name][Math.floor(Math.random() * speech[cmd.help.name].length)]); }
+    if (user == null) { user = speech["default"][Math.floor(Math.random() * speech["default"].length)]; } 
+    else if (tags.includes("bot") && user.bot === true) { user = speech[args.name][Math.floor(Math.random() * speech[args.name].length)]; }
 
-    return user;
+    var valid = (typeof user === "object") ? true : false;
+    if (valid === false) { msg.channel.send(user); }
+    callback({valid: valid, user: user});
 };
 
 module.exports.conf = { requiredModules: [] };

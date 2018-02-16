@@ -44,18 +44,18 @@ exports.run = async (client, message) => {
                 message.author.send(text[1]).then(() => {
                     message.author.dmChannel.awaitMessages(m => m.content, { max: 1, time: 130000, errors: ["time"], }).then((collected) => {
                         reports.push(collected.first().content);
-                        db.get("SELECT * FROM stats WHERE statName = 'report'", [], (err, row) => {
+                        db.get("SELECT * FROM stats WHERE statName = 'general'", [], (err, row) => {
                             if (err) { return console.log(err); }
                             else {
                                 embed.setColor(reportTypes[type.toLowerCase()][1])
-                                .setTitle(`${reports[0]} Report: ${row.reportNumber}`)
+                                .setTitle(`${reports[0][0]} Report: ${row.reportNumber}`)
                                 .addField(`User: ${message.author.tag}`, `From: ${message.guild.name}`)
                                 .addField("Message:", `${reports[1]}`);
     
                                 DMembed.setDescription(`Your report has been sent! Report number: ${row.reportNumber}
                                 \nIssue: ${reports[1]} \nAny more questions, please ask Butterstroke#7150!`);
    
-                                db.run(`UPDATE stats SET reportNumber = ${row.reportNumber + 1} WHERE statName = "report"`); 
+                                db.run(`UPDATE stats SET reportNumber = ${row.reportNumber + 1} WHERE statName = "general"`); 
                                 client.channels.get("353381124250140682").send({embed});
                                 message.author.send({embed: DMembed});       
                             }

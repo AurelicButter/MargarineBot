@@ -28,4 +28,4 @@ Created through part-desire, part-what can I do in Discord, part-I'm going to le
 - 30 May 2017: Beta 0.2 Released
 
 <b>Invite me!</b>
-<i>Not avalible at the current moment as the bot is in development.</i>
+<i>Not available at the current moment as the bot is in development.</i>

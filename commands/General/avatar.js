@@ -1,8 +1,10 @@
-exports.run = async (client, message, user) => {
-    user = client.funcs.userSearch(message, {user: user});
-    if (user.username === null) { return; }
+exports.run = async (client, message, [user]) => {
+    client.funcs.userSearch(client, message, {user: user, name: this.help.name}, function(data) {
+        if (data.valid === false) { return; }
+        user = data.user;
     
-    return message.channel.send("", { files: [`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`]});
+        message.channel.send("", { files: [user.displayAvatarURL()]});
+    });
 };
   
 exports.conf = {
@@ -18,6 +20,5 @@ exports.help = {
     name: "avatar",
     description: "Fetch a user's avatar!",
     usage: "[user:str]",
-    usageDelim: "",
-    extendedHelp: "Fetch someone's avatar image."
+    usageDelim: ""
 };
