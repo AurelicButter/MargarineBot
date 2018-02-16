@@ -1,11 +1,12 @@
 exports.run = async (client, message, user) => {
     message.delete().catch();
-    user = client.funcs.userSearch(message, {user: user});
-    if (user == null) { return; }
-    
-	if (user.id === client.user.id) { return message.channel.send(`Why would you try and make me greet myself, ${message.author.username}? I'm not that lonely!`); }
+    client.funcs.userSearch(client, message, {user: user, name: this.help.name}, function(data) {
+        if (data.valid === false) { return; }
 
-	message.channel.send(`Hello ${user.username}! `);
+        if (data.user.id === client.user.id) { return message.channel.send(`Why would you try and make me greet myself, ${message.author.username}? I'm not that lonely!`); }
+
+	    message.channel.send(`Hello ${data.user.username}! `);
+    });
 };
 
 exports.conf = {

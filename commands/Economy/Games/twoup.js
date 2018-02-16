@@ -1,45 +1,30 @@
-exports.run = async (client, message, [credit]) => {
-    const sqlite3 = require("sqlite3").verbose();
-    let db = new sqlite3.Database("./assets/data/score.sqlite");
+exports.run = async (client, message, [bet]) => {
+    let rolls = [];
+    for (var z = 0; z < 7; z++) {
+        var x = (Math.random() > .5) ? "heads" : "tails";
+        rolls.push(x);
+    }
 
-    if (!credit) { return message.reply("Credits? Hello? I need an amount of credits!"); }
-    else if (credit < 0) { return message.reply("What are you trying to do? Steal someone's credits? That's illegal, you know."); }
-    else if (credit === 0) { return message.reply("Betting nothing to play? This is a gambling game. Get some credits and come back."); }
-    else if (Number.isInteger(credit) === false) { return message.reply("You can't split a credit! Give me a whole number."); }
-
-    db.get(`SELECT * FROM scores WHERE userId = "${message.author.id}"`, [], (err, row) => {
-        if (err) { return console.log(err); }
-        if (!row) { return message.reply("You haven't signed up and received your credits yet! D: Use `m~daily` (Using default prefix) to earn your first amount of credits."); }
-        if (row.credits < credit) { return message.reply("You don't have that many credits, baka!"); }
-
-        let rolls = []; var earnings; var result;
-        for (var z = 0; z < 7; z++) {
-            var x = (Math.random() > .5) ? "heads" : "tails";
-            rolls.push(x);
+    for (var y = 0; y < 7; y++) {
+        if (rolls[y] === rolls[y + 1] && rolls[y] === "heads") { var result = ["won", 1.4]; break;}
+        else if (y === 6) { 
+            if ((rolls[0] !== rolls[1]) && (rolls[0] === rolls[2]) && (rolls[0] !== rolls[3]) && (rolls[0] === rolls[4]) && (rolls[0] !== rolls[5]) && (rolls[0] === rolls[6]) && (rolls[0] !== rolls[7])) {
+                var result = ["won", 2];
+            } else { var result = ["lost", -1];}
         }
+    }
+        
+    if (result === false) {
+        if ((rolls[0] !== rolls[1]) && (rolls[0] === rolls[2]) && (rolls[0] !== rolls[3]) && (rolls[0] === rolls[4]) && (rolls[0] !== rolls[5]) && (rolls[0] === rolls[6]) && (rolls[0] !== rolls[7])) {
+            result = ["won", 1];
+        } else { result = ["lost", -1]; }
+    }
 
-        if (((rolls[0] === rolls[1]) && (rolls[0] === "heads")) || 
-            ((rolls[1] === rolls[2]) && (rolls[1] === "heads")) ||
-            ((rolls[2] === rolls[3]) && (rolls[2] === "heads")) ||
-            ((rolls[3] === rolls[4]) && (rolls[3] === "heads")) ||
-            ((rolls[4] === rolls[5]) && (rolls[4] === "heads")) ||
-            ((rolls[5] === rolls[6]) && (rolls[5] === "heads")) ||
-            ((rolls[6] === rolls[7]) && (rolls[6] === "heads"))) {  
-            earnings = (credit * .2).toFixed(0);
-            result = "won";
-        }
-        else if ((rolls[0] !== rolls[1]) && (rolls[0] === rolls[2]) && (rolls[0] !== rolls[3]) && (rolls[0] === rolls[4]) && (rolls[0] !== rolls[5]) && (rolls[0] === rolls[6]) && (rolls[0] !== rolls[7])) {
-            earnings = (credit * .8).toFixed(0);
-            result = "won";
-        } else {
-            earnings = credit * -1;
-            result = "lost";
-        }
+    client.funcs.transactions(client, message, {credit: [bet, "*", result[1]]}, function(data) {
+        if (data.valid === false) { return; }
 
-        db.run(`UPDATE scores SET credits = ${Number(row.credits) + earnings} WHERE userId = ${message.author.id}`);
-        message.channel.send(`**Coins:** ${rolls.join(", ")}\nYou have ${result} ${Math.abs(earnings)} credits.`); 
+        message.channel.send(`**Coins:** ${rolls.join(", ")}\nYou have ${result[0]} ${Math.abs(data.earnings)} credits.`); 
     });
-    db.close();
 };
 
 exports.conf = {
@@ -53,8 +38,7 @@ exports.conf = {
 exports.help = {
     name: "twoup",
     description: "Bet on coin flips. Get two heads in a row and win or hope for all five odds!",
-    usage: "[credits:int]",
-    usageDelim: "",
+    usage: "[bet:int]",
     extendedHelp: "Two-up is a traditional Australian gambling game, involving a designated 'spinner' throwing two coins into the air. Players bet on whether the coins will fall with both heads up, both tails up, or with one head and one tail up (known as 'odds'). It is traditionally played on Anzac Day in pubs and clubs throughout Australia, in part to mark a shared experience with Diggers through the ages.",
-    humanUse: "(Amount of credits)"
+    humanUse: "(Amount)"
 };

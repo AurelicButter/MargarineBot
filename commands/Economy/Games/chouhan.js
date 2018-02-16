@@ -1,36 +1,20 @@
-exports.run = async (client, message, [credit, bet]) => {
-    const sqlite3 = require("sqlite3").verbose();
-    let db = new sqlite3.Database("./assets/data/score.sqlite");
+exports.run = async (client, message, [bet, credit]) => {
+    let rolls = [];
+    for (var z = 0; z < 6; z++) {
+        var x = Math.floor(Math.random() * (Math.floor(6) - Math.ceil(1) + 1)) + Math.ceil(1);
+        rolls.push(x);
+    }
 
-    if (!credit) { return message.reply("Credits? Hello? I need an amount of credits!"); }
-    else if (credit < 0) { return message.reply("What are you trying to do? Steal someone's credits? That's illegal, you know."); }
-    else if (credit === 0) { return message.reply("Betting nothing to play? This is a gambling game. Get some credits and come back."); }
-    else if (Number.isInteger(credit) === false) { return message.reply("You can't split a credit! Give me a whole number."); }
+    var sum = rolls[0] + rolls[1] + rolls[2] + rolls[3] + rolls[4] + rolls[5];
 
-    db.get(`SELECT credits FROM scores WHERE userId = "${message.author.id}"`, [], (err, row) => {
-        if (err) { return console.log(err); }
-        if (!row) { return message.reply("You haven't signed up and received your credits yet! D: Use `m~daily` (Using default prefix) to earn your first amount of credits."); } 
-        if (row.credits < credit) { return message.reply("You don't have that many credits, baka!"); }
+    if ((sum%2 === 0 && bet === "even") || (sum%2 !== 0 && bet === "odd")) { var result = ["won", 1.5]; } 
+    else { var result = ["lost", -1]; }
 
-        let rolls = [];
-        for (var z = 0; z < 6; z++) {
-            var x = Math.floor(Math.random() * (Math.floor(6) - Math.ceil(1) + 1)) + Math.ceil(1);
-            rolls.push(x);
-        }
+    client.funcs.transactions(client, message, {credit: [credit, "*", result[1]]}, function(data) {
+        if (data.valid === false) { return; }
 
-        var sum = rolls[0] + rolls[1] + rolls[2] + rolls[3] + rolls[4] + rolls[5];
-
-        if ((sum%2 === 0 && bet === "even") || (sum%2 !== 0 && bet === "odd")) {
-            var result = "won";
-            credit = (credit * .5).toFixed(0);
-        } else {
-            var result = "lost";
-            credit = credit * -1;
-        }
-        db.run(`UPDATE scores SET credits = ${Number(row.credits) + credit} WHERE userId = ${message.author.id}`);
-        message.channel.send(`**Sum:** ${sum} \n**Your Guess:** ${bet} \n*You have ${result} ${Math.abs(credit)} credits.*`);
+        message.channel.send(`**Sum:** ${sum} \n**Your Guess:** ${bet} \n*You have ${result[0]} ${Math.abs(data.earnings)} credits.*`);
     });
-    db.close();
 };
 
 exports.conf = {
@@ -44,7 +28,8 @@ exports.conf = {
 exports.help = {
     name: "chouhan",
     description: "Bet your credits on if the sum of six dice are even or odd.",
-    usage: "[credits:int] <even|odd>",
+    usage: "<even|odd> [credits:int]",
     usageDelim: " ",
     extendedHelp: "A simple Japanese dice game. Six dice are rolled and the results kept secret. Players bet on whether the sum on the dice is odd or even.",
+    humanUse: "(even|odd)_(amount)"
 };

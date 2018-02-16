@@ -18,5 +18,5 @@ exports.help = {
     description: "The one stop picker for hard choices!",
     usage: "[choice:str] [...]",
     usageDelim: " | ",
-    humanUse: "(choice) (another one) (etc...)"
+    humanUse: "(choice)_(another one)_(etc...)"
 };

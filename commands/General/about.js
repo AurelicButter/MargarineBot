@@ -11,7 +11,7 @@ exports.run = async (client, message) => {
      \n**Creation:** I was created on ${client.user.createdAt.toLocaleString()} by ${client.owner.tag}. My current version is ${config.version} as of ${config.updateDate}.\n
      \n**More Information:** I have a Github repo which contains my current update tracker and the source code if you are curious. https://github.com/Butterstroke/MargarineBot
      \n**Margarine's TOS:** For people looking for a link to my Terms and service, please refer here: https://github.com/Butterstroke/MargarineBot/blob/master/TermsAndService.md`)
-     .setThumbnail(client.user.avatarURL());
+     .setThumbnail(client.user.displayAvatarURL());
   return message.channel.send({embed});
 };
 
