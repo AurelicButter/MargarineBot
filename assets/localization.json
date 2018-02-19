@@ -1,0 +1,21 @@
+{
+    "permLevels": {
+        "general": [
+            "Level 0: Everyone",
+            "Level 1: Placeholder",
+            "Level 2: Guild Moderators",
+            "Level 3: Guild Admins",
+            "Level 4: Guild Owners",
+            "Level 5: Placeholder", "Level 6: Placeholder", "Level 7: Placeholder", "Level 8: Placeholder",
+            "Level 9: Toast & Butter",
+            "Level 10: Bot Owner"
+        ],
+        "addPerms": [
+            "with no additional permissions",
+            "Placeholder",
+            "with guild moderator permissions",
+            "with guild admin permissions",
+            "with guild owner permissions"
+        ]
+    }
+}

@@ -15,30 +15,29 @@ exports.run = async (client, message, [kind, search]) => {
         .setFooter(guild.name, guild.iconURL());
 
     if (kind === "user") { 
-        let user = client.funcs.userSearch(client, message, User);
-        if (user.username === null) {
-            embed.addField(":x: No User found! :x:");
-            return message.channel.send({embed});
-        }
+        client.funcs.userSearch(client, message, {user: User, name: this.help.name}, function(data) {
+            if (data.valid === false) { return; }
+            var user = data.user;
 
-        const statusList = {
-            online: "Online",
-            idle: "Idle",
-            dnd: "Do not Disturb"
-        };
-
-        var Status = statusList[user.presence.status] ? statusList[user.presence.status]: "Offline";
-        var botUser = user.bot ? "True": "False";
-        var activity = user.presence.activity !== null ? Status + " - " + user.presence.activity.name: Status;
-        
-        embed.setThumbnail(user.avatarURL())
-        .setColor(0x04d5fd)
-        .setAuthor("User: " + user.tag)
-        .setDescription("ID: " + user.id)
-        .addField("Created:", user.createdAt.toLocaleString(), true)
-        .addField("Joined:", guild.members.get(user.id).joinedAt.toLocaleString(), true)
-        .addField("Bot user:", botUser, true)
-        .addField("Status:", activity, true);
+            const statusList = {
+                online: "Online",
+                idle: "Idle",
+                dnd: "Do not Disturb"
+            };
+    
+            var Status = statusList[user.presence.status] ? statusList[user.presence.status]: "Offline";
+            var botUser = user.bot ? "True": "False";
+            var activity = user.presence.activity !== null ? Status + " - " + user.presence.activity.name: Status;
+            
+            embed.setThumbnail(user.avatarURL())
+            .setColor(0x04d5fd)
+            .setAuthor("User: " + user.tag)
+            .setDescription("ID: " + user.id)
+            .addField("Created:", user.createdAt.toLocaleString(), true)
+            .addField("Joined:", guild.members.get(user.id).joinedAt.toLocaleString(), true)
+            .addField("Bot user:", botUser, true)
+            .addField("Status:", activity, true);
+        });
     }
 
     else if (kind === "role") { 
@@ -66,7 +65,7 @@ exports.run = async (client, message, [kind, search]) => {
         else { return message.reply("You can't ask information about a server with additional stuff!"); }
     }
 
-    return message.channel.send({embed});
+    message.channel.send({embed});
 };
 
 exports.conf = {
@@ -83,6 +82,6 @@ exports.help = {
   description: "Get the server or user information.",
   usage: "[server|user|role] [search:str]",
   usageDelim: " ",
-  extendedHelp: "If using one of the aliases, you can skip [server|user|role] and define your search item!",
+  extendedHelp: "Need Discord info? I got you covered with this command!",
   humanUse: "([If not specified] server|user|role)_(search content)"
 };

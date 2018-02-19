@@ -3,9 +3,9 @@ let db = new sqlite3.Database("./assets/data/score.sqlite");
 const speech = require("../assets/values/speech.json");
 
 module.exports = async (client, msg, args, callback) => {
-    var user = args.user || msg.author; 
+    var user = args.user || msg.author;
 
-    client.funcs.validator(args.credit[0], function(data) {
+    client.funcs.validator({credit: args.credit[0], tags: ["credit"]}, function(data) {
         if (data.valid === false) { return msg.channel.send(data.message); }
     });
     

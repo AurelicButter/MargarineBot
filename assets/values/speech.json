@@ -1,21 +1,53 @@
 {
     "intChecker": {
-        "none": [
-            "You didn't supply me with an amount of credits, baka!",
-            "Credits? Hello? I need an amount of credits!"
-        ],
-        "negative": [
-            "You can't bet a negative amount of credits!",
-            "What are you trying to do? Steal someone's credits? That's illegal, you know."
-        ],
-        "zero": [
-            "You can't use zero credits here! Bet some *actual* credits and then we'll talk.",
-            "...wow, I didn't know you were that oblivious to gambling credits. You don't bet **nothing**, baka!"
-        ],
-        "noInteger": [
-            "There is no decimal work in credits! Whole credits only.",
-            "You can't split a credit! Give me a whole number, baka!"
-        ]
+        "none": {
+            "credit": [
+                "You didn't supply me with an amount of credits, baka!",
+                "Credits? Hello? I need an amount of credits!"
+            ],
+            "craft": [
+                "You can't craft nothing, baka!"
+            ],
+            "default": [
+                "You didn't include a value here, baka!"
+            ]
+        },
+        "negative": {
+            "credit": [
+                "You can't bet a negative amount of credits!",
+                "What are you trying to do? Steal someone's credits? That's illegal, you know."
+            ],
+            "craft": [
+                "You can't craft a negative number, baka!"
+            ],
+            "default": [
+                "No negative values in this established command, baka!"
+            ]
+        },
+        "zero": {
+            "credit": [
+                "You can't use zero credits here! Bet some *actual* credits and then we'll talk.",
+                "...wow, I didn't know you were that oblivious to gambling credits. You don't bet **nothing**, baka!"
+            ],
+            "craft": [
+                "Why are you even crafting, baka!"
+            ],
+            "default": [
+                "We've divided by zero. It didn't go so well..."
+            ]
+        },
+        "noInteger": {
+            "credit": [
+                "There is no decimal work in credits! Whole credits only.",
+                "You can't split a credit! Give me a whole number, baka!"
+            ],
+            "craft": [
+                "You can't have a part of something, baka!"
+            ],
+            "default": [
+                "Decimals? That's like giving me fraction work. No thanks!"
+            ]
+        }
     },
     "noRow": [
         "You haven't redeemed your first daily yet! :cry:",

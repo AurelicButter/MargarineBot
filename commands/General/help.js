@@ -1,4 +1,6 @@
 /* Base command is from the default Komada help command. This has been modified a bit */
+const local = require("../../assets/localization.json")["permLevels"]["general"];
+
 exports.run = async (client, msg, [cmd, mod]) => {
     const method = client.user.bot ? "author" : "channel";
     const help = this.buildHelp(client, msg);
@@ -38,17 +40,6 @@ exports.run = async (client, msg, [cmd, mod]) => {
     
             if (!this.runCommandInhibitors(client, msg, cmd)) { return; }
 
-            var permissionLevel = [
-                "Level 0: Everyone",
-                "Level 1: Placeholder",
-                "Level 2: Guild Moderators/Guild Moderator permissions",
-                "Level 3: Guild Admins/Guild Admin permissions",
-                "Level 4: Guild Owners/Guild owner permissions",
-                "Level 5: Placeholder", "Level 6: Placeholder", "Level 7: Placeholder", "Level 8: Placeholder",
-                "Level 9: Toast & Butter",
-                "Level 10: Bot Owner"
-            ];
-
             var usage = cmd.help.humanUse || cmd.help.usage;
             var spliter = cmd.help.humanUse ? "_": " ";
             var usageAct = usage.length < 1 ? "": usage.split(spliter).join(cmd.help.usageDelim);
@@ -59,7 +50,7 @@ exports.run = async (client, msg, [cmd, mod]) => {
                 .setTitle(cmd.help.name + alias)
                 .setDescription(cmd.help.description)
                 .addField("Usage:", `\`${prefix + cmd.help.name + " " + usageAct}\``)
-                .addField("Permission level:", permissionLevel[cmd.conf.permLevel]);
+                .addField("Permission level:", local[cmd.conf.permLevel]);
             if (cmd.help.extendedHelp) { embed.addField("Extended Help:", cmd.help.extendedHelp); }
             return msg.send({embed});
         }
