@@ -5,7 +5,8 @@ const speech = require("../assets/values/speech.json");
 module.exports = async (client, msg, args, callback) => {
     var user = args.user || msg.author;
 
-    client.funcs.validator({credit: args.credit[0], tags: ["credit"]}, function(data) {
+    var tags = args.tags ? args.tags[0] : "credit";
+    client.funcs.validator({credit: args.credit[0], tags: tags}, function(data) {
         if (data.valid === false) { return msg.channel.send(data.message); }
     });
     

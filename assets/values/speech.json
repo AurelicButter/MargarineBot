@@ -9,7 +9,8 @@
                 "You can't craft nothing, baka!"
             ],
             "default": [
-                "You didn't include a value here, baka!"
+                "You didn't include a value here, baka!",
+                "No value, no results, baka!"
             ]
         },
         "negative": {
@@ -18,10 +19,12 @@
                 "What are you trying to do? Steal someone's credits? That's illegal, you know."
             ],
             "craft": [
-                "You can't craft a negative number, baka!"
+                "You can't craft a negative number, baka!",
+                "You're better off selling your raw items than crafting a negative amount."
             ],
             "default": [
-                "No negative values in this established command, baka!"
+                "No negative values in this established command, baka!",
+                "Negatives? Here? Lmao. You're really funny!"
             ]
         },
         "zero": {
@@ -30,10 +33,12 @@
                 "...wow, I didn't know you were that oblivious to gambling credits. You don't bet **nothing**, baka!"
             ],
             "craft": [
-                "Why are you even crafting, baka!"
+                "Why are you even crafting, baka!",
+                "Tell me the answer of 0/0 and I'll craft you 0 of that item."
             ],
             "default": [
-                "We've divided by zero. It didn't go so well..."
+                "We've divided by zero. It didn't go so well...",
+                "Zero is an evil number. Don't give me these evils to work with."
             ]
         },
         "noInteger": {
@@ -42,10 +47,12 @@
                 "You can't split a credit! Give me a whole number, baka!"
             ],
             "craft": [
-                "You can't have a part of something, baka!"
+                "You can't have a part of something, baka!",
+                "Uh... you want to craft half of an item? I don't think that will work out well for you."
             ],
             "default": [
-                "Decimals? That's like giving me fraction work. No thanks!"
+                "Decimals? That's like giving me fraction work. No thanks!",
+                "Decimals: fun to look at, not possible with credits."
             ]
         }
     },
@@ -58,7 +65,8 @@
     "lessCredit": [
         "You don't have that many credits, baka!",
         "A poor person like yourself could never afford that bet.",
-        "Try paying in dirt. It's worth more than your bank right now."
+        "Try paying in dirt. It's worth more than your bank right now.",
+        "Try to pull a fast one on me? Too bad you can't afford it."
     ],
     "userSearch": {
         "balance": [
@@ -87,7 +95,8 @@
             "Whatever you are trying to find, it's not typed right or it doesn't exist.",
             "Where is the user? I don't know but not any location where I can find it!",
             "I couldn't find the user! Give me a better thing to search with, baka!",
-            "Another non-existant user? Really?"
+            "Another non-existant user? Really?",
+            "... There isn't a user here, baka!"
         ]
     }
 }
