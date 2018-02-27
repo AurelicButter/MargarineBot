@@ -1,8 +1,9 @@
 exports.run = async (client, message, [user]) => {
-    user = client.funcs.userSearch(client, message, {user: user});
-    if (user === undefined) { return; }
+    client.funcs.userSearch(client, message, {user: user, name: this.help.name}, function(data) {
+        if (data.valid === false) { return; }
 
-    message.channel.send(`Baka ${user.username}! `);
+        message.channel.send(`Baka ${data.user.username}! `);
+    });
 };
 
 exports.conf = {

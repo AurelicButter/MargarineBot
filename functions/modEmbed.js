@@ -37,8 +37,8 @@ module.exports = (client, message, action, user, reason) => {
       message.channel.send("Whoops! Looks like some settings were missing! I've fixed these issues for you. Please check the confs and set the channel.");
     } 
 
-    if ((message.guild.settings.defaultChannel !== null) && (message.guild.settings.modlog === null)) { var channel = message.guild.channels.find("id", message.guild.settings.defaultChannel); } 
     if (message.guild.settings.modlog !== null) { var channel = message.guild.channels.find("id", message.guild.settings.modlog); } 
+    else if (message.guild.settings.defaultChannel !== null) { var channel = message.guild.channels.find("id", message.guild.settings.defaultChannel); } 
     
     if (!channel) { var channel = message.channel; }
   }

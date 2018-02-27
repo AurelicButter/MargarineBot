@@ -1,0 +1,10 @@
+{
+    "reportChannel": "<channel_id>",
+    "awardChannel": "<channel_id>",
+    "awards": {
+        "suggest": 250,
+        "bug": 500,
+        "minor": 600,
+        "major": 2000
+    }
+}

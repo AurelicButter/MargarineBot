@@ -11,13 +11,12 @@ module.exports = (client, msg, args, callback) => {
         if (idTest.test(user) === true) { client.users.fetch(user); }
         else {
             var result = client.users.find("username", `${user}`);
-            if (result !== null) { user = result; }
-            else {
+            if (result === null) { 
                 if (msg.channel.guild !== undefined) {
                     user = msg.channel.guild.members.find("nickname", `${user}`);
                     user = user ? user.user : null;
                 }
-            }
+            } else { user = result; }
         }
     }
 
