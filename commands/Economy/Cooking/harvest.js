@@ -15,7 +15,7 @@ exports.run = async (client, msg) => {
             [row.greenapple, row.apple, row.lemon, row.potato, row.rice, row.egg, row.bread, row.chocolate]
         ];
 
-        if (die < .6) { var results = 0; } 
+        if (die < .06) { var results = 0; } 
         else if (die < .12) { var results = 1; }
         else if (die < .24) { var results = 2; } 
         else if (die < .36) { var results = 3; } 

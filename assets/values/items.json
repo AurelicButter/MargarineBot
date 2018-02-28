@@ -1,117 +1,120 @@
 {
-    "item1": {
-        "type": "item_type",
-        "price": ["buy", "sell"],
-        "name": "item_name",
-        "emote": "item_emote"
+    "info": {
+        "item_structure": {
+            "price": ["buy", "sell"],
+            "name": "item_name",
+            "emote": "item_emote",
+            "category": ["item_major", "item_minor"] 
+        },
+        "material_names": ["info", "trash", "fish", "crab", "squid", "shark", "potato", "egg", "bread", "chocolate", "greenapple", "apple", "lemon", "sake", "rice"],
+        "product_names": ["fishcake", "cookie", "oden", "sushi"]
     },
     "trash": {
-        "type": "material",
         "price": ["N/A", 0],
         "name": "trash",
-        "emote": "🗑"
+        "emote": "🗑",
+        "category": ["material", "N/A"]
     },
     "fish": {
-        "type": "material",
         "price": ["N/A", 5],
         "name": "fish",
-        "emote": "🐟"
+        "emote": "🐟",
+        "category": ["material", "fishing"]
     },
     "crab": {
-        "type": "material",
         "price": ["N/A", 15],
         "name": "crab",
-        "emote": "🦀" 
+        "emote": "🦀",
+        "category": ["material", "fishing"] 
     },
     "squid": {
-        "type": "material",
         "price": ["N/A", 25],
         "name": "squid",
-        "emote": "🦑"
+        "emote": "🦑",
+        "category": ["material", "fishing"]
     },
     "shark": {
-        "type": "material",
         "price": ["N/A", 75],
         "name": "shark",
-        "emote": "🦈"
+        "emote": "🦈",
+        "category": ["material", "fishing"]
     }, 
     "potato": {
-        "type": "material",
         "price": ["N/A", 15],
         "name": "potato",
-        "emote": "🥔"
+        "emote": "🥔",
+        "category": ["material", "harvest"]
     },
     "egg": {
-        "type": "material",
         "price": ["N/A", 5],
         "name": "egg",
-        "emote": "🥚"
+        "emote": "🥚",
+        "category": ["material", "harvest"]
     },
     "bread": {
-        "type": "material",
         "price": ["N/A", 15],
         "name": "bread",
-        "emote": "🍞"
+        "emote": "🍞",
+        "category": ["material", "harvest"]
     },
     "chocolate": {
-        "type": "material",
         "price": ["N/A", 15],
         "name": "chocolate",
-        "emote": "🍫"
+        "emote": "🍫",
+        "category": ["material", "harvest"]
     },
     "greenapple": {
-        "type": "material",
         "price": ["N/A", 10],
         "name": "green apple",
-        "emote": "🍏"
+        "emote": "🍏",
+        "category": ["material", "harvest"]
     },
     "apple": {
-        "type": "material",
         "price": ["N/A", 10],
         "name": "apple",
-        "emote": "🍎"
+        "emote": "🍎",
+        "category": ["material", "harvest"]
     },
     "lemon": {
-        "type": "material",
         "price": ["N/A", 15],
         "name": "lemon",
-        "emote": "🍋"
+        "emote": "🍋",
+        "category": ["material", "harvest"]
     },
     "sake": {
-        "type": "material",
         "price": ["N/A", 25],
         "name": "sake",
-        "emote": "🍶"
+        "emote": "🍶",
+        "category": ["material", "harvest"]
     },
     "rice": {
-        "type": "material",
         "price": ["N/A", 10],
         "name": "rice",
-        "emote": "🍚"
+        "emote": "🍚",
+        "category": ["material", "harvest"]
     },
-
     "fishcake": {
-        "type": "product",
         "price": ["N/A", 30],
         "name": "fishcake",
-        "emote": "🍥"
+        "emote": "🍥",
+        "category": ["product", "food"]
     },
     "cookie": {
-        "type": "product",
         "price": ["N/A", 25],
         "name": "cookie",
-        "emote": "🍪"
+        "emote": "🍪",
+        "category": ["product", "food"]
     },
     "oden": {
-        "type": "product",
         "price": ["N/A", 125],
         "name": "oden",
-        "emote": "🍢"
+        "emote": "🍢",
+        "category": ["product", "food"]
     },
     "sushi": {
-        "type": "product",
         "price": ["N/A", 75],
         "name": "sushi",
-        "emote": "🍣"
+        "emote": "🍣",
+        "category": ["product", "food"]
     }
 }

@@ -1,23 +1,22 @@
-exports.run = async (client, message, [item, amount]) => {
+exports.run = async (client, msg, [item, amount]) => {
     const sqlite3 = require("sqlite3").verbose();
-    let db = new sqlite3.Database("./assets/data/score.sqlite");
-    let sql = new sqlite3.Database("./assets/data/inventory.sqlite");
-    let object = require("../../assets/values/items.json");
-
-    db.get(`SELECT credits FROM scores WHERE userId = "${message.author.id}"`, [], (err, row) => {
+    let db = new sqlite3.Database("./assets/data/inventory.sqlite");
+    let object = require("../../../assets/values/items.json")[item.toLowerCase()];
+    if (!object) { return msg.channel.send("That item does not exist."); }
+    
+    db.get(`SELECT ${object.name} FROM ${object.category[0]} WHERE userId = "${msg.author.id}"`, [], (err, row) => {
         if (err) { return console.log(err); }
-        if (!row) { return message.reply("You have not redeemed your first daily yet!"); }
-        else {        
-            objects = object[item];
-            sql.get(`SELECT ${objects.name} FROM ${objects.type} WHERE userId = "${message.author.id}"`, [], (row) => {
-                if (amount > row) { return message.channel.send("You don't have that much " + objects.name + ", baka!"); }
-                else { 
-                    sql.run(`UPDATE ${objects.type} SET ${objects.name} = ${Number(row) - 1} WHERE userId = ${message.author.id}`);
-                    db.run (`UPDATE scores SET credits = ${Number(row.credits) + (objects.price[1] * amount)} WHERE userId = ${message.author.id}`);
-                    message.channel.send("You have sold " + amount + " " + objects.name + " for " + (objects.price[1] * amount) + " credits.");
-                }
-            });
-        }
+        if (!row) { return msg.reply("You have not redeemed your first daily yet!"); }
+        amount = (amount === undefined) ? Object.values(row)[0] : amount;
+        if (amount > row) { return msg.channel.send("You don't have that much " + object.name + ", baka!"); }
+        
+        db.run(`UPDATE ${object.category[0]} SET ${object.name} = ${Object.values(row)[0] - amount} WHERE userId = "${msg.author.id}"`);
+
+        client.funcs.transactions(client, msg, {credit: [1, "+", (object.price[1] * amount)]}, function(data) {
+            if (data.valid === false) { return; }
+    
+            msg.channel.send("You have sold " + amount + " " + object.name + " for " + data.earnings + " credits.");
+        });
     });
 };
 
@@ -32,6 +31,6 @@ exports.conf = {
 exports.help = {
     name: "sell",
     description: "Sell your items!",
-    usage: "[item:str] [amount:int]",
+    usage: "<item:str> [amount:int]",
     usageDelim: " "
 };

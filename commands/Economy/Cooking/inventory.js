@@ -11,15 +11,38 @@ exports.run = async (client, message) => {
     db.get(`SELECT * FROM material WHERE userId = "${message.author.id}"`, [], (err, row) => {
         if (err) { return console.log(err); }
         if (!row) { return message.channel.send("You haven't signed up with `m~daily` yet! D:"); } 
-        else {
-            embed.addField("Materials:", `__Fishing__\n${row.fish} ${items.fish.emote}, ${row.crab} ${items.crab.emote}, ${row.squid} ${items.squid.emote}, ${row.shark} ${items.shark.emote}
-            \n__Harvest__\n${row.potato} ${items.potato.emote}, ${row.greenapple} ${items.greenapple.emote}, ${row.apple} ${items.apple.emote}, ${row.lemon} ${items.lemon.emote}, ${row.bread} ${items.bread.emote}, ${row.rice} ${items.rice.emote}, ${row.egg} ${items.egg.emote}, ${row.chocolate} ${items.chocolate.emote}`);
+        
+        var amounts = Object.values(row);
+        var fishing = []; var harvest = []; var x = 2; var y;
+        do {
+            y = x - 1;
+            var z = items.info.material_names[x];
+            if (amounts[y] !== null || amounts[y] > 0) {
+                if (items[z].category[1] === "fishing") { fishing.push(amounts[y] + items[z].emote); }
+                else if (items[z].category[1] === "harvest") { harvest.push(amounts[y] + items[z].emote); }
+            }
+            x++;
+        } while (x < items.info.material_names.length);
+        if (fishing.length === 0) { fishing.push("You do not have any fish."); }
+        if (harvest.length === 0) { harvest.push("You do not have any harvest materials."); }
 
-            db.get(`SELECT * FROM product WHERE userId = "${message.author.id}"`, [], (err, row) => {
-                embed.addField("**Products:**", `__Food__\n${row.fishcake} ${items.fishcake.emote}, ${row.cookie} ${items.cookie.emote}, ${row.oden} ${items.oden.emote}, ${row.sushi} ${items.sushi.emote}`);
-                message.channel.send({embed});
-            });
-        }
+        embed.addField("Materials:", `__Fishing__\n${fishing.join(", ")}\n__Harvest__\n${harvest.join(", ")}`);
+
+        db.get(`SELECT * FROM product WHERE userId = "${message.author.id}"`, [], (err, row) => {
+            var amount = Object.values(row);
+            var food = []; var x = 1 + items.info.material_names.length; var y = 1;
+            do {
+                var z = items.info.product_names[y - 1];
+                if (amount[y] !== null || amount[y] > 0) {
+                    if (items[z].category[1] === "food") { food.push(amount[y] + items[z].emote); }
+                }
+                x++; y++;
+            } while (y - 1 < items.info.product_names.length);
+
+            if (food.length === 0) { food.push("You do not have any food items."); }
+            embed.addField("**Products:**", `__Food__\n${food.join(", ")}`);
+            message.channel.send({embed});
+        });
     });
     db.close();
 };
