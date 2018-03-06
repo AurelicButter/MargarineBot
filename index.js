@@ -1,5 +1,5 @@
 const Komada = require("komada");
-const config = require("./assets/settings/settings.json");
+const config = require("./assets/settings.json");
 
 const permStructure = new Komada.PermLevels()
   .addLevel(0, false, () => true)

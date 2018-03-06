@@ -1,4 +1,4 @@
-const speech = require("../assets/values/speech.json")["intChecker"];
+const speech = require("../assets/speech.json")["intChecker"];
 
 module.exports = async (args, callback) => {
     var credit = args.credit;

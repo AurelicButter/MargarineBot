@@ -3,5 +3,4 @@ node_modules/
 .vscode/
 bwd/
 assets/data/
-assets/settings/settings.json
-assets/settings/owner.json
+assets/settings.json

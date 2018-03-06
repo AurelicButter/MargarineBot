@@ -1,4 +1,4 @@
-const reportChannel = require("../../assets/settings/owner.json").reportChannel;
+const reportChannel = require("../../assets/settings.json").owner.channels.report;
 
 exports.run = async (client, msg) => {   
     const sqlite3 = require("sqlite3").verbose();
