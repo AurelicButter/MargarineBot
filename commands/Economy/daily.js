@@ -1,42 +1,26 @@
+const sqlite3 = require("sqlite3").verbose();
+let db = new sqlite3.Database("./assets/data/score.sqlite");
+
 exports.run = async (client, message, [user]) => {
-    const sqlite3 = require("sqlite3").verbose();
-    let db = new sqlite3.Database("./assets/data/score.sqlite");
+    var data = await client.funcs.userSearch(message, {user: [user], tags:["bot"], name: this.help.name});
+    if (data.valid === false) { return; }
+    user = data.user[0];
 
-    client.funcs.userSearch(client, message, {user: user, bot: true, name: this.help.name}, function(data) {
-        if (data.valid === false) { return; }
-        user = data.user;
+    var baka = (user.id === message.author.id) ? "self" : "other";
 
-        if (user.id === message.author.id) {
-            db.get(`SELECT daily, credits FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
-                if (err) { return console.log(err); }
-                if (!row) {
-                    client.funcs.sqlTables(client, message, user, "add");
-                    return message.channel.send("You have received your daily amount of 100 credits."); 
-                } else if ((Number(row.daily) + 86400000) > Date.now()) { return message.reply("You have already redeemed your daily for today."); } 
-                else {
-                    db.run(`UPDATE scores SET daily = ${Date.now()}, credits = ${Number(row.credits) + 100} WHERE userId = ${user.id}`);
-                    return message.channel.send(`You have received 100 credits! You should buy me a game of chouhan with that.`);
-                }
-            });
-        } else {
-            db.get(`SELECT daily FROM scores WHERE userId = "${message.author.id}"`, [], (err, row) => {
-                if (err) { return console.log(err); }
-                if (!row) { return message.reply("You have not gotten your first daily yet. Before giving credits to others, you must recieve the daily!"); }
-                if ((Number(row.daily) + 86400000) > Date.now()) { return message.reply("You have already redeemed your daily for today."); }
-            });
-    
-            db.get(`SELECT credits FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
-                if (!row) { return message.channel.send("That user has not gotten their first daily to start off with so you can not give them any credits at the moment. :cry:"); } 
-                else {
-                    var credit = Number((100 * (1 + Math.random())).toFixed(0)); 
-                    db.run(`UPDATE scores SET daily = ${Date.now()} WHERE userId = ${message.author.id}`);
-                    db.run(`UPDATE scores SET credits = ${Number(row.credits) + credit} WHERE userId = ${user.id}`);
-                    message.channel.send(`${user.username} has received ${credit} credits.`);
-                }
-            });
+    this.dbChecker(client, [message.author, user], baka, function (text) {
+        if (text.valid === true) {
+            var credit = (baka === "other") ? Number((100 * (1 + Math.random())).toFixed(0)) : 100; 
+            if (baka === "other") {
+                db.run(`UPDATE scores SET daily = ${Date.now()} WHERE userId = ${message.author.id}`);
+                db.run(`UPDATE scores SET credits = ${text.credits + credit} WHERE userId = ${user.id}`);
+            } else { db.run(`UPDATE scores SET daily = ${Date.now()}, credits = ${text.credits + credit} WHERE userId = ${user.id}`); }
         }
+    
+        message.channel.send(text.text.replace('-user-', user.prefered).replace('-credit-', credit));
+    
         db.close();
-    });	
+    });
 };
 
 exports.conf = {
@@ -52,6 +36,31 @@ exports.help = {
     name: "daily",
     description: "Get a daily amount of credits or give them to someone else.",
     usage: "[user:str]",
-    usageDelim: "",
     humanUse: "(user)"
 };
+
+exports.dbChecker = function (client, user, type, callback) {
+    let talk = require("../../assets/speech.json");
+    var check = type;
+    var data = [];
+    db.serialize(function() {
+        db.each(`SELECT daily, credits FROM scores WHERE userId IN ("${user[0].id}", "${user[1].id}")`, function (err, row) {
+            if (err) { return console.log(err); }
+            if (!row) { 
+                if (type === "self") { client.funcs.sqlTables(user, "add"); }
+                else if ( type === "other") { type === "noRow"; }
+                else { type === "noRow"; check === false; } 
+            } else if ((Number(row.daily) + 86400000) > Date.now()) { type === "multi"; }
+            data.push(type, row.credits)
+        }, function() { 
+            var valid = (check !== data[0]) ? false : true;
+            talk = (check === false) ? talk : talk["daily"];
+    
+            callback({ 
+                valid: valid, 
+                text: talk[data[0]][Math.floor(Math.random() * talk[data[0]].length)],
+                credits: data[1]
+            });
+        });
+    });
+}

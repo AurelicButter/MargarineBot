@@ -1,4 +1,4 @@
-exports.run = async (client, message, [bet, credit]) => {
+exports.run = async (client, msg, [bet, credit]) => {
     let rolls = [];
     for (var z = 0; z < 6; z++) {
         var x = Math.floor(Math.random() * (Math.floor(6) - Math.ceil(1) + 1)) + Math.ceil(1);
@@ -10,10 +10,10 @@ exports.run = async (client, message, [bet, credit]) => {
     if ((sum%2 === 0 && bet === "even") || (sum%2 !== 0 && bet === "odd")) { var result = ["won", 1.5]; } 
     else { var result = ["lost", -1]; }
 
-    client.funcs.transactions(client, message, {credit: [credit, "*", result[1]]}, function(data) {
+    client.funcs.transactions(msg, {credit: [credit, "*", result[1]]}, function(data) {
         if (data.valid === false) { return; }
 
-        message.channel.send(`**Sum:** ${sum} \n**Your Guess:** ${bet} \n*You have ${result[0]} ${Math.abs(data.earnings)} credits.*`);
+        msg.channel.send(`**Sum:** ${sum} \n**Your Guess:** ${bet} \n*You have ${result[0]} ${Math.abs(data.earnings)} credits.*`);
     });
 };
 

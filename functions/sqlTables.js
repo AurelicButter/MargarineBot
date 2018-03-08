@@ -1,4 +1,4 @@
-module.exports = (client, message, user, type) => {
+module.exports = (user, type) => {
     const sqlite3 = require("sqlite3").verbose();
     let db = new sqlite3.Database("./assets/data/score.sqlite");
     let sql = new sqlite3.Database("./assets/data/inventory.sqlite");

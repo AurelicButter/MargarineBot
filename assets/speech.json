@@ -118,16 +118,19 @@
             "Oh? Feeling generous are we? You have given -user- -credit- credits!",
             "Success! -user- is now -credit- credits richer!"
         ],
-        "error": {
-            "noRow": [
-               "That user hasn't redeemed their first daily yet! :cry:",
-               "Sadly, that user does not like my games and didn't redeem their first daily yet." 
-            ],
-            "badDaily": [
-                "Nani?!?! You can't give other people credits if you haven't recieved your first daily yet!",
-                "You have not gotten your first daily yet!",
-                "You aren't in my records. You should redeem your first daily before giving to others."
-            ]    
-        }
+        "noRow": [
+            "That user hasn't redeemed their first daily yet! :cry:",
+            "Sadly, that user does not like my games and didn't redeem their first daily yet." 
+        ],
+        "badDaily": [
+            "Nani?!?! You can't give other people credits if you haven't recieved your first daily yet!",
+            "You have not gotten your first daily yet!",
+            "You aren't in my records. You should redeem your first daily before giving to others."
+        ],
+        "multi": [
+            "You are trying to cheat my daily command! Rude!",
+            "You've already redeemed a daily today, baka!",
+            "You have already redeemed your daily for today."
+        ]
     }
 }

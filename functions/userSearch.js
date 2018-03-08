@@ -9,7 +9,7 @@ module.exports = async (msg, args, callback) => {
         var user = users[x]; var valid = false;
 
         if (user == null) { user = msg.author; }
-        else if (msg.mentions.users.size > 0) { user = msg.mentions.users[x]; }
+        else if (msg.mentions.users.size > 0) { user = msg.mentions.users.first(); }
         else if (/^(\d{17,21})$/.test(user)) { user = await Promise.resolve(msg.client.users.fetch(user)); }
         else if (msg.client.users.find("username", user) !== null) { user = msg.client.users.find("username", user); }
 

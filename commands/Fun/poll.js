@@ -14,8 +14,8 @@ exports.run = async (client, msg, [question, ...option]) => {
 
     for (var x = 0; x < option.length; x++) { embed.addField(`Option ${x + 1} - ${emote[x]}:`, option[x]); }
 
-    const msg = await msg.channel.send({embed});
-    for (var x = 0; x < option.length; x++) { msg.react(emote[x]); }
+    const message = await msg.channel.send({embed});
+    for (var x = 0; x < option.length; x++) { message.react(emote[x]); }
 };
 
 exports.conf = {

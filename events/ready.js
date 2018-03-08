@@ -5,7 +5,7 @@ exports.run = async client => {
     let db = new sqlite3.Database("./assets/data/score.sqlite");
     let sql = new sqlite3.Database("./assets/data/inventory.sqlite");
         
-    await db.get("SELECT * FROM scores WHERE userId = 1", [], (err, row) => { if (err) { return client.funcs.sqlTables(client, "", "", "init"); } else { return; } });
+    await db.get("SELECT * FROM scores WHERE userId = 1", [], (err, row) => { if (err) { return client.funcs.sqlTables("", "init"); } else { return; } });
     await db.close();
     await sql.get("SELECT * FROM material WHERE userId = 1", [], (err, row) => { if (err) { return; } else { return; }});
     await sql.close();
