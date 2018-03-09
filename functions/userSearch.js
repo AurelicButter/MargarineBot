@@ -1,6 +1,6 @@
 const speech = require("../assets/speech.json")["userSearch"];
 
-module.exports = async (msg, args, callback) => {
+module.exports = async (msg, args) => {
     var users = args.user || [null]; 
     var tags = args.tags || ["None"];
     var amount = args.user.length; var x = 0; var data = [];
@@ -38,7 +38,6 @@ module.exports = async (msg, args, callback) => {
 
     var valid = (text) ? false : true;
     if (valid === false) { msg.channel.send(text); data = text; }
-    callback({valid: valid, user: data});
     return { valid: valid, user: data };
 };
 
