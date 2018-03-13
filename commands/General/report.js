@@ -1,9 +1,8 @@
+const sqlite3 = require("sqlite3").verbose();
+let db = new sqlite3.Database("./assets/data/score.sqlite");
 const reportChannel = require("../../assets/settings.json").owner.channels.report;
 
 exports.run = async (client, msg) => {   
-    const sqlite3 = require("sqlite3").verbose();
-    let db = new sqlite3.Database("./assets/data/score.sqlite");
-
     const reports = [];
     
     const reportTypes = {

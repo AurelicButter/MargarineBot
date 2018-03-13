@@ -116,7 +116,8 @@
         ],
         "other": [
             "Oh? Feeling generous are we? You have given -user- -credit- credits!",
-            "Success! -user- is now -credit- credits richer!"
+            "Success! -user- is now -credit- credits richer!",
+            "-user- is really going to make it rain with -credit- extra credits in their pockets!"
         ],
         "noRow": [
             "That user hasn't redeemed their first daily yet! :cry:",
