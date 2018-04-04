@@ -1,9 +1,6 @@
 exports.run = async (client, msg, [bet, credit]) => {
     let rolls = [];
-    for (var z = 0; z < 6; z++) {
-        var x = Math.floor(Math.random() * (Math.floor(6) - Math.ceil(1) + 1)) + Math.ceil(1);
-        rolls.push(x);
-    }
+    for (var z = 0; z < 6; z++) { rolls.push(Math.floor(Math.random() * (Math.floor(6) - Math.ceil(1) + 1)) + Math.ceil(1)); }
 
     var sum = rolls[0] + rolls[1] + rolls[2] + rolls[3] + rolls[4] + rolls[5];
 
@@ -22,7 +19,7 @@ exports.conf = {
     runIn: ["text"],
     aliases: ["chō-han", "chōhan", "chou-han"],
     permLevel: 0,
-    botPerms: [],
+    botPerms: []
 };
   
 exports.help = {

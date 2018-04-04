@@ -14,11 +14,11 @@ exports.conf = {
     aliases: [],
     permLevel: 0,
     botPerms: [],
-    requiredFuncs: ["userSearch"],
+    requiredFuncs: ["userSearch"]
 };
 
 exports.help = {
   name: "greet",
   description: "Have Margarine greet you or someone with a hello!",
-  usage: "[user:str]",
+  usage: "[user:str]"
 };

@@ -5,45 +5,33 @@ module.exports = (client, message, action, user, reason) => {
     kick: ["Kick", "KICK_MEMBERS", "kicked", 0x00AE86]
   };
 
-  var verb = options[action.toLowerCase()][0];
-  var perm = options[action.toLowerCase()][1];
-  var past = options[action.toLowerCase()][2];
-  var color = options[action.toLowerCase()][3];
-
-  const embed = new client.methods.Embed()
-    .setTimestamp();
+  const embed = new client.methods.Embed().setTimestamp();
+  options = options[action.toLowerCase()];
   
-  if (message.channel.permissionsFor(message.author).has(perm) === false) { 
-      embed.setColor(0xDD2E44)
+  if (message.channel.permissionsFor(message.author).has(options[1]) === false) { 
+    embed.setColor(0xDD2E44)
       .setTitle("❌ ERROR: MISSING PERMISSIONS! ❌")
       .setDescription("You do not have the correct permissions for this command!");
+  } else if (message.channel.permissionsFor(client.user).has(option[1]) === false) {
+    embed.setColor(0xDD2E44)
+    .setTitle("❌ ERROR: MISSING PERMISSIONS! ❌")
+    .setDescription("I do not have the correct permissions for this command!");
   } else {
-      embed.setColor(color)
-      .addField(`**Action:** ${verb}`, `**Moderator:** ${message.author.tag}`)
+    embed.setColor(options[3])
+      .addField(`**Action:** ${options[0]}`, `**Moderator:** ${message.author.tag}`)
       .addField("**User:**", user.tag)
       .addField("**Reason:**", reason)
-      .setThumbnail(message.author.avatarURL());
+      .setThumbnail(message.author.displayAvatarURL());
   }
 
   const DMembed = new client.methods.Embed()
-    .setColor(color)
+    .setColor(options[3])
     .setTitle("Moderator Message:")
-    .setDescription(`You have been ${past} from ${message.guild.name}!\n**Reason:** ${reason}`);
+    .setDescription(`You have been ${options[2]} from ${message.guild.name}!\n**Reason:** ${reason}`);
 
-  if (!embed.thumbnail) { var channel = message.channel; } 
-  else {
-    if ((!client.settings.guilds.schema.modlog) || (!client.settings.guilds.schema.defaultChannel)) { 
-      client.funcs.confAdd(client);
-      message.channel.send("Whoops! Looks like some settings were missing! I've fixed these issues for you. Please check the confs and set the channel.");
-    } 
+  var channel = !embed.thumbnail ? message.channel : client.funcs.defaultChannel(client, message.guild.id, ["mod", message.channel]);
 
-    if (message.guild.settings.modlog !== null) { var channel = message.guild.channels.find("id", message.guild.settings.modlog); } 
-    else if (message.guild.settings.defaultChannel !== null) { var channel = message.guild.channels.find("id", message.guild.settings.defaultChannel); } 
-    
-    if (!channel) { var channel = message.channel; }
-  }
-
-  return [embed, channel, DMembed];
+  return { embed: embed, channel: channel, DMembed: DMembed };
 };
 
 module.exports.conf = { requiredModules: [] };

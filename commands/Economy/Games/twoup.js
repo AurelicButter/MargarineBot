@@ -9,10 +9,8 @@ exports.run = async (client, msg, [bet]) => {
     for (var y = 0; y < 7; y++) {
         if (rolls[y] === rolls[y + 1] && rolls[y] === "heads") { var result = ["won", 1.4]; break; }
         else if (rolls[y] !== rolls[1]) { fact.push(true); }
-        else if (y === 6) {
-            if (fact.includes(false)) { var result = ["lost", -1]; }
-            else { var result = ["won", 2]; }
-        } else { fact.push(false); }
+        else if (y === 6) { var result = fact.includes(false) ? ["lost", -1] : ["won", 2]; } 
+        else { fact.push(false); }
     }
 
     client.funcs.transactions(msg, {credit: [bet, "*", result[1]]}, function(data) {
@@ -27,7 +25,7 @@ exports.conf = {
     runIn: ["text"],
     aliases: ["two-up"],
     permLevel: 0,
-    botPerms: [],
+    botPerms: []
 };
 
 exports.help = {

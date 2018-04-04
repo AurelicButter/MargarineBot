@@ -48,8 +48,7 @@ exports.run = async (client, msg) => {
                         const DMembed = new client.methods.Embed()
                             .setColor(0x00AE86)
                             .setTimestamp()
-                            .setDescription(`**Report number:** ${row.reportNumber}
-                            \n**Issue:** ${reports[1]} 
+                            .setDescription(`**Report number:** ${row.reportNumber} \n**Issue:** ${reports[1]} 
                             \nYour report has been sent! Any more questions, please ask Butterstroke#7150!`);
    
                         db.run(`UPDATE stats SET reportNumber = ${row.reportNumber + 1} WHERE statName ="general"`); 

@@ -48,16 +48,16 @@ exports.run = async (client, message, [time, reason]) => {
 };
 
 exports.conf = {
-    enabled: true,
-    runIn: ["text"],
-    aliases: ["ld", "lock"],
-    permLevel: 2,
-    botPerms: ["MANAGE_ROLES", "EMBED_LINKS", "ADMINISTRATOR"],
+  enabled: true,
+  runIn: ["text"],
+  aliases: ["ld", "lock"],
+  permLevel: 2,
+  botPerms: ["MANAGE_ROLES", "EMBED_LINKS", "ADMINISTRATOR"]
 };
   
 exports.help = {
-    name: "lockdown",
-    description: "Locks or unlocks the channel.",
-    usage: "[time:str] [reason:str]",
-    usageDelim: " | ",
+  name: "lockdown",
+  description: "Locks or unlocks the channel.",
+  usage: "[time:str] [reason:str]",
+  usageDelim: " | "
 };
