@@ -12,7 +12,7 @@ exports.run = async (client, msg, [item, amount]) => {
         
         db.run(`UPDATE ${object.category[0]} SET ${object.name} = ${Object.values(row)[0] - amount} WHERE userId = "${msg.author.id}"`);
 
-        client.funcs.transactions(client, msg, {credit: [1, "+", (object.price[1] * amount)]}, function(data) {
+        client.funcs.transactions(msg, {credit: [1, "+", (object.price[1] * amount)]}, function(data) {
             if (data.valid === false) { return; }
     
             msg.channel.send("You have sold " + amount + " " + object.name + " for " + data.earnings + " credits.");

@@ -1,4 +1,4 @@
-const settings = require("../../assets/settings/owner.json");
+const settings = require("../../assets/settings.json")["owner"];
 
 exports.run = async (client, message, [user, type, ...text]) => {
     const sqlite3 = require("sqlite3").verbose();
@@ -12,38 +12,38 @@ exports.run = async (client, message, [user, type, ...text]) => {
         if (!type) { return message.reply("BAKA! I need a type of an award!"); }
         if (!text) { return message.reply("Explain yourself on giving the award!"); }
 
-        client.funcs.userSearch(client, message, {user: user, tags:["bot"], name: this.help.name}, function(data) {
-            if (data.valid === false) { return; }
+        var data = await client.funcs.userSearch(message, {user: [user], tags:["bot"], name: this.help.name});
+        
+        if (data.valid === false) { return; }
 
-            db.get(`SELECT credits FROM scores WHERE userId = "${data.user.id}"`, [], (err, row) => {
-                if (err) { return console.log(err); }
-                if (!row) { return message.reply("That user has not gotten their first daily yet!"); }
+        db.get(`SELECT credits FROM scores WHERE userId = "${data.user[0].id}"`, [], (err, row) => {
+            if (err) { return console.log(err); }
+            if (!row) { return message.reply("That user has not gotten their first daily yet!"); }
                 
-                type = type.toLowerCase(); 
+            type = type.toLowerCase(); 
 
-                const awards = {
-                    suggest: ["suggest", settings.awards.suggest],
-                    bug: ["bug", settings.awards.bug],
-                    minor: ["minor", settings.awards.minor],
-                    major: ["major", settings.awards.major]
-                };
+            const awards = {
+                suggest: ["suggest", settings.awards.suggest],
+                bug: ["bug", settings.awards.bug],
+                minor: ["minor", settings.awards.minor],
+                major: ["major", settings.awards.major]
+            };
 
-                let users = ["Overall", data.user.id];
-                for (var x = 0; x < users.length; x++) {
-                    db.get(`SELECT ${awards[type][0]} FROM awards WHERE userId = "${users[x]}"`, [], (err, row) => {        
-                        db.run(`UPDATE awards SET ${awards[type][0]} = ${Object.values(row)[0] + 1} WHERE userId = "${users[x]}"`);
-                    });
-                };
+            let users = ["Overall", data.user[0].id];
+            for (var x = 0; x < users.length; x++) {
+                db.get(`SELECT ${awards[type][0]} FROM awards WHERE userId = "${users[x]}"`, [], (err, row) => {        
+                    db.run(`UPDATE awards SET ${awards[type][0]} = ${Object.values(row)[0] + 1} WHERE userId = "${users[x]}"`);
+                });
+            };
 
-                embed.setTitle(":tada: Award Notification! :tada:")
-                .addField(`To ${data.user.tag} for the reason of ${text.join(" ")}`, `User has been awarded ${awards[type][1]} credits!`)
-                .setFooter("Awarded to: " + data.user.tag + " (" + data.user.id + ") on:", data.user.displayAvatarURL());
+            embed.setTitle(":tada: Award Notification! :tada:")
+            .addField(`To ${data.user[0].tag} for the reason of ${text.join(" ")}`, `User has been awarded ${awards[type][1]} credits!`)
+            .setFooter("Awarded to: " + data.user[0].tag + " (" + data.user[0].id + ") on:", data.user.displayAvatarURL());
 
-                message.reply(`<@${data.user.id}> (${data.user.id}) have been awarded ${awards[type][1]} credits!`);
+            message.reply(data.user[0].ping + `(${data.user[0].id}) have been awarded ${awards[type][1]} credits!`);
                     
-                client.channels.get(settings.awardChannel).send({embed});
-                db.run(`UPDATE scores SET credits = ${row.credits + awards[type][1]} WHERE userId = "${data.user.id}"`);
-            });
+            client.channels.get(settings.channels.award).send({embed});
+            db.run(`UPDATE scores SET credits = ${row.credits + awards[type][1]} WHERE userId = "${data.user[0].id}"`);
         });
     } else {
         db.get("SELECT * FROM awards WHERE userID = 'Overall'", [], (err, row) => {

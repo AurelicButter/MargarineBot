@@ -1,18 +1,18 @@
-exports.run = async (client, message, [choice, user]) => {  
-    client.funcs.userSearch(client, message, {user: user, name: this.help.name}, function(data) {
-        if (data.valid === false) { return; }
-
-        user = (data.user.id === message.author.id) ? client.user : data.user;
+exports.run = async (client, msg, [choice, user]) => {
+    if (!user) { user = client.user.id; }  
+    var data = await client.funcs.userSearch(msg, {user: [null, user], name: this.help.name});
+    
+    if (data.valid === false) { return; }
+    if (data.user[1].id === msg.author.id) { msg.channel.send("Hey! You can't play rock, paper, scissors with yourself! Invite someone into the mix or play with me instead!"); }
         
-        var types = ["rock", "paper", "scissors"];
-        var hand = types[Math.floor(Math.random() * (Math.floor(2) - Math.ceil(1) + 1)) + Math.ceil(1)];
+    var types = ["rock", "paper", "scissors"];
+    var hand = types[Math.floor(Math.random() * (Math.floor(2) - Math.ceil(1) + 1)) + Math.ceil(1)];
 
-        if ((choice === "rock" && hand === "scissors") || (choice === "paper" && hand === "rock") || (choice === "scissors" && hand === "paper")) { var result = `**${message.author.username} wins!**`; } 
-        if ((choice === "rock" && hand === "paper") || (choice === "paper" && hand === "scissors") || (choice === "scissors" && hand === "rock")) { var result = `**${user.username} wins!**`; }
-        if (choice === hand) { var result = "**Draw!**"; }
+    if ((choice === "rock" && hand === "scissors") || (choice === "paper" && hand === "rock") || (choice === "scissors" && hand === "paper")) { var result = `**${data.user[0].prefered} wins!**`; } 
+    else if ((choice === "rock" && hand === "paper") || (choice === "paper" && hand === "scissors") || (choice === "scissors" && hand === "rock")) { var result = `**${data.user[1].prefered} wins!**`; }
+    else { var result = "**Draw!**"; }
 
-        message.channel.send(`${message.author.username} plays ${choice}! ${user.username} plays ${hand}! ${result}`);
-    });
+    msg.channel.send(`${data.user[0].prefered} plays ${choice}! ${data.user[1].prefered} plays ${hand}! ${result}`);
 };
     
 exports.conf = {

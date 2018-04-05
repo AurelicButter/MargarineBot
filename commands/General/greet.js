@@ -1,12 +1,11 @@
 exports.run = async (client, message, user) => {
-    message.delete().catch();
-    client.funcs.userSearch(client, message, {user: user, name: this.help.name}, function(data) {
-        if (data.valid === false) { return; }
+    var data = await client.funcs.userSearch(message, {user: [user], name: this.help.name});
+    
+    if (data.valid === false) { return; }
 
-        if (data.user.id === client.user.id) { return message.channel.send(`Why would you try and make me greet myself, ${message.author.username}? I'm not that lonely!`); }
+    if (data.user[0].id === client.user.id) { return message.channel.send(`Why would you try and make me greet myself, ${message.author.username}? I'm not that lonely!`); }
 
-	    message.channel.send(`Hello ${data.user.username}! `);
-    });
+	message.channel.send(`Hello ${data.user[0].prefered}! `);
 };
 
 exports.conf = {
@@ -14,12 +13,12 @@ exports.conf = {
     runIn: ["text"],
     aliases: [],
     permLevel: 0,
-    botPerms: ["MANAGE_MESSAGES"],
-    requiredFuncs: ["userSearch"],
+    botPerms: [],
+    requiredFuncs: ["userSearch"]
 };
 
 exports.help = {
   name: "greet",
   description: "Have Margarine greet you or someone with a hello!",
-  usage: "[user:str]",
+  usage: "[user:str]"
 };

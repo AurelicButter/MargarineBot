@@ -1,9 +1,8 @@
-const reportChannel = require("../../assets/settings/owner.json").reportChannel;
+const sqlite3 = require("sqlite3").verbose();
+let db = new sqlite3.Database("./assets/data/score.sqlite");
+const reportChannel = require("../../assets/settings.json").owner.channels.report;
 
 exports.run = async (client, msg) => {   
-    const sqlite3 = require("sqlite3").verbose();
-    let db = new sqlite3.Database("./assets/data/score.sqlite");
-
     const reports = [];
     
     const reportTypes = {
@@ -49,8 +48,7 @@ exports.run = async (client, msg) => {
                         const DMembed = new client.methods.Embed()
                             .setColor(0x00AE86)
                             .setTimestamp()
-                            .setDescription(`**Report number:** ${row.reportNumber}
-                            \n**Issue:** ${reports[1]} 
+                            .setDescription(`**Report number:** ${row.reportNumber} \n**Issue:** ${reports[1]} 
                             \nYour report has been sent! Any more questions, please ask Butterstroke#7150!`);
    
                         db.run(`UPDATE stats SET reportNumber = ${row.reportNumber + 1} WHERE statName ="general"`); 

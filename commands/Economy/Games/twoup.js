@@ -1,29 +1,22 @@
-exports.run = async (client, message, [bet]) => {
+exports.run = async (client, msg, [bet]) => {
     let rolls = [];
     for (var z = 0; z < 7; z++) {
         var x = (Math.random() > .5) ? "heads" : "tails";
         rolls.push(x);
     }
 
+    let fact = [];
     for (var y = 0; y < 7; y++) {
-        if (rolls[y] === rolls[y + 1] && rolls[y] === "heads") { var result = ["won", 1.4]; break;}
-        else if (y === 6) { 
-            if ((rolls[0] !== rolls[1]) && (rolls[0] === rolls[2]) && (rolls[0] !== rolls[3]) && (rolls[0] === rolls[4]) && (rolls[0] !== rolls[5]) && (rolls[0] === rolls[6]) && (rolls[0] !== rolls[7])) {
-                var result = ["won", 2];
-            } else { var result = ["lost", -1];}
-        }
-    }
-        
-    if (result === false) {
-        if ((rolls[0] !== rolls[1]) && (rolls[0] === rolls[2]) && (rolls[0] !== rolls[3]) && (rolls[0] === rolls[4]) && (rolls[0] !== rolls[5]) && (rolls[0] === rolls[6]) && (rolls[0] !== rolls[7])) {
-            result = ["won", 1];
-        } else { result = ["lost", -1]; }
+        if (rolls[y] === rolls[y + 1] && rolls[y] === "heads") { var result = ["won", 1.4]; break; }
+        else if (rolls[y] !== rolls[1]) { fact.push(true); }
+        else if (y === 6) { var result = fact.includes(false) ? ["lost", -1] : ["won", 2]; } 
+        else { fact.push(false); }
     }
 
-    client.funcs.transactions(client, message, {credit: [bet, "*", result[1]]}, function(data) {
+    client.funcs.transactions(msg, {credit: [bet, "*", result[1]]}, function(data) {
         if (data.valid === false) { return; }
 
-        message.channel.send(`**Coins:** ${rolls.join(", ")}\nYou have ${result[0]} ${Math.abs(data.earnings)} credits.`); 
+        msg.channel.send(`**Coins:** ${rolls.join(", ")}\nYou have ${result[0]} ${Math.abs(data.earnings)} credits.`); 
     });
 };
 
@@ -32,7 +25,7 @@ exports.conf = {
     runIn: ["text"],
     aliases: ["two-up"],
     permLevel: 0,
-    botPerms: [],
+    botPerms: []
 };
 
 exports.help = {

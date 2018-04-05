@@ -1,33 +1,34 @@
 const sqlite3 = require("sqlite3").verbose();
 let db = new sqlite3.Database("./assets/data/score.sqlite");
-const speech = require("../assets/values/speech.json");
+const speech = require("../assets/speech.json");
 
-module.exports = async (client, msg, args, callback) => {
+module.exports = async (msg, args, callback) => {
     var user = args.user || msg.author;
 
     var tags = args.tags ? args.tags[0] : "credit";
-    client.funcs.validator({credit: args.credit[0], tags: tags}, function(data) {
-        if (data.valid === false) { return msg.channel.send(data.message); }
-    });
-    
-    this.dbChecker({user: user, credits: args.credit[0]}, function(data) {
-        if (data.valid === false) { 
-            msg.channel.send(data.credits); 
-            callback({valid: false});
-        }
-        else {
-            if (args.credit !== undefined) {
+    var checker = await msg.client.funcs.validator({credit: args.credit[0], tags: tags});
+    if (checker.valid === false) {
+        msg.channel.send(checker.message); 
+        callback({valid: false});
+    } else {
+        this.dbChecker({user: user, credits: args.credit[0]}, function(data) {
+            if (data.valid === false) { 
+                msg.channel.send(data.credits); 
+                callback({valid: false});
+            } else if (args.credit !== undefined) {
                 if (args.credit[1] === "+") { var amount = args.credit[0] + args.credit[2]; }
-                else if (args.credit[1] === "-") { var amount = args.credit[0] - args.credit[2]; }
-                else if (args.credit[1] === "*") { var amount = args.credit[0] * args.credit[2]; }
-
-                amount = (amount < 0) ? amount : amount - args.credit[0];
-                db.run(`UPDATE scores SET credits = ${amount + data.credits} WHERE userId = ${user.id}`);
-
+                else if (args.credit[1] === "-") { var amount = args.credit[0] - args.credit[2]; } 
+                else if (args.credit[1] === "*") { 
+                    var amount = args.credit[0] * args.credit[2]; 
+                    amount = (amount < 0) ? amount : amount - args.credit[0];
+                }
+    
+                db.run(`UPDATE scores SET credits = "${Number(amount) + data.credits}" WHERE userId = "${user.id}"`);
+    
                 callback({valid: true, earnings: amount});
             } else { callback(data); }
-        }
-    });
+        });
+    }
 };
 
 exports.conf = { requiredModules: [] };

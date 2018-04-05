@@ -40,9 +40,8 @@ exports.run = async (client, msg, [cmd, mod]) => {
     
             if (!this.runCommandInhibitors(client, msg, cmd)) { return; }
 
-            var usage = cmd.help.humanUse || cmd.help.usage;
-            var spliter = cmd.help.humanUse ? "_": " ";
-            var usageAct = usage.length < 1 ? "": usage.split(spliter).join(cmd.help.usageDelim);
+            var usage = cmd.help.humanUse ? [cmd.help.humanUse, "_"] : [cmd.help.usage, " "];
+            var usageAct = usage.length < 1 ? "": usage[0].split(usage[1]).join(cmd.help.usageDelim);
             var alias = cmd.conf.aliases.length > 0 ? ` aka: (${cmd.conf.aliases.join(", ")})`: "";
             
             const embed = new client.methods.Embed()
@@ -52,7 +51,7 @@ exports.run = async (client, msg, [cmd, mod]) => {
                 .addField("Usage:", `\`${prefix + cmd.help.name + " " + usageAct}\``)
                 .addField("Permission level:", local[cmd.conf.permLevel]);
             if (cmd.help.extendedHelp) { embed.addField("Extended Help:", cmd.help.extendedHelp); }
-            return msg.send({embed});
+            msg.send({embed});
         }
     }
 };
@@ -62,9 +61,7 @@ exports.conf = {
     runIn: ["text", "dm"],
     aliases: ["commands"],
     permLevel: 0,
-    botPerms: ["SEND_MESSAGES"],
-    requiredFuncs: [],
-    requiredSettings: [],
+    botPerms: ["SEND_MESSAGES"]
 };
   
 exports.help = {

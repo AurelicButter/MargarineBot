@@ -3,7 +3,7 @@ exports.run = async (client, msg) => {
     let db = new sqlite3.Database("./assets/data/inventory.sqlite");
     const items = require("../../../assets/values/items.json");
 
-    client.funcs.transactions(client, msg, {credit: [1, "-", 11]}, function(data) {
+    client.funcs.transactions(msg, {credit: [1, "-", 11]}, function(data) {
         if (data.valid === false) { return; }
 
         db.get(`SELECT * FROM material WHERE userId = "${msg.author.id}"`, [], (err, row) => {

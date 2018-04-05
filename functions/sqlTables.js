@@ -1,4 +1,4 @@
-module.exports = (client, message, user, type) => {
+module.exports = (user, type) => {
     const sqlite3 = require("sqlite3").verbose();
     let db = new sqlite3.Database("./assets/data/score.sqlite");
     let sql = new sqlite3.Database("./assets/data/inventory.sqlite");
@@ -23,7 +23,7 @@ module.exports = (client, message, user, type) => {
         db.run("INSERT INTO scores (userId, credits, level, daily, rep, repDaily) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 100, 0, Date.now(), 0, 0]);
         db.run("INSERT INTO fish_stats (userId, trash, fish, crab, squid, shark) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0, 0]);
         db.run("INSERT INTO badges (userId) VALUES (?)", [user.id]);  
-        db.run("INSERT INTO awards (userId, suggest, bugs, minor, major) VALUES (?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0]);  
+        db.run("INSERT INTO awards (userId) VALUES (?)", [user.id]);  
         db.close();
 
         sql.run("INSERT INTO material (userId) VALUES (?)", [user.id]);
