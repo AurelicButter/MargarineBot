@@ -15,19 +15,20 @@ exports.run = async (client, msg, [user]) => {
             else if (time[x] >= 1) { time.push(time[x].toFixed(2) + " days"); }
             else { time.push((time[0] * 24).toFixed(2) + " hours"); }
         }
-        let avatar = msg.client.users.find("username", data.user[0].username);
-
-        const embed = new client.methods.Embed()
-            .setTimestamp()
-            .setFooter(msg.guild.name, msg.guild.iconURL())
-            .setThumbnail(avatar.displayAvatarURL())
-            .setColor(0x04d5fd)
-            .setAuthor(`User: ${data.user[0].username}`, avatar.displayAvatarURL())
-            .setDescription(`ID: ${data.user[0].id}`)
-            .addField("Credits:", (row.credits).toLocaleString() + " (Last redeem: " + time[2] + " ago)")
-            .addField("Reputation:", row.rep + " (Last Rep: " + time[3] + " ago)");
         
-        msg.channel.send({embed});
+        client.users.fetch(data.user[0].id).then(avatar => {
+            const embed = new client.methods.Embed()
+                .setTimestamp()
+                .setFooter(msg.guild.name, msg.guild.iconURL())
+                .setThumbnail(avatar.displayAvatarURL())
+                .setColor(0x04d5fd)
+                .setAuthor(`User: ${data.user[0].username}`, avatar.displayAvatarURL())
+                .setDescription(`ID: ${data.user[0].id}`)
+                .addField("Credits:", (row.credits).toLocaleString() + " (Last redeem: " + time[2] + " ago)")
+                .addField("Reputation:", row.rep + " (Last Rep: " + time[3] + " ago)");
+        
+            msg.channel.send({embed});
+        });
     });
     db.close();
 };
@@ -38,7 +39,7 @@ exports.conf = {
     aliases: ["bal", "credits", "profile"],
     permLevel: 0,
     botPerms: [],
-    requiredFuncs: ["userSearch"],
+    requiredFuncs: ["userSearch"]
 };
   
 exports.help = {

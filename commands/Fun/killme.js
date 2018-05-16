@@ -10,12 +10,11 @@ exports.conf = {
     runIn: ["text"],
     aliases: ["kms"],
     permLevel: 0,
-    botPerms: [],
+    botPerms: []
 };
       
 exports.help = {
     name: "killme",
     description: "Kill yourself with this command. Now comes with free revival!",
-    usage: "",
-    usageDelim: "",
+    usage: ""
 };

@@ -13,10 +13,11 @@
     "ms": "^2.0.0",
     "node-opus": "^0.2.7",
     "querystring": "^0.2.0",
+    "request": "^2.85.0",
     "snekfetch": "^3.5.8",
     "sqlite3": "^3.1.13",
     "steamapi": "^1.3.5",
-    "ytdl-core": "^0.18.3"
+    "ytdl-core": "^0.20.4"
   },
   "devDependencies": {},
   "repository": {
