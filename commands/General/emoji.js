@@ -12,7 +12,10 @@ exports.run = async (client, msg, [Name, ID]) => {
         if (element[1].name === Name) { return element; }
     });
     var type = emoji[0][1].animated === true ? "gif" : "png";
-    msg.channel.send({files: [`https://cdn.discordapp.com/emojis/${emoji[0][0]}.${type}`]});
+
+    if (msg.content.slice(prefix.length).startsWith("react")) {
+        msg.channel.messages.fetch(ID).then(msg => msg.react(client.emojis.get(emoji[0][0]))); 
+    } else { msg.channel.send({files: [`https://cdn.discordapp.com/emojis/${emoji[0][0]}.${type}`]}); }
 };
 
 exports.conf = {
