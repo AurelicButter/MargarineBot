@@ -1,14 +1,18 @@
 exports.run = async (client, msg, [Name, ID]) => {
     const prefix = msg.guild.settings.prefix || client.config.prefix;
-    let emote = client.emojis.find("name", Name);
-    
-    msg.delete();   
-    if (!Name || !emote) { return msg.channel.send("I can't find that emoji. My searching capabilities are case-sensitive so be sure that the emoji name is **exactly** the way it is spelled.").then(message => {
-        setTimeout(() => { message.delete(); }, 4000);
-    }); } else if (msg.content.slice(prefix.length).startsWith("react")) {
-        if (!ID) { return msg.channel.send("You need to specify a message's ID so that I can find it!").then(msg => { setTimeout(() => { msg.delete(); }, 4000); }); }
-		msg.channel.messages.fetch(ID).then(msg => msg.react(emote)); 
-    } else { msg.channel.send("", { files: [emote.url]}); }
+
+    msg.delete(); 
+    if (!Name) { return msg.channel.send("You need a name of an emote to search with, baka!"); }
+    if (msg.content.slice(prefix.length).startsWith("react") && (!ID)) {
+        return msg.channel.send("You need to specify a message's ID so that I can find it!").then(msg => { setTimeout(() => { msg.delete(); }, 4000); }); 
+    }
+
+    let emotes = Array.from(client.emojis);
+    let emoji = emotes.filter((element) => {
+        if (element[1].name === Name) { return element; }
+    });
+    var type = emoji[0][1].animated === true ? "gif" : "png";
+    msg.channel.send({files: [`https://cdn.discordapp.com/emojis/${emoji[0][0]}.${type}`]});
 };
 
 exports.conf = {
@@ -16,7 +20,7 @@ exports.conf = {
     runIn: ["text"],
     aliases: ["see", "emote", "react"],
     permLevel: 0,
-    botPerms: ["ATTACH_FILES", "ADD_REACTIONS", "MANAGE_MESSAGES"],
+    botPerms: ["ATTACH_FILES", "ADD_REACTIONS", "MANAGE_MESSAGES"]
 };
   
 exports.help = {

@@ -18,5 +18,5 @@ module.exports.conf = { requiredModules: [] };
 module.exports.help = {
     name: "defaultChannel",
     type: "functions",
-    description: "Searchs for the 'default' channel of the server.",
+    description: "Searchs for the 'default' channel of the server."
 };

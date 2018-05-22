@@ -11,12 +11,13 @@ exports.run = async (client, msg, [term]) => {
 
         do {
             var z = text[x].trim(); var y = text[x + 1] ? text[x + 1].trim() : ""; var zed = text[x + 2] ? text[x + 2].trim() : "";
-            if (z.length > 1) {
+            if (z + y + zed === "404NotFound") { return msg.channel.send("Whoops! Looks like a user by that name does not exist."); }
+            else if (z.length > 1) {
                 if (z.startsWith("Online")) {
                     if (zed.startsWith("ago")) { info.status = z.slice(6) + " " + y + " ago"; }
                     else if (z.startsWith("OnlineNow")) { info.status = z.slice(6, z.search("Gender")); }
                     else if (zed.includes(":")) { info.status = z.slice(6) + " " + y + " " + (new Date()).getFullYear(); }
-                    else if (z.includes("Yesterday") && zed.slice(1, 2) === "M") { 
+                    else if (z.includes("Yesterday") || z.includes("Today") && zed.slice(1, 2) === "M") { 
                         info.status = z.slice(6, -1) + " at " + y + zed.slice(0, 2); 
                     }
                     else if (Number(zed) !== NaN) { info.status = z.slice(6) + " " + y + " " + zed; }
@@ -45,10 +46,15 @@ exports.run = async (client, msg, [term]) => {
                         info[butter].completed = z.slice(num[0] + 9, num[1]);
                         info[butter].hold = z.slice(num[1] + 7, num[2]);
                         info[butter].drop = z.slice(num[2] + 7, -4);
-                        info[butter].plan = zed.slice(5, -5);
 
-                        if (butter === "aStats") { info.aStats.watch = z.slice(8, num[0]); }
-                        else { info.mStats.read = z.slice(8, num[0]); }
+                        if (butter === "aStats") { 
+                            info.aStats.watch = z.slice(8, num[0]); 
+                            info.aStats.plan = zed.slice(5, -5);
+                        }
+                        else { 
+                            info.mStats.read = z.slice(7, num[0]); 
+                            info.mStats.plan = zed.slice(4, -5);
+                        }
                     }
                 } else if (z === "All" && !info.friends) { info.friends = y.slice(1, -8); }
                 else if (Number(y) !== NaN) {

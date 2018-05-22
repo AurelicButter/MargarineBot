@@ -22,11 +22,11 @@ exports.conf = {
   runIn: ["text"],
   aliases: [],
   permLevel: 0,
-  botPerms: [],
+  botPerms: []
 };
   
 exports.help = {
   name: "permlevel",
   description: "Check your permission level.",
-  usage: "",
+  usage: ""
 };

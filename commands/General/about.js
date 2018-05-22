@@ -19,11 +19,11 @@ exports.conf = {
     runIn: ["text", "dm"],
     aliases: [],
     permLevel: 0,
-    botPerms: [],
+    botPerms: []
 };
   
 exports.help = {
     name: "about",
     description: "General information.",
-    usage: "",
+    usage: ""
 };
