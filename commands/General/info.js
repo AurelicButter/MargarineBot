@@ -1,50 +1,43 @@
 exports.run = async (client, message, [kind, search]) => {
-    let guild = message.guild;
+    let guild = message.channel.guild;
     let msg = message.content.slice(2).split(" ");
 
-    if (msg[0] === "info") {
-        var kind = msg[1];
-        var User = msg.slice(2).join(" ");
-    } else {
-        var kind = msg[0];
-        var User = msg.slice(1).join(" ");
-    }
+    var x = (msg[0] === "info") ? 1 : 0;
+    var kind = msg[x];
+    var user = msg.slice(x + 1).join(" ");
 
     const embed = new client.methods.Embed()
         .setTimestamp()
-        .setAuthor(guild.name, guild.iconURL());
+        .setFooter(guild.name, guild.iconURL());
 
     if (kind === "user") { 
-        let user = client.funcs.userSearch(client, message, User);
-        if (user.username === null) {
-            embed.addField(":x: No User found! :x:");
-            return message.channel.send({embed});
-        }
+        var data = await client.funcs.userSearch(message, {user: [user], name: this.help.name});
+        if (data.valid === false) { return; }
+        
+        user = client.users.find("username", data.user[0].username);
 
         const statusList = {
             online: "Online",
             idle: "Idle",
             dnd: "Do not Disturb"
         };
-
-        var Status = statusList[user.presence.status];
-        if (!Status) { var Status = "Offline"; } 
-        
-        embed.setThumbnail(user.avatarURL())
-        .setColor("#4d5fd")
-        .addField("User:", `${user.tag} - ${user.id}`)
+    
+        var Status = statusList[user.presence.status] || "Offline";
+        var botUser = user.bot ? "True": "False";
+        var activity = user.presence.activity !== null ? " - " + user.presence.activity.name: " ";
+            
+        embed.setThumbnail(user.displayAvatarURL())
+        .setColor(0x04d5fd)
+        .setAuthor("User: " + user.tag)
+        .setDescription("ID: " + user.id)
         .addField("Created:", user.createdAt.toLocaleString(), true)
-        .addField("Joined:", guild.members.get(user.id).joinedAt.toLocaleString(), true);
-
-        if (user.bot === true) { embed.addField("Bot user:", "True", true); } 
-        else { embed.addField("Bot user:", "False", true); }
-
-        if (user.presence.activity === null) { embed.addField("Status:", Status, true); } 
-        else { embed.addField("Status:", `${Status} - ${user.presence.activity.name}`, true); }
+        .addField("Joined:", guild.members.get(user.id).joinedAt.toLocaleString(), true)
+        .addField("Bot user:", botUser, true)
+        .addField("Status:", Status + activity, true);
     }
 
     else if (kind === "role") { 
-        let role = guild.roles.find("name", User); 
+        let role = guild.roles.find("name", user); 
 
         if (!role) { return message.channel.send("Looks like I can't find the role. My searchs are case-sensitive so please check before retyping."); }
     
@@ -56,9 +49,9 @@ exports.run = async (client, message, [kind, search]) => {
     }
 
     else if (kind === "server") {
-        if (!User) { 
+        if (!user) { 
             embed.setThumbnail(guild.iconURL())
-            .setColor("#4d5fd")
+            .setColor(0x04d5fd)
             .addField("Region:", guild.region, true)
             .addField("Created:", guild.createdAt.toLocaleString(), true)
             .addField("Owner:", `${guild.owner.user.tag} - ${guild.owner.id}`)
@@ -68,7 +61,7 @@ exports.run = async (client, message, [kind, search]) => {
         else { return message.reply("You can't ask information about a server with additional stuff!"); }
     }
 
-    return message.channel.send({embed});
+    message.channel.send({embed});
 };
 
 exports.conf = {
@@ -77,13 +70,14 @@ exports.conf = {
     aliases: ["server", "role", "user"],
     permLevel: 0,
     botPerms: [],
-    requiredFuncs: ["userSearch"],
+    requiredFuncs: ["userSearch"]
 };
 
 exports.help = {
   name: "info",
   description: "Get the server or user information.",
   usage: "[server|user|role] [search:str]",
-  usageDelim: "",
-  extendedHelp: "If using one of the aliases, you can skip [server|user|role] and define your search item!",
+  usageDelim: " ",
+  extendedHelp: "Need Discord info? I got you covered with this command!",
+  humanUse: "([If not specified] server|user|role)_(search content)"
 };

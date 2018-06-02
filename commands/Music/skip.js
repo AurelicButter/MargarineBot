@@ -3,7 +3,7 @@ exports.run = async (client, msg) => {
   if (msg.member.voiceConnection !== msg.guild.voiceConnection) { throw "You can't skip a song if you are not listening to it!"; }
 
   msg.guild.voiceConnection.dispatcher.end();
-  return msg.send("⏭ Skipped the current song.");
+  msg.send("⏭ Skipped the current song.");
 };
 
 exports.conf = {
@@ -11,14 +11,11 @@ exports.conf = {
   runIn: ["text"],
   aliases: [],
   permLevel: 0,
-  botPerms: [],
-  requiredFuncs: [],
+  botPerms: []
 };
 
 exports.help = {
   name: "skip",
   description: "Skips the current song.",
-  usage: "",
-  usageDelim: "",
-  extendedHelp: "",
+  usage: ""
 };

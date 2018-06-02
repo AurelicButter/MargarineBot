@@ -8,13 +8,11 @@ exports.conf = {
   runIn: ["text"],
   aliases: [],
   permLevel: 0,
-  botPerms: [],
-  requiredFuncs: [],
+  botPerms: []
 };
   
 exports.help = {
   name: "ping",
   description: "Ping/Pong command.",
-  usage: "",
-  usageDelim: "",
+  usage: ""
 };

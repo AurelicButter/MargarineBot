@@ -7,12 +7,11 @@ exports.conf = {
     runIn: ["text"],
     aliases: [],
     permLevel: 0,
-    botPerms: [],
+    botPerms: []
 };
       
 exports.help = {
     name: "crash",
-    description: ":eyes: Do it. I dare you to.",
-    usage: "",
-    usageDelim: "",
+    description: "👀 Do it. I dare you to.",
+    usage: ""
 };

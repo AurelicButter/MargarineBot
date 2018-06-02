@@ -1,26 +1,21 @@
-exports.run = async (client, message, [question, option1, option2, option3, option4, option5]) => {
-  if(!question) { return message.reply("You need to provide a question."); }
-  if(!option1 || !option2) { return message.reply("You need to provide at least two options!"); }
+exports.run = async (client, msg, [question, ...option]) => {
+    if (!question) { return msg.reply("You need to provide a question."); }
+    else if (option.length < 2) { return msg.reply("You need to provide at least two options!"); }
+    else if (option.length > 25) { return msg.reply("Whoa! You have a giant list of options! Not even I can handle all of these!"); }
 
-  message.delete().catch();
-  const embed = new client.methods.Embed()
-     .setColor("#FFFFFF")
-     .setTimestamp()
-     .setDescription(`A poll has been started by ${message.author.username}!`)
-     .addField("Question: ", `${question}`)
-     .addField("Option 1:", `✅ - ${option1}`)
-     .addField("Option 2:", `❎ - ${option2}`);
+    var emote = ["✅", "❎", "☑", "✔", "❌", "✖", "⭕", "🔘"];
 
-  if (option3) { embed.addField("Option 3:", `☑ - ${option3}`); }
-  if (option4) { embed.addField("Option 4:", `✔ - ${option4}`); }
-  if (option5) { embed.addField("Option 5:", `❌- ${option5}`); }
+    msg.delete().catch();
+    const embed = new client.methods.Embed()
+        .setColor("#FFFFFF")
+        .setTimestamp()
+        .setDescription(`A poll has been started by ${msg.author.username}!`)
+        .addField("Question: ", `${question}`);
 
-  const msg = await message.channel.send({embed}).catch(err => client.funcs.log(err, "error"));
-  await msg.react("✅");
-  await msg.react("❎");
-  if (option3) { await msg.react("☑"); }
-  if (option4) { await msg.react("✔"); }
-  if (option5) { await msg.react("❌"); }
+    for (var x = 0; x < option.length; x++) { embed.addField(`Option ${x + 1} - ${emote[x]}:`, option[x]); }
+
+    const message = await msg.channel.send({embed});
+    for (var x = 0; x < option.length; x++) { message.react(emote[x]); }
 };
 
 exports.conf = {
@@ -34,6 +29,7 @@ exports.conf = {
 exports.help = {
     name: "poll",
     description: "Poll users",
-    usage: "[question:str] [option1:str] [option2:str] [option3:str] [option4:str] [option5:str]",
+    usage: "[question:str] [option:str][...]",
     usageDelim: " | ",
+    humanUse: "(question)_(option1)_(option2)_(etc...->option5)"
 };

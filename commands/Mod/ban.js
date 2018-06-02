@@ -1,18 +1,19 @@
-exports.run = async (client, message, [User, reason]) => {
-    let user = client.funcs.userSearch(client, message, User);
-    if (user.username === null) { return; }
-    
-	if (!reason) { return message.reply("You must supply a reason for the ban."); }
-    if (!message.guild.member(user).bannable) { return message.reply("I cannot ban that member"); }
-    
-    var Toast = client.funcs.modEmbed(client, message, "ban", user, reason);
+exports.run = async (client, msg, [user, reason]) => {
+    user = await client.funcs.userSearch(msg, {user: [user], name: this.help.name});
+    if (user.valid === null) { return; }
+    user = client.users.find("username", user.user[0].username);
 
-    if (Toast[0].thumbnail) {
-        await user.send({embed: Toast[2]});
-        await message.guild.member(user).ban(reason);
+    if (!reason) { return msg.reply("You must supply a reason!"); }
+    if (msg.guild.member(user).bannable === false) { return msg.reply("I cannot ban that member"); }
+
+    var Toast = await client.funcs.modEmbed(client, msg, "kick", user.user[0], reason);
+    
+    if (Toast.embed.thumbnail) {
+        await user.send({embed: Toast.DMembed});
+        await msg.client.users.fetch(user.id).kick(reason);
     }
-
-    await Toast[1].send({embed: Toast[0]});
+    
+    await Toast.channel.send({embed: Toast[0]});
 };
 
 exports.conf = {
@@ -21,12 +22,12 @@ exports.conf = {
     aliases: ["b"],
     permLevel: 3,
     botPerms: ["BAN_MEMBERS", "EMBED_LINKS"],
-    requiredFuncs: ["userSearch", "modEmbed"],
+    requiredFuncs: ["userSearch", "modEmbed"]
 };
       
 exports.help = {
     name: "ban",
     description: "Bans the mentioned user.",
-    usage: "<User:str> [reason:str] [...]",
-    usageDelim: " ",
+    usage: "<user:str> [reason:str] [...]",
+    usageDelim: " "
 };

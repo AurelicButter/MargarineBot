@@ -1,0 +1,21 @@
+{
+    "token": "<BOT_TOKEN>",
+    "ownerID": "<OWNER_ID>",
+    "prefix": "<PREFIX>", 
+    "build": {
+        "version": "Beta 0.9",
+        "releaseDate": "TBD"
+    },
+    "owner": {
+        "channels": {
+            "award": "<CHANNEL_ID>",
+            "report": "<CHANNEL_ID"
+        },
+        "awards": {
+            "suggest": 250,
+            "bug": 500,
+            "minor": 600,
+            "major": 2000
+        }
+    }
+}

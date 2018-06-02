@@ -1,0 +1,138 @@
+{
+    "intChecker": {
+        "none": {
+            "credit": [
+                "You didn't supply me with an amount of credits, baka!",
+                "Credits? Hello? I need an amount of credits!"
+            ],
+            "craft": [
+                "You can't craft nothing, baka!"
+            ],
+            "default": [
+                "You didn't include a value here, baka!",
+                "No value, no results, baka!",
+                "A man once said you always have value in life. Apparently, you can't spread some of that wealth into your command."
+            ]
+        },
+        "negative": {
+            "credit": [
+                "You can't bet a negative amount of credits!",
+                "What are you trying to do? Steal someone's credits? That's illegal, you know."
+            ],
+            "craft": [
+                "You can't craft a negative number, baka!",
+                "You're better off selling your raw items than crafting a negative amount."
+            ],
+            "default": [
+                "No negative values in this established command, baka!",
+                "Negatives? Here? Lmao. You're really funny!"
+            ]
+        },
+        "zero": {
+            "credit": [
+                "You can't use zero credits here! Bet some *actual* credits and then we'll talk.",
+                "...wow, I didn't know you were that oblivious to gambling credits. You don't bet **nothing**, baka!"
+            ],
+            "craft": [
+                "Why are you even crafting, baka!",
+                "Tell me the answer of 0/0 and then I'll craft you 0 of that item."
+            ],
+            "default": [
+                "We've divided by zero. It didn't go so well...",
+                "Zero is an evil number. Don't give me these evils to work with."
+            ]
+        },
+        "noInteger": {
+            "credit": [
+                "There is no decimal work in credits! Whole credits only.",
+                "You can't split a credit! Give me a whole number, baka!"
+            ],
+            "craft": [
+                "You can't have a part of something, baka!",
+                "Uh... you want to craft half of an item? I don't think that will work out well for you."
+            ],
+            "default": [
+                "Decimals? That's like giving me fraction work. No thanks!",
+                "Decimals: fun to look at, not possible with what you are trying to do."
+            ]
+        }
+    },
+    "noRow": [
+        "You haven't redeemed your first daily yet! :cry:",
+        "You haven't signed up and received your credits yet! D:",
+        "You need some credits to do this, baka! Get some with the daily command!",
+        "Credits speak a whole lot of value in these parts. Set yourself up with a daily command first!"
+    ],
+    "lessCredit": [
+        "You don't have that many credits, baka!",
+        "A poor person like yourself could never afford that bet.",
+        "Try paying in dirt. It's worth more than your bank right now.",
+        "Try to pull a fast one on me? Too bad you can't afford it, baka!"
+    ],
+    "userSearch": {
+        "balance": [
+            "Bots can't have any records!",
+            "Bots aren't allowed to have bank accounts. They could hack them easily at this point.",
+            "You are lucky I don't have one because then I'd show you the true power of business!"
+        ],
+        "daily": [
+            "You can't give your credits to a bot user, baka!",
+            "Bots don't have records within our bank to take dailies!",
+            "What is the bot going to do with all of these credits? It's more useful not to take a daily at this point."
+        ],
+        "rep": [
+            "You can't give rep to a bot user. However, as long as you keep interacting with them, I'm sure they will be happy! :smile:",
+            "Bots can't have rep, baka!"
+        ],
+        "exchange": [
+            "You can't give your credits to a bot user!",
+            "Exchanging to a bot user is just not possible. They are known to do foul things with money from time to time."
+        ],
+        "award": [
+            "Awarding a non-existant user? Wow, I think we've hit a new low here.",
+            "Fake users don't get awards, baka!",
+            "Are you trying to funnel some extra credits through a false user again?"
+        ],
+        "ecoedit": [
+            "Trying to edit some credits on a fake account? Not on my watch, baka!",
+            "A fake account is a fake account. There is nothing else to do here."
+        ],
+        "default": [
+            "Whatever you are trying to find, it's not typed right or it doesn't exist.",
+            "Where is the user? I don't know but not any location where I can find it!",
+            "I couldn't find the user! Give me a better thing to search with, baka!",
+            "Another non-existant user? Really?",
+            "... There isn't a user here, baka!",
+            "You say user, I say doesn't exist. Baka!"
+        ]
+    },
+    "daily": {
+        "self": [
+            "You have redeemed 100 credits!",
+            "Poof! You are 100 credits richer now!",
+            "Don't go gambling your 100 credits all in one place now.",
+            "You have redeemed your daily credits. Come back tomorrow at the same time for more!",
+            "You should buy me a game with those credits. I won't take all 100 on you, I swear."
+        ],
+        "other": [
+            "Oh? Feeling generous are we? You have given -user- -credit- credits!",
+            "Success! -user- is now -credit- credits richer!",
+            "-user- is really going to make it rain with -credit- extra credits in their pockets!"
+        ],
+        "noRow": [
+            "That user hasn't redeemed their first daily yet! :cry:",
+            "Sadly, that user does not like my games and didn't redeem their first daily yet." 
+        ],
+        "badDaily": [
+            "Nani?!?! You can't give other people credits if you haven't recieved your first daily yet!",
+            "You have not gotten your first daily yet!",
+            "You aren't in my records. You should redeem your first daily before giving to others."
+        ],
+        "multi": [
+            "You are trying to cheat my daily command! Rude!",
+            "You've already redeemed a daily today, baka!",
+            "You have already redeemed your daily for today.",
+            "No stealing! I already payed your daily worth of credits today, baka!"
+        ]
+    }
+}

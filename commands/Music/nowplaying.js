@@ -11,14 +11,14 @@ exports.run = async (client, message) => {
   const embed = new client.methods.Embed()
   .setColor(0x04d5fd)
   .setTimestamp()
-  .setTitle(`📻 __${message.guild.name}'s Stream of Music__`)
+  .setTitle(`📻 __${message.guild.name}'s Music Stream__`)
   .setDescription("*Streaming all your requests from the fabulous library of Youtube.*")
   .setThumbnail(song.image)
   .addField("**Title:**", `[${song.title}](${song.url})`)
   .addField("**Requested by:**", song.requester, true)
-  .addField("**Time Left:**", `${moment.duration((handler.songs[0].seconds * 1000) - message.guild.voiceConnection.dispatcher.time).format("h:mm:ss", { trim: false })} out of ${moment.duration(handler.songs[0].seconds * 1000).format("h:mm:ss", { trim: false })}`, true);
+  .addField("**Time Left:**", `${moment.duration((handler.songs[0].seconds * 1000) - message.guild.voiceConnection.dispatcher.time).format("h:mm:ss", { trim: false })} out of ` + moment.duration(handler.songs[0].seconds * 1000).format("h:mm:ss", { trim: false }), true);
 
-  return message.channel.send({embed});
+  message.channel.send({embed});
 };
 
 exports.conf = {
@@ -26,14 +26,11 @@ exports.conf = {
   runIn: ["text"],
   aliases: ["np", "whatsplaying", "whatsplayingfam"],
   permLevel: 0,
-  botPerms: [],
-  requiredFuncs: [],
+  botPerms: []
 };
 
 exports.help = {
   name: "nowplaying",
   description: "See what's currently playing in VC.",
-  usage: "",
-  usageDelim: "",
-  extendedHelp: "",
+  usage: ""
 };

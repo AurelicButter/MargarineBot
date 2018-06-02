@@ -1,0 +1,120 @@
+{
+    "info": {
+        "item_structure": {
+            "price": ["buy", "sell"],
+            "name": "item_name",
+            "emote": "item_emote",
+            "category": ["item_major", "item_minor"] 
+        },
+        "material_names": ["info", "trash", "fish", "crab", "squid", "shark", "potato", "egg", "bread", "chocolate", "greenapple", "apple", "lemon", "sake", "rice"],
+        "product_names": ["fishcake", "cookie", "oden", "sushi"]
+    },
+    "trash": {
+        "price": ["N/A", 0],
+        "name": "trash",
+        "emote": "🗑",
+        "category": ["material", "N/A"]
+    },
+    "fish": {
+        "price": ["N/A", 5],
+        "name": "fish",
+        "emote": "🐟",
+        "category": ["material", "fishing"]
+    },
+    "crab": {
+        "price": ["N/A", 15],
+        "name": "crab",
+        "emote": "🦀",
+        "category": ["material", "fishing"] 
+    },
+    "squid": {
+        "price": ["N/A", 25],
+        "name": "squid",
+        "emote": "🦑",
+        "category": ["material", "fishing"]
+    },
+    "shark": {
+        "price": ["N/A", 75],
+        "name": "shark",
+        "emote": "🦈",
+        "category": ["material", "fishing"]
+    }, 
+    "potato": {
+        "price": ["N/A", 15],
+        "name": "potato",
+        "emote": "🥔",
+        "category": ["material", "harvest"]
+    },
+    "egg": {
+        "price": ["N/A", 5],
+        "name": "egg",
+        "emote": "🥚",
+        "category": ["material", "harvest"]
+    },
+    "bread": {
+        "price": ["N/A", 15],
+        "name": "bread",
+        "emote": "🍞",
+        "category": ["material", "harvest"]
+    },
+    "chocolate": {
+        "price": ["N/A", 15],
+        "name": "chocolate",
+        "emote": "🍫",
+        "category": ["material", "harvest"]
+    },
+    "greenapple": {
+        "price": ["N/A", 10],
+        "name": "green apple",
+        "emote": "🍏",
+        "category": ["material", "harvest"]
+    },
+    "apple": {
+        "price": ["N/A", 10],
+        "name": "apple",
+        "emote": "🍎",
+        "category": ["material", "harvest"]
+    },
+    "lemon": {
+        "price": ["N/A", 15],
+        "name": "lemon",
+        "emote": "🍋",
+        "category": ["material", "harvest"]
+    },
+    "sake": {
+        "price": ["N/A", 25],
+        "name": "sake",
+        "emote": "🍶",
+        "category": ["material", "harvest"]
+    },
+    "rice": {
+        "price": ["N/A", 10],
+        "name": "rice",
+        "emote": "🍚",
+        "category": ["material", "harvest"]
+    },
+    "fishcake": {
+        "price": ["N/A", 30],
+        "name": "fishcake",
+        "emote": "🍥",
+        "category": ["product", "food"]
+    },
+    "cookie": {
+        "price": ["N/A", 25],
+        "name": "cookie",
+        "emote": "🍪",
+        "category": ["product", "food"]
+    },
+    "oden": {
+        "price": ["N/A", 125],
+        "name": "oden",
+        "emote": "🍢",
+        "category": ["product", "food"]
+    },
+    "sushi": {
+        "price": ["N/A", 75],
+        "name": "sushi",
+        "emote": "🍣",
+        "category": ["product", "food"]
+    }
+}

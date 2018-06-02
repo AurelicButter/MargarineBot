@@ -1,1 +1,0 @@
-I'm just a dummy file for the SQLite database to be created here.
