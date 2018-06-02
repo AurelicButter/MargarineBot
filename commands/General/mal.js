@@ -20,7 +20,7 @@ exports.run = async (client, msg, [term]) => {
                     else if (z.includes("Yesterday") || z.includes("Today") && zed.slice(1, 2) === "M") { 
                         info.status = z.slice(6, -1) + " at " + y + zed.slice(0, 2); 
                     }
-                    else if (Number(zed) !== NaN) { info.status = z.slice(6) + " " + y + " " + zed; }
+                    else if (isNaN(zed) === false) { info.status = z.slice(6) + " " + y + " " + zed; }
                 } if (z.includes("Birthday") && !info.birthday) {
                     if (y.includes("Location")) {
                         var num = (z.length - z.search("Birthday")) * (-1);
@@ -57,7 +57,7 @@ exports.run = async (client, msg, [term]) => {
                         }
                     }
                 } else if (z === "All" && !info.friends) { info.friends = y.slice(1, -8); }
-                else if (Number(y) !== NaN) {
+                else if (isNaN(y) === false) {
                     if (z === "Days:") { 
                         if (!info.aStats.days) { info.aStats.days = y; }
                         else { info.mStats.days = y; }
