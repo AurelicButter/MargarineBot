@@ -9,13 +9,11 @@ exports.conf = {
     runIn: ["text"],
     aliases: [],
     permLevel: 0,
-    botPerms: [],
-    requiredFuncs: [],
+    botPerms: []
 };
       
 exports.help = {
     name: "8ball",
     description: "Ask the magic 8ball wizard for an answer!",
-    usage: "[args:str][...]",
-    usageDelim: "",
+    usage: "[args:str][...]"
 };

@@ -52,7 +52,7 @@ exports.conf = {
     runIn: ["text"],
     aliases: ["inv"],
     permLevel: 0,
-    botPerms: [],
+    botPerms: []
 };
   
 exports.help = {

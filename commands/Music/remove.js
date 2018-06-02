@@ -10,7 +10,7 @@ exports.run = async (client, message, [songID]) => {
     songID = songID - 1;
     var title = handler.songs[songID].title;
     handler.songs.splice(songID, 1);
-    return message.channel.send(`${title} has been removed from the queue.`);
+    message.channel.send(`${title} has been removed from the queue.`);
 };
   
 exports.conf = {
@@ -18,14 +18,12 @@ exports.conf = {
     runIn: ["text"],
     aliases: [],
     permLevel: 0,
-    botPerms: [],
-    requiredFuncs: [],
+    botPerms: []
 };
   
 exports.help = {
     name: "remove",
     description: "Removes a song from the queue.",
     usage: "[songID:int]",
-    usageDelim: "",
 };
   

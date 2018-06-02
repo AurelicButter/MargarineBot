@@ -44,7 +44,7 @@ exports.conf = {
     aliases: [],
     permLevel: 0,
     botPerms: [],
-    requiredFuncs: ["sqlTables", "userSearch"],
+    requiredFuncs: ["sqlTables", "userSearch"]
 };
   
 exports.help = {

@@ -38,12 +38,12 @@ exports.conf = {
     aliases: [],
     permLevel: 0,
     botPerms: [],
-    cooldown: 30,
+    cooldown: 30
 };
   
 exports.help = {
     name: "fish",
     description: "Fish and try to turn your credits into a fortune!",
     usage: "",
-    extendedHelp: "Spend 10 credits to fish and catch yourself a fortune!",
+    extendedHelp: "Spend 10 credits to fish and catch yourself a fortune!"
 };

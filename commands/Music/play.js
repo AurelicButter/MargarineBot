@@ -46,14 +46,11 @@ exports.conf = {
   runIn: ["text"],
   aliases: [],
   permLevel: 0,
-  botPerms: [],
-  requiredFuncs: [],
+  botPerms: []
 };
 
 exports.help = {
   name: "play",
   description: "Plays the queue of music.",
-  usage: "[songURL:str]",
-  usageDelim: "",
-  extendedHelp: "",
+  usage: "[songURL:str]"
 };

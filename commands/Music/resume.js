@@ -3,7 +3,7 @@ exports.run = async (client, msg) => {
   if (msg.guild.voiceConnection.dispatcher.paused === false) { return msg.send("The stream is not paused, baka!"); }
 
   msg.guild.voiceConnection.dispatcher.resume();
-  return msg.send("▶ Now resuming your tunes. Keep partying!");
+  msg.send("▶ Now resuming your tunes. Keep partying!");
 };
 
 exports.conf = {
@@ -11,14 +11,11 @@ exports.conf = {
   runIn: ["text"],
   aliases: [],
   permLevel: 0,
-  botPerms: [],
-  requiredFuncs: [],
+  botPerms: []
 };
 
 exports.help = {
   name: "resume",
   description: "Resumes the playlist.",
-  usage: "",
-  usageDelim: "",
-  extendedHelp: "",
+  usage: ""
 };
