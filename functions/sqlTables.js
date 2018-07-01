@@ -5,7 +5,6 @@ module.exports = (user, type) => {
 
     if (type === "init") {
         db.run("CREATE TABLE IF NOT EXISTS scores (userId TEXT, credits INTEGER, level INTEGER, daily TEXT, rep INTEGER, repDaily TEXT)");
-        db.run("CREATE TABLE IF NOT EXISTS fish_stats (userId TEXT, trash INTEGER, fish INTEGER, crab INTEGER, squid INTEGER, shark INTERGER)");
         db.run("CREATE TABLE IF NOT EXISTS badges (userId TEXT, bugTester TEXT, betaTester TEXT)");
         db.run("CREATE TABLE IF NOT EXISTS awards (userId TEXT, suggest INTEGER, bugs INTEGER, minor INTEGER, major INTEGER)", [], (err, row) => {
             if (err) { return console.log(err); }
@@ -21,7 +20,6 @@ module.exports = (user, type) => {
         sql.close();
     } if (type === "add") {
         db.run("INSERT INTO scores (userId, credits, level, daily, rep, repDaily) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 100, 0, Date.now(), 0, 0]);
-        db.run("INSERT INTO fish_stats (userId, trash, fish, crab, squid, shark) VALUES (?, ?, ?, ?, ?, ?)", [user.id, 0, 0, 0, 0, 0]);
         db.run("INSERT INTO badges (userId) VALUES (?)", [user.id]);  
         db.run("INSERT INTO awards (userId) VALUES (?)", [user.id]);  
         db.close();

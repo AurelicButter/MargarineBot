@@ -2,15 +2,12 @@ const puppeteer = require("puppeteer");
 
 exports.run = async (client, msg, [term]) => {
     const infoHelp = {
-        terms: ["current", "plan", "finish", "drop", "pause"],
         anime: ["💚 Watching", "🗓 Planned", "💙 Completed", "💔 Dropped", "💛 Paused"],
         manga: ["📗 Reading", "🗓 Planned", "📘 Completed", "📕 Dropped", "📙 Paused"]
     };
 
     const url = "https://anilist.co/user/" + term;
-    const info = { anime: {}, manga: {} }; terms = infoHelp.terms;
-
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
     const page = await browser.newPage();
 
     await page.goto(url + "/stats");
@@ -18,17 +15,17 @@ exports.run = async (client, msg, [term]) => {
     if (page.target()._targetInfo.url === "https://anilist.co/404") { return msg.channel.send("Whoops! Looks like a user by that name does not exist."); }
 
     var lists = await page.evaluate(() => {
-        var aList = document.querySelector('#app > div.page-content > div > div.content.container > div > div.stats-wrap > div:nth-child(1) > div > div.chart > svg > g:nth-child(2) > g.ct-series.ct-series-a').innerHTML;
-        var mList = document.querySelector('#app > div.page-content > div > div.content.container > div > div.stats-wrap > div:nth-child(1) > div > div.chart > svg > g:nth-child(2) > g.ct-series.ct-series-b').innerHTML;
+        var aList = document.querySelector("#app > div.page-content > div > div.content.container > div > div.stats-wrap > div:nth-child(1) > div > div.chart > svg > g:nth-child(2) > g.ct-series.ct-series-a").innerHTML;
+        var mList = document.querySelector("#app > div.page-content > div > div.content.container > div > div.stats-wrap > div:nth-child(1) > div > div.chart > svg > g:nth-child(2) > g.ct-series.ct-series-b").innerHTML;
         return [aList.split("</text>"), mList.split("</text>")];
     });
 
     await page.goto(url);
 
     var stats = await page.evaluate(() => {
-        var ava = document.querySelector('#app > div.page-content > div > div.header-wrap > div.banner > div.container > div > img').getAttribute("src");
-        var num = document.querySelector('#app > div.page-content > div > div.content.container > div > div:nth-child(2) > div.stats-wrap > div:nth-child(1) > div.stats-wrap').innerText.split(" ");
-        var ber = document.querySelector('#app > div.page-content > div > div.content.container > div > div:nth-child(2) > div.stats-wrap > div:nth-child(2) > div.stats-wrap').innerText.split(" ");
+        var ava = document.querySelector("#app > div.page-content > div > div.header-wrap > div.banner > div.container > div > img").getAttribute("src");
+        var num = document.querySelector("#app > div.page-content > div > div.content.container > div > div:nth-child(2) > div.stats-wrap > div:nth-child(1) > div.stats-wrap").innerText.split(" ");
+        var ber = document.querySelector("#app > div.page-content > div > div.content.container > div > div:nth-child(2) > div.stats-wrap > div:nth-child(2) > div.stats-wrap").innerText.split(" ");
         return [num[0].slice(0, -5), num[2].slice(6, -5), ber[0].slice(0, -9), ber[2].slice(6, -5), ava];
     });
 
@@ -36,12 +33,12 @@ exports.run = async (client, msg, [term]) => {
 
     var aDisplay = []; var mDisplay = [];
     var y = 0; for (var x = 0; x < lists[0].length; x++) { 
-        if (!lists[0][x].endsWith(">") && lists[0][x].length > 1) { aDisplay.push(infoHelp.anime[y] + ": " + lists[0][x].slice(lists[0][x].search("text\">") + 6)); y++ } 
-        else if (lists[0][x].endsWith(">")) { aDisplay.push(infoHelp.anime[y] + ": 0"); y++ }
+        if (!lists[0][x].endsWith(">") && lists[0][x].length > 1) { aDisplay.push(infoHelp.anime[y] + ": " + lists[0][x].slice(lists[0][x].search("text\">") + 6)); y++; } 
+        else if (lists[0][x].endsWith(">")) { aDisplay.push(infoHelp.anime[y] + ": 0"); y++; }
     }
     var y = 0; for (var x = 0; x < lists[1].length; x++) { 
-        if (!lists[1][x].endsWith(">") && lists[1][x].length > 1) { mDisplay.push(infoHelp.manga[y] + ": " + lists[1][x].slice(lists[1][x].search("text\">") + 6)); y++ } 
-        else if (lists[1][x].endsWith(">")) { mDisplay.push(infoHelp.manga[y] + ": 0"); y++ } 
+        if (!lists[1][x].endsWith(">") && lists[1][x].length > 1) { mDisplay.push(infoHelp.manga[y] + ": " + lists[1][x].slice(lists[1][x].search("text\">") + 6)); y++; } 
+        else if (lists[1][x].endsWith(">")) { mDisplay.push(infoHelp.manga[y] + ": 0"); y++; } 
     }
     
     const embed = new client.methods.Embed()
@@ -70,6 +67,6 @@ exports.conf = {
 exports.help = {
     name: "anilist",
     description: "Fetch a user's profile on AniList",
-    usage: "[term:str]",
+    usage: "[term:str]", humanUse: "(AniList profile name)",
     extendedHelp: "There is a 60 second cooldown for each profile search to not spam the site."
 };

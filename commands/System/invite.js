@@ -8,11 +8,11 @@ exports.conf = {
     runIn: ["text", "dm"],
     aliases: [],
     permLevel: 0,
-    botPerms: [],
+    botPerms: []
 };
 
 exports.help = {
     name: "invite",
     description: "Displays the join server link of the bot.",
-    usage: "",
+    usage: ""
 };

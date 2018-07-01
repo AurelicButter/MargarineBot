@@ -11,18 +11,23 @@ exports.run = async (client, msg, [user]) => {
 
     var info = []; var talk1 = talk;
     db.serialize(function() {
-        db.each(`SELECT daily, credits FROM scores WHERE userId IN ("${msg.author.id}", "${user.id}")`, function (err, row) {
+        db.each(`SELECT daily, credits FROM scores WHERE userId IN ("${msg.author.id}", "${user.id}")`, [], function (err, row) {
             if (err) { return console.log(err); }
-            if (!row) { 
-                if (type === "self") { client.funcs.sqlTables(user, "add"); }
-                else if (type === "other") { info.push("noRow"); }
-            } else if (Number(row.daily) + 86400000 > Date.now()) { info.push("multi"); }
-            else { info.push(type); }
+            if (row) {
+                if (Number(row.daily) + 86400000 > Date.now()) { info.push("multi"); }
+                else { info.push(type); }
+            }
             info.push(row.credits);
         }, function() {
-            var valid = (type !== info[0]) ? false : true;
+            if (info.length < 1) {
+                if (type === "self") {
+                    client.funcs.sqlTables(user, "add");
+                    info.push(...["self", 100]);
+                } else if (type === "other") { info.push("noRow"); }
+            } 
+            
             if (info[2] !== "noRow") { talk1 = talk1["daily"]; }
-            var x = 0;
+            var valid = (type !== info[0]) ? false : true; var x = 0;
 
             if (valid === true) {
                 var credit = (type === "other") ? Number((100 * (1 + Math.random())).toFixed(0)) : 100; 
@@ -32,8 +37,7 @@ exports.run = async (client, msg, [user]) => {
                     db.run(`UPDATE scores SET credits = ${info[1] + credit} WHERE userId = ${user.id}`);
                 }
             }
-        
-            msg.channel.send(talk1[info[x]][Math.floor(Math.random() * talk1[info[x]].length)].replace('-user-', user.prefered).replace('-credit-', credit));
+            msg.channel.send(talk1[info[x]][Math.floor(Math.random() * talk1[info[x]].length)].replace("-user-", user.prefered).replace("-credit-", credit));
         });
     });
 };
@@ -50,6 +54,5 @@ exports.conf = {
 exports.help = {
     name: "daily",
     description: "Get a daily amount of credits or give them to someone else.",
-    usage: "[user:str]",
-    humanUse: "(user)"
+    usage: "[user:str]", humanUse: "(user)"
 };
