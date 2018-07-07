@@ -25,8 +25,7 @@ exports.run = async (client, msg) => {
             var result = (kind === "trash") ? "You have lost 10 credits" : "You have placed the fish in your inventory";
     
             if (kind !== "trash") { db.run(`UPDATE material SET ${kind} = ${Number(Fisher[1][results]) + 1} WHERE userId = ${msg.author.id}`); }
-    
-            msg.channel.send(`${msg.author.username}, you have caught ${items[kind].emote}. ${result}.`);
+            msg.channel.send(client.speech(["fish"]).replace("-user1-", msg.author.username).replace("-fish-", items[kind].emote) + " " + result);
         });
         db.close();
     });

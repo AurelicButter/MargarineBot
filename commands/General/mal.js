@@ -6,8 +6,7 @@ exports.run = async (client, msg, [term]) => {
 
     request(url + term, function(err, res, body) {
         $ = cheerio.load(body);
-        var text = $.text().split(" "); var x = 0; var info = new Object();
-        info.aStats = new Object(); info.mStats = new Object();
+        var text = $.text().split(" "); var x = 0; var info = { aStats: {}, mStats: {} };
 
         do {
             var z = text[x].trim(); var y = text[x + 1] ? text[x + 1].trim() : ""; var zed = text[x + 2] ? text[x + 2].trim() : "";

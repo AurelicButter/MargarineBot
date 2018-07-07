@@ -6,7 +6,7 @@ A Discord bot coded in Node.js using the Discord.js Library and the Komada frame
 <b>Introduction:</b>
 Created through part-desire, part-what can I do in Discord, part-I'm going to learn Javascript, and part-it's only 12 am thoughts, Margarine has been my personal project for almost 6 months now. I am quite proud of the functionality and the time I have spend into Margarine. I have received plenty of support over the months of developing him and I can't thank those people enough as without that support, Margarine would have never been as big as he is today. I hope that you enjoy either looking at/learning/using Margarine as much as I do.
 
-*Name Origin:* My typical nickname is Butter. As in the stuff that you put on toast. His name comes from the artificial butter (I tends to call it 'Fake Butter') you can buy in stores called, Margarine.
+*Name Origin:* My typical nickname is Butter, as in the stuff that you put on toast. His name comes from the artificial butter (I tends to call it 'Fake Butter') you can buy in stores called, Margarine.
      
 
 <b>Features:</b>

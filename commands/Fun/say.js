@@ -11,11 +11,11 @@ exports.conf = {
     runIn: ["text"],
     aliases: ["echo", "talk"],
     permLevel: 0,
-    botPerms: [],
+    botPerms: []
 };
   
 exports.help = {
     name: "say",
     description: "Have Margarine echo what you said.",
-    usage: "[msg:str]",
+    usage: "[msg:str]"
 };

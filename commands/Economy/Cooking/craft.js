@@ -35,7 +35,7 @@ exports.run = async (client, msg, [item, amount]) => {
 
             db.get(`SELECT ${names} FROM material WHERE userId = "${msg.author.id}"`, [], (err, row) => {
                 if (err) { return console.log(err); }
-                if (!row) { return msg.reply("You haven't redeemed your first daily yet!"); }
+                if (!row) { return msg.reply(client.speech(["noRow"])); }
                 let invAmount = Object.values(row);
 
                 for (var x = 0; x < recipe.length; x++) {
@@ -50,7 +50,7 @@ exports.run = async (client, msg, [item, amount]) => {
                     db.run(`UPDATE product SET ${product.name} = ${Object.values(row)[0] + amount} WHERE userId = ${msg.author.id}`);
                 });
 
-                msg.channel.send("You have crafted " + amount + " " + product.emote);
+                msg.channel.send(client.speech(["craft"]).replace("-num-", amount).replace("-item-", product.emote));
             });        
             db.close();
         });
@@ -69,7 +69,6 @@ exports.conf = {
 exports.help = {
     name: "craft",
     description: "Make items!",
-    usage: "[item:str] [amount:str]",
-    usageDelim: " ",
+    usage: "[item:str] [amount:str]", usageDelim: " ",
     humanUse: "(item name)_(amount|help)"
 };

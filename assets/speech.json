@@ -6,7 +6,8 @@
                 "Credits? Hello? I need an amount of credits!"
             ],
             "craft": [
-                "You can't craft nothing, baka!"
+                "You can't craft nothing, baka!",
+                "Wow. Crafting nothing, I see. Got nothing else to do?"
             ],
             "default": [
                 "You didn't include a value here, baka!",
@@ -17,7 +18,8 @@
         "negative": {
             "credit": [
                 "You can't bet a negative amount of credits!",
-                "What are you trying to do? Steal someone's credits? That's illegal, you know."
+                "What are you trying to do? Steal someone's credits? That's illegal, you know.",
+                "Robbing a bank would reel you in more credits than gambling negative credits."
             ],
             "craft": [
                 "You can't craft a negative number, baka!",
@@ -25,7 +27,7 @@
             ],
             "default": [
                 "No negative values in this established command, baka!",
-                "Negatives? Here? Lmao. You're really funny!"
+                "Negatives? Here? HA! You're really funny!"
             ]
         },
         "zero": {
@@ -53,7 +55,8 @@
             ],
             "default": [
                 "Decimals? That's like giving me fraction work. No thanks!",
-                "Decimals: fun to look at, not possible with what you are trying to do."
+                "Decimals: fun to look at, not possible with what you are trying to do.",
+                "The only decimals I like to look at is in human currency. My credits are not that so keep them away!"
             ]
         }
     },
@@ -61,7 +64,10 @@
         "You haven't redeemed your first daily yet! :cry:",
         "You haven't signed up and received your credits yet! D:",
         "You need some credits to do this, baka! Get some with the daily command!",
-        "Credits speak a whole lot of value in these parts. Set yourself up with a daily command first!"
+        "Credits speak a whole lot of value in these parts. Set yourself up with a daily command first!",
+        "Get yourself some credits first!",
+        "Where are your credits?! Oh. You haven't redeemed your first daily yet...",
+        "Oh... you didn't redeem your first daily yet..."
     ],
     "lessCredit": [
         "You don't have that many credits, baka!",
@@ -82,11 +88,13 @@
         ],
         "rep": [
             "You can't give rep to a bot user. However, as long as you keep interacting with them, I'm sure they will be happy! :smile:",
-            "Bots can't have rep, baka!"
+            "Bots can't have rep, baka!",
+            "A bot's reputation is on how well you like it. It doesn't need points to show it."
         ],
         "exchange": [
             "You can't give your credits to a bot user!",
-            "Exchanging to a bot user is just not possible. They are known to do foul things with money from time to time."
+            "Exchanging to a bot user is just not possible. They are known to do foul things with money from time to time.",
+            "Nope! No can do. Bots can't have credits."
         ],
         "award": [
             "Awarding a non-existant user? Wow, I think we've hit a new low here.",
@@ -126,7 +134,8 @@
         "badDaily": [
             "Nani?!?! You can't give other people credits if you haven't recieved your first daily yet!",
             "You have not gotten your first daily yet!",
-            "You aren't in my records. You should redeem your first daily before giving to others."
+            "You aren't in my records. You should redeem your first daily before giving to others.",
+            "Earn a bit yourself with the daily command before giving to others!"
         ],
         "multi": [
             "You are trying to cheat my daily command! Rude!",
@@ -134,5 +143,21 @@
             "You have already redeemed your daily for today.",
             "No stealing! I already payed your daily worth of credits today, baka!"
         ]
-    }
+    },
+    "exchange": [
+        "-user1- just gave -user2- -credit- credits!",
+        "Looks like -user2- is -credit- credits richer because of -user1-.",
+        "Exchange complete, -user1-! -user2- has received -credit- credits.",
+        "Credits exchanged! -credit- credits have been given to -user2-." 
+    ],
+    "fish": [
+        "-user1-, you have caught -fish-.",
+        "Looks like -user1- just caught a -fish-.",
+        "Nice catch! You just caught yourself -fish-."
+    ],
+    "craft": [
+        "You have crafted -num- -item-.",
+        "-num- -item- has been successfully crafted and added to your inventory.",
+        "-num- brand new -item- is now in your inventory."
+    ]
 }

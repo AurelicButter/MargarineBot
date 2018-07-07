@@ -6,7 +6,7 @@ exports.run = async (client, msg, [item, amount]) => {
     
     db.get(`SELECT ${object.name} FROM ${object.category[0]} WHERE userId = "${msg.author.id}"`, [], (err, row) => {
         if (err) { return console.log(err); }
-        if (!row) { return msg.reply("You have not redeemed your first daily yet!"); }
+        if (!row) { return msg.reply(client.speech(["noRow"])); }
         amount = (amount === undefined) ? Object.values(row)[0] : amount;
         if (amount > row) { return msg.channel.send("You don't have that much " + object.name + ", baka!"); }
         

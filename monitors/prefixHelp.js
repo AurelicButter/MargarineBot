@@ -1,7 +1,7 @@
 exports.conf = {
     enabled: true,
     ignoreBots: false,
-    ignoreSelf: false,
+    ignoreSelf: false
 };
   
 exports.run = (client, msg) => {
