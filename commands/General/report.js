@@ -1,6 +1,5 @@
 const sqlite3 = require("sqlite3").verbose();
 let db = new sqlite3.Database("./assets/data/score.sqlite");
-const reportChannel = require("../../assets/settings.json").owner.channels.report;
 
 exports.run = async (client, msg) => {   
     const reports = [];
@@ -35,7 +34,7 @@ exports.run = async (client, msg) => {
             msg.author.send(text[1]).then(() => {
                 msg.author.dmChannel.awaitMessages(m => m.content, { max: 1, time: 130000, errors: ["time"], }).then((collected) => {
                     reports.push(collected.first().content);
-                    db.get("SELECT reportNumber FROM stats WHERE statName = 'general'", [], (err, row) => {
+                    db.get("SELECT reportNumber FROM stats WHERE statName = 'report'", [], (err, row) => {
                         if (err) { return console.log(err); }
                         
                         const embed = new client.methods.Embed()
@@ -52,7 +51,7 @@ exports.run = async (client, msg) => {
                             \nYour report has been sent! Any more questions, please ask Butterstroke#7150!`);
    
                         db.run(`UPDATE stats SET reportNumber = ${row.reportNumber + 1} WHERE statName ="general"`); 
-                        client.channels.get(reportChannel).send({embed});
+                        client.channels.get(client.ownerSetting.get("channels").report).send({embed});
                         msg.author.send({embed: DMembed});       
                     });
                     db.close();
@@ -67,7 +66,7 @@ exports.conf = {
     runIn: ["text"],
     aliases: [],
     permLevel: 0,
-    botPerms: [],
+    botPerms: []
 };
     
 exports.help = {

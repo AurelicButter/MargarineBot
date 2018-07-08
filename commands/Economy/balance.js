@@ -2,7 +2,7 @@ exports.run = async (client, msg, [user]) => {
     const sqlite3 = require("sqlite3").verbose();
     let db = new sqlite3.Database("./assets/data/score.sqlite");
 
-    var data = await client.funcs.userSearch(msg, {user: [user], tags:["bot"], name: this.help.name});
+    var data = await client.funcs.userSearch(client, msg, {user: [user], tags:["bot"], name: this.help.name});
     if (data.valid === false) { return; }
 
     db.get(`SELECT * FROM scores WHERE userId = "${data.user[0].id}"`, [], (err, row) => {
@@ -45,6 +45,5 @@ exports.conf = {
 exports.help = {
     name: "balance",
     description: "Check credit amount and the last time the user recieved their daily.",
-    usage: "[user:str]",
-    humanUse: "(user)"
+    usage: "[user:str]", humanUse: "(user)"
 };

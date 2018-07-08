@@ -1,9 +1,9 @@
 exports.run = async (client, msg, [user]) => {
-    var data = await client.funcs.userSearch(msg, {user: [user], name: this.help.name});
-    
-    if (data.valid !== false) { 
-        client.users.fetch(data.user[0].id).then(avatar => { msg.channel.send("", { files: [avatar.displayAvatarURL()]}); }); 
-    }
+    client.funcs.userSearch(client, msg, {user: [user], name: this.help.name}).then(data => {
+        if (data.valid !== false) {
+            client.users.fetch(data.user[0].id).then(avatar => { msg.channel.send("", { files: [avatar.displayAvatarURL()]}); }); 
+        }
+    });
 };
   
 exports.conf = {

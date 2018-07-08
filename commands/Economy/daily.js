@@ -3,7 +3,7 @@ let db = new sqlite3.Database("./assets/data/score.sqlite");
 let talk = require("../../assets/speech.json");
 
 exports.run = async (client, msg, [user]) => {
-    var data = await client.funcs.userSearch(msg, {user: [user], tags:["bot"], name: this.help.name});
+    var data = await client.funcs.userSearch(client, msg, {user: [user], tags:["bot"], name: this.help.name});
     if (data.valid === false) { return; }
     user = data.user[0];
 

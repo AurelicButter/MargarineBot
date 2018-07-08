@@ -2,7 +2,7 @@ const sqlite3 = require("sqlite3").verbose();
 let db = new sqlite3.Database("./assets/data/score.sqlite");
 
 exports.run = async (client, msg, [user, ...note]) => {
-    var data = await client.funcs.userSearch(msg, {user: [user], tags:["bot"], name: this.help.name});
+    var data = await client.funcs.userSearch(client, msg, {user: [user], tags:["bot"], name: this.help.name});
     if (data.valid == false) { return; }
         
     user = data.user[0];
@@ -11,7 +11,7 @@ exports.run = async (client, msg, [user, ...note]) => {
 
     db.get(`SELECT repDaily, rep FROM scores WHERE userId = "${msg.author.id}"`, [], (err, row) => {
         if (err) { return console.log(err); }
-        if (!row) { return msg.reply("You have not redeemed your first daily yet!"); }
+        if (!row) { return msg.reply(client.speech(["noRow"])); }
         if ((Number(row.repDaily) + 86400000) > Date.now()) { return msg.reply("You've already have given someone else rep today!"); }
         
         db.get(`SELECT rep FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {

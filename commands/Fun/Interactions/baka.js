@@ -1,5 +1,5 @@
 exports.run = async (client, msg, [user]) => {
-    var data = await client.funcs.userSearch(msg, {user: [user], name: this.help.name});
+    var data = await client.funcs.userSearch(client, msg, {user: [user], name: this.help.name});
     
     if (data.valid !== false) { msg.channel.send("Baka " + data.user[0].prefered + "!"); }
 };

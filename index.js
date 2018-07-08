@@ -44,6 +44,6 @@ for (var x = 0; keys.length > x; x++) {
     case "database":
       client.ownerSetting.set("database", config.database); break;
   }
-};
+}
 
 client.login(config.token);

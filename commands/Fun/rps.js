@@ -1,6 +1,6 @@
 exports.run = async (client, msg, [choice, user]) => {
     if (!user) { user = client.user.id; }  
-    var data = await client.funcs.userSearch(msg, {user: [null, user], name: this.help.name});
+    var data = await client.funcs.userSearch(client, msg, {user: [null, user], name: this.help.name});
     
     if (data.valid === false) { return; }
     if (data.user[1].id === msg.author.id) { msg.channel.send("Hey! You can't play rock, paper, scissors with yourself! Invite someone into the mix or play with me instead!"); }
@@ -21,7 +21,7 @@ exports.conf = {
     aliases: [],
     permLevel: 0,
     botPerms: [],
-    requiredFuncs: ["userSearch"],
+    requiredFuncs: ["userSearch"]
 };
     
 exports.help = {

@@ -15,12 +15,11 @@ exports.conf = {
     runIn: ["text"],
     aliases: [],
     permLevel: 0,
-    botPerms: [],
+    botPerms: []
 };
   
 exports.help = {
     name: "roll",
     description: "Roll a die!",
-    usage: "[sides:str]",
-    usageDelim: "",
+    usage: "[sides:str]"
 };
