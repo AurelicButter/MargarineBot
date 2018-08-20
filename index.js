@@ -2,6 +2,9 @@ const Komada = require("komada");
 const Discord = require("discord.js");
 const config = require("./assets/settings.json");
 const speech = require("./assets/speech.json");
+const localization = require("./assets/localization.json");
+const items = require("./assets/values/items.json");
+const recipes = require("./assets/values/recipes.json");
 
 const permStructure = new Komada.PermLevels()
   .addLevel(0, false, () => true)
@@ -26,11 +29,12 @@ const client = new Komada.Client({
     cmdLogging: false
 });
 
-client.speech = function(keys) {
+client.speech = function(keys, msg) {
   if (!keys) { throw new Error("Keys missing in function call!"); }
   var t = speech;
   for (var x = 0; x < keys.length; x++) { t = t[keys[x]]; }
-  return t[Math.floor(Math.random() * t.length)];
+  var text = t[Math.floor(Math.random() * t.length)]; var prefix = msg.guildSettings.prefix || config.prefix;
+  return text.replace("-prefix-", prefix);
 };
 
 client.ownerSetting = new Discord.Collection();
@@ -39,11 +43,12 @@ for (var x = 0; keys.length > x; x++) {
   switch (keys[x]) {
     case "owner":
       var key = Object.keys(config.owner);
-      for (var y = 0; key.length > y; y++) { client.ownerSetting.set(key[y], config.owner[key[y]]); }
-      break;
-    case "database":
-      client.ownerSetting.set("database", config.database); break;
+      for (var y = 0; key.length > y; y++) { client.ownerSetting.set(key[y], config.owner[key[y]]); } break;
+    case "database": client.database = config.database; break;
   }
 }
+client.ownerSetting.set("permLevel", localization.permLevels);
+client.database.items = items;
+client.database.recipes = recipes;
 
 client.login(config.token);

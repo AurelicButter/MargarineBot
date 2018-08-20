@@ -21,13 +21,9 @@ exports.run = async (client, msg, [term]) => {
                     }
                     else if (isNaN(zed) === false) { info.status = z.slice(6) + " " + y + " " + zed; }
                 } if (z.includes("Birthday") && !info.birthday) {
-                    if (y.includes("Location")) {
-                        var num = (z.length - z.search("Birthday")) * (-1);
-                        var baka = y.slice(0, y.search("Location"));
-                    } else {
-                        var num = (z.length - z.search("Birthday")) * (-1);
-                        var baka = y.slice(-1) === "," ? y + " " + zed.slice(0, 4) : y;
-                    }
+                    var num = (z.length - z.search("Birthday")) * (-1);
+                    if (y.includes("Location")) { var baka = y.slice(0, y.search("Location")); } 
+                    else { var baka = y.slice(-1) === "," ? y + " " + zed.slice(0, 4) : y; }
                     info.birthday = z.slice(num + 8) + " " + baka;
                 } if (z.includes("Gender")) {
                     var amount = (z.search("Birthday")) ? z.search("Birthday") : null;
