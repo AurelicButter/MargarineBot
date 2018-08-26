@@ -1,7 +1,7 @@
-const sqlite3 = require("sqlite3").verbose();
-let db = new sqlite3.Database("./assets/data/score.sqlite");
-
 exports.run = async (client, msg) => {   
+    const sqlite3 = require("sqlite3").verbose();
+    let db = new sqlite3.Database(client.database.general);
+
     const reports = [];
     
     const reportTypes = {

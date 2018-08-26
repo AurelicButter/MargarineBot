@@ -1,6 +1,4 @@
 /* Base command is from the default Komada help command. This has been modified a bit */
-const local = require("../../assets/localization.json")["permLevels"]["general"];
-
 exports.run = async (client, msg, [cmd, mod]) => {
     const method = client.user.bot ? "author" : "channel";
     const help = this.buildHelp(client, msg);
@@ -49,7 +47,7 @@ exports.run = async (client, msg, [cmd, mod]) => {
                 .setTitle(cmd.help.name + alias)
                 .setDescription(cmd.help.description)
                 .addField("Usage:", `\`${prefix + cmd.help.name + " " + usageAct}\``)
-                .addField("Permission level:", local[cmd.conf.permLevel]);
+                .addField("Permission level:", client.ownerSettings.get("permLevel").general[cmd.conf.permLevel]);
             if (cmd.help.extendedHelp) { embed.addField("Extended Help:", cmd.help.extendedHelp); }
             msg.send({embed});
         }
@@ -67,8 +65,7 @@ exports.conf = {
 exports.help = {
     name: "help",
     description: "Display help for a command.",
-    usage: "[command:str] [mod:str]",
-    usageDelim: " ",
+    usage: "[command:str] [mod:str]", usageDelim: " ",
     humanUse: "(command|module)_ ([If module] command)"
 };
   

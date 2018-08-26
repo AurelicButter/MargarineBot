@@ -25,5 +25,5 @@ exports.conf = { requiredModules: [] };
 exports.help = {
   name: "validator",
   type: "functions",
-  description: "Validates any credit amount.",
+  description: "Validates any credit amount."
 };

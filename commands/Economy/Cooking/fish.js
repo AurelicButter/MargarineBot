@@ -1,7 +1,7 @@
 exports.run = async (client, msg) => {
     const sqlite3 = require("sqlite3").verbose();
-    let db = new sqlite3.Database("./assets/data/inventory.sqlite");
-    const items = require("../../../assets/values/items.json");
+    let db = new sqlite3.Database(client.database.inv);
+    const items = client.database.items;
 
     client.funcs.transactions(msg, {credit: [1, "-", 11]}, function(data) {
         if (data.valid === false) { return; }
@@ -25,7 +25,7 @@ exports.run = async (client, msg) => {
             var result = (kind === "trash") ? "You have lost 10 credits" : "You have placed the fish in your inventory";
     
             if (kind !== "trash") { db.run(`UPDATE material SET ${kind} = ${Number(Fisher[1][results]) + 1} WHERE userId = ${msg.author.id}`); }
-            msg.channel.send(client.speech(["fish"]).replace("-user1-", msg.author.username).replace("-fish-", items[kind].emote) + " " + result);
+            msg.channel.send(client.speech(["fish"], msg).replace("-user1-", msg.author.username).replace("-fish-", items[kind].emote) + " " + result);
         });
         db.close();
     });

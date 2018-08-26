@@ -1,12 +1,12 @@
 exports.run = async (client, msg, [item, amount]) => {
     const sqlite3 = require("sqlite3").verbose();
-    let db = new sqlite3.Database("./assets/data/inventory.sqlite");
-    let object = require("../../../assets/values/items.json")[item.toLowerCase()];
+    let db = new sqlite3.Database(client.database.inv);
+    let object = client.database.items[item.toLowerCase()];
     if (!object) { return msg.channel.send("That item does not exist."); }
     
     db.get(`SELECT ${object.name} FROM ${object.category[0]} WHERE userId = "${msg.author.id}"`, [], (err, row) => {
         if (err) { return console.log(err); }
-        if (!row) { return msg.reply(client.speech(["noRow"])); }
+        if (!row) { return msg.reply(client.speech(["noRow"], msg)); }
         amount = (amount === undefined) ? Object.values(row)[0] : amount;
         if (amount > row) { return msg.channel.send("You don't have that much " + object.name + ", baka!"); }
         
@@ -31,6 +31,5 @@ exports.conf = {
 exports.help = {
     name: "sell",
     description: "Sell your items!",
-    usage: "<item:str> [amount:int]",
-    usageDelim: " "
+    usage: "<item:str> [amount:int]", usageDelim: " "
 };

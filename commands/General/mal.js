@@ -45,8 +45,7 @@ exports.run = async (client, msg, [term]) => {
                         if (butter === "aStats") { 
                             info.aStats.watch = z.slice(8, num[0]); 
                             info.aStats.plan = zed.slice(5, -5);
-                        }
-                        else { 
+                        } else { 
                             info.mStats.read = z.slice(7, num[0]); 
                             info.mStats.plan = zed.slice(4, -5);
                         }

@@ -1,9 +1,9 @@
 exports.run = async (client, msg) => {
     const sqlite3 = require("sqlite3").verbose();
-    let db = new sqlite3.Database("./assets/data/inventory.sqlite");
-    const items = require("../../../assets/values/items.json");
+    let db = new sqlite3.Database(client.database.inv);
+    const items = client.database.items;
 
-    client.funcs.transactions(msg, {credit: [1, "-", 11]}, function(data) {
+    client.funcs.transactions(msg, {credit: [1, "-", 11]}, function(data) { 
         if (data.valid === false) { return; }
     });
 
@@ -25,13 +25,11 @@ exports.run = async (client, msg) => {
         else { var results = 7; }
 
         var item = items[itemName[0][results]];
-        var amount = Number(itemName[1][results]) + 1;
-
         var name = (item.name === "green apple") ? "greenapple" : item.name;
 
-        db.run(`UPDATE material SET ${name} = ${amount} WHERE userId = ${msg.author.id}`);
+        db.run(`UPDATE material SET ${name} = ${Number(itemName[1][results]) + 1} WHERE userId = ${msg.author.id}`);
                 
-        return msg.channel.send(`${msg.author.username}, you have found ${item.emote}. The item has been placed in your inventory.`);
+        msg.channel.send(`${msg.author.username}, you have found ${item.emote}. The item has been placed in your inventory.`);
     });
     db.close();
 };
@@ -42,11 +40,10 @@ exports.conf = {
     aliases: [],
     permLevel: 0,
     botPerms: [],
-    cooldown: 30,
+    cooldown: 30
 };
   
 exports.help = {
     name: "harvest",
-    description: "Harvest fruits and other foods for cooking!",
-    usage: "",
+    description: "Harvest fruits and other foods for cooking!", usage: ""
 };

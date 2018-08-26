@@ -1,8 +1,8 @@
 exports.run = async (client, msg, [item, amount]) => {
     const sqlite3 = require("sqlite3").verbose();
-    let db = new sqlite3.Database("./assets/data/inventory.sqlite");
-    let items = require("../../../assets/values/items.json");
-    let recipe = require("../../../assets/values/recipes.json");
+    let db = new sqlite3.Database(client.database.inv);
+    let items = client.database.items,
+        recipe = client.database.recipes;
 
     if (!item) { return msg.channel.send("You need to define an item to craft, baka!"); }
     var product = items[item.toLowerCase()];
@@ -12,7 +12,6 @@ exports.run = async (client, msg, [item, amount]) => {
 
     if (amount === "help") {
         var recipeList = [];
-
         recipe.forEach(element => { recipeList.push(element[1] + " " + items[element[0]].emote); });
 
         const embed = new client.methods.Embed()
@@ -35,7 +34,7 @@ exports.run = async (client, msg, [item, amount]) => {
 
             db.get(`SELECT ${names} FROM material WHERE userId = "${msg.author.id}"`, [], (err, row) => {
                 if (err) { return console.log(err); }
-                if (!row) { return msg.reply(client.speech(["noRow"])); }
+                if (!row) { return msg.reply(client.speech(["noRow"], msg)); }
                 let invAmount = Object.values(row);
 
                 for (var x = 0; x < recipe.length; x++) {
@@ -50,7 +49,7 @@ exports.run = async (client, msg, [item, amount]) => {
                     db.run(`UPDATE product SET ${product.name} = ${Object.values(row)[0] + amount} WHERE userId = ${msg.author.id}`);
                 });
 
-                msg.channel.send(client.speech(["craft"]).replace("-num-", amount).replace("-item-", product.emote));
+                msg.channel.send(client.speech(["craft"], msg).replace("-num-", amount).replace("-item-", product.emote));
             });        
             db.close();
         });

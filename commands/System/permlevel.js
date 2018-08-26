@@ -1,5 +1,3 @@
-const local = require("../../assets/localization.json")["permLevels"];
-
 exports.run = async (client, msg) => {
     for (let i = 0; i < 10; i++) {
         if (msg.author.id === client.owner.id) { 
@@ -12,9 +10,9 @@ exports.run = async (client, msg) => {
         else if (client.permStructure[i].check(client, msg)) { var permLevel = i; }
     }
 
-    var info = addPerms ? local["general"][permLevel] + " " + local["addPerms"][addPerms] : local["general"][permLevel];
+    var info = addPerms ? client.ownerSetting.get("permLevel").addPerms[addPerms] : "";
 
-    msg.channel.send(`Your permission level is ${info}`);
+    msg.channel.send(`Your permission level is ${client.ownerSetting.get("permLevel").general[permLevel]} ${info}`);
 };
   
 exports.conf = {
