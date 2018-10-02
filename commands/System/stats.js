@@ -5,10 +5,9 @@ const moment = require("moment");
 require("moment-duration-format");
 
 exports.run = async (client, message) => {
-  const config = require("../../assets/settings.json");
   const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
   message.channel.send(`= GENERAL =
-• Margarine  :: ${config.version}
+• Margarine  :: ${client.ownerSetting.get("build").version}
 • Mem Usage  :: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
 • Uptime     :: ${duration}
 

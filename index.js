@@ -45,6 +45,7 @@ for (var x = 0; keys.length > x; x++) {
       var key = Object.keys(config.owner);
       for (var y = 0; key.length > y; y++) { client.ownerSetting.set(key[y], config.owner[key[y]]); } break;
     case "database": client.database = config.database; break;
+    case "build": client.ownerSetting.set("build", config.build); break;
   }
 }
 client.ownerSetting.set("permLevel", localization.permLevels);
