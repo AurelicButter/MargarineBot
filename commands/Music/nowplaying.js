@@ -31,6 +31,5 @@ exports.conf = {
 
 exports.help = {
   name: "nowplaying",
-  description: "See what's currently playing in VC.",
-  usage: ""
+  description: "See what's currently playing in VC.", usage: ""
 };

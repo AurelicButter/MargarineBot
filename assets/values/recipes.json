@@ -20,5 +20,6 @@
         ["fish", 1],
         ["squid", 1],
         ["rice", 2]
-    ]
+    ],
+    "recycle": [ ["trash", 10] ]
 }

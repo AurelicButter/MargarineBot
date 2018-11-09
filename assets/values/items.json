@@ -7,13 +7,13 @@
             "category": ["item_major", "item_minor"] 
         },
         "material_names": ["info", "trash", "fish", "crab", "squid", "shark", "potato", "egg", "bread", "chocolate", "greenapple", "apple", "lemon", "sake", "rice"],
-        "product_names": ["fishcake", "cookie", "oden", "sushi"]
+        "product_names": ["fishcake", "cookie", "oden", "sushi", "recycle"]
     },
     "trash": {
         "price": ["N/A", 0],
         "name": "trash",
         "emote": "🗑",
-        "category": ["material", "N/A"]
+        "category": ["material", "misc"]
     },
     "fish": {
         "price": ["N/A", 5],
@@ -116,5 +116,11 @@
         "name": "sushi",
         "emote": "🍣",
         "category": ["product", "food"]
+    },
+    "recycle": {
+        "price": ["N/A", 44],
+        "name": "recycle",
+        "emote": "♻",
+        "category": ["product", "misc"]
     }
 }

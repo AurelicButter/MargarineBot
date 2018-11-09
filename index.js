@@ -3,8 +3,9 @@ const Discord = require("discord.js");
 const config = require("./assets/settings.json");
 const speech = require("./assets/speech.json");
 const localization = require("./assets/localization.json");
-const items = require("./assets/values/items.json");
-const recipes = require("./assets/values/recipes.json");
+const remove = require("./commandRemover.js");
+
+remove(); //Removes most default commands from the Komada directory so that there is absolutly no conflicts.
 
 const permStructure = new Komada.PermLevels()
   .addLevel(0, false, () => true)
@@ -49,7 +50,7 @@ for (var x = 0; keys.length > x; x++) {
   }
 }
 client.ownerSetting.set("permLevel", localization.permLevels);
-client.database.items = items;
-client.database.recipes = recipes;
+client.database.items = require("./assets/values/items.json");
+client.database.recipes = require("./assets/values/recipes.json");
 
 client.login(config.token);

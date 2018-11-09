@@ -1,7 +1,7 @@
 exports.run = async (client, msg, [question, ...option]) => {
     if (!question) { return msg.reply("You need to provide a question."); }
     else if (option.length < 2) { return msg.reply("You need to provide at least two options!"); }
-    else if (option.length > 25) { return msg.reply("Whoa! You have a giant list of options! Not even I can handle all of these!"); }
+    else if (option.length > emote.length) { return msg.reply("Whoa! You have a giant list of options! Not even I can handle all of these!"); }
 
     var emote = ["✅", "❎", "☑", "✔", "❌", "✖", "⭕", "🔘"];
 
@@ -23,13 +23,12 @@ exports.conf = {
     runIn: ["text"],
     aliases: [],
     permLevel: 0,
-    botPerms: [],
+    botPerms: []
 };
   
 exports.help = {
     name: "poll",
     description: "Poll users",
-    usage: "[question:str] [option:str][...]",
-    usageDelim: " | ",
+    usage: "[question:str] [option:str][...]", usageDelim: " | ",
     humanUse: "(question)_(option1)_(option2)_(etc...->option5)"
 };
