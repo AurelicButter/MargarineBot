@@ -17,5 +17,20 @@
             "with guild admin permissions",
             "with guild owner permissions"
         ]
-    }
+    }, 
+    "games": [
+        ["Playing around with Butterstroke", "play"],
+        ["Hacking to the gate", "listen"],
+        ["Rewatching Occultic;Nine.", "watch"],
+        ["Harvesting wild fruits", "play"],
+        ["Partying to weeb tunes", "listen"],
+        ["Breaking all of the code", "play"],
+        ["Spying on Butterstroke", "watch"],
+        ["Chilling out with friends", "play"],
+        ["Conquering all those who oppose me! Oh wait, this isn't a video game", "play"],
+        ["Writing for Kiri Kiri Basara", "play"],
+        ["Playing around with wires", "play"],
+        ["Cooking up a fantastic meal!", "play"],
+        ["Crafting a brand new world", "play"]
+    ]
 }
