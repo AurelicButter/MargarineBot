@@ -1,22 +1,37 @@
-module.exports = (client, guildID, args) => {
-    var guild = client.guilds.find("id", guildID);
-    if (!client.settings.guilds.schema.defaultChannel || !client.settings.guilds.schema.modlog) { client.funcs.confAdd(client); }
-  
-    if (args[0] === "mod") { 
-        if (client.settings.guilds.schema.modlog !== null) { 
-            return guild.channels.find("id", guild.settings.modlog);
-        } else { return guild.channels.find("id", args[1].channel.id); }
+module.exports = (client, guild, args) => {
+    if (!args) { args == "default"; }
+    var channelID = schemaCheck(client, args);
+
+    if (channelID == false) {
+        channelID = locate(Array.from(guild.channels), ["general", "general-chat", "off-topic"]);
+        if (channelID == false) {
+            var channels = Array.from(guild.channels.sort((e1, e2) => e1.rawPosition - e2.rawPosition));
+            for (var x = 0; x < channels.length; x++) {
+                var currChannel = channels[x][1];
+                if (currChannel.type == "text" && currChannel.permissionsFor(guild.members.get(client.user.id)).has("SEND_MESSAGES")) { 
+                    channelID = currChannel.id; 
+                    x = channels.length;
+                }
+            }
+        }
     }
-    if (client.settings.guilds.schema.defaultChannel.default !== null) { return guild.channels.find("id", guild.settings.defaultChannel); }
-    else if (guild.channels.find("name", "general")) { return guild.channels.find("name", "general"); }
-    else if (guild.channels.find("id", guild.id)) { return guild.channels.find("id", guild.id); }
-    else { return guild.channels.find(c => c.permissionsFor(guild.me).has("SEND_MESSAGES")); }
+
+    return guild.channels.get(channelID);
 };
   
-module.exports.conf = { requiredModules: [] };
-  
-module.exports.help = {
-    name: "defaultChannel",
-    type: "functions",
-    description: "Searchs for the 'default' channel of the server."
+function schemaCheck(client, schema, args) {
+    var schema = client.settings.guilds.schema;
+    if(!schema.defaultChannel || !schema.modlog) { client.funcs.confAdd(client); }
+    
+    if(schema.defaultChannel != null && args == "default") { return schema.defaultChannel; }
+    else if(schema.modlog != null && args == "mod") { return schema.modlog; }
+    else { return false; }
+};
+
+function locate(cList, name) {
+    var channelList = Array.from(cList);
+    for (var x = 0; x < channelList.length; x++) {
+        if (name.includes(channelList[x][1].name)) { x = channelList.length; return channelList[x][1].id; }
+        if (x + 1 == channelList.length) { return false; }
+    }
 };
