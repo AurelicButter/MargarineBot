@@ -2,14 +2,14 @@ const fetch = require("node-fetch");
 
 exports.run = async (client, msg, [term]) => {
     var options = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify({ query: `query ($name: String) { User(name: $name) { avatar { large } siteUrl
             stats { watchedTime chaptersRead animeListScores { meanScore } mangaListScores { meanScore }
                 animeStatusDistribution { status amount } mangaStatusDistribution { status amount } }
         } }`, variables: { name: term } })
     };
-    var response = await fetch('https://graphql.anilist.co', options);
+    var response = await fetch("https://graphql.anilist.co", options);
     var json = await response.json();
     if (!json.data.User.stats) { return msg.channel.send("Anilist profile by that user is not found!"); }
     var data = json.data.User,

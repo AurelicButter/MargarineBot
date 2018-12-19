@@ -31,7 +31,7 @@ function schemaCheck(client, schema, args) {
 function locate(cList, name) {
     var channelList = Array.from(cList);
     for (var x = 0; x < channelList.length; x++) {
-        if (name.includes(channelList[x][1].name)) { x = channelList.length; return channelList[x][1].id; }
+        if (name.includes(channelList[x][1].name) && channelList[x][1].type == "text") { x = channelList.length; return channelList[x][1].id; }
         if (x + 1 == channelList.length) { return false; }
     }
 };

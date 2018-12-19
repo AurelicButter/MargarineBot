@@ -11,13 +11,14 @@
     "moment": "^2.22.2",
     "moment-duration-format": "^1.3.0",
     "ms": "^2.0.0",
-    "node-fetch": "^2.2.1",
-    "node-opus": "^0.2.9",
+    "node-fetch": "^2.3.0",
+    "node-opus": "^0.3.1",
     "querystring": "^0.2.0",
     "request": "^2.88.0",
     "snekfetch": "^4.0.4",
     "sqlite3": "^4.0.4",
-    "ytdl-core": "^0.28.0"
+    "youtube-playlist": "^1.0.2",
+    "ytdl-core": "^0.28.2"
   },
   "devDependencies": {},
   "repository": {
@@ -25,7 +26,8 @@
     "url": "git+https://github.com/butterstroke/MargarineBot"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "author": "Butterstroke",
   "license": "Apache-2.0"
