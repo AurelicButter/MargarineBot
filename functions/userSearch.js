@@ -1,38 +1,44 @@
-module.exports = async (client, msg, args) => {
-    var users = args.user || [null]; 
-    var tags = args.tags || ["None"];
-    var amount = args.user.length; var x = 0; var data = [];
+module.exports = async (client, msg, user, tags) => {
+    if (!user || user.length < 1) { user = [null]; }
+    if (!tags || tags.length < 1) { tags = ["None"]; }
 
-    do {
-        if (users[x] == null || users[x].length < 1) { var user = msg.author; }
-        else if (msg.mentions.users.size > 1 && msg.content.startsWith("<")) {
-            var item = Array.from(msg.mentions.users);
-            var user = item[1];
-        } else if (msg.mentions.users.size > 0 && msg.content.startsWith("<") === false) { var user = msg.mentions.users.first(); }
-        else if (/^(\d{17,21})$/.test(users[x])) { var user = await Promise.resolve(msg.client.users.fetch(users[x])); }
-        else if (msg.client.users.get("username", users[x]) !== null) { var user = msg.client.users.get("username", users[x]); }
-        
-        if (!user) { var user = users[x]; }
-        msg.channel.guild.members.forEach(element => {
-            if (typeof user === "object") {
-                if (element.user.username.toLowerCase() === user.username.toLowerCase()) { 
-                    data.push(this.userObjects(element));
-                } 
-            } else if (element.nickname) {
-                if (element.nickname.toLowerCase() === user.toLowerCase()) { 
-                    data.push(this.userObjects(element));
-                }
+    if (typeof user === "object") { user = user[0]; }
+
+    if (user === null) { user = msg.author.id; }
+    else if (msg.mentions.users.size > 1 && msg.content.startsWith("<")) {
+        var item = Array.from(msg.mentions.users);
+        user = item[0][1].toString().slice(2, -1);
+    } else if (msg.mentions.users.size > 0) { 
+        if (msg.content.startsWith("<") === false) { user = msg.mentions.users.first().id; }
+        else if (msg.content.indexOf("<") != msg.content.lastIndexOf("<")) { user = Array.from(msg.mentions.users)[0][1].toString().slice(2, -1); }
+    }
+    else if (/^(\d{17,21})$/.test(user)) { 
+        user = await Promise.resolve(client.users.fetch(user));
+        user = user.id;
+    }
+
+    var members = Array.from(msg.guild.members);
+    if (/^(\d{17,21})$/.test(user) === false) { 
+        for (var x = 0; x < members.length; x++) {
+            if (user.toLowerCase() === members[x][1].user.username.toLowerCase()) { 
+                user = msg.guild.members.get(members[x][0]);
+                x = members.length;
             }
-        });       
-        x++;
-    } while (x < amount);
+            else if (members[x][1].nickname && user.toLowerCase() === members[x][1].nickname.toLowerCase()) { 
+                user = msg.guild.members.get(members[x][0]);
+                x = members.length;
+            }
+            else if (x + 1 === members.length) { user == null; }
+        }
+    } else { user = msg.guild.members.get(user); }
 
-    if (data.length !== args.user.length) { var text = client.speech(["userSearch", "default"]); } 
-    else if (tags.includes("bot") && user.bot === true) { var text = client.speech(["userSearch", args.name]); }
-
-    var valid = (text) ? false : true;
-    if (valid === false) { msg.channel.send(text); data = text; }
-    return { valid: valid, user: data };
+    if (user === null) { 
+        msg.channel.send(client.speech(msg, ["func-userSearch", "default"]));
+        return false; 
+    } else if (user.user.bot == true && tags.includes("bot")) { 
+        msg.channel.send(client.speech(msg, ["func-userSearch", tags[0]]));
+        return false; 
+    } else { return user; }
 };
 
 module.exports.conf = { requiredModules: [] };
@@ -40,26 +46,5 @@ module.exports.conf = { requiredModules: [] };
 module.exports.help = {
   name: "userSearch",
   type: "functions",
-  description: "Searchs for a user with a mention, username, or a guild nickname. Search is case-sensitive.",
-};
-
-exports.userObjects = (element) => {
-    let name = element.nickname ? element.nickname : element.user.username;
-
-    return {
-        id: element.user.id,
-        username: element.user.username,
-        bot: element.user.bot,
-        discriminator: element.user.discriminator,
-        tag: element.user.username + "#" + element.user.discriminator,
-        ping: "<@" + element.user.id + ">",
-        speaking: element.speaking,
-        nickname: element.nickname,
-        prefered: name,
-        info: {
-            avatar: element.user.avatar,
-            joined: element.joinedTimestamp,
-            roles: element._roles 
-        }
-    };
+  description: "Searchs for a user with a mention, username, or a guild nickname.",
 };

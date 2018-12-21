@@ -1,7 +1,7 @@
 <h1>Margarine's Terms of Service</h1>
 The agreements for the users of Margarine due to Discord's Developer Terms of Service (Defined as Discord TOS).
 
-**Last Updated:** 24 May, 2018
+**Last Updated:** 20 December, 2018
 
 **Usage:**
 By using Margarine, users agree to have their information usable and manipulated for improving and general use of Margarine. Any data collected will be collected anonymously and, in most cases, not stored.
@@ -20,7 +20,10 @@ For users of the developer version of Margarine, a command may be reload with `c
 **Data Requests and Removal:**
 Users may contact the developer for the current user profile on Margarine at any time using the contact information defined in the contact section. The user's information will be sent to them in the most convenient way for both parties and decrypted for general viewing. After the profile has been received, the developer will delete the sent file 48-72 hours later and any leak from that file will be up to the user's responsibility and discretion. 
 
-If the user wants for their user profile to be deleted for whatever reason, they may message the people in the contact section below. However, once deleted, there is no way to recover the lost data.
+If the user wants for their user profile to be deleted for whatever reason, they may message the people in the contact section below. However, once deleted, there is no way to recover the lost data. The exception to this rule is in cases of self-hosting, in which the user must send their request to the person responsible for the hosted instance.
+
+**Self-Hosting**
+For any issues relating to a self-hosted instance of Margarine, the user must send their requests to the person responsible for the self-hosting. The developer is not responsible for any misuse conducted by the self-hosted instances of the program. However, if general questions about Margarine do arise, please see the Contact section of the terms for information on how to get in touch with the developer.
 
 **Disclaimer:**
 If for any reason Margarine needs to store more data, these terms will change with notice in future releases. If users are using the developer version of Margarine, these terms may change overnight. The developer(s) will try to pass the news on quickly, however, cannot guarantee that the news will be current before the changes happen. Any questions based on recent changes, please refer to the Contact section of this file.
