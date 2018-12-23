@@ -13,6 +13,5 @@ exports.conf = {
   
 exports.help = {
   name: "ping",
-  description: "Ping/Pong command.",
-  usage: ""
+  description: "Ping/Pong command.", usage: ""
 };

@@ -1,9 +1,11 @@
 exports.run = async (client, msg) => {
-  if (!msg.guild.voiceConnection) { throw "I am not connected in a voice channel, please add some songs to the mix first!"; }
-  if (msg.guild.voiceConnection.dispatcher.paused === false) { return msg.send("The stream is not paused, baka!"); }
+  var handler = client.funcs.musicCheck(msg);
+  if (handler === false) { return; }
+  if (handler.state != "PAUSE") { return msg.channel.send(client.speech(msg, ["resume", "noPause"])); }
 
-  msg.guild.voiceConnection.dispatcher.resume();
-  msg.send("▶ Now resuming your tunes. Keep partying!");
+  handler.dispatcher.resume();
+  handler.state = "PLAY";
+  msg.channel.send(client.speech(msg, ["resume", "success"]));
 };
 
 exports.conf = {
@@ -16,6 +18,5 @@ exports.conf = {
 
 exports.help = {
   name: "resume",
-  description: "Resumes the playlist.",
-  usage: ""
+  description: "Resumes the playlist.", usage: ""
 };

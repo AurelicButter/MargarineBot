@@ -1,42 +1,36 @@
 const Komada = require("komada");
 const Discord = require("discord.js");
 const config = require("./assets/settings.json");
-const speech = require("./assets/speech.json");
 const localization = require("./assets/localization.json");
-const remove = require("./commandRemover.js");
+const util = require("./utilities/utilExport.js");
 
-remove(); //Removes most default commands from the Komada directory so that there is absolutly no conflicts.
-
-const permStructure = new Komada.PermLevels()
-  .addLevel(0, false, () => true)
-  .addLevel(2, false, (client, msg) => {
-    if (!msg.guild || !msg.guild.settings.modRole) { return false; }
-    const modRole = msg.guild.roles.get(msg.guild.settings.modRole);
-    return modRole && msg.member.roles.has(modRole.id);
-  })
-  .addLevel(3, false, (client, msg) => {
-    if (!msg.guild || !msg.guild.settings.adminRole) { return false; }
-    const adminRole = msg.guild.roles.get(msg.guild.settings.adminRole);
-    return adminRole && msg.member.roles.has(adminRole.id);
-  })
-  .addLevel(4, false, (client, msg) => msg.guild && msg.author.id === msg.guild.owner.id)
-  .addLevel(9, false, (client, msg) => msg.author.id === config.secondary)
-  .addLevel(10, false, (client, msg) => msg.author === client.owner);
+util.envCheck(); //Checks for the proper enviroment.
 
 const client = new Komada.Client({
     ownerID: config.ownerID,
     prefix: config.prefix,
     clientOptions: { fetchAllMembers: false },
-    cmdLogging: false
+    cmdLogging: false,
+    permStructure: new Komada.PermLevels()
+      .addLevel(0, false, () => true)
+      .addLevel(2, false, (client, msg) => {
+        if (!msg.guild || !msg.guild.settings.modRole) { return false; }
+        const modRole = msg.guild.roles.get(msg.guild.settings.modRole);
+        return modRole && msg.member.roles.has(modRole.id);
+      })
+      .addLevel(3, false, (client, msg) => {
+        if (!msg.guild || !msg.guild.settings.adminRole) { return false; }
+        const adminRole = msg.guild.roles.get(msg.guild.settings.adminRole);
+        return adminRole && msg.member.roles.has(adminRole.id);
+      })
+      .addLevel(4, false, (client, msg) => msg.guild && msg.author.id === msg.guild.owner.id)
+      .addLevel(9, false, (client, msg) => msg.author.id === config.secondary)
+      .addLevel(10, false, (client, msg) => msg.author === client.owner)
 });
 
-client.speech = function(keys, msg) {
-  if (!keys) { throw new Error("Keys missing in function call!"); }
-  var t = speech;
-  for (var x = 0; x < keys.length; x++) { t = t[keys[x]]; }
-  var text = t[Math.floor(Math.random() * t.length)]; var prefix = msg.guildSettings.prefix || config.prefix;
-  return text.replace("-prefix-", prefix);
-};
+util.remove(client); //Removes most default commands from the Komada directory so that there is absolutly no conflicts.
+
+client.speech = util.speech;
 
 client.ownerSetting = new Discord.Collection();
 var keys = Object.keys(config);

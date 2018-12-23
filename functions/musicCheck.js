@@ -4,7 +4,7 @@ module.exports = (msg, tag) => {
     if (!msg.member.voice.channelID) { 
         result = false;
         speech = client.speech(msg, ["func-music", "general", "userVC"]);
-    } else if (tag != "join") {
+    } else if (tag !== "join") {
         if (!client.music.get(msg.guild.id)) {
             result = false;
             speech = client.speech(msg, ["func-music", "general", "noQueue"]);

@@ -1,42 +1,49 @@
 const yt = require("ytdl-core");
 
 exports.run = async (client, msg) => {
-  const handler = client.queue.get(msg.guild.id);
-  if (!handler) { throw `Add some songs to the mix first with ${msg.guild.settings.prefix}queueadd [Youtube URL]`; }
-  
-  if (!msg.guild.voiceConnection) {
-    await client.commands.get("join").run(client, msg);
-    if (!msg.guild.voiceConnection) { return; }
-    return this.run(client, msg);
+  const handler = client.music.get(msg.guild.id);
+
+  if (!handler) {
+    if(msg.member.voice.channelID) {
+      await client.commands.get("join").run(client, msg);
+      if(!client.music.get(msg.guild.id)) { return; }
+      return this.run(client, msg);
+    }
+
+    throw client.speech(msg, ["func-music", "general", "userVC"]);
   }
 
-  if (handler.playing) { 
-    if (msg.member.voiceConnection !== msg.guild.voiceConnection) { throw "I'm sorry. I'm already playing in another voice channel on your guild!"; }
+  if (handler.state === "PLAY") { 
+    if (msg.member.voice.channelID !== handler.channel.id) { throw client.speech(msg, ["func-music", "general", "mismatch"]); }
 
-    throw "I'm already playing in your channel.";
-  } else { handler.playing = true; }
+    throw client.speech(msg, ["play", "alreadyPlay"]);
+  } else if (handler.state === "PAUSE") { return client.commands.get("resume").run(client, msg); }
+  else { handler.state = "PLAY"; }
+
+  if(handler.queue.length === 0) { return msg.channel.send(client.speech(msg, ["play", "noQueue"])); }
     
   (function play(song) {
     if (song === undefined) {
-      return msg.channel.send("All your selected tunes have been played. I'll be taking my leave now.").then(() => {
-      handler.playing = false;
-      return msg.member.voiceChannel.leave();
+      return msg.channel.send(client.speech(msg, ["play", "allDone"])).then(() => {
+      handler.state = "STOP";
     });
   }
     
-  msg.channel.send(`📻 Playing ${song.requester}'s request: **${song.title}**`).catch(err => client.emit("log", err, "error"));
+  msg.channel.send(client.speech(msg, ["play", "nextSong"])
+    .replace("-request", song.requester)
+    .replace("-title", song.title));
   
-  return msg.guild.voiceConnection.playStream(yt(song.url, { audioonly: true }), { passes: 2 })
+  return handler.dispatcher = handler.connection.play(yt(song.url, { audioonly: true }), { passes: 2 })
     .on("end", () => { setTimeout(() => {
-      handler.songs.shift();
-      play(handler.songs[0]);
+      handler.queue.shift();
+      play(handler.queue[0]);
     }, 100); })
   
     .on("error", err => msg.channel.send(`error: ${err}`).then(() => {
-      handler.songs.shift();
-      play(handler.songs[0]);
+      handler.queue.shift();
+      play(handler.queue[0]);
     }));
-  }(handler.songs[0]));
+  }(handler.queue[0]));
     
   return null;
 };
@@ -44,9 +51,8 @@ exports.run = async (client, msg) => {
 exports.conf = {
   enabled: true,
   runIn: ["text"],
-  aliases: [],
-  permLevel: 0,
-  botPerms: []
+  aliases: [], permLevel: 0,
+  botPerms: ["CONNECT", "SPEAK"]
 };
 
 exports.help = {

@@ -1,26 +1,41 @@
 const yt = require("ytdl-core");
+const ytPlay = require("youtube-playlist");
 const getInfoAsync = require("util").promisify(yt.getInfo);
-const url = require("url");
 
 exports.run = async (client, msg, [song]) => {
-  const YTRegExp = new RegExp(/(?:v.|d\/|e\/)([\w-_]{11})/);
-  var songID = url.parse(song).path.split("/")[1];
-  var id = songID.match(YTRegExp);
+  var handler = client.funcs.musicCheck(msg);
+  if (handler === false) { return; }
+  var id = [];
 
-  if (id === null) { throw "You must provide a valid YouTube URL."; }
-  const info = await getInfoAsync(`https://youtu.be/${id[1]}`);
+  if (song.match(/(playlist\?list=\S{30,34})/)) { 
+    msg.send(client.speech(msg, ["queueadd", "listDetect"]));
+    list = await Promise.resolve(ytPlay(song, "id"));
+        
+    for(var x = 0; x < list.data.playlist.length; x++) {
+      id.push(list.data.playlist[x]);
+    }
+  } else if (song.match(/(?:v=)(\S{11}$)/)) {
+    id.push(song.split(".com/")[1].match(/(?:v=)(\S{11}$)/)[1]);
+  } else { throw client.speech(msg, ["queueadd", "noURL"]); }
 
-  if (client.queue.has(msg.guild.id) === false) { client.queue.set(msg.guild.id, { playing: false, songs: [], }); }
+  for(var x = 0; x < id.length; x++) {
+    try {
+      info = await getInfoAsync("https://youtu.be/" + id[x]);
 
-  client.queue.get(msg.guild.id).songs.push({
-    url: song,
-    title: info.title,
-    seconds: info.length_seconds,
-    requester: msg.author.username,
-    image: info.thumbnail_url
-  });
+      handler.queue.push({
+        url: "https://youtu.be/" + id[x],
+        title: info.title,
+        seconds: info.length_seconds,
+        requester: msg.author.tag,
+        image: info.thumbnail_url
+      });
+    } catch(err) {
+      msg.send("Whoops! Looks like I can't access this video. <https://youtu.be/" + id[x] + ">");
+    }    
+  }
 
-  msg.send(`🎵 Added **${info.title}** to the queue 🎶`);
+  if (id.length == 1) { msg.send(client.speech(msg, ["queueadd", "success"]).replace("-title", info.title)); }
+  else { msg.send(client.speech(msg, ["queueadd", "multi"]).replace("-number", id.length)); }
 };
 
 exports.conf = {
@@ -33,8 +48,7 @@ exports.conf = {
 
 exports.help = {
   name: "queueadd",
-  description: "Adds a song the the queue.",
-  usage: "[song:str]",
+  description: "Adds a song or a playlist to the queue.",
+  usage: "[song:str]", humanUse: "[Song/Playlist URL]",
+  extendedHelp: "Note: Only Youtube song and Youtube playlist URLs only. Youtube mixes do not count."
 };
-
-exports.init = (client) => { client.queue = new client.methods.Collection(); };

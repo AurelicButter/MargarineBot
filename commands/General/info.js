@@ -1,5 +1,5 @@
 exports.run = async (client, message, [kind, search]) => {
-    let guild = message.channel.guild;
+    let guild = message.guild;
     let msg = (message.content.startsWith("<")) ? message.content.slice(client.user.id.length + 4).split(" ") : message.content.slice(2).split(" ");
 
     var x = (msg[0] === "info") ? 1 : 0;
@@ -11,37 +11,37 @@ exports.run = async (client, message, [kind, search]) => {
 
     switch (kind) {
         case "user":
-            var data = await client.funcs.userSearch(client, message, {user: [user], name: this.help.name});
-            if (data.valid === false) { return; }
-            user = await Promise.resolve(client.users.fetch(data.user[0].id));
+            user = await client.funcs.userSearch(client, message, user);
+            if (user === false) { return; }
+
+            var userC = client.users.get(user.id);
 
             const statusList = {
-                online: "Online",
-                idle: "Idle",
-                dnd: "Do not Disturb"
+                online: "online",
+                idle: "idle",
+                dnd: "on do not disturb mode"
             };
     
-            var Status = statusList[user.presence.status] || "Offline";
-            var botUser = user.bot ? "True": "False";
-            var activity = user.presence.activity !== null ? " - " + user.presence.activity.name: " ";
+            var Status = statusList[user.presence.status] || "offline";
+            var activity = user.presence.activity !== null ? " while playing " + user.presence.activity.name: " ";
             
-            embed.setThumbnail(user.displayAvatarURL())
-                .setAuthor("User: " + user.tag)
-                .setDescription("ID: " + user.id)
-                .addField("Created:", user.createdAt.toLocaleString(), true)
-                .addField("Joined:", guild.members.get(user.id).joinedAt.toLocaleString(), true)
-                .addField("Bot user:", botUser, true)
-                .addField("Status:", Status + activity, true); break;
+            embed.setThumbnail(userC.displayAvatarURL())
+                .setAuthor("User: " + user.user.tag + " | ID: " + user.id)
+                .setDescription("Currently " + Status + activity)
+                .addField("Created:", userC.createdAt.toLocaleString(), true)
+                .addField("Joined:", user.joinedAt.toLocaleString(), true)
+                .addField("Bot user:", user.bot ? "True": "False", true); break;
         case "role":
+            var role;
             guild.roles.forEach(element => { if (element.name.toLowerCase() === user.toLowerCase()) { role = element; } });
-            if (!role) { return message.channel.send("Looks like I can't find the role. Be sure it is spelled correctly."); }
+            if (!role) { return message.channel.send(client.speech(message, ["info", "role"])); }
     
             embed.addField("Role:", `${role.name} - ${role.id}`)
                 .addField("Position:", role.position, true)
                 .addField("Hex Colour:", role.hexColor, true)
                 .addField("Users:", role.members.size, true); break;
         case "server":
-            if (user) { return message.reply("You can't ask information about a server with additional stuff!"); }
+            if (user) { return message.reply(client.speech(message, ["info", "server"])); }
 
             embed.setThumbnail(guild.iconURL())
                 .addField("Region:", guild.region, true)
@@ -49,11 +49,10 @@ exports.run = async (client, message, [kind, search]) => {
                 .addField("Owner:", `${guild.owner.user.tag} - ${guild.owner.id}`)
                 .addField("Members:", `${guild.memberCount - guild.members.filter(m => m.user.bot).size} (${guild.members.filter(m => m.user.bot).size} bots)`, true)
                 .addField("Roles:", guild.roles.size, true); break;
-        default: return message.channel.send("You didn't give a correct search term. Do either server, user, or role.");
+        default: return message.channel.send(client.speech(message, ["info", "noTerm"]));
     };
 
-    var colour = (kind === "role") ? role.hexColor : 0x04d5fd;
-    embed.setColor(colour);
+    embed.setColor((kind === "role") ? role.hexColor : 0x04d5fd);
     message.channel.send({embed});
 };
 

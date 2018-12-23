@@ -1,9 +1,10 @@
 exports.run = async (client, msg, user) => {
-    var data = await client.funcs.userSearch(client, msg, {user: [user], name: this.help.name});
-    if (data.valid === false) { return; }
-    if (data.user[0].id === client.user.id) { return msg.channel.send(`Why would you try and make me greet myself, ${msg.author.username}? I'm not that lonely!`); }
+    var data = await client.funcs.userSearch(client, msg, user);
+    if (data === false) { return; }
+    if (data.id === client.user.id) { return msg.channel.send(client.speech(msg, ["greet", "me"]).replace("-user", msg.author.username)); }
 
-	msg.channel.send(`Hello ${data.user[0].prefered}! `);
+    var name = data.nickname || data.user.username;
+	msg.channel.send(client.speech(msg, ["greet", "success"]).replace("-user", name));
 };
 
 exports.conf = {

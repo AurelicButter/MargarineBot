@@ -1,9 +1,9 @@
 exports.run = async (client, msg) => {
-  if (!msg.guild.voiceConnection) { throw "I am not connected in a voice channel, please add some songs to the mix first!"; }
-  if (msg.member.voiceConnection !== msg.guild.voiceConnection) { throw "You can't skip a song if you are not listening to it!"; }
+  var handler = client.funcs.musicCheck(msg);
+  if (handler === false) { return; }
 
-  msg.guild.voiceConnection.dispatcher.end();
-  msg.send("⏭ Skipped the current song.");
+  handler.dispatcher.end();
+  msg.channel.send(client.speech(msg, ["skip"]));
 };
 
 exports.conf = {
@@ -16,6 +16,5 @@ exports.conf = {
 
 exports.help = {
   name: "skip",
-  description: "Skips the current song.",
-  usage: ""
+  description: "Skips the current song.", usage: ""
 };

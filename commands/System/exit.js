@@ -14,6 +14,5 @@ exports.conf = {
   
 exports.help = {
   name: "exit",
-  description: "Shuts down the bot.",
-  usage: ""
+  description: "Shuts down the bot.", usage: ""
 };  

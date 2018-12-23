@@ -47,7 +47,7 @@ exports.run = async (client, msg, [cmd, mod]) => {
                 .setTitle(cmd.help.name + alias)
                 .setDescription(cmd.help.description)
                 .addField("Usage:", `\`${prefix + cmd.help.name + " " + usageAct}\``)
-                .addField("Permission level:", client.ownerSettings.get("permLevel").general[cmd.conf.permLevel]);
+                .addField("Permission level:", client.ownerSetting.get("permLevel").general[cmd.conf.permLevel]);
             if (cmd.help.extendedHelp) { embed.addField("Extended Help:", cmd.help.extendedHelp); }
             msg.send({embed});
         }

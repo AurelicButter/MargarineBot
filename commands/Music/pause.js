@@ -1,9 +1,11 @@
 exports.run = async (client, msg) => {
-  if (!msg.guild.voiceConnection) { throw `I am not connected in a voice channel, please add some songs to the mix first with ${msg.guild.settings.prefix}queueadd`; }
-  if (msg.guild.voiceConnection.dispatcher.paused) { return msg.send("The stream is already paused, baka!"); }
+  var handler = client.funcs.musicCheck(msg);
+  if (handler === false) { return; }
+  if (handler.state === "PAUSE") { return msg.send(client.speech(msg, ["pause", "paused"])); }
 
-  msg.guild.voiceConnection.dispatcher.pause();
-  return msg.send("⏸ The mix is now paused.");
+  handler.state = "PAUSE";
+  handler.dispatcher.pause();
+  msg.send(client.speech(msg, ["pause", "success"]));
 };
 
 exports.conf = {
@@ -11,14 +13,10 @@ exports.conf = {
   runIn: ["text"],
   aliases: [],
   permLevel: 0,
-  botPerms: [],
-  requiredFuncs: [],
+  botPerms: []
 };
 
 exports.help = {
   name: "pause",
-  description: "Pauses the playlist.",
-  usage: "",
-  usageDelim: "",
-  extendedHelp: "",
+  description: "Pauses the playlist.", usage: ""
 };

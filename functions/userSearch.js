@@ -10,7 +10,7 @@ module.exports = async (client, msg, user, tags) => {
         user = item[0][1].toString().slice(2, -1);
     } else if (msg.mentions.users.size > 0) { 
         if (msg.content.startsWith("<") === false) { user = msg.mentions.users.first().id; }
-        else if (msg.content.indexOf("<") != msg.content.lastIndexOf("<")) { user = Array.from(msg.mentions.users)[0][1].toString().slice(2, -1); }
+        else if (msg.content.indexOf("<") !== msg.content.lastIndexOf("<")) { user = Array.from(msg.mentions.users)[0][1].toString().slice(2, -1); }
     }
     else if (/^(\d{17,21})$/.test(user)) { 
         user = await Promise.resolve(client.users.fetch(user));
@@ -35,7 +35,7 @@ module.exports = async (client, msg, user, tags) => {
     if (user === null) { 
         msg.channel.send(client.speech(msg, ["func-userSearch", "default"]));
         return false; 
-    } else if (user.user.bot == true && tags.includes("bot")) { 
+    } else if (user.user.bot === true && tags.includes("bot")) { 
         msg.channel.send(client.speech(msg, ["func-userSearch", tags[0]]));
         return false; 
     } else { return user; }
