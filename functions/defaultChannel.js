@@ -1,6 +1,7 @@
 module.exports = (client, guild, args) => {
     if (!args) { args == "default"; }
-    var channelID = schemaCheck(client, args);
+
+    var channelID = schemaCheck(client, guild, args);
 
     if (channelID == false) {
         channelID = locate(Array.from(guild.channels), ["general", "general-chat", "off-topic"]);
@@ -19,12 +20,12 @@ module.exports = (client, guild, args) => {
     return guild.channels.get(channelID);
 };
   
-function schemaCheck(client, schema, args) {
-    var schema = client.settings.guilds.schema;
+function schemaCheck(client, guild, args) {
+    var schema = client.settings.guilds.get(guild.id);
     if(!schema.defaultChannel || !schema.modlog) { client.funcs.confAdd(client); }
     
-    if(schema.defaultChannel != null && args == "default") { return schema.defaultChannel; }
-    else if(schema.modlog != null && args == "mod") { return schema.modlog; }
+    if(schema.defaultChannel != null && args === "default") { return schema.defaultChannel; }
+    else if(schema.modlog != null && args === "mod") { return schema.modlog; }
     else { return false; }
 };
 
