@@ -1,8 +1,23 @@
-exports.anilist = [];
+exports.anilist = [ //Missing search term
+    "You forgot to include a search term!"
+];
 
 exports.avatar = [];
 
-exports.award = [];
+exports.award = {
+    "noType": [
+        "BAKA! I need a type of an award!"
+    ],
+    "noText": [
+        "Explain yourself on giving the award!"
+    ],
+    "noRow": [
+        "That user has not gotten their first daily yet!"
+    ],
+    "success": [
+        "<@-id>, (-id) have been awarded -credits credits!"
+    ]
+};
 
 exports.calculate = [];
 

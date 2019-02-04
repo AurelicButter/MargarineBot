@@ -9,7 +9,7 @@ exports.run = async (client, msg, [song]) => {
 
   if (song.match(/(playlist\?list=\S{30,34})/)) { 
     msg.send(client.speech(msg, ["queueadd", "listDetect"]));
-    list = await Promise.resolve(ytPlay(song, "id"));
+    var list = await Promise.resolve(ytPlay(song, "id"));
         
     for(var x = 0; x < list.data.playlist.length; x++) {
       id.push(list.data.playlist[x]);
@@ -20,7 +20,7 @@ exports.run = async (client, msg, [song]) => {
 
   for(var x = 0; x < id.length; x++) {
     try {
-      info = await getInfoAsync("https://youtu.be/" + id[x]);
+      var info = await getInfoAsync("https://youtu.be/" + id[x]);
 
       handler.queue.push({
         url: "https://youtu.be/" + id[x],
@@ -34,7 +34,7 @@ exports.run = async (client, msg, [song]) => {
     }    
   }
 
-  if (id.length == 1) { msg.send(client.speech(msg, ["queueadd", "success"]).replace("-title", info.title)); }
+  if (id.length === 1) { msg.send(client.speech(msg, ["queueadd", "success"]).replace("-title", info.title)); }
   else { msg.send(client.speech(msg, ["queueadd", "multi"]).replace("-number", id.length)); }
 };
 

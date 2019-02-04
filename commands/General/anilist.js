@@ -1,12 +1,13 @@
 const fetch = require("node-fetch");
 
 exports.run = async (client, msg, [term]) => {
+    if (!term) { return msg.channel.send(client.speech(msg, ["anilist"])); }
     var options = {
         method: "POST",
         headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify({ query: `query ($name: String) { User(name: $name) { avatar { large } siteUrl
             stats { watchedTime chaptersRead animeListScores { meanScore } mangaListScores { meanScore }
-                animeStatusDistribution { status amount } mangaStatusDistribution { status amount } }
+                animeStatusDistribution { amount } mangaStatusDistribution { amount } }
         } }`, variables: { name: term } })
     };
     var response = await fetch("https://graphql.anilist.co", options);

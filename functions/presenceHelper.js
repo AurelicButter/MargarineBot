@@ -1,15 +1,15 @@
 let games = require("../assets/localization.json")["games"];
 
 module.exports = (client, name, type, status) => {
-    if (status == null) { status == "online"; }
-    if (type == null) { type == 0; } //A.K.A => play
+    if (status === null) { status = "online"; }
+    if (type === null) { type = 0; } //A.K.A => play
 
-    if (name == "-start" || name == "-reset") {
+    if (name === "-start" || name === "-reset") {
         Presence(client, "play", "Playing around with " + client.owner.username, "online");
         client.timer = setInterval(function() {
             do { //No duplicate statuses, Margarine. K thx.
                 var items = games[Math.floor(Math.random() * games.length)];
-            } while (client.user.presence.activity.name != null && items[0] == client.user.presence.activity.name.slice(9));
+            } while (client.user.presence.activity.name !== null && items[0] === client.user.presence.activity.name.slice(9));
 
             Presence(client, items[1], items[0], status);
         }, 900000);
@@ -22,7 +22,7 @@ module.exports = (client, name, type, status) => {
 function Presence(client, type, name, status) {
     const tList = { "play": "PLAYING", "stream": "STREAMING", "listen": "LISTENING", "watch": "WATCHING" };
     type = tList[type];
-    name = (name != "-null") ? "m~help | " + name : null;
+    name = (name !== "-null") ? "m~help | " + name : null;
 
-    client.user.setPresence({ activity: { name: name, type: type }, status: status });
-};
+    client.user.setPresence({ activity: { name, type }, status });
+}

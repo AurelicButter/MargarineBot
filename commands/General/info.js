@@ -14,8 +14,6 @@ exports.run = async (client, message, [kind, search]) => {
             user = await client.funcs.userSearch(client, message, user);
             if (user === false) { return; }
 
-            var userC = client.users.get(user.id);
-
             const statusList = {
                 online: "online",
                 idle: "idle",
@@ -25,10 +23,10 @@ exports.run = async (client, message, [kind, search]) => {
             var Status = statusList[user.presence.status] || "offline";
             var activity = user.presence.activity !== null ? " while playing " + user.presence.activity.name: " ";
             
-            embed.setThumbnail(userC.displayAvatarURL())
-                .setAuthor("User: " + user.user.tag + " | ID: " + user.id)
+            embed.setThumbnail(user.user.displayAvatarURL())
+                .setAuthor(user.user.tag + " | " + user.id)
                 .setDescription("Currently " + Status + activity)
-                .addField("Created:", userC.createdAt.toLocaleString(), true)
+                .addField("Created:", user.user.createdAt.toLocaleString(), true)
                 .addField("Joined:", user.joinedAt.toLocaleString(), true)
                 .addField("Bot user:", user.bot ? "True": "False", true); break;
         case "role":
