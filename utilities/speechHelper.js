@@ -10,7 +10,7 @@ module.exports = function(msg, keys) {
         category = category[category.length - 1].toLowerCase();
     }
 
-    var PATH = msg.client.clientBaseDir + "\\assets\\speech\\" + msg.guildSettings.lang + "\\" + category + ".js";
+    var PATH = msg.client.clientBaseDir + "assets/speech/" + msg.guildSettings.lang + "/" + category + ".js";
 
     if (fs.existsSync(PATH) == false) { 
         throw new Error("Localization file is missing.\nLanguage: " + msg.guildSettings.lang + "\nCategory: " + category + "\nCommand: " + name); 
