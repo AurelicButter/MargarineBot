@@ -1,17 +1,18 @@
 exports.run = async (client, msg, [Name, ID]) => {
     const prefix = msg.guild.settings.prefix || client.config.prefix;
 
-    msg.delete(); 
-    if (!Name) { return msg.channel.send("You need a name of an emote to search with, baka!").then(msg => { setTimeout(() => { msg.delete(); }, 4000); }); }
-    if (msg.content.slice(prefix.length).startsWith("react") && (!ID)) {
-        return msg.channel.send("You need to specify a message's ID so that I can find it!").then(msg => { setTimeout(() => { msg.delete(); }, 4000); }); 
-    }
+    if (msg.channel.permissionsFor(client.user).has("MANAGE_MESSAGES")) { msg.delete(); }
+    if (!Name) { return errMsg(msg, "noName"); }
+    if (msg.content.slice(prefix.length).startsWith("react") && (!ID)) { return errMsg(msg, "noID"); }
+    if (Name.startsWith("<")) { Name = Name.slice(2, -20); }
 
     let emotes = Array.from(client.emojis);
     let emoji = emotes.filter((element) => {
         if (element[1].name === Name) { return element; }
     });
-    var type = emoji[0][1].animated === true ? "gif" : "png";
+
+    try { var type = emoji[0][1].animated === true ? "gif" : "png"; } 
+    catch(err) { return errMsg(msg, "badName"); }
 
     if (msg.content.slice(prefix.length).startsWith("react")) {
         msg.channel.messages.fetch(ID).then(msg => msg.react(client.emojis.get(emoji[0][0]))); 
@@ -23,7 +24,7 @@ exports.conf = {
     runIn: ["text"],
     aliases: ["see", "emote", "react"],
     permLevel: 0,
-    botPerms: ["ATTACH_FILES", "ADD_REACTIONS", "MANAGE_MESSAGES"]
+    botPerms: ["ATTACH_FILES", "ADD_REACTIONS"]
 };
   
 exports.help = {
@@ -33,3 +34,11 @@ exports.help = {
     extendedHelp: "Bring in your pool of emotes from other servers! Either use the big image or use the alias of react and add a message ID to react to a message instead!",
     humanUse: "(name)_([If reacting] messageID)"
 };
+
+function errMsg(msg, type) {
+    msg.channel.send(msg.client.speech(msg, ["emoji", type])).then(msg => { 
+        if (msg.channel.permissionsFor(msg.client.user).has("MANAGE_MESSAGES")) { 
+            setTimeout(() => { msg.delete(); }, 4000);
+        } 
+    }); 
+}

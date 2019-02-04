@@ -1,6 +1,6 @@
-exports.run = async (client, message, [...choice]) => {
+exports.run = async (client, msg, [...choice]) => {
     var results = choice[(Math.ceil(Math.random() * choice.length) - 1)];
-    message.channel.send(`${message.author.username}, I think **${results}** would be the best choice!`);
+    msg.channel.send(client.speech(msg, ["choose"]).replace("-user", msg.author.username).replace("-result", results));
 };
   
 exports.conf = {
