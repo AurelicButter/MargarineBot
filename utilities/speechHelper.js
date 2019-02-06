@@ -12,12 +12,12 @@ module.exports = function(msg, keys) {
 
     var PATH = msg.client.clientBaseDir + "assets/speech/" + msg.guildSettings.lang + "/" + category + ".js";
 
-    if (fs.existsSync(PATH) == false) { 
+    if (fs.existsSync(PATH) === false) { 
         throw new Error("Localization file is missing.\nLanguage: " + msg.guildSettings.lang + "\nCategory: " + category + "\nCommand: " + name); 
     }
 
     var t = require(PATH); var n;
-    if (name.startsWith("func-") == false) { t = t[name]; n = 1; }
+    if (name.startsWith("func-") === false) { t = t[name]; n = 1; }
     else { t = t[keys[1]]; n = 2; }
     for (var x = n; x < keys.length; x++) { t = t[keys[x]]; }
     var text = t[Math.floor(Math.random() * t.length)]; var prefix = msg.guildSettings.prefix || msg.client.config.prefix;

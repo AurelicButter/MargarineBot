@@ -36,4 +36,4 @@ function dateMaker(date) {
     var d = date.toLocaleString().split(" ")[0].split("-");
 
     return d[2] + " " + months[d[1]] + ", " + d[0];
-};
+}

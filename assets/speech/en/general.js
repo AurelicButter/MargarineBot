@@ -63,4 +63,25 @@ exports.info = {
 
 exports.mal = [];
 
-exports.report = [];
+exports.report = {
+    "start": [
+        "I'm going to be asking a couple of questions so I'll be taking this into the DMs."
+    ],
+    "q1": [
+        "Alright. Let's get to the point. First question: What kind of issue is this?\nPlease answer `issue`, `bug`, `complaint`, or `suggestion`"
+    ],
+    "q2": [
+        "Next: Please provide a decently sized message explaining the item."
+    ],
+    "err1": [
+        "You are not able to send todo reports. Only the bot owner can."
+    ],
+    "timeout": {
+        "t1": [
+            "You didn't provide me with a description in time. I recommend either making your report shorter or copy and pasting so that you don't have to try and type it so quickly."
+        ],
+        "t2": [
+            "It seems you have timed out with making a report. When you are ready, feel free to try again!"
+        ]
+    }
+};

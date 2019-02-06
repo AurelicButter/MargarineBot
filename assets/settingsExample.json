@@ -9,7 +9,7 @@
     "owner": {
         "channels": {
             "award": "<CHANNEL_ID>",
-            "report": "<CHANNEL_ID"
+            "report": "<CHANNEL_ID>"
         },
         "awards": {
             "suggest": 250,
@@ -20,6 +20,7 @@
     },
     "database": {
         "general": "./assets/data/general.sqlite",
-        "inv": "./assets/data/inventory.sqlite"
+        "inv": "./assets/data/inventory.sqlite",
+        "user": "./assets/data/users.sqlite"
     }
 }

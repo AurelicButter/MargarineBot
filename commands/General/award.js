@@ -27,12 +27,13 @@ exports.run = async (client, msg, [user, type, ...text]) => {
                 major: ["major", settings.awards.major]
             };
 
-            let users = ["Overall", data.id];
-            for (var x = 0; x < users.length; x++) {
-                db.get(`SELECT ${awards[type][0]} FROM awards WHERE userId = "${users[x]}"`, [], (err, row) => {        
-                    db.run(`UPDATE awards SET ${awards[type][0]} = ${Object.values(row)[0] + 1} WHERE userId = "${users[x]}"`);
-                });
-            };
+            db.get(`SELECT ${awards[type][0]} FROM awards WHERE userId = "Overall"`, [], (err, row) => {        
+                db.run(`UPDATE awards SET ${awards[type][0]} = ${Object.values(row)[0] + 1} WHERE userId = "Overall"`);
+            });
+
+            db.get(`SELECT ${awards[type][0]} FROM awards WHERE userId = "${data.id}"`, [], (err, row) => {        
+                db.run(`UPDATE awards SET ${awards[type][0]} = ${Object.values(row)[0] + 1} WHERE userId = "${data.id}"`);
+            });
 
             embed.setTitle(":tada: Award Notification! :tada:")
                 .addField(`To ${data.user.tag} for the reason of ${text.join(" ")}`, `User has been awarded ${awards[type][1]} credits!`)
