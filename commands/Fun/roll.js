@@ -1,14 +1,14 @@
-exports.run = (client, message, sides) => {
-    if (sides.length < 1) { sides = 6; }
-    if (sides === 0) { return message.channel.send("You can't roll from 0!"); }
+exports.run = (client, msg, sides) => {
+    sides = (sides.length < 1) ? 6 : Number(sides); 
+    if (sides === 0) { return msg.channel.send(client.speech(msg, ["roll", "zero"])); }
 
-    if (Number.isInteger(Number(sides))) { 
+    if (Number.isInteger(sides)) {
+        if (sides < 0) { return msg.channel.send(client.speech(msg, ["roll", "negative"])); } 
         var y = Math.floor(Math.random() * (Math.floor(sides) - Math.ceil(1) + 1)) + Math.ceil(1);
-        return message.channel.send(`🎲 You rolled a ${y}! 🎲`);
-    } else {
-        return message.channel.send("It seems you added some letters into your number. Please try again!");
-    }    
- };
+        return msg.channel.send(client.speech(msg, ["roll", "success"]).replace("-value", y));
+    } 
+    return msg.channel.send(client.speech(msg, ["roll", "noNumber"])); 
+};
 
 exports.conf = {
     enabled: true,
@@ -19,7 +19,6 @@ exports.conf = {
 };
   
 exports.help = {
-    name: "roll",
-    description: "Roll a die!",
-    usage: "[sides:str]"
+    name: "roll", description: "Roll a die!",
+    usage: "[sides:str]", humanUse: "[sides]"
 };

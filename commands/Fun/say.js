@@ -17,5 +17,5 @@ exports.conf = {
 exports.help = {
     name: "say",
     description: "Have Margarine echo what you said.",
-    usage: "[msg:str]"
+    usage: "[msg:str]", humanUse: "[msg]"
 };
