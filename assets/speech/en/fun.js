@@ -1,6 +1,7 @@
 exports.roll = {
     "zero": [
-        "You can't roll from 0!"
+        "You can't roll from 0!",
+        "A die with 0 sides? You got to be joking."
     ],
     "negative": [
         "You can't roll a negative number, baka!"

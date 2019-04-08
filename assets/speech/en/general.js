@@ -2,7 +2,31 @@ exports.anilist = [ //Missing search term
     "You forgot to include a search term!"
 ];
 
-exports.avatar = [];
+exports.anime = {
+    "noSearch": [
+        "You're missing a search term, baka!"
+    ],
+    "noResult": [
+        "There's not an anime by that name!"
+    ],
+    "nsfw" : [
+        "You can't search for hentai in a SFW channel!"
+    ]
+};
+
+exports.manga = {
+    "noSearch": [
+        "You're missing a search term, baka!"
+    ],
+    "noResult": [
+        "There's not a manga by that name!"
+    ],
+    "nsfw" : [
+        "You can't search for hentai in a SFW channel!"
+    ]
+};
+
+exports.avatar = []; //Placeholder
 
 exports.award = {
     "noType": [
@@ -61,7 +85,7 @@ exports.info = {
     ]
 };
 
-exports.mal = [];
+exports.mal = []; //Placeholder
 
 exports.report = {
     "start": [
