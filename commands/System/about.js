@@ -7,9 +7,9 @@ exports.run = async (client, msg) => {
   
     const embed = new client.methods.Embed()
         .setColor(0x37FDFC)
-        .setTitle("About Margarine")
+        .setTitle("About Me")
         .setDescription(`[Github](https://github.com/Butterstroke/MargarineBot) | [Terms Of Service](https://github.com/Butterstroke/MargarineBot/blob/master/TermsOfService.md)
-        \nI am a very helpful and amazing bot! Doing ${prefix}help is great for finding ways I can assist you. I was written in Komada, a Discord.js framework.
+        \nI am a very helpful and amazing bot! Doing ${prefix}help is great for finding ways I can assist you. I was written with Discord.js and Komada, a Discord.js framework.
         \n**Stats:** I have been online, helping out, for ${duration} using ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB of memory. ${client.users.size} users across ${client.guilds.size} guilds with ${client.channels.size.toLocaleString()} channels depend on my functions to be as reliable as possible!
         \n**Name Origin:** Butterstroke#7150's typical nickname is Butter. As in the stuff that you put on toast. My name comes from the artificial butter *(He tends to call it 'Fake Butter')* you can buy in stores called, Margarine.        
         \n**Creation:** I was created on the ${dateMaker(client.user.createdAt)} by Butterstroke#7150.`)

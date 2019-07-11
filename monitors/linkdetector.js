@@ -1,7 +1,7 @@
 exports.conf = {
-    enabled: true,
+    enabled: false,
     ignoreBots: false,
-    ignoreSelf: false,
+    ignoreSelf: false
 };
   
 exports.run = (client, message) => {
@@ -11,6 +11,6 @@ exports.run = (client, message) => {
       return;
   } else if(message.content.includes(Link)) {
     message.delete();
-    message.reply("No advertising links!");
+    message.reply("No advertising links, baka!");
   }
 };

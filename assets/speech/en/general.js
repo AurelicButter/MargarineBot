@@ -16,7 +16,8 @@ exports.anime = {
 
 exports.manga = {
     "noSearch": [
-        "You're missing a search term, baka!"
+        "You're missing a search term, baka!",
+        "I need a title or something, baka! Come back with one!"
     ],
     "noResult": [
         "There's not a manga by that name!"
@@ -36,7 +37,8 @@ exports.award = {
         "Explain yourself on giving the award!"
     ],
     "noRow": [
-        "That user has not gotten their first daily yet!"
+        "That user has not gotten their first daily yet!",
+        "That user doesn't seem to like my games. They haven't even claimed their first daily yet!"
     ],
     "success": [
         "<@-id>, (-id) have been awarded -credits credits!"
@@ -47,7 +49,8 @@ exports.calculate = [];
 
 exports.choose = [
     "-user, I think that **-result** would be the best choice!",
-    "Hmm... looks like **-result** is the best option"
+    "Hmm... looks like **-result** is the best option",
+    "**-result** looks rather tempting. I'd pick that one."
 ];
 
 exports.emoji = {
@@ -67,7 +70,8 @@ exports.greet = {
         "How rude, -user! I'm not that lonely!"
     ],
     "success": [
-        "Why hello there, -user!"
+        "Why hello there, -user!",
+        "Hello, -user! I hope you are doing well."
     ]
 };
 
@@ -98,14 +102,16 @@ exports.report = {
         "Next: Please provide a decently sized message explaining the item."
     ],
     "err1": [
-        "You are not able to send todo reports. Only the bot owner can."
+        "You are not able to send todo reports. Only the bot owner can.",
+        "You found a secret command word! Too bad only the bot owner can go past this point. Try again with a different word."
     ],
     "timeout": {
         "t1": [
             "You didn't provide me with a description in time. I recommend either making your report shorter or copy and pasting so that you don't have to try and type it so quickly."
         ],
         "t2": [
-            "It seems you have timed out with making a report. When you are ready, feel free to try again!"
+            "It seems you have timed out with making a report. When you are ready, feel free to try again!",
+            "Looks like the time ran out! Take a moment to prepare yourself and then contact me when ready."
         ]
     }
 };

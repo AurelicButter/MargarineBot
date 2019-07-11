@@ -1,9 +1,3 @@
-exports.conf = {
-    enabled: true,
-    ignoreBots: false,
-    ignoreSelf: false,
-};
-  
 exports.run = (client, msg) => {
     switch (msg.content) {
         case "/shrug":
@@ -23,4 +17,10 @@ exports.run = (client, msg) => {
             msg.channel.send("*" + msg.author.tag + "* : ( ͡° ͜ʖ ͡°)");
             break;
     }
+};
+
+exports.conf = {
+    enabled: true,
+    ignoreBots: true,
+    ignoreSelf: true,
 };

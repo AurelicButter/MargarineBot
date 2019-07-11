@@ -4,6 +4,7 @@
   "description": "Javascript bot using the Komada framework",
   "main": "index.js",
   "dependencies": {
+    "anilist-node": "^1.1.0",
     "cheerio": "^1.0.0-rc.2",
     "discord.js": "github:hydrabolt/discord.js",
     "ffmpeg": "0.0.4",
@@ -16,9 +17,9 @@
     "querystring": "^0.2.0",
     "request": "^2.88.0",
     "snekfetch": "^4.0.4",
-    "sqlite3": "^4.0.4",
+    "sqlite3": "^4.0.8",
     "youtube-playlist": "^1.0.2",
-    "ytdl-core": "^0.28.2"
+    "ytdl-core": "^0.28.3"
   },
   "devDependencies": {},
   "repository": {

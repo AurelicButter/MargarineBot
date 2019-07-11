@@ -33,12 +33,14 @@ module.exports = async (client, msg, user, tags) => {
     } else { user = msg.guild.members.get(user); }
 
     if (user === null) { 
-        msg.channel.send(client.speech(msg, ["func-userSearch", "default"]));
+        client.speech(msg, ["func-userSearch", "default"]);
         return false; 
     } else if (user.user.bot === true && tags.includes("bot")) { 
-        msg.channel.send(client.speech(msg, ["func-userSearch", tags[0]]));
+        client.speech(msg, ["func-userSearch", tags[0]]);
         return false; 
-    } else { return user; }
+    } 
+    
+    return user;
 };
 
 module.exports.conf = { requiredModules: [] };

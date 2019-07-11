@@ -13,6 +13,7 @@ module.exports = function(msg, keys) {
     var PATH = msg.client.clientBaseDir + "assets/speech/" + msg.guildSettings.lang + "/" + category + ".js";
 
     if (fs.existsSync(PATH) === false) { 
+        msg.channel.send("Whoops! Looks like I'm missing a file or two. Please contact the bot owner.");
         throw new Error("Localization file is missing.\nLanguage: " + msg.guildSettings.lang + "\nCategory: " + category + "\nCommand: " + name); 
     }
 
@@ -22,5 +23,5 @@ module.exports = function(msg, keys) {
     for (var x = n; x < keys.length; x++) { t = t[keys[x]]; }
     var text = t[Math.floor(Math.random() * t.length)]; var prefix = msg.guildSettings.prefix || msg.client.config.prefix;
 
-    return text.replace("-prefix", prefix);
+    msg.channel.send(text.replace("-prefix", prefix));
 };

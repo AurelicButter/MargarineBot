@@ -1,19 +1,19 @@
 module.exports = (msg, tag) => {
-    var result, speech;
     var client = msg.client;
     if (!msg.member.voice.channelID) { 
-        result = false;
-        speech = client.speech(msg, ["func-music", "general", "userVC"]);
+        client.speech(msg, ["func-music", "general", "userVC"]);
+        return false;
     } else if (tag !== "join") {
         if (!client.music.get(msg.guild.id)) {
-            result = false;
-            speech = client.speech(msg, ["func-music", "general", "noQueue"]);
+            client.speech(msg, ["func-music", "general", "noQueue"]);
+            return false;
         } else if (msg.member.voice.channelID !== client.music.get(msg.guild.id).channel.id) {
-            result = false;
-            speech = client.speech(msg, ["func-music", "general", "mismatch"]);
-        } else { result = client.music.get(msg.guild.id); }
-    } else { result = true; }
+            client.speech(msg, ["func-music", "general", "mismatch"]);
+            return false;
+        } 
+        
+        return client.music.get(msg.guild.id);
+    } 
     
-    if(speech) { msg.channel.send(speech); }
-    return result;
+    return true;
 };

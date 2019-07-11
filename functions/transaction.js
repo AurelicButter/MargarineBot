@@ -23,7 +23,7 @@ module.exports = (msg, amount, user, callback) => {
         } else if (!row) { text = "noRow"; }
         else if (row.credits < credits) { text = "lessCredit"; }
 
-        if (text) { msg.channel.send(client.speech(msg, ["func-transaction", "dbCheck", test])); return false; }
+        if (text) { client.speech(msg, ["func-transaction", "dbCheck", test]); return false; }
 
         db.run(`UPDATE users SET credits ="${amount + row.credits}" WHERE userId = "${user.id}"`);
         callback([true, row.credits, (row.credits + amount)]);

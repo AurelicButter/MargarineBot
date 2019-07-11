@@ -1,29 +1,16 @@
-const fetch = require("node-fetch");
+const AniListNode = require("anilist-node");
+const anilist = new AniListNode();
 
 exports.run = async (client, msg, [term]) => {
     if (!term) { return msg.channel.send(client.speech(msg, ["manga", "noSearch"])); }
-    var options = {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify({ query: `query ($id: Int, $page: Int, $perPage: Int, $search: String) {
-            Page (page: $page, perPage: $perPage) {
-              media (id: $id, search: $search, type:MANGA) { id idMal title { romaji english } description isAdult
-              coverImage { medium } siteUrl startDate { year } chapters volumes format status meanScore }
-        } }`, variables: { search: term, page: 1, perPage: 3 } })
-    };
-    var response = await fetch("https://graphql.anilist.co", options);
-    var json = await response.json();
-    if (!json.data.Page.media) { return msg.channel.send(client.speech(msg, ["manga", "noResult"])); }
-
-    const data = json.data.Page.media[0];
+    var data = await anilist.search("manga", term, 1, 3);
+    data = await anilist.media.manga(data.media[0].id);
     
     if (!msg.channel.nsfw && data.isAdult) { return msg.channel.send(client.speech(msg, ["manga, nsfw"])); }
 
     title = data.title.romaji + " ";
 
-    if (data.title.english) {
-        title = title + "| " + data.title.english;
-    }
+    if (data.title.english) { title = title + "| " + data.title.english; }
 
     chapCount = (data.status === "RELEASING") ? "" : `**Chapters:** ${data.chapters} - **Volumes:** ${data.volumes}\n`;
 
@@ -36,7 +23,7 @@ exports.run = async (client, msg, [term]) => {
 
     embed.setDescription(`[Anilist](${data.siteUrl}) | [MyAnimeList](https://myanimelist.net/anime/${data.idMal})\n\n**Format:** `
         + data.format.charAt(0) + data.format.substring(1).toLowerCase() + `\n**Released:** ${data.startDate.year}\n` + chapCount
-        + "**Status:** " + data.status.charAt(0) + data.status.substring(1).toLowerCase() + "**Average Score:** " + data.meanScore 
+        + "**Status:** " + data.status.charAt(0) + data.status.substring(1).toLowerCase() + "\n**Average Score:** " + data.meanScore 
         + " out of 100\n\n" + data.description.replace(/<br>/g, "").replace(/&mdash;/g, "-"));
 
     msg.channel.send({embed});
@@ -46,7 +33,7 @@ exports.conf = {
     enabled: true,
     runIn: ["text"], 
     aliases: [],
-    permLevel: 10,
+    permLevel: 0,
     botPerms: ["ATTACH_FILES"],
     cooldown: 30
 };
