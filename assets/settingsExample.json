@@ -1,15 +1,15 @@
 {
-    "token": "<BOT_TOKEN>",
-    "ownerID": "<OWNER_ID>",
-    "prefix": "<PREFIX>", 
+    "token": "Token Key",
+    "ownerID": "User ID",
+    "prefix": "Prefix", 
     "build": {
-        "version": "Release 1.0",
-        "releaseDate": "TBD"
+        "version": "Release 1.0 - Klasa Rewrite (Developer)",
+        "releaseDate": "December 24th, 2019"
     },
     "owner": {
         "channels": {
-            "award": "<CHANNEL_ID>",
-            "report": "<CHANNEL_ID>"
+            "award": "Channel ID",
+            "report": "Channel ID"
         },
         "awards": {
             "suggest": 250,
@@ -18,9 +18,23 @@
             "major": 2000
         }
     },
-    "database": {
-        "general": "./assets/data/general.sqlite",
-        "inv": "./assets/data/inventory.sqlite",
-        "user": "./assets/data/users.sqlite"
+    "database": "./assets/MargarineData.sqlite",
+    "permLevels": {
+        "general": [
+            "Level 0: Everyone",
+            "Level 1: Placeholder", "Level 2: Placeholder", "Level 3: Placeholder", "Level 4: Placeholder",
+            "Level 5: Guild Moderators", 
+            "Level 6: Guild Admins", 
+            "Level 7: Guild Owners", 
+            "Level 8: Placeholder",
+            "Level 9: Toast & Butter",
+            "Level 10: Bot Owner"
+        ],
+        "addPerms": [
+            "with no additional permissions",
+            "with guild moderator permissions",
+            "with guild admin permissions",
+            "with guild owner permissions"
+        ]
     }
 }

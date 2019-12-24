@@ -1,18 +1,21 @@
-exports.run = async (client, message) => {
-    await message.delete().catch();
-    await message.channel.send(`Good night, ${client.owner.username}!`);
-    await process.exit().catch((e) => { console.error(e); });
+const { Command } = require("klasa");
+
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: 'exit',
+            runIn: ['text', 'dm'],
+            aliases: ["shutdown", "sleep"],
+            guarded: true,
+            permissionLevel: 10,
+            description: 'Shuts down the bot.',
+            usage: ""
+        });
+    }
+
+    async run(msg) {
+        await msg.delete().catch();
+        await msg.channel.send("Good night, " + this.client.owner.username + "!");
+        await process.exit().catch((e) => { console.error(e); });
+    }
 };
-  
-exports.conf = {
-  enabled: true,
-  runIn: ["text", "dm"],
-  aliases: ["sleep"],
-  permLevel: 10,
-  botPerms: []
-};
-  
-exports.help = {
-  name: "exit",
-  description: "Shuts down the bot.", usage: ""
-};  

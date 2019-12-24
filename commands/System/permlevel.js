@@ -1,30 +1,40 @@
-exports.run = async (client, msg) => {
-    for (let i = 0; i < 10; i++) {
-        if (msg.author.id === client.owner.id) { 
-          if (client.permStructure[4].check(client, msg)) { var addPerms = 4; }
-          else if (client.permStructure[3].check(client, msg)) { var addPerms = 3; }
-          else if (client.permStructure[2].check(client, msg)) { var addPerms = 2; }
-          else { var addPerms = 0; }
-          var permLevel = 10; 
-        }
-        else if (client.permStructure[i].check(client, msg)) { var permLevel = i; }
+const { Command } = require("klasa");
+const config = require("../../assets/settings.json");
+
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "permlevel",
+            runIn: ['text'],
+            aliases: [],
+            guarded: true,
+            description: "Checks your permission level."
+        });
     }
 
-    var info = addPerms ? client.ownerSetting.get("permLevel").addPerms[addPerms] : "";
+    async run(msg) {
+        var permLevel = 0;
 
-    msg.channel.send(`Your permission level is ${client.ownerSetting.get("permLevel").general[permLevel]} ${info}`);
-};
-  
-exports.conf = {
-  enabled: true,
-  runIn: ["text"],
-  aliases: [],
-  permLevel: 0,
-  botPerms: []
-};
-  
-exports.help = {
-  name: "permlevel",
-  description: "Check your permission level.",
-  usage: ""
+        if (msg.author === this.client.owner || msg.author.id === config.secondary) {
+            var guild = msg.guild;
+            var authorLvl = (msg.author === this.client.owner) ? 10 : 9;
+            var author = guild.members.get(msg.author.id);
+
+            if (!guild) { permLevel = 0; }
+            else if (guild.owner.id === msg.author.id) { permLevel = 3; }
+            else if (author.permissions.has("ADMINISTRATOR")) { permLevel = 2; }
+            else if (author.roles.has(guild.settings.modRole)) { permLevel = 1; }
+            else { permLevel = 0; }
+
+            var info = this.client.ownerSetting.get("permLevel").addPerms[permLevel];
+            return msg.channel.send("Your permission level is " + this.client.ownerSetting.get("permLevel").general[authorLvl] + " " + info);
+        } 
+        
+        for (var i = 5; i < 8; i++) {
+            var check = await msg.hasAtLeastPermissionLevel(i);
+            if (check) { permLevel = i; }
+        }
+
+        msg.channel.send("Your permission level is " + this.client.ownerSetting.get("permLevel").general[permLevel]);
+    }
 };

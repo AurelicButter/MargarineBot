@@ -1,19 +1,22 @@
-exports.run = async (client, msg, [...choice]) => {
-    var results = choice[(Math.ceil(Math.random() * choice.length) - 1)];
-    msg.channel.send(client.speech(msg, ["choose"]).replace("-user", msg.author.username).replace("-result", results));
-};
-  
-exports.conf = {
-    enabled: true,
-    runIn: ["text"],
-    aliases: ["choice"],
-    permLevel: 0,
-    botPerms: []
-};
-    
-exports.help = {
-    name: "choose",
-    description: "The one stop picker for hard choices!",
-    usage: "[choice:str] [...]", usageDelim: " | ",
-    humanUse: "(choice)_(another one)_(etc...)"
+const { Command } = require("klasa");
+
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "choose",
+            enabled: true,
+            runIn: ["text"],
+            cooldown: 0,
+            aliases: ["choice"],
+            description: "The one stop picker for hard choices!",
+            usage: "[choice:str] [...]", usageDelim: " | "
+        });
+    }
+
+    async run(msg, [...choice]) {
+        if (choice.length < 2) { return msg.channel.send(client.speech(msg, ["choose", "lackChoice"])); }
+
+        var numChoice = Math.floor(Math.random() * choice.length);
+        msg.channel.send(this.client.speech(msg, ["choose", "success"], [["-user", msg.author.username], ["-result", choice[numChoice]]]));
+    }
 };

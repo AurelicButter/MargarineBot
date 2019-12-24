@@ -41,3 +41,8 @@ exports.default = [
     "... There isn't a user here, baka!",
     "You say user, I say doesn't exist. Baka!"
 ];
+
+exports.noGuild = [
+    "B-baka! I can't find a user here with that term!",
+    "We're not in a guild right now... how do you expect me to find a user like that in here!"
+];

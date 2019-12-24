@@ -1,27 +1,9 @@
 {
-    "permLevels": {
-        "general": [
-            "Level 0: Everyone",
-            "Level 1: Placeholder",
-            "Level 2: Guild Moderators",
-            "Level 3: Guild Admins",
-            "Level 4: Guild Owners",
-            "Level 5: Placeholder", "Level 6: Placeholder", "Level 7: Placeholder", "Level 8: Placeholder",
-            "Level 9: Toast & Butter",
-            "Level 10: Bot Owner"
-        ],
-        "addPerms": [
-            "with no additional permissions",
-            "Placeholder",
-            "with guild moderator permissions",
-            "with guild admin permissions",
-            "with guild owner permissions"
-        ]
-    }, 
     "games": [
         ["Playing around with Butterstroke", "play"],
         ["Hacking to the gate", "listen"],
-        ["Rewatching Occultic;Nine.", "watch"],
+        ["Rewatching Occultic;Nine", "watch"],
+        ["Rewatching Robotics;Notes", "watch"],
         ["Harvesting wild fruits", "play"],
         ["Partying to weeb tunes", "listen"],
         ["Breaking all of the code", "play"],
@@ -31,6 +13,10 @@
         ["Writing for Kiri Kiri Basara", "play"],
         ["Playing around with wires", "play"],
         ["Cooking up a fantastic meal!", "play"],
-        ["Crafting a brand new world", "play"]
+        ["Crafting a brand new world", "play"],
+        ["Having a romance comedy to myself!", "play"],
+        ["Reaching for the blue sky", "play"],
+        ["Someday, surely, for the sake of illuminating someone's path, I want to shine", "listen"],
+        ["Considering the possibilities of being an isekai protagonist", "play"]
     ]
 }
