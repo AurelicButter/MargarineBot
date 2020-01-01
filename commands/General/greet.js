@@ -1,23 +1,24 @@
-exports.run = async (client, msg, user) => {
-    var data = await client.funcs.userSearch(client, msg, user);
-    if (data === false) { return; }
-    if (data.id === client.user.id) { return msg.channel.send(client.speech(msg, ["greet", "me"]).replace("-user", msg.author.username)); }
+const { Command } = require("klasa");
+const { MessageEmbed } = require("discord.js");
+const AnilistNode = require("anilist-node");
+const anilist = new AnilistNode();
 
-    var name = data.nickname || data.user.username;
-	msg.channel.send(client.speech(msg, ["greet", "success"]).replace("-user", name));
-};
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "greet",
+            enabled: true,
+            runIn: ["text"],
+            aliases: [],
+            description: "Have Margarine greet you or someone with a hello!",
+            usage: "[user:usersearch]"
+        });
+    }
 
-exports.conf = {
-    enabled: true,
-    runIn: ["text"],
-    aliases: [],
-    permLevel: 0,
-    botPerms: [],
-    requiredFuncs: ["userSearch"]
-};
+    async run(msg, [user]) {
+        if (user === null) { return; }        
+        if (user.id === this.client.user.id) { return msg.send(this.client.speech(msg, ["greet", "me"], [["-param1", msg.author.username]])); }
 
-exports.help = {
-  name: "greet",
-  description: "Have Margarine greet you or someone with a hello!",
-  usage: "[user:str]"
+	    msg.send(this.client.speech(msg, ["greet", "success"], [["-param1", user.username]]));
+    }
 };

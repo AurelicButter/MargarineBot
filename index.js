@@ -2,13 +2,15 @@ const { Client } = require("klasa");
 const Discord = require("discord.js");
 const config = require("./assets/settings.json");
 const util = require("./utilities/utilExport.js");
+const fs = require("fs");
 
-util.envCheck(); //Checks to make sure Margarine is running in the right environment.
+util.envCheck(); //Checks to make sure Margarine is running in the right enviroment.
 
 const client = new Client({
     fetchAllMembers: false,
     prefix: config.prefix,
-    commandEditing: true
+    commandEditing: true,
+    readyMessage: (client) => `This is ${client.user.username} speaking! Online and awaiting orders!\nI'm currently serving ${client.guilds.size} guilds and ${client.users.size} people!`
 });
 
 Client.defaultPermissionLevels
@@ -19,10 +21,16 @@ Client.defaultPermissionLevels
 
 client.gateways.guilds.schema
     .add("modRole", "role")
-    .add("langSpeech", "language", { default: "en-CA" });
+    .add("langSpeech", "language", { default: "en-CA" })
+    .add("defaultChannel", "channel");
 
 client.speech = util.speech;
 client.dataManager = util.dataManager;
+client.util = util.util; //All utility functions and extra search functions
+
+if (!fs.existsSync(config.database)) { //Init the SQLite Database
+    util.dataManager("init");
+}
 
 client.ownerSetting = new Discord.Collection();
 
@@ -37,12 +45,11 @@ for (var x = 0; keys.length > x; x++) {
 }
 
 client.ownerSetting.set("permLevel", config.permLevels);
+client.ownerSetting.set("globalPrefix", config.prefix);
 
 client.database = {
     "items": require("./assets/values/items.json"),
     "recipes": require("./assets/values/recipes.json")
 };
 
-client.login(config.token).then(() => {
-    client.user.setPresence({ activity: { name: "m~help | Running the latest code!", type: "PLAYING" }, status: "online" });
-});
+client.login(config.token);
