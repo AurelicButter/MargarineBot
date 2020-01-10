@@ -7,6 +7,9 @@ exports.anime = {
     "noSearch": [
         "You're missing a search term, baka!"
     ],
+    "searchErr": [
+        "Looks like AniList is having a bit of trouble right now. Come back and try again later."
+    ],
     "noResult": [
         "There's not an anime by that name!"
     ],
@@ -88,7 +91,7 @@ exports.greet = {
         "How rude, -param1! I'm not that lonely!",
         "Trying to make me seem lonely. Bad -param1!"
     ],
-    "success": [ //Parameter 1L Username
+    "success": [ //Parameter 1 Username
         "Why hello there, -param1!",
         "Hello, -param1! I hope you are doing well.",
         "And good day to you, -param1!"
@@ -97,41 +100,19 @@ exports.greet = {
 
 exports.help = [];
 
-exports.serverinfo = []; //Placeholder
-exports.userinfo = []; //Placeholder
-
-exports.roleinfo = [
-    "Looks like I can't find the role. Be sure it is spelled correctly.",
-    "Are you sure that exists? I don't think it does."
-];
+exports.info = {
+    "role": [
+        "Looks like I can't find the role. Be sure it is spelled correctly.",
+        "Are you sure that exists? I don't think it does."
+    ],
+    "server": [
+        "You can't ask information about a server with additional stuff!",
+        "I don't need these extra words. Leave out the extra words and ask for the server info."
+    ],
+    "noTerm": [
+        "You didn't give a correct search term. Do either server, user, or role.",
+        "Looks like you provided me with an incorrect search term. I need either server, user, or role."
+    ]
+};
 
 exports.mal = []; //Placeholder
-
-exports.report = {
-    "start": [
-        "I'm going to be asking a couple of questions so I'll be taking this into your DMs.",
-        "Time for a questionaire! I'll be asking a couple questions in your DMs."
-    ],
-    "q1": [
-        "Alright. Let's get to the point. First question: What kind of issue is this?\nPlease answer `issue`, `bug`, `complaint`, or `suggestion`",
-        "What kind of issue are we talking about?\nPlease answer `issue`, `bug`, `complaint`, or `suggestion`"
-    ],
-    "q2": [
-        "Next: Please provide a decently sized message explaining the issue.",
-        "Next, I'm going to need a decently sized message explaining the issue."
-    ],
-    "err1": [
-        "You are not able to send todo reports. Only the bot owner can.",
-        "You found a secret command word! Too bad only the bot owner can go past this point. Try again with a different word."
-    ],
-    "timeout": {
-        "t1": [
-            "You didn't provide me with a description in time. I recommend either making your report shorter or copy pasting so that you don't have to try and type it so quickly.",
-            "Looks like you timed out but don't worry. Take your time finishing your message and then try again. I recommending copy pasting so you don't have to speed type it."
-        ],
-        "t2": [
-            "It seems you have timed out with making a report. When you are ready, feel free to try again!",
-            "Looks like the time ran out! Take a moment to prepare yourself and then contact me when ready."
-        ]
-    }
-};

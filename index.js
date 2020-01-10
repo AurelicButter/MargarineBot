@@ -1,8 +1,8 @@
 const { Client } = require("klasa");
-const Discord = require("discord.js");
+const { Collection } = require("discord.js");
 const config = require("./assets/settings.json");
 const util = require("./utilities/utilExport.js");
-const fs = require("fs");
+const { existsSync } = require("fs");
 
 util.envCheck(); //Checks to make sure Margarine is running in the right enviroment.
 
@@ -28,11 +28,11 @@ client.speech = util.speech;
 client.dataManager = util.dataManager;
 client.util = util.util; //All utility functions and extra search functions
 
-if (!fs.existsSync(config.database)) { //Init the SQLite Database
+if (!existsSync(config.database)) { //Init the SQLite Database
     util.dataManager("init");
 }
 
-client.ownerSetting = new Discord.Collection();
+client.ownerSetting = new Collection();
 
 var keys = Object.keys(config);
 for (var x = 0; keys.length > x; x++) { 

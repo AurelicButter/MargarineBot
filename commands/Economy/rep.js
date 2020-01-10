@@ -1,44 +1,41 @@
-const sqlite3 = require("sqlite3").verbose();
-let db = new sqlite3.Database("./assets/data/score.sqlite");
+const { Command } = require("klasa");
 
-exports.run = async (client, msg, [user, ...note]) => {
-    var data = await client.funcs.userSearch(client, msg, {user: [user], tags:["bot"], name: this.help.name});
-    if (data.valid == false) { return; }
-        
-    user = data.user[0];
-    if (user.id === msg.author.id) { return msg.channel.send("You can't give rep to yourself! That's like saying hire me for your nuclear plant because I'm a high school student!"); }
-    var mention = note ? user.tag : user.ping; 
-
-    db.get(`SELECT repDaily, rep FROM scores WHERE userId = "${msg.author.id}"`, [], (err, row) => {
-        if (err) { return console.log(err); }
-        if (!row) { return msg.reply(client.speech(["noRow"])); }
-        if ((Number(row.repDaily) + 86400000) > Date.now()) { return msg.reply("You've already have given someone else rep today!"); }
-        
-        db.get(`SELECT rep FROM scores WHERE userId = "${user.id}"`, [], (err, row) => {
-            if (!row) { return msg.channel.send("That user has not gotten their first daily to start off with so you can not give them any rep at the moment. :cry:"); } 
-            
-            db.run(`UPDATE scores SET rep = ${row.rep + 1} WHERE userId = ${user.id}`);
-            db.run(`UPDATE scores SET repDaily = ${Date.now()} WHERE userId = ${msg.author.id}`);
-            if (note.trim().length > 0) { user.send("Delivery here! Someone has included a note with your rep!\n\n" + note.join(" ") + "\n-" + msg.author.tag); } 
-            msg.channel.send("You have given " + mention + " a reputation point!");
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "rep",
+            enabled: true,
+            runIn: ["text"],
+            aliases: [],
+            description: "Give someone a reputation point!",
+            usage: "[user:usersearch] [note:str]", usageDelim: "|"
         });
-    });
-    db.close();
-};
+    }
 
-exports.conf = {
-    enabled: true,
-    runIn: ["text"],
-    aliases: [],
-    permLevel: 0,
-    botPerms: [],
-    requiredFuncs: ["userSearch"]
-};
-  
-exports.help = {
-    name: "rep",
-    description: "Give someone a reputation point!",
-    usage: "[user:str] [note:str][...]",
-    usageDelim: " ",
-    humanUse: "(Required: User)_(Note)"
+    async run(msg, [user, note]) {
+        if (user == null) { return; }
+        if (user.id === msg.author.id) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "sameUser"])); }
+        
+        var data = this.client.dataManager("select", msg.author.id, "users");
+        if (!data) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
+
+        var tarData = this.client.dataManager("select", user.id, "users");
+        if (!tarData) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noUser"])); }
+
+        var cooldown = JSON.parse(data.cooldowns);
+        if (cooldown.rep !== null && cooldown.rep + 86400000 > Date.now()) {
+            return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "cooldown"]));
+        }
+
+        cooldown.rep = Date.now();
+
+        this.client.dataManager("update", ["rep=" + (tarData.rep + 1), user.id], "users");
+        this.client.dataManager("update", ["cooldowns='" + JSON.stringify(cooldown) + "'", msg.author.id], "users");
+
+        if (note && note.trim().length > 0) {
+            user.send("Delivery here! Someone has included a note with your rep!\n\n" + note.join(" ") + "\n-" + msg.author.tag);
+        }
+
+        msg.channel.send(this.client.speech(msg, ["rep"], [["-mention", "<@" + user.id + ">"]]));
+    }
 };

@@ -1,3 +1,5 @@
+/* Speech for cooking specific commands */
+
 exports.craft = {
     "noItem": [
         "You need to define an item to craft, baka!"
