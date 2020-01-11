@@ -6,16 +6,15 @@ module.exports = class extends Command {
             name: "avatar",
             enabled: true,
             runIn: ["text"],
-            cooldown: 0,
             aliases: [],
             requiredPermissions: ["ATTACH_FILES"],
             description: "Fetch a user's avatar!",
-            usage: "[user:usersearch]",
+            usage: "[user:usersearch]"
         });
     }
 
     async run(msg, [user]) {
-        if (user == null) { return; }
+        if (user === null) { return; }
         msg.channel.send("", { files: [user.displayAvatarURL()]});
     }
 };

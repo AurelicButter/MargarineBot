@@ -1,67 +1,71 @@
-exports.run = async (client, msg) => {
-    const sqlite3 = require("sqlite3").verbose();
-    let db = new sqlite3.Database(client.database.inv);
-    const items = client.database.items;
+const { Command } = require("klasa");
+const { MessageEmbed } = require("discord.js");
 
-    const embed = new client.methods.Embed()
-        .setTimestamp()
-        .setColor(0x04d5fd)
-        .setFooter(msg.author.username + "'s Inventory", msg.author.avatarURL());
+function listMaker(data, items) {
+    var keys = Object.keys(data);
+    var result = [];
 
-    db.get(`SELECT * FROM material WHERE userId = "${msg.author.id}"`, [], (err, row) => {
-        if (err) { return console.log(err); }
-        if (!row) { return msg.channel.send(client.speech(["noRow"], msg)); }
-        
-        var amounts = Object.values(row);
-        var material = [[], [], []];
-
-        for (var x = 1; x < items.info.material_names.length; x++) {
-            var y = items.info.material_names[x];
-            if (amounts[x] !== null && amounts[x] > 0) {
-                switch (items[y].category[1]) {
-                    case "fishing": material[0].push(amounts[x] + items[y].emote); break;
-                    case "harvest": material[1].push(amounts[x] + items[y].emote); break;
-                    case "misc": material[2].push(amounts[x] + items[y].emote); break;
-                }
-            }
+    for (var x = 1; x < keys.length; x++) {
+        if (data[keys[x]] > 0) {
+            result.push(`${data[keys[x]]} ${items[keys[x]].emote}`);
         }
-        if (material[0].length === 0) { material[0].push("You do not have any fish."); }
-        if (material[1].length === 0) { material[1].push("You do not have any harvest materials."); }
-        if (material[2].length === 0) { material[2].push("You do not have any misc materials."); } 
-        embed.addField("Materials:", `__Fishing__\n${material[0].join(", ")}\n__Harvest__\n${material[1].join(", ")}\n__Misc__\n${material[2].join(", ")}`);
+    }
 
-        db.get(`SELECT * FROM product WHERE userId = "${msg.author.id}"`, [], (err, row) => {
-            var amount = Object.values(row);
-            var product = [[], []];
+    if (result.length === 0) { return "You do not have any items in this category."; }
+    return result.join(", ");
+}
 
-            for (var x = 1; x < items.info.product_names.length; x++) {
-                var y = items.info.product_names[x];
-                if (amount[x] !== null && amount[x] > 0) {
-                    switch (items[y].category[1]) {
-                        case "food": product[0].push(amount[x] + items[y].emote); break;
-                        case "material[2]": product[1].push(amount[x] + items[y].emote); break;
-                    }
-                }
-            }
-            if (product[0].length === 0) { product[0].push("You do not have any food items."); }
-            if (product[1].length === 0) { product[1].push("You do not have any material[2] materials."); } 
-            embed.addField("**Products:**", `__Food__\n${product[0].join(", ")}\n__material[2]__\n${product[1].join(", ")}`);
-
-            msg.channel.send({embed});
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "inventory",
+            enabled: true,
+            runIn: ["text"],
+            aliases: ["inv"],
+            description: "Check your inventory for materials, produced goods, and more!"
         });
-    });
-    db.close();
-};
+    }
 
-exports.conf = {
-    enabled: true,
-    runIn: ["text"],
-    aliases: ["inv"],
-    permLevel: 0,
-    botPerms: []
-};
-  
-exports.help = {
-    name: "inventory",
-    description: "Check your inventory for materials, produced goods, and more!", usage: ""
+    async run(msg) {
+        const items = this.client.itemData;
+        const embed = new MessageEmbed()
+            .setTimestamp()
+            .setColor(0x04d5fd)
+            .setFooter(`${msg.author.username}'s Inventory`, msg.author.avatarURL());
+
+        var fishData = this.client.dataManager("select", msg.author.id, "fishing");
+        if (!fishData) { return msg.channel.send(this.client.speech(msg, ["inventory"])); }
+
+        var harvData = this.client.dataManager("select", msg.author.id, "harvest");
+        var prodData = this.client.dataManager("select", msg.author.id, "product");
+        var materials = { "misc": [] };
+
+        if (fishData.trash > 0) {
+            materials["misc"].push(`${fishData.trash} ${items.trash.emote}`);
+        }
+        if (prodData.recycle > 0) {
+            materials["misc"].push(`${prodData.recycle} ${items.recycle.emote}`);
+        }
+
+        if (!materials.misc || materials.misc.length === 0) {
+            materials.misc = "You do not have any items in this category.";
+        } else if (materials.misc.length === 1) {
+            materials.misc = materials.misc[0];
+        } else {
+            materials.misc = materials.misc.join(", ");
+        }
+
+        delete fishData.trash; //Remove for loop to process others
+        delete prodData.trash;
+
+        materials.fishing = listMaker(fishData, items);
+        materials.harvest = listMaker(harvData, items);
+        materials.product = listMaker(prodData, items);
+
+        embed.addField("Materials:", `__Fishing__\n${materials.fishing}\n__Harvest__\n${materials.harvest}`);
+        embed.addField("Products:", materials.product);
+        embed.addField("Miscellaneous:", materials.misc);
+
+        msg.channel.send({embed});
+    }
 };

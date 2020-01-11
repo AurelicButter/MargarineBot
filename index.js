@@ -1,10 +1,10 @@
 const { Client } = require("klasa");
 const { Collection } = require("discord.js");
 const config = require("./assets/settings.json");
-const util = require("./utilities/utilExport.js");
+const { envCheck, speech, dataManager, util } = require("./utilities/utilExport.js");
 const { existsSync } = require("fs");
 
-util.envCheck(); //Checks to make sure Margarine is running in the right enviroment.
+envCheck(); //Checks to make sure Margarine is running in the right enviroment.
 
 const client = new Client({
     fetchAllMembers: false,
@@ -24,13 +24,11 @@ client.gateways.guilds.schema
     .add("langSpeech", "language", { default: "en-CA" })
     .add("defaultChannel", "channel");
 
-client.speech = util.speech;
-client.dataManager = util.dataManager;
-client.util = util.util; //All utility functions and extra search functions
+client.speech = speech;
+client.dataManager = dataManager;
+client.util = util; //All utility functions and extra search functions
 
-if (!existsSync(config.database)) { //Init the SQLite Database
-    util.dataManager("init");
-}
+if (!existsSync(config.database)) { dataManager("init"); } //Init the SQLite Database
 
 client.ownerSetting = new Collection();
 
@@ -47,9 +45,6 @@ for (var x = 0; keys.length > x; x++) {
 client.ownerSetting.set("permLevel", config.permLevels);
 client.ownerSetting.set("globalPrefix", config.prefix);
 
-client.database = {
-    "items": require("./assets/values/items.json"),
-    "recipes": require("./assets/values/recipes.json")
-};
+client.itemData = require("./assets/items.json");
 
 client.login(config.token);

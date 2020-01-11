@@ -1,4 +1,9 @@
-module.exports = () => {
+/**
+ * Verifies the enviroment before running Margarine.
+ * If the enviroment check fails, program will terminate
+ * @returns { null }  If enviroment check passes.
+ */
+module.exports = function envCheck() {
     const { version: djsVersion } = require("discord.js");
     const { version: kVersion } = require("klasa");
     
@@ -13,9 +18,4 @@ module.exports = () => {
 
     if (missingDep.length > 0) { console.log(missingDep.join("\n")); process.exit(); }
     else { return; }
-};
-
-module.exports.help = {
-    name: "envCheck",
-    description: "Verifies the enviroment before running Margarine."
 };

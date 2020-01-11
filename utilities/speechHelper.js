@@ -1,6 +1,13 @@
-const fs = require("fs");
+const { existsSync } = require("fs");
 
-module.exports = function(msg, keys, replace=[]) {
+/**
+ * Picks a random speech line to simulate speech.
+ * @param {KlasaMessage} msg - Required.
+ * @param {Object[]} keys - Required. Value 0 is the command or function name for searching and Value 1 is the context.
+ * @param {Object[]} [replace] - Can be null. Any value to replace in the text. Denoted as a tuple [replace, new] for each item
+ * @returns {string} Randomly selected speech line.
+ */
+module.exports = function speech(msg, keys, replace=[]) {
     if (!keys) { throw new Error("Keys missing in function call!"); }
 
     var name = keys[0];
@@ -10,10 +17,10 @@ module.exports = function(msg, keys, replace=[]) {
         category = category[category.length - 1].toLowerCase();
     }
 
-    var PATH = msg.client.userBaseDirectory + "/assets/speech/" + msg.guild.settings.langSpeech + "/" + category + ".js";
+    var PATH = `${msg.client.userBaseDirectory}/assets/speech/${msg.guild.settings.langSpeech}/${category}.js`;
 
-    if (fs.existsSync(PATH) === false) { 
-        throw new Error("Localization file is missing.\nLanguage: " + msg.guild.settings.langSpeech + "\nCategory: " + category + "\nCommand: " + name + "\n" + PATH);
+    if (existsSync(PATH) === false) { 
+        throw new Error(`Localization file is missing.\nLanguage: ${msg.guild.settings.langSpeech}\nCategory: ${category}\nCommand: ${name}\n${PATH}`);
     }
 
     var t = require(PATH); var n;
@@ -29,9 +36,4 @@ module.exports = function(msg, keys, replace=[]) {
     }
 
     return text.replace("-prefix", msg.guild.settings.prefix);
-};
-
-module.exports.help = {
-    name: "speechHelper",
-    description: "Picks a random speech line and sends it to the channel."
 };

@@ -30,18 +30,18 @@ module.exports = class extends Command {
                 if (z + y + zed === "404NotFound") { return msg.channel.send("Whoops! Looks like a user by that name does not exist."); }
                 else if (z.length > 1) {
                     if (z.startsWith("Online")) {
-                        if (zed.startsWith("ago")) { info.status = z.slice(6) + " " + y + " ago"; }
+                        if (zed.startsWith("ago")) { info.status = `${z.slice(6)} ${y} ago`; }
                         else if (z.startsWith("OnlineNow")) { info.status = z.slice(6, z.search("Gender")); }
-                        else if (zed.includes(":")) { info.status = z.slice(6) + " " + y + " " + (new Date()).getFullYear(); }
+                        else if (zed.includes(":")) { info.status = `${z.slice(6)} ${y} ${(new Date()).getFullYear()}`; }
                         else if (z.includes("Yesterday") || z.includes("Today") && zed.slice(1, 2) === "M") { 
-                            info.status = z.slice(6, -1) + " at " + y + zed.slice(0, 2); 
+                            info.status = `${z.slice(6, -1)} at  ${y}${zed.slice(0, 2)}`; 
                         }
-                        else if (isNaN(zed) === false) { info.status = z.slice(6) + " " + y + " " + zed; }
+                        else if (isNaN(zed) === false) { info.status = `${z.slice(6)} ${y} ${zed}`; }
                     } if (z.includes("Birthday") && !info.birthday) {
                         var num = (z.length - z.search("Birthday")) * (-1);
                         if (y.includes("Location")) { var baka = y.slice(0, y.search("Location")); } 
                         else { var baka = y.slice(-1) === "," ? y + " " + zed.slice(0, 4) : y; }
-                        info.birthday = z.slice(num + 8) + " " + baka;
+                        info.birthday = `${z.slice(num + 8)} ${baka}`;
                     } if (z.includes("Gender")) {
                         var amount = (z.search("Birthday")) ? z.search("Birthday") : null;
 
@@ -83,21 +83,21 @@ module.exports = class extends Command {
             } while (x < text.length);
 
             var list = [];
-            if (info.gender) { list.push("🚻 Gender: " + info.gender); }
-            if (info.birthday) { list.push("🎂 Birthday: " + info.birthday); }
-            if (info.friends) { list.push("👫 Friends: " + info.friends); }
+            if (info.gender) { list.push(`🚻 Gender: ${info.gender}`); }
+            if (info.birthday) { list.push(`🎂 Birthday: ${info.birthday}`); }
+            if (info.friends) { list.push(`👫 Friends: ${info.friends}`); }
 
             const embed = new MessageEmbed()
-                .setTitle(term + "'s MAL Profile")
+                .setTitle(`${term}'s MAL Profile`)
                 .setURL(url + term)
-                .setDescription("Last online: " + info.status);
+                .setDescription(`Last online: ${info.status}`);
                 if (list.length > 0) { embed.addField("__General:__", list.join("\n")); }
-                embed.addField("__Anime:__", "🕓 Days: " + info.aStats.days + " | 📊 Mean: " + info.aStats.mean + "\n💚 Watching: " + info.aStats.watch + "\n💙 Completed: " + info.aStats.completed + "\n💛 On-Hold: " + info.aStats.hold + "\n💔 Dropped: " + info.aStats.drop + "\n🗓 Plan-to-Watch: " + info.aStats.plan, true)
-                .addField("__Manga:__", "🕓 Days: " + info.mStats.days + " | 📊 Mean: " + info.mStats.mean + "\n📗 Reading: " + info.mStats.read + "\n📘 Completed: " + info.mStats.completed + "\n📙 On-Hold: " + info.mStats.hold + "\n📕 Dropped: " + info.mStats.drop + "\n🗓 Plan-to-Read: " + info.mStats.plan, true)
+                embed.addField("__Anime:__", `🕓 Days: ${info.aStats.days} | 📊 Mean: ${info.aStats.mean}\n💚 Watching: ${info.aStats.watch}\n💙 Completed: ${info.aStats.completed}\n💛 On-Hold: ${info.aStats.hold}\n💔 Dropped: ${info.aStats.drop}\n🗓 Plan-to-Watch: ${info.aStats.plan}`, true)
+                .addField("__Manga:__", `🕓 Days: ${info.mStats.days} | 📊 Mean: ${info.mStats.mean}\n📗 Reading: ${info.mStats.read}\n📘 Completed: ${info.mStats.completed}\n📙 On-Hold: ${info.mStats.hold}\n📕 Dropped: ${info.mStats.drop}\n🗓 Plan-to-Read: ${info.mStats.plan}`, true)
                 .setTimestamp()
                 .setColor(0x2E51A2)
-                .setThumbnail(loadBody(".user-image").find("img")[0].attribs.src)
-                .setFooter("Requested by: " + msg.author.tag);
+                .setThumbnail(loadBody(".user-image").find("img")[0].attribs["data-src"])
+                .setFooter(`Requested by: ${msg.author.tag}`);
 
             msg.channel.send({embed});
         });    

@@ -5,7 +5,10 @@
             "name": "item_name",
             "emote": "item_emote",
             "category": "Table in DB",
-            "subcategory": "Any subcategory of the table"
+            "subcategory": "Any subcategory of the table",
+            "recipe": [
+                ["material_name", "amount"]
+            ]
         }
     },
     "trash": {
@@ -98,34 +101,56 @@
         "name": "fishcake",
         "emote": "🍥",
         "category": "product",
-        "subcategory": "food"
+        "subcategory": "food",
+        "recipe": [
+            ["fish", 1],
+            ["potato", 1] 
+        ]
     },
     "cookie": {
         "sell": 25,
         "name": "cookie",
         "emote": "🍪",
         "category": "product",
-        "subcategory": "food"
+        "subcategory": "food",
+        "recipe": [
+            ["egg", 1],
+            ["bread", 1],
+            ["chocolate", 2]
+        ]
     },
     "oden": {
         "sell": 125,
         "name": "oden",
         "emote": "🍢",
         "category": "product",
-        "subcategory": "food"
+        "subcategory": "food",
+        "recipe": [
+            ["sake", 1],
+            ["egg", 5],
+            ["squid", 1]
+        ]
     },
     "sushi": {
         "sell": 75,
         "name": "sushi",
         "emote": "🍣",
         "category": "product",
-        "subcategory": "food"
+        "subcategory": "food",
+        "recipe": [
+            ["fish", 1],
+            ["squid", 1],
+            ["rice", 2]
+        ]
     },
     "recycle": {
         "sell": 44,
         "name": "recycle",
         "emote": "♻",
         "category": "product",
-        "subcategory": "misc"
+        "subcategory": "misc",
+        "recipe": [
+            ["trash", 10]
+        ]
     }
 }

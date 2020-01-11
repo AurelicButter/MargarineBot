@@ -34,3 +34,11 @@ exports.lackCredits = [ //When the user doesn't have enough credits
     "Try paying in dirt. It's worth more than your bank right now.",
     "Try to pull a fast one on me? Too bad you can't afford it, baka!"
 ];
+
+exports.noItems = [ //When an item does not exist in the items.json file.
+    "Hmm... nope. Not finding that item here."
+];
+
+exports.noZero = [ //When a command requires a nonzero amount.
+    "Hey! You don't have any of this!"
+];

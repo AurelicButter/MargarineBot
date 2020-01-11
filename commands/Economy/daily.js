@@ -6,7 +6,6 @@ module.exports = class extends Command {
             name: "daily",
             enabled: true,
             runIn: ["text"],
-            cooldown: 0,
             aliases: [],
             description: "Get a daily amount of credits or give them to someone else.",
             usage: "[user:usersearch]",
@@ -14,10 +13,10 @@ module.exports = class extends Command {
     }
 
     async run(msg, [user]) {
-        if (user == null) { return; }
+        if (user === null) { return; }
                
         var data = this.client.dataManager("select", msg.author.id, "users");
-        if (!data && user.id != msg.author.id) { return msg.channel.send(this.client.speech(msg, ["daily", "noAccount"])); }
+        if (!data && user.id !== msg.author.id) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
         
         if (!data) {
             this.client.dataManager("add", msg.author.id);
@@ -30,8 +29,7 @@ module.exports = class extends Command {
         if (user.id === msg.author.id) {
             cooldown.credit = Date.now();
 
-            this.client.dataManager("update", ["credits=" + (data.credits + 100) + ", cooldowns='" + JSON.stringify(cooldown) + "'", msg.author.id], "users");
-
+            this.client.dataManager("update", [`credits=${(data.credits + 100)}, cooldowns='${JSON.stringify(cooldown)}'`, msg.author.id], "users");
             return msg.channel.send(this.client.speech(msg, ["daily", "self"]));
         }
 
@@ -40,8 +38,8 @@ module.exports = class extends Command {
 
         cooldown.credit = Date.now();
         
-        this.client.dataManager("update", ["credits=" + (tarData.credits + 100), user.id], "users");
-        this.client.dataManager("update", ["cooldowns='" + JSON.stringify(cooldown) + "'", msg.author.id], "users");
+        this.client.dataManager("update", [`credits=${(tarData.credits + 100)}`, user.id], "users");
+        this.client.dataManager("update", [`cooldowns='${JSON.stringify(cooldown)}'`, msg.author.id], "users");
 
         return msg.channel.send(this.client.speech(msg, ["daily", "other"], [["-user", user.username], ["-credit", 100]]));
     }
