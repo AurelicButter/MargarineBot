@@ -1,7 +1,7 @@
 const { Client } = require("klasa");
 const { Collection } = require("discord.js");
 const config = require("./assets/settings.json");
-const { envCheck, speech, dataManager, util } = require("./utilities/utilExport.js");
+const { envCheck, speech, dataManager, util, commandRemover } = require("./utilities/utilExport.js");
 const { existsSync } = require("fs");
 
 envCheck(); //Checks to make sure Margarine is running in the right enviroment.
@@ -15,14 +15,15 @@ const client = new Client({
 
 Client.defaultPermissionLevels
     .add(5, ({ guild, member }) => guild && member.roles.has(guild.settings.modRole))
-    .add(6, ({ guild, member }) => guild && member.permissions.has('ADMINISTRATOR'))
+    .add(6, ({ guild, member }) => guild && member.permissions.has("ADMINISTRATOR"))
     .add(9, ({ author, client }) => author === client.owner || author.id === config.secondary)
     .add(10, ({ author, client }) => author === client.owner);
 
 client.gateways.guilds.schema
     .add("modRole", "role")
     .add("langSpeech", "language", { default: "en-CA" })
-    .add("defaultChannel", "channel");
+    .add("defaultChannel", "channel")
+    .add("modlog", "channel");
 
 client.speech = speech;
 client.dataManager = dataManager;
@@ -46,5 +47,7 @@ client.ownerSetting.set("permLevel", config.permLevels);
 client.ownerSetting.set("globalPrefix", config.prefix);
 
 client.itemData = require("./assets/items.json");
+
+commandRemover(client);
 
 client.login(config.token);

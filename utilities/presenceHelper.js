@@ -1,11 +1,16 @@
 let games = require("../assets/localization.json")["games"];
 
-module.exports = (client, name, type, status) => {
-    if (status === null) { status = "online"; }
-    if (type === null) { type = 0; } //A.K.A => play
-
+/**
+ * Sets the presence for Margarine and starts a 15 minute interval for automatic change
+ * @param { KlasaClient } client - Required. Needed to grab the user and additional functions.
+ * @param { String } name - Customize a presence. Will not reset until the user sends additional commands.
+ * @param { String } type - Type of activity to be displayed. Either play, stream, listen, or watch.
+ * @param { String } status - Changes the colour on the status. Either online, idle, dnd, or invisible.
+ */
+module.exports = (client, name, type=0, status="online") => { //Type defaulted to play and status defaulted to online.
     if (name === "-start" || name === "-reset") {
-        Presence(client, "play", "Playing around with " + client.owner.username, "online");
+        var items = games[Math.floor(Math.random() * games.length)]; //For random status upon startup
+        Presence(client, items[1], items[0], "online");
         client.timer = setInterval(function() {
             do { //No duplicate statuses, Margarine. K thx.
                 var items = games[Math.floor(Math.random() * games.length)];
@@ -22,7 +27,7 @@ module.exports = (client, name, type, status) => {
 function Presence(client, type, name, status) {
     const tList = { "play": "PLAYING", "stream": "STREAMING", "listen": "LISTENING", "watch": "WATCHING" };
     type = tList[type];
-    name = (name !== "-null") ? client.ownerSetting.get("globalPrefix") + "help | " + name : null;
+    name = (name !== "-null") ? `${client.ownerSetting.get("globalPrefix")}help | ${name}` : null;
 
     client.user.setPresence({ activity: { name, type }, status });
 }
