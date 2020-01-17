@@ -19,8 +19,9 @@ Client.defaultPermissionLevels
     .add(9, ({ author, client }) => author === client.owner || author.id === config.secondary)
     .add(10, ({ author, client }) => author === client.owner);
 
-client.gateways.guilds.schema
+client.gateways.guilds.schema //Add all configurable settings
     .add("modRole", "role")
+    .add("muteRole", "role")
     .add("langSpeech", "language", { default: "en-CA" })
     .add("defaultChannel", "channel")
     .add("modlog", "channel");

@@ -18,13 +18,13 @@ module.exports = class extends Command {
         if (user === null) { return; }
         user = msg.guild.members.get(user.id);
         if (user.kickable === false) { return msg.reply("I cannot kick that member"); }
-
-	    var data = this.client.util.modEmbed(msg, "kick", user, reason);
-	
-	    if (data.embed.thumbnail) {
-		    await user.send({embed: data.DMembed});
-		    await user.kick(`Automated Action - Moderator: ${msg.author.username} | Reason: ${reason}`);
-	    }
+        
+        var data = this.client.util.modEmbed(msg, "kick", user, reason);
+        
+        if (data.embed.thumbnail) {
+            await user.send({embed: data.DMembed});
+            await user.kick(`Automated Action - Moderator: ${msg.author.username} | Reason: ${reason}`);
+        }
 
         this.client.util.defaultChannel(msg.guild, "mod").send({embed: data.embed});
     }

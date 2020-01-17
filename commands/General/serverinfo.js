@@ -7,7 +7,6 @@ module.exports = class extends Command {
             name: "serverinfo",
             enabled: true,
             runIn: ["text"],
-            cooldown: 0,
             aliases: ["server"],
             description: "Get your server's information",
             extendedHelp: "Need Discord info on your server? I got you covered!"
@@ -20,7 +19,7 @@ module.exports = class extends Command {
         const embed = new MessageEmbed()
             .setTimestamp()
             .setColor(0x04d5fd)
-            .setAuthor(guild.name + " | " + guild.id)
+            .setAuthor(`${guild.name} | ${guild.id}`)
             .setThumbnail(guild.iconURL())            
             .addField("Region:", guild.region, true)
             .addField("Created:", guild.createdAt.toLocaleString(), true)

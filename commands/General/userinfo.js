@@ -7,23 +7,20 @@ module.exports = class extends Command {
             name: "userinfo",
             enabled: true,
             runIn: ["text"],
-            cooldown: 0,
             aliases: ["user"],
             description: "Get a user's information",
-            usage: "[user:usersearch]", usageDelim: " ",
+            usage: "[user:usersearch]",
             extendedHelp: "Need Discord info on a specific user? I got you covered!"
         });
     }
 
-    async run(message, [user]) {
+    async run(msg, [user]) {
         if (user === null) { return; }
-
-        let guild = message.guild;
-        user = guild.members.get(user.id);
+        user = msg.guild.members.get(user.id);
 
         const embed = new MessageEmbed()
             .setTimestamp()
-            .setFooter(guild.name, guild.iconURL());
+            .setFooter(msg.guild.name, msg.guild.iconURL());
 
         const statusList = {
             online: "online",
@@ -56,8 +53,8 @@ module.exports = class extends Command {
         }
             
         embed.setThumbnail(user.user.displayAvatarURL())
-            .setAuthor(user.user.tag + " | " + user.id)
-            .setDescription("Currently " + Status + activity)
+            .setAuthor(`${user.user.tag} | ${user.id}`)
+            .setDescription(`Currently ${Status}${activity}`)
             .addField("ID: ", user.id, true)
             .addField("Bot user:", user.user.bot ? "True": "False", true)
             .addBlankField(true)
@@ -65,6 +62,6 @@ module.exports = class extends Command {
             .addField("Joined:", user.joinedAt.toLocaleString(), true)
             .setColor(0x04d5fd);
 
-        message.channel.send({embed});
+        msg.channel.send({embed});
     }
 };

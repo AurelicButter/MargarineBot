@@ -10,24 +10,47 @@ module.exports = class extends Command {
             enabled: true,
             runIn: ["text"],
             cooldown: 60,
-            aliases: ["choice"],
             requiredPermissions: ["ATTACH_FILES"],
             description: "Fetch a user's profile on MyAnimeList",
-            usage: "[term:str]",
-            extendedHelp: "There is a 60 second cooldown for each profile search to not spam the MAL site."
+            usage: "[set|search|user:usersearch] [username:str]", usageDelim: " ",
+            extendedHelp: "Note: The user must set their own account name in Margarine in order to search by a Discord user. For general searching, use the search keyword before the username."
         });
     }
 
-    async run(msg, [term]) {
-        const url = "https://myanimelist.net/profile/";
+    async run(msg, [user, username]) {
+        if (user === "set") {
+            var data = this.client.dataManager("select", msg.author.id, "users");
+            if (!data) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
 
-        request(url + term, function(err, res, body) {
+            var profiles = JSON.parse(data.profiles);
+            profiles.MAL = username;
+
+            this.client.dataManager("update", [`profiles='${JSON.stringify(profiles)}'`, msg.author.id], "users");
+            return msg.channel.send(this.client.speech(msg, ["mal", "setProfile"])); //Success of setting profile.
+        }
+
+        if (user === null) { return; } //Return for failed usersearch.
+        if (user === "search" & username === null) { return msg.channel.send(this.client.speech(msg, ["mal", "noTerm"])); }
+        if (user !== "search") { //Replace username value with stored MAL username in Margarine.
+            var userData = this.client.dataManager("select", user.id, "users");
+            if (!userData) { 
+                if (user.id !== msg.author.id) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noUser"])); }
+                return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); 
+            }
+
+            username = JSON.parse(userData.profiles).MAL;
+            if (!username) { return msg.channel.send(this.client.speech(msg, ["mal", "noUsername"])); }
+        }        
+
+        const url = `https://myanimelist.net/profile/${username}`;
+
+        request(url, function(err, res, body) {
             var loadBody = cheerio.load(body);
             var text = loadBody.text().split(" "); var x = 0; var info = { aStats: {}, mStats: {} };
 
             do {
                 var z = text[x].trim(); var y = text[x + 1] ? text[x + 1].trim() : ""; var zed = text[x + 2] ? text[x + 2].trim() : "";
-                if (z + y + zed === "404NotFound") { return msg.channel.send("Whoops! Looks like a user by that name does not exist."); }
+                if (z + y + zed === "404NotFound") { return msg.channel.send(this.client.speech(msg, ["MAL", "404Err"])); }
                 else if (z.length > 1) {
                     if (z.startsWith("Online")) {
                         if (zed.startsWith("ago")) { info.status = `${z.slice(6)} ${y} ago`; }
@@ -38,18 +61,10 @@ module.exports = class extends Command {
                         }
                         else if (isNaN(zed) === false) { info.status = `${z.slice(6)} ${y} ${zed}`; }
                     } if (z.includes("Birthday") && !info.birthday) {
-                        var num = (z.length - z.search("Birthday")) * (-1);
-                        if (y.includes("Location")) { var baka = y.slice(0, y.search("Location")); } 
-                        else { var baka = y.slice(-1) === "," ? y + " " + zed.slice(0, 4) : y; }
-                        info.birthday = `${z.slice(num + 8)} ${baka}`;
+                        info.birthday = `🎂 Birthday: ${z.slice(-3)} ${y.slice(0, 2)}`;
+                        if (y.search(",") > -1) { info.birthday += `, ${zed.slice(0, 4)}`; }
                     } if (z.includes("Gender")) {
-                        var amount = (z.search("Birthday")) ? z.search("Birthday") : null;
-
-                        if (z.startsWith("ago")) { var amount2 = 9; }
-                        else if (z.startsWith("AM") || z.startsWith("PM")) { var amount2 = 8; }
-                        else { var amount2 = 15; } 
-
-                        info.gender = z.slice(amount2, amount);
+                        info.gender = `🚻 Gender: ${z.substring(z.search("Gender") + 6, z.toLowerCase().search("male") + 4)}`;
                     } else if (z.startsWith("Watching") || z.startsWith("Reading")) {
                         if (!info.aStats.watch || !info.mStats.read) {
                             var num = [z.search("Completed"), z.search("On-Hold"), z.search("Dropped")];
@@ -67,7 +82,7 @@ module.exports = class extends Command {
                                 info.mStats.plan = zed.slice(4, -5);
                             }
                         }
-                    } else if (z === "All" && !info.friends) { info.friends = y.slice(1, -8); }
+                    } else if (z === "All" && !info.friends) { info.friends = `👫 Friends: ${y.slice(1, -8)}`; }
                     else if (isNaN(y) === false) {
                         if (z === "Days:") { 
                             if (!info.aStats.days) { info.aStats.days = y; }
@@ -83,13 +98,13 @@ module.exports = class extends Command {
             } while (x < text.length);
 
             var list = [];
-            if (info.gender) { list.push(`🚻 Gender: ${info.gender}`); }
-            if (info.birthday) { list.push(`🎂 Birthday: ${info.birthday}`); }
-            if (info.friends) { list.push(`👫 Friends: ${info.friends}`); }
+            if (info.gender) { list.push(info.gender); }
+            if (info.birthday) { list.push(info.birthday); }
+            if (info.friends) { list.push(info.friends); }
 
             const embed = new MessageEmbed()
-                .setTitle(`${term}'s MAL Profile`)
-                .setURL(url + term)
+                .setTitle(`${username}'s MAL Profile`)
+                .setURL(url)
                 .setDescription(`Last online: ${info.status}`);
                 if (list.length > 0) { embed.addField("__General:__", list.join("\n")); }
                 embed.addField("__Anime:__", `🕓 Days: ${info.aStats.days} | 📊 Mean: ${info.aStats.mean}\n💚 Watching: ${info.aStats.watch}\n💙 Completed: ${info.aStats.completed}\n💛 On-Hold: ${info.aStats.hold}\n💔 Dropped: ${info.aStats.drop}\n🗓 Plan-to-Watch: ${info.aStats.plan}`, true)

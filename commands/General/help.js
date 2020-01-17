@@ -13,7 +13,7 @@ module.exports = class extends Command {
             aliases: ["commands"],
             requiredPermissions: ["SEND_MESSAGES"],
             description: "Displays help for a command",
-            usage: "[command:str] [mod:str]", usageDelim: " "
+            usage: "[module|command:str] [mod:str]", usageDelim: " "
         });
     }
 
@@ -36,7 +36,7 @@ module.exports = class extends Command {
                 .addField("Categories:", helpMessage);
             
             return msg.send({embed});
-        } if (cmd === "category" || cmd === "module") {
+        } if (cmd === "module") {
             if (!mod) { return msg.send("You did not supply me with a category!"); }
     
             for (let cat = 0; cat < categories.length; cat++) {
@@ -81,8 +81,8 @@ module.exports = class extends Command {
 		await Promise.all(this.client.commands.map((command) =>
 			this.client.inhibitors.run(message, command, true)
 				.then(() => {
-					if (!has(help, command.category)) help[command.category] = {};
-					if (!has(help[command.category], command.subCategory)) help[command.category][command.subCategory] = [];
+					if (!has(help, command.category)) { help[command.category] = {}; }
+					if (!has(help[command.category], command.subCategory)) { help[command.category][command.subCategory] = []; } 
 					const description = isFunction(command.description) ? command.description(message.language) : command.description;
 					help[command.category][command.subCategory].push(`${prefix}${command.name.padEnd(longest)} :: ${description}`);
 				})

@@ -10,7 +10,6 @@ module.exports = class extends Command {
             enabled: true,
             runIn: ["text"],
             cooldown: 30,
-            aliases: [],
             requiredPermissions: ["ATTACH_FILES"],
             description: "Search for anime on AniList",
             usage: "[term:str]",
@@ -28,29 +27,29 @@ module.exports = class extends Command {
         if (!msg.channel.nsfw && data.isAdult) { return this.client.speech(msg, ["anime, nsfw"]); }
 
         var title = data.title.romaji;
-        if (data.title.english) { title = title + " | " + data.title.english; }
+        if (data.title.english) { title = `${title} | ${data.title.english}`; }
 
         var desc = `[Anilist](${data.siteUrl}) | [MyAnimeList](https://myanimelist.net/anime/${data.idMal})\n\n**Format:** `;
-        var time = data.season.charAt(0) + data.season.substring(1).toLowerCase() + " " + data.startDate.year;
+        var time = `${this.client.util.toTitleCase(data.season)} ${data.startDate.year}`;
 
         if (data.format === "TV_SHORT") { data.format = "TV Short"; }
         if (data.format === "SPECIAL") { data.format = "Special"; }
-        if (data.episodes === null) { data.episodes === "No episode count found"; }
+        if (data.episodes === null) { data.episodes = "No episode count found"; }
 
-        var duration = (data.duration === null) ? "" : data.duration + " minutes";
+        var duration = (data.duration === null) ? "" : `${data.duration} minutes`;
 
         if (data.format === "MOVIE") {
-            desc = desc + `Movie \n**Released:** ${time}\n**Runtime:** ${duration}\n`;
+            desc = `${desc}Movie \n**Released:** ${time}\n**Runtime:** ${duration}\n`;
         } else {
-            desc = desc + `${data.format}\n**Season:** ${time}\n**Episodes:** ${data.episodes}`;
-            if (duration.length > 1) { desc = desc + " (" + duration + " per episode)"; }
-            desc = desc + "\n";
+            desc = `${desc}${data.format}\n**Season:** ${time}\n**Episodes:** ${data.episodes}`;
+            if (duration.length > 1) { desc = `${desc} (${duration} per episode)`; }
+            desc = `${desc}\n`;
         }
 
         if (data.status === "NOT_YET_RELEASED") { 
-            desc = desc + `**Status:** Not yet released\n\n${data.description.replace(/<br>/g, "").replace(/<(i|\/i)>/g, "")}`;
+            desc = `${desc}**Status:** Not yet released\n\n${data.description.replace(/<br>/g, "").replace(/<(i|\/i)>/g, "")}`;
         } else {
-            desc = desc + `**Status:** ${data.status.charAt(0) + data.status.substring(1).toLowerCase()}
+            desc = `${desc}**Status:** ${this.client.util.toTitleCase(data.status)}
                 **Average Score:** ${data.meanScore} out of 100\n\n${data.description.replace(/<br>/g, "").replace(/<(i|\/i)>/g, "")}`;
         }
 

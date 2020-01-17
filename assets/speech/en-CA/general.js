@@ -1,7 +1,38 @@
-exports.anilist = [ //Missing search term
-    "You forgot to include a search term!",
-    "Here is your result for nothing: \" \". Give me a search term next time, baka!"
-];
+exports.anilist = {
+    "setProfile": [ //Activates upon a successful link of the user's AniList profile.
+        "You're all set! I have your username in my systems now!",
+        "✅ Username added. You're good to go!"
+    ],
+    "noUsername": [ //User has a profile but has not set their AniList profile.
+        "Huh... that user appears to have not set their AniList profile in my systems yet.",
+        "They haven't set their AniList profile yet! Try a general search for now."
+    ],
+    "noTerm": [ //Missing search term
+        "You forgot to include a search term!",
+        "Here is your result for nothing: \" \". Give me a search term next time, baka!"
+    ],
+    "404Err": [ //Profile not found. Given a 404 error
+        "Anilist profile by that user is not found!"
+    ]
+};
+
+exports.mal = {
+    "setProfile": [ //Activates upon a successful link of the user's MAL profile.
+        "You're all set! I have your username in my systems now!",
+        "✅ Username added. You're good to go!"
+    ],
+    "noUsername": [ //User has a profile but has not set their MAL profile.
+        "Huh... that user appears to have not set their MAL profile in my systems yet.",
+        "They haven't set their MAL profile yet! Try a general search for now."
+    ],
+    "noTerm": [ //Missing search term
+        "You forgot to include a search term!",
+        "Here is your result for nothing: \" \". Give me a search term next time, baka!"
+    ],
+    "404Err": [ //Profile not found. Given a 404 error
+        "MAL profile by that user is not found!"
+    ]
+};
 
 exports.anime = {
     "noSearch": [
@@ -114,5 +145,3 @@ exports.info = {
         "Looks like you provided me with an incorrect search term. I need either server, user, or role."
     ]
 };
-
-exports.mal = []; //Placeholder

@@ -12,8 +12,8 @@ exports.dataManager = require("./dataManager.js");
 exports.commandRemover = function(client) {
     const cmdNames = ["Admin/load", "Admin/unload", "Admins/transfer", "General/Chat Bot Info/info", "General/Chat Bot Info/stats"];
     for(var x = 0; x < cmdNames.length; x++) {
-        if (existsSync(client.userBaseDirectory + "/node_modules/klasa/src/commands/" + cmdNames[x] + ".js")) {
-            unlinkSync(client.userBaseDirectory + "/node_modules/klasa/src/commands/" + cmdNames[x] + ".js");
+        if (existsSync(`${client.userBaseDirectory}/node_modules/klasa/src/commands/${cmdNames[x]}.js`)) {
+            unlinkSync(`${client.userBaseDirectory}/node_modules/klasa/src/commands/${cmdNames[x]}.js`);
         }
     }
 };
@@ -46,7 +46,7 @@ exports.util = {
       * @param { String } args - Defaults to "default". Takes either "default" or "mod" depending on the action needed.
       * @returns { KlasaChannel } Returns a channel that best fits the arguements given.
     */
-    defaultChannel: function(guild, args="default") {
+    defaultChannel: (guild, args="default") => {
         if (guild.settings.defaultChannel !== null && args === "default") { return guild.channels.get(guild.settings.defaultChannel); }
         else if (guild.settings.modlog !== null && args === "mod") { return guild.channels.get(guild.settings.modlog); }
     
@@ -70,7 +70,7 @@ exports.util = {
      * @param { String } text 
      * @return { String }
      */
-    toTitleCase: function(text) {
+    toTitleCase: (text) => {
         return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
     }
 };

@@ -41,5 +41,5 @@ module.exports = function(msg, action=action.toLowerCase(), user, reason) {
         .setTitle("Moderator Message")
         .setDescription(`You have been ${options[1]} from ${msg.guild.name}!\n**Reason:** ${reason}`);
 
-    return { embed: embed, DMembed: DMembed };
+    return { embed, DMembed };
 };

@@ -30,9 +30,4 @@ function Presence(client, type, name, status) {
     name = (name !== "-null") ? `${client.ownerSetting.get("globalPrefix")}help | ${name}` : null;
 
     client.user.setPresence({ activity: { name, type }, status });
-}
-
-module.exports.help = {
-    name: "presenceHelper",
-    description: "Sets and manages the bot's presence"
-}
+};

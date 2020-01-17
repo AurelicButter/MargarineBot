@@ -7,7 +7,6 @@ module.exports = class extends Command {
             name: "roleinfo",
             enabled: true,
             runIn: ["text"],
-            cooldown: 0,
             aliases: ["role"],
             description: "Get information on a role",
             usage: "[rolesrc:str]",
@@ -22,7 +21,7 @@ module.exports = class extends Command {
 
         const embed = new MessageEmbed()
             .setTimestamp()
-            .setAuthor(role.name + " | " + role.id)
+            .setAuthor(`${role.name} | ${role.id}`)
             .setColor(role.hexColor)
             .addField("Position:", (msg.guild.roles.size - role.position), true)
             .addField("Hex Colour:", role.hexColor, true)
