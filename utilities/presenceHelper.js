@@ -1,5 +1,13 @@
 let games = require("../assets/localization.json")["games"];
 
+function Presence(client, type, name, status) {
+    const tList = { "play": "PLAYING", "stream": "STREAMING", "listen": "LISTENING", "watch": "WATCHING" };
+    type = tList[type];
+    name = (name !== "-null") ? `${client.ownerSetting.get("globalPrefix")}help | ${name}` : null;
+
+    client.user.setPresence({ activity: { name, type }, status });
+};
+
 /**
  * Sets the presence for Margarine and starts a 15 minute interval for automatic change
  * @param { KlasaClient } client - Required. Needed to grab the user and additional functions.
@@ -22,12 +30,4 @@ module.exports = (client, name, type=0, status="online") => { //Type defaulted t
         Presence(client, type, name, status);
         clearInterval(client.timer); 
     }
-};
-
-function Presence(client, type, name, status) {
-    const tList = { "play": "PLAYING", "stream": "STREAMING", "listen": "LISTENING", "watch": "WATCHING" };
-    type = tList[type];
-    name = (name !== "-null") ? `${client.ownerSetting.get("globalPrefix")}help | ${name}` : null;
-
-    client.user.setPresence({ activity: { name, type }, status });
 };

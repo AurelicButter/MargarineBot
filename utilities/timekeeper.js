@@ -1,3 +1,9 @@
+/**
+ * Combines a specific label with a count
+ * @param { Number } time - Required. Any number. 
+ * @param { String} label - Required. Any label.
+ * @returns { String } Returns a time + label format. Example: "60 minutes"
+ */
 function properLabel(time, label) {
     if (time === 0) { return null; }
     if (time === 1) { return ` ${time} ${label}`; }
@@ -6,6 +12,11 @@ function properLabel(time, label) {
 }
 
 module.exports = {
+    /**
+     * Creates a human readable string from a process.uptime.
+     * @param { Number } time - A process.uptime count.
+     * @returns { String } Returns a human readable time count. For example, "1 hour, 23 minutes, and 12 seconds"
+     */
     elapsedTime: (time) => {
         var second = Math.floor(time / 1000);
         var minute = Math.floor(second / 60);
@@ -22,15 +33,15 @@ module.exports = {
         return lblTime.join();
     },
 
+    /**
+     * Creates a human readable date from a date object
+     * @param { Date } date - Required
+     * @returns { String } Returns a human readable date. For example, "May 26, 2017"
+     */
     dateMaker: (date) => {
         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         var d = date.toLocaleString().split(" ")[0].split("/");
 
         return `${months[d[0]]} ${d[1]}, ${d[2].slice(0, -1)}`;
     }
-};
-
-module.exports.help = {
-  name: "timekeeper",
-  description: "Creates a human readable time display out of timestamps.",
 };

@@ -7,7 +7,7 @@ module.exports = class extends Command {
             enabled: true,
             runIn: ["text"],
             aliases: ["k"],
-            permissionLevel: 2,
+            permissionLevel: 5,
             requiredPermissions: ["KICK_MEMBERS", "EMBED_LINKS"],
             description: "Kicks the mentioned user.",
             usage: "<user:usersearch> <reason:str>", usageDelim: ","

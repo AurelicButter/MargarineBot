@@ -5,8 +5,7 @@ module.exports = class extends Command {
     constructor(...args) {
         super(...args, {
             name: "permlevel",
-            runIn: ['text'],
-            aliases: [],
+            runIn: ["text"],
             guarded: true,
             description: "Checks your permission level."
         });
@@ -27,7 +26,7 @@ module.exports = class extends Command {
             else { permLevel = 0; }
 
             var info = this.client.ownerSetting.get("permLevel").addPerms[permLevel];
-            return msg.channel.send("Your permission level is " + this.client.ownerSetting.get("permLevel").general[authorLvl] + " " + info);
+            return msg.channel.send(`Your permission level is ${this.client.ownerSetting.get("permLevel").general[authorLvl]} ${info}`);
         } 
         
         for (var i = 5; i < 8; i++) {
@@ -35,6 +34,6 @@ module.exports = class extends Command {
             if (check) { permLevel = i; }
         }
 
-        msg.channel.send("Your permission level is " + this.client.ownerSetting.get("permLevel").general[permLevel]);
+        msg.channel.send(`Your permission level is ${this.client.ownerSetting.get("permLevel").general[permLevel]}`);
     }
 };

@@ -65,6 +65,31 @@ exports.util = {
     
         return guild.channels.get(channelID.id);
     },
+    /**
+     * Goes over all common checks to ensure the user is able to interact with a music command
+     * @param { KlasaMessage } msg - Required
+     * @param { String } tag - A tag for specific cases such as the join command.
+     * @returns { Boolean | Object } Returns true if passed and false if failed. If tag is not join, will return the music instance.
+     */
+    musicCheck: (msg, tag) => {
+        var client = msg.client;
+        if (!msg.member.voice.channelID) { 
+            msg.channel.send(client.speech(msg, ["func-music", "general", "userVC"]));
+            return false;
+        } else if (tag !== "join") {
+            if (!client.music.get(msg.guild.id)) {
+                msg.channel.send(client.speech(msg, ["func-music", "general", "noQueue"]));
+                return false;
+            } else if (msg.member.voice.channelID !== client.music.get(msg.guild.id).channel.id) {
+                msg.channel.send(client.speech(msg, ["func-music", "general", "mismatch"]));
+                return false;
+            } 
+        
+            return client.music.get(msg.guild.id);
+        } 
+    
+        return true;
+    },
     /** 
      * Returns a capitialized text string
      * @param { String } text 

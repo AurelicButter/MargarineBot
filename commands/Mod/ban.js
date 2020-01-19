@@ -7,6 +7,7 @@ module.exports = class extends Command {
             enabled: true,
             runIn: ["text"],
             aliases: ["b"],
+            permissionLevel: 6,
             description: "Ban someone.",
             usage: "<user:usersearch> <reason:str>", usageDelim: ","
         });

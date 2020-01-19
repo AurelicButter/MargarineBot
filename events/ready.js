@@ -1,14 +1,14 @@
-const { Event } = require('klasa');
+const { Event } = require("klasa");
 
 module.exports = class extends Event {
 	constructor(...args) {
 		super(...args, {
 			once: true,
-			event: 'klasaReady'
+			event: "klasaReady"
 		});
 	}
 
 	async run() {
-        this.client.util.presenceHelper(this.client, "-start"); //Initialize presence
+		this.client.util.presenceHelper(this.client, "-start"); //Initialize presence
 	}
 };

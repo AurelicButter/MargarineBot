@@ -12,8 +12,10 @@ module.exports = function(msg, action=action.toLowerCase(), user, reason) {
     const client = msg.client;
     const Options = {
         ban: ["BAN_MEMBERS", "banned", 0xDD2E44],
-        unban: ["BAN_MEMBERS", "unbanned", 0x21A321],
-        kick: ["KICK_MEMBERS", "kicked", 0x00AE86]
+        unban: ["BAN_MEMBERS", "unbanned", 0x38b058],
+        kick: ["KICK_MEMBERS", "kicked", 0xFFFF66],
+        mute: ["MANAGE_ROLES", "muted", 0x808080],
+        unmute: ["MANAGE_ROLES", "unmuted", 0x38b058]
     };
 
     const embed = new MessageEmbed().setTimestamp();
