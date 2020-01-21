@@ -13,7 +13,9 @@ exports.noAccount = [ //When the user does not exist in the database
     "Credits speak a whole lot of value in these parts. Set yourself up with a daily command first!",
     "Get yourself some credits first!",
     "Where are your credits?! Oh. You haven't redeemed your first daily yet...",
-    "Oh... you didn't redeem your first daily yet..."
+    "Oh... you didn't redeem your first daily yet...",
+    "Oh no! You haven't redeemed your first daily yet! You should do that and then come back.",
+    "Seems like you haven't redeemed your first daily yet. Go and do that, you'll be able to play."
 ];
 
 exports.sameUser = [ //When the target is the user but command can't have the same
@@ -32,13 +34,16 @@ exports.lackCredits = [ //When the user doesn't have enough credits
     "You don't have that many credits, baka!",
     "A poor person like yourself could never afford that bet.",
     "Try paying in dirt. It's worth more than your bank right now.",
-    "Try to pull a fast one on me? Too bad you can't afford it, baka!"
+    "Try to pull a fast one on me? Too bad you can't afford it, baka!",
+    "That's an awfully high amount for someone who can't afford it."
 ];
 
 exports.noItems = [ //When an item does not exist in the items.json file.
-    "Hmm... nope. Not finding that item here."
+    "Hmm... nope. Not finding that item here.",
+    "That's not an item."
 ];
 
 exports.noZero = [ //When a command requires a nonzero amount.
-    "Hey! You don't have any of this!"
+    "Hey! You don't have any of this!",
+    "You can't have nothing here!"
 ];

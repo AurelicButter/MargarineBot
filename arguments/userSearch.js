@@ -20,13 +20,11 @@ module.exports = class extends Argument {
         var regex = new RegExp(regExpEsc(arg), "i");
         var results = msg.guild.members.filter(m => regex.test(m.user.username));
 
-        if (results.size == 0) {
+        if (results.size === 0) {
             msg.channel.send(this.client.speech(msg, ["func-userSearch", "default"]));
             return null;
         }
 
         return this.client.users.get(results.keys().next().value);
-
-        //Check for bot user and if the command doesn't allow bots.
     }
-}
+};
