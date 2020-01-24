@@ -77,7 +77,7 @@ module.exports = class extends Command {
                     else if (Math.abs(chance - 7) === 1) { earnings = 6/5; } 
                     else { earnings = 1; } 
                     break;
-            };
+            }
         } else if (results === 0) { earnings = 2; } 
         else { earnings = 1; }
 

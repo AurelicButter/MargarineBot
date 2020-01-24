@@ -1,24 +1,20 @@
-exports.run = (client, msg, sides) => {
-    sides = (sides.length < 1) ? 6 : Number(sides); 
-    if (sides === 0) { return msg.channel.send(client.speech(msg, ["roll", "zero"])); }
+const { Command } = require("klasa");
 
-    if (Number.isInteger(sides)) {
-        if (sides < 0) { return msg.channel.send(client.speech(msg, ["roll", "negative"])); } 
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "roll",
+            runIn: ["text"],
+            description: "Roll a die. Will default to 6 if no amount is provided.",
+            usage: "[sides:int]"
+        });
+    }
+
+    async run(msg, [sides=6]) {
+        if (sides === 0) { return msg.channel.send(this.client.speech(msg, ["roll", "zero"])); }
+        if (sides < 0) { return msg.channel.send(this.client.speech(msg, ["roll", "negative"])); }
+
         var y = Math.floor(Math.random() * (Math.floor(sides) - Math.ceil(1) + 1)) + Math.ceil(1);
-        return msg.channel.send(client.speech(msg, ["roll", "success"]).replace("-value", y));
-    } 
-    return msg.channel.send(client.speech(msg, ["roll", "noNumber"])); 
-};
-
-exports.conf = {
-    enabled: true,
-    runIn: ["text"],
-    aliases: [],
-    permLevel: 0,
-    botPerms: []
-};
-  
-exports.help = {
-    name: "roll", description: "Roll a die!",
-    usage: "[sides:str]", humanUse: "[sides]"
+        msg.channel.send(this.client.speech(msg, ["roll", "success"]).replace("-value", y)); 
+    }
 };

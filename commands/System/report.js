@@ -52,7 +52,7 @@ module.exports = class extends Command {
 
                         this.client.channels.get(this.client.ownerSetting.get("channels").report).send(embed);
                         msg.author.send({embed: DMembed});  
-                        this.client.dataManager("update", ["count=" + reportNumber, "report"], "stats");
+                        this.client.dataManager("update", [`count=${reportNumber}`, "report"], "stats");
                     }).catch(() => { msg.author.send(this.client.speech(msg, ["report", "timeout", "t2"])); }); 
                 });
             }).catch(() => { msg.author.send(this.client.speech(msg, ["report", "timeout", "t1"])); }); 
