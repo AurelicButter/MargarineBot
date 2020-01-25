@@ -1,22 +1,21 @@
-exports.run = async (client, msg) => {
-  var handler = client.funcs.musicCheck(msg);
-  if (handler === false) { return; }
-  if (handler.state !== "PAUSE") { return msg.channel.send(client.speech(msg, ["resume", "noPause"])); }
+const { Command } = require("klasa");
 
-  handler.dispatcher.resume();
-  handler.state = "PLAY";
-  msg.channel.send(client.speech(msg, ["resume", "success"]));
-};
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "resume",
+            runIn: ["text"],
+            description: "Resumes the playlist."
+        });
+    }
 
-exports.conf = {
-  enabled: true,
-  runIn: ["text"],
-  aliases: [],
-  permLevel: 0,
-  botPerms: []
-};
+    async run(msg) {
+        var handler = this.client.util.musicCheck(msg, "handler");
+        if (handler === false) { return; }
+        if (handler.state !== "PAUSE") { return msg.channel.send(this.client.speech(msg, ["resume", "noPause"])); }
 
-exports.help = {
-  name: "resume",
-  description: "Resumes the playlist.", usage: ""
+        handler.dispatcher.resume();
+        handler.state = "PLAY";
+        msg.channel.send(this.client.speech(msg, ["resume", "success"]));
+    }
 };

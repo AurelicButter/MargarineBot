@@ -14,10 +14,10 @@ exports.join = {
     ]
 };
 
-exports.leave = [ //Parameter 1: Voice channel name.
-    "I have left -param1.",
-    "The party is now over in -param1.",
-    "Thanks for the fun! I've cleaned up and have left -param1."
+exports.leave = [
+    "I have left -channel.",
+    "The party is now over in -channel.",
+    "Thanks for the fun! I've cleaned up and have left -channel."
 ];
 
 exports.nowplaying = {
@@ -90,16 +90,10 @@ exports.queueadd = {
     ]
 };
 
-exports.remove = {
-    "noInt": [
-        "I only have songs queued in integers. Come back with a whole number, will you?",
-        "This isn't a number... Come back with a number, baka!"
-    ],
-    "success": [ //Parameter 1: Song title
-        "**-param1** has been removed from the queue.",
-        "Okay! **-param1** has been removed from the queue."
-    ]
-};
+exports.remove = [
+    "**-song** has been removed from the queue.",
+    "Okay! **-song** has been removed from the queue."
+];
 
 exports.resume = {
     "noPause": [
@@ -114,13 +108,14 @@ exports.resume = {
 
 exports.skip = [
     "⏭ Skipped the current song.",
-    "On to the next song! ⏭"
+    "On to the next song! ⏭",
+    "⏭ Okay! Playing the next song then!"
 ];
 
 exports.volume = {
-    "noArgs": [ //Parameter 1: volume
-        "📢 Volume: -param1%",
-        "Currently playing at -param1%"
+    "noArgs": [
+        "📢 Volume: -vol%",
+        "Currently playing at -vol%"
     ],
     "zero": [
         "You might as well mute me if you don't want any noise."
@@ -154,5 +149,9 @@ exports.general = {
         "BAKA! You aren't even in my voice channel to begin with!",
         "You are not in my voice channel! Come in and tell me face to face!",
         "I'm already playing in another VC. You should join in on the fun instead!"
-    ] //Margarine not in the same VC
+    ], //Margarine not in the same VC
+    "noHandler": [ //Margarine needs a dispatcher active in order to do the command
+        "Hey! I'm not playing anything right now!",
+        "You should really play some music before you try to interact with the music."
+    ]
 };

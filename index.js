@@ -33,6 +33,7 @@ client.util = util; //All utility functions and extra search functions
 if (!existsSync(config.database)) { dataManager("init"); } //Init the SQLite Database
 
 client.ownerSetting = new Collection();
+client.music = new Collection();
 
 var keys = Object.keys(config);
 for (var x = 0; keys.length > x; x++) { 

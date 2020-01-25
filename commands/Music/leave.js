@@ -1,21 +1,20 @@
-exports.run = async (client, msg) => {
-  var vcID = client.funcs.musicCheck(msg);
-  if (vcID === false) { return; }
+const { Command } = require("klasa");
 
-  vcID.channel.leave();
-  client.music.delete(msg.guild.id);
-  msg.channel.send(client.speech(msg, ["leave"]).replace("-channel", vcID.channel.name));
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "leave",
+            runIn: ["text"],
+            description: "Leaves the VC that you are in."
+        });
+    }
+
+    async run(msg) {
+        var vcID = this.client.util.musicCheck(msg);
+        if (vcID === false) { return; }
+
+        vcID.channel.leave();
+        this.client.music.delete(msg.guild.id);
+        msg.channel.send(this.client.speech(msg, ["leave"], [["-channel", vcID.channel.name]]));  
+    }
 };
-  
-exports.conf = {
-  enabled: true,
-  runIn: ["text"],
-  aliases: [],
-  permLevel: 0,
-  botPerms: []
-};
-  
-exports.help = {
-  name: "leave",
-  description: "Leaves the VC that you are in.", usage: ""
-};  

@@ -1,20 +1,19 @@
-exports.run = async (client, msg) => {
-  var handler = client.funcs.musicCheck(msg);
-  if (handler === false) { return; }
+const { Command } = require("klasa");
 
-  handler.dispatcher.end();
-  msg.channel.send(client.speech(msg, ["skip"]));
-};
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "skip",
+            runIn: ["text"],
+            description: "Skips the current song."
+        });
+    }
 
-exports.conf = {
-  enabled: true,
-  runIn: ["text"],
-  aliases: [],
-  permLevel: 0,
-  botPerms: []
-};
+    async run(msg) {
+        var handler = this.client.util.musicCheck(msg, "handler");
+        if (handler === false) { return; }
 
-exports.help = {
-  name: "skip",
-  description: "Skips the current song.", usage: ""
+        handler.dispatcher.end();
+        msg.channel.send(this.client.speech(msg, ["skip"])); 
+    }
 };

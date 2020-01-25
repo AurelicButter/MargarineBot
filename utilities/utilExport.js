@@ -77,16 +77,19 @@ exports.util = {
             msg.channel.send(client.speech(msg, ["func-music", "general", "userVC"]));
             return false;
         } else if (tag !== "join") {
-            if (!client.music.get(msg.guild.id)) {
+            var handler = client.music.get(msg.guild.id);
+            if (!handler) {
                 msg.channel.send(client.speech(msg, ["func-music", "general", "noQueue"]));
                 return false;
-            } else if (msg.member.voice.channelID !== client.music.get(msg.guild.id).channel.id) {
+            } else if (msg.member.voice.channelID !== handler.channel.id) {
                 msg.channel.send(client.speech(msg, ["func-music", "general", "mismatch"]));
                 return false;
-            } 
+            } else if (tag === "handler" && !handler.dispatcher) {
+                msg.channel.send(client.speech(msg, ["func-music", "general", "noHandler"]));
+            }
         
-            return client.music.get(msg.guild.id);
-        } 
+            return handler;
+        }
     
         return true;
     },

@@ -1,29 +1,29 @@
-exports.run = async (client, msg, [volume]) => {
-  var handler = client.funcs.musicCheck(msg);
-  if (handler === false) { return; }
+const { Command } = require("klasa");
 
-  if (!volume) { return msg.send(client.speech(msg, ["volume", "noArgs"]).replace("-vol", Math.round(dispatcher.volume * 50))); }
-  if (volume === 0) { return msg.send(client.speech(msg, ["volume", "zero"])); }
-  if (volume > 100) { return msg.send(client.speech(msg, ["volume", "overHun"])); }
-  if (handler.playing !== "PLAY") { return msg.send(client.speech(msg, ["volume", "notPlay"])); }
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "volume",
+            runIn: ["text"],
+            aliases: ["vol"],
+            description: "Manage the volume for current song.",
+            usage: "[volume:int]"
+        });
+    }
 
-  const dispatcher = handler.dispatcher;
-  var emote = (volume < (dispatcher.volume * 50)) ? ["🔉 Decreasing"] : ["🔊 Increasing"];
+    async run(msg, [volume]) {
+        var handler = this.client.util.musicCheck(msg, "handler");
+        if (handler === false) { return; }
 
-  dispatcher.setVolume(Math.min(volume) / 50, 2);
-  msg.send(client.speech(msg, ["volume", "success"]).replace("-action", emote).replace("-vol", Math.round(dispatcher.volume * 50)));
-};
-
-exports.conf = {
-  enabled: true,
-  runIn: ["text"],
-  aliases: ["vol"],
-  permLevel: 0,
-  botPerms: []
-};
-
-exports.help = {
-  name: "volume",
-  description: "Manage the volume for current song.",
-  usage: "[volume:int]", humanUse: "[Volume percentage]"
+        if (!volume) { return msg.channel.send(this.client.speech(msg, ["volume", "noArgs"], [["-vol",Math.round(dispatcher.volume * 50)]])); }
+        if (volume === 0) { return msg.channel.send(this.client.speech(msg, ["volume", "zero"])); }
+        if (volume > 100) { return msg.channel.send(this.client.speech(msg, ["volume", "overHun"])); }
+        if (handler.playing !== "PLAY") { return msg.channel.send(this.client.speech(msg, ["volume", "notPlay"])); }       
+      
+        const dispatcher = handler.dispatcher;
+        var emote = (volume < (dispatcher.volume * 50)) ? ["🔉 Decreasing"] : ["🔊 Increasing"];
+      
+        dispatcher.setVolume(Math.min(volume) / 50, 2);
+        msg.channel.send(this.client.speech(msg, ["volume", "success"], [["-param1", emote], ["-param2", Math.round(dispatcher.volume * 50)]]));
+    }
 };

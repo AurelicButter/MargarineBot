@@ -1,24 +1,22 @@
-exports.run = async (client, msg, [songID]) => {
-    var handler = client.funcs.musicCheck(msg);
-    if (handler === false) { return; }
-    if (Number.isInteger(songID) === false) { return msg.channel.send(client.speech(msg, ["remove", "noInt"])); }
+const { Command } = require("klasa");
 
-    songID = songID - 1;
-    var title = handler.queue[songID].title;
-    handler.queue.splice(songID, 1);
-    msg.channel.send(client.speech(msg, ["remove", "success"]).replace("-title", title));
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "remove",
+            runIn: ["text"],
+            description: "Removes a song from the queue.",
+            usage: "[songID:int]"
+        });
+    }
+
+    async run(msg, [songID=songID - 1]) {
+        var handler = this.client.util.musicCheck(msg);
+        if (handler === false) { return; }
+        if (songID === 0) { return this.client.commands.get("skip").run(msg); }
+        
+        var title = handler.queue[songID].title;
+        handler.queue.splice(songID, 1);
+        msg.channel.send(this.client.speech(msg, ["remove"], [["-song", title]]));  
+    }
 };
-  
-exports.conf = {
-    enabled: true,
-    runIn: ["text"],
-    aliases: [],
-    permLevel: 0,
-    botPerms: []
-};
-  
-exports.help = {
-    name: "remove",
-    description: "Removes a song from the queue.",
-    usage: "[songID:int]", humanUse: "[Song number]"
-};  
