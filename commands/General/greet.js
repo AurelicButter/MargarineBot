@@ -1,7 +1,4 @@
 const { Command } = require("klasa");
-const { MessageEmbed } = require("discord.js");
-const AnilistNode = require("anilist-node");
-const anilist = new AnilistNode();
 
 module.exports = class extends Command {
     constructor(...args) {
@@ -9,7 +6,6 @@ module.exports = class extends Command {
             name: "greet",
             enabled: true,
             runIn: ["text"],
-            aliases: [],
             description: "Have Margarine greet you or someone with a hello!",
             usage: "[user:usersearch]"
         });
@@ -19,6 +15,6 @@ module.exports = class extends Command {
         if (user === null) { return; }        
         if (user.id === this.client.user.id) { return msg.send(this.client.speech(msg, ["greet", "me"], [["-param1", msg.author.username]])); }
 
-	    msg.send(this.client.speech(msg, ["greet", "success"], [["-param1", user.username]]));
+        msg.channel.send(this.client.speech(msg, ["greet", "success"], [["-param1", user.username]]));
     }
 };

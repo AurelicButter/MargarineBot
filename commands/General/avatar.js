@@ -6,7 +6,6 @@ module.exports = class extends Command {
             name: "avatar",
             enabled: true,
             runIn: ["text"],
-            aliases: [],
             requiredPermissions: ["ATTACH_FILES"],
             description: "Fetch a user's avatar!",
             usage: "[user:usersearch]"

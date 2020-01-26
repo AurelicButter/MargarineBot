@@ -19,10 +19,10 @@ module.exports = function dataManager(args, values, table) {
             if(tableCheck["count(*)"]) { return console.log("SQLite Database exists! Skipping creation step..."); } //Prevent crashing if SQLite database exists already
 
             db.prepare("CREATE TABLE users (userID TEXT, credits INTEGER, rep INTEGER, cooldowns TEXT, profiles TEXT)").run();
-            db.prepare("CREATE TABLE awards (userID TEXT, suggest INTEGER, bugs INTEGER, minor INTEGER, major INTEGER)").run();
+            db.prepare("CREATE TABLE awards (userID TEXT, suggest INTEGER, bug INTEGER, minor INTEGER, major INTEGER)").run();
             db.prepare("CREATE TABLE stats (statName TEXT, count INTEGER)").run();
 
-            db.prepare("INSERT INTO awards (userID, suggest, bugs, minor, major) VALUES (?, ?, ?, ?, ?)").run("Overall", 0, 0, 0, 0);
+            db.prepare("INSERT INTO awards (userID, suggest, bug, minor, major) VALUES (?, ?, ?, ?, ?)").run("Overall", 0, 0, 0, 0);
             db.prepare("INSERT INTO stats (statName, count) VALUES (?, ?)").run("report", 0);
             
             db.prepare("CREATE TABLE fishing (userID TEXT, trash INTEGER, fish INTEGER, crab INTEGER, squid INTEGER, shark INTEGER)").run();

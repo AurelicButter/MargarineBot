@@ -35,7 +35,7 @@ module.exports = class extends Command {
 
         msg.channel.messages.fetch({ limit: msgCount }).then((messages) => {
             if (user && userCheck[2]) {
-                const filterBy = user ? user.id : client.user.id;
+                const filterBy = user ? user.id : this.client.user.id;
                 messages = messages.filter(m => m.author.id === filterBy).array().slice(0, amount);
                 var extra = `by ${user.tag} `;
             }

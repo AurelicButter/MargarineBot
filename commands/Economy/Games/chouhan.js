@@ -11,6 +11,8 @@ module.exports = class extends Command {
             usage: "<even|odd> <bet:int>", usageDelim: " ",
             extendedHelp: "A simple Japanese dice game. Six dice are rolled and the results kept secret. Players bet on whether the sum on the dice is odd or even."
         });
+
+        this.humanUse = "<even|odd> <bet>";
     }
 
     async run(msg, [choice=choice.toLowerCase(), bet]) {

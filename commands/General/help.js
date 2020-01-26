@@ -56,17 +56,17 @@ module.exports = class extends Command {
             cmd = this.client.commands.get(cmd) || this.client.aliases.get(cmd);
             if (!cmd) { return msg.send("❌ | Unknown command, please run the help command with no arguments to get a list of categories."); }
 
-            var usage = cmd.humanUse ? [cmd.humanUse, "_"] : [cmd.usageString, " "];
+            var usage = cmd.humanUse ? [cmd.humanUse.trim(), "_"] : [cmd.usageString, " "];
             var usageAct = usage.length < 1 ? "": usage[0].split(usage[1]).join(cmd.usageDelim);
             var alias = cmd.aliases.length > 0 ? ` aka: (${cmd.aliases.join(", ")})`: "";
-            
+
             const embed = new MessageEmbed()
                 .setColor(0x04d5fd)
                 .setTitle(cmd.name + alias)
                 .setDescription(cmd.description)
                 .addField("Usage:", `\`${msg.guild.settings.prefix + cmd.name} ${usageAct}\``)
                 .addField("Permission level:", this.client.ownerSetting.get("permLevel").general[cmd.permissionLevel]);
-                if (cmd.extendedHelp) { embed.addField("Extended Help:", cmd.extendedHelp); }
+                if (typeof cmd.extendedHelp === "string") { embed.addField("Extended Help:", cmd.extendedHelp); }
             msg.send({embed});
         }
     }

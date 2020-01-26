@@ -6,7 +6,6 @@ module.exports = class extends Command {
             name: "fish",
             enabled: true,
             runIn: ["text"],
-            aliases: [],
             cooldown: 30,
             description: "Fish and try to turn your credits into a fortune!",
             extendedHelp: "Spend 10 credits to fish and catch yourself a fortune! (30 second cooldown)"

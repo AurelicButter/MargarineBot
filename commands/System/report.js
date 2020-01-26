@@ -7,10 +7,8 @@ module.exports = class extends Command {
             name: "report",
             enabled: true,
             runIn: ["text"],
-            aliases: [],
             requiredPermissions: ["EMBED_LINKS"],
             description: "File a report to the bot owner. (ie: Bug, issue, complaint)",
-            usage: "",
             extendedHelp: "Margarine will be sliding into your DMs for a few questions. Be sure to have DMs open and ready to answer some questions!"
         });
     }

@@ -6,7 +6,6 @@ module.exports = class extends Command {
             name: "setavatar",
             enabled: true,
             runIn: ["text", "dm"],
-            aliases: [],
             permissionLevel: 9,
             description: "Set Margarine's avatar",
             usage: "[image:str]"

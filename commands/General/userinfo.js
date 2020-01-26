@@ -33,7 +33,7 @@ module.exports = class extends Command {
         var activity;
         if (user.presence.activity === null) { activity = " "; }
         else if (user.presence.activity.name === "Custom Status") {
-            activity = " while doing " + user.presence.activity.state;
+            activity = ` while doing ${user.presence.activity.state}`;
         } else {
             switch (user.presence.activity.type) { //All cases covered
                 case "PLAYING":

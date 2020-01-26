@@ -21,6 +21,8 @@ module.exports = class extends Command {
             usage: "<bet:int>", usageDelim: " ",
             extendedHelp: "An early English game played with two dice. The game 'Craps' developed from hazard. The game is popular in North America but is not in the rest of the world."
         });
+
+        this.humanUse = "<bet>";
     }
 
     async run(msg, [bet]) {

@@ -7,7 +7,6 @@ module.exports = class extends Command {
             name: "balance",
             enabled: true,
             runIn: ["text"],
-            cooldown: 0,
             aliases: ["bal", "credits", "profile"],
             requiredPermissions: ["EMBED_LINKS"],
             description: "Check credit amounts and cooldowns",

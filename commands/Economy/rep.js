@@ -6,7 +6,6 @@ module.exports = class extends Command {
             name: "rep",
             enabled: true,
             runIn: ["text"],
-            aliases: [],
             description: "Give someone a reputation point!",
             usage: "[user:usersearch] [note:str]", usageDelim: "|"
         });

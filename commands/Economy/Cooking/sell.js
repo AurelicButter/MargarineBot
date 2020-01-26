@@ -6,7 +6,6 @@ module.exports = class extends Command {
             name: "sell",
             enabled: true,
             runIn: ["text"],
-            aliases: [],
             description: "Sell your items!",
             usage: "<item:str> [amount:int]", usageDelim: " "
         });

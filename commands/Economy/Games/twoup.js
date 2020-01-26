@@ -10,6 +10,8 @@ module.exports = class extends Command {
             usage: "<bet:int>",
             extendedHelp: "Two-up is a traditional Australian gambling game, involving a designated 'spinner' throwing two coins into the air. Players bet on whether the coins will fall with both heads up, both tails up, or with one head and one tail up (known as 'odds'). It is traditionally played on Anzac Day in pubs and clubs throughout Australia."
         });
+
+        this.humanUse = "<bet>";
     }
 
     async run(msg, [bet]) {

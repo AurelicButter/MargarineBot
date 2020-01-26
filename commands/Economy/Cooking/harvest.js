@@ -6,7 +6,6 @@ module.exports = class extends Command {
             name: "harvest",
             enabled: true,
             runIn: ["text"],
-            aliases: [],
             cooldown: 30,
             description: "Harvest fruits and other foods for cooking!",
             extendedHelp: "Spend 10 credits to gather materials! (30 second cooldown)"

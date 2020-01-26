@@ -5,17 +5,16 @@ const { serverLink } = require("../../assets/settings.json");
 module.exports = class extends Command {
     constructor(...args) {
         super(...args, {
-            name: 'about',
-            runIn: ['text', 'dm'],
+            name: "about",
+            runIn: ["text", "dm"],
             aliases: ["stats", "whoami"],
             guarded: true,
-            description: 'General information',
-            usage: ""
+            description: "General information"
         });
     }
 
     async run(msg) {
-        var support = (serverLink && serverLink.length > 1) ? "| [Support Server](" + serverLink + ")" : "";
+        var support = (serverLink && serverLink.length > 1) ? `| [Support Server](${serverLink})` : "";
 
         const embed = new MessageEmbed()
         .setColor(0x37FDFC)
@@ -26,7 +25,7 @@ module.exports = class extends Command {
         \n**Name Origin:** Butterstroke#7150's typical nickname is Butter. As in the stuff that you put on toast. My name comes from the artificial butter *(He tends to call it 'Fake Butter')* you can buy in stores called, Margarine.        
         \n**Creation:** I was created on ${this.client.util.timekeeper.dateMaker(this.client.user.createdAt)} by Butterstroke#7150.`)
         .setThumbnail(this.client.user.displayAvatarURL())
-        .setFooter("Running on Margarine " + this.client.ownerSetting.get("build").version + " | Released on: " + this.client.ownerSetting.get("build").releaseDate);
+        .setFooter(`Running on Margarine ${this.client.ownerSetting.get("build").version} | Released on: ${this.client.ownerSetting.get("build").releaseDate}`);
 
         msg.channel.send({embed});
     }

@@ -44,3 +44,32 @@ exports.say = [
     "You need to provide me with a message!",
     "I need a message to echo before I can do this!"
 ];
+
+exports.eightball = [
+    "It is certain, -user",
+    "As I see it, yes, -user",
+    "It's looking a bit hazy. Try again",
+    "Don't count on it, -user",
+    "It is decidedly so, -user",
+    "Most likely.",
+    "Ask again later, -user. You may have better luck.",
+    "Reply sent.... no",
+    "Without a doubt, -user!",
+    "Outlook is good",
+    "Better to leave you wondering, -user",
+    "Sources say no.",
+    "Yes! Most definitely!",
+    "Yes.",
+    "Seems my prediction powers are weak at the moment. Try again later.",
+    "Outlook is not so good, -user.",
+    "The stars say yes, -user.",
+    "You may rely on it.",
+    "FOCUS! Concentrate your mindset and ask again.",
+    "Very doubtful, -user"
+];
+
+exports.crash = [
+    "Wow. That's awful of you, -user. I'm just here trying to be helpful and make friends but you want to shut me down. Quite rude!",
+    "Ouch! Am I not doing a good enough job for you? BAKA!",
+    "-user! So mean! I'm just trying to have fun here!"
+];

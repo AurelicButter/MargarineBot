@@ -7,7 +7,6 @@ module.exports = class extends Command {
             enabled: true,
             runIn: ["text"],
             cooldown: 10,
-            aliases: [],
             description: "Give someone some of your credits",
             usage: "[user:usersearch] [credit:int]", usageDelim: " "
         });

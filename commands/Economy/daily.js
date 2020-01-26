@@ -6,9 +6,8 @@ module.exports = class extends Command {
             name: "daily",
             enabled: true,
             runIn: ["text"],
-            aliases: [],
             description: "Get a daily amount of credits or give them to someone else.",
-            usage: "[user:usersearch]",
+            usage: "[user:usersearch]"
         });
     }
 

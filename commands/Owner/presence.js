@@ -1,17 +1,19 @@
-exports.run = async (client, msg, [status, game, type]) => { client.funcs.presenceHelper(client, game, type, status); };
+const { Command } = require("klasa");
 
-exports.conf = {
-  enabled: true,
-  runIn: ["text", "dm"],
-  aliases: [],
-  permLevel: 9,
-  botPerms: []
-};
-  
-exports.help = {
-  name: "presence",
-  description: "Sets Margarine's status entirely",
-  usage: "<online|idle|dnd|invisible> [game:str] [play|stream|listen|watch]",
-  usageDelim: " | ",
-  humanUse: "(online|idle|dnd|invisible)_(game)_(play|stream|listen|watch)"
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "presence",
+            enabled: true,
+            runIn: ["text", "dm"],
+            permissionLevel: 9,
+            description: "Set Margarine's status entirely",
+            usage: "<online|idle|dnd|invisible> [game:str] [play|stream|listen|watch]",
+            usageDelim: " | "
+        });
+    }
+
+    async run(msg, [status, game, type="play"]) {
+        this.client.util.presenceHelper(this.client, game, type, status);
+    }
 };

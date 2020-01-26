@@ -9,6 +9,8 @@ module.exports = class extends Command {
             description: "Flip a coin!",
             usage: "<heads|tails> <bet:int>", usageDelim: " "
         });
+
+        this.humanUse = "<heads|tails> <bet>";
     }
 
     async run(msg, [choice=choice.toLowerCase(), bet]) {
