@@ -4,7 +4,7 @@ const dbDir = require("../assets/settings.json")["database"];
 /** 
  * Manages the SQLite database
  * @param { string } args - An action for the database. Either init, add, select, update, or delete 
- * @param { string[] } values - An array of values for the add, select, and update actions. 
+ * @param { string|string[] } values - An array of values for the add, select, and update actions. 
  * Select needs one value, while both add and update need two.
  * @param { string } table - Target table in the database.
  * @returns {Object} If action was select. Returns null for all other options.

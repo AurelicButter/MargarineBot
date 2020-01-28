@@ -6,7 +6,7 @@ function Presence(client, type, name, status) {
     name = (name !== "-null") ? `${client.ownerSetting.get("globalPrefix")}help | ${name}` : null;
 
     client.user.setPresence({ activity: { name, type }, status });
-};
+}
 
 /**
  * Sets the presence for Margarine and starts a 15 minute interval for automatic change

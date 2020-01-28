@@ -28,3 +28,18 @@ exports.rep = [
     "You have given -mention a reputation point!",
     "One new, shiny reputation point for -mention has been given!"
 ];
+
+exports.revoke = {
+    "prompt": [
+        "By doing this, you will delete all of your data. If you want to do this, reply with \"yes\"."
+    ],
+    "stopped": [
+        "Action aborted. Nothing has happened."
+    ],
+    "success": [
+        "Okay. I've deleted your data from my systems. If you want to give it to me again, wait 24 hours."
+    ],
+    "timeout": [
+        "Whoops! Looks like you forgot to respond to me. I'm not waiting around anymore."
+    ]
+}

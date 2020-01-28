@@ -17,11 +17,15 @@ module.exports = class extends Argument {
         if (arg === undefined) { return msg.author; }
         if (IDRegex.test(arg)) { return this.client.users.get(/(\d{17,21})/.exec(arg)[0]); } 
 
-        var regex = new RegExp(regExpEsc(arg), "i");
-        var results = msg.guild.members.filter(m => regex.test(m.user.username));
+        var results = [];
+
+        if (msg.guild) {
+            var regex = new RegExp(regExpEsc(arg), "i");
+            results = msg.guild.members.filter(m => regex.test(m.user.username));    
+        }
 
         if (results.size === 0) {
-            msg.channel.send(this.client.speech(msg, ["func-userSearch", "default"]));
+            msg.channel.send(this.client.speech(msg, ["func-system", "usersearch"]));
             return null;
         }
 

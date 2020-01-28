@@ -3,6 +3,10 @@ exports.anilist = {
         "You're all set! I have your username in my systems now!",
         "✅ Username added. You're good to go!"
     ],
+    "removeProfile": [ //Successfully removed profile.
+        "Okay! That username is no longer attached to you!",
+        "✅ Username removed. You're good to go!"
+    ],
     "noUsername": [ //User has a profile but has not set their AniList profile.
         "Huh... that user appears to have not set their AniList profile in my systems yet.",
         "They haven't set their AniList profile yet! Try a general search for now."
@@ -20,6 +24,10 @@ exports.mal = {
     "setProfile": [ //Activates upon a successful link of the user's MAL profile.
         "You're all set! I have your username in my systems now!",
         "✅ Username added. You're good to go!"
+    ],
+    "removeProfile": [ //Successfully removed profile.
+        "Okay! That username is no longer attached to you!",
+        "✅ Username removed. You're good to go!"
     ],
     "noUsername": [ //User has a profile but has not set their MAL profile.
         "Huh... that user appears to have not set their MAL profile in my systems yet.",
@@ -67,29 +75,6 @@ exports.manga = {
 };
 
 exports.avatar = []; //Placeholder
-
-exports.award = {
-    "noType": [
-        "BAKA! I need a type of an award!",
-        "But, what kind of award are you giving someone? You never provided me with one!"
-    ],
-    "noText": [
-        "Explain yourself on giving the award!",
-        "Tell me a story. Express yourself. Or just explain why you are giving an award. That works too."
-    ],
-    "noRow": [
-        "That user has not gotten their first daily yet!",
-        "That user doesn't seem to like my games. They haven't even claimed their first daily yet!",
-        "Looks like that user doesn't have a profile. Sad. No rewards for them."
-    ],
-    "success": [ //Parameter 1: User id, Parameter 2: Awarded Credits
-        "<@-id>, (-id) have been awarded -credits credits!",
-        "<@-param1>, (-param1) has been awarded -param2 credits!",
-        "Congratulations <@-param1> (-param1)! You've been awarded -param2 credits!"
-    ]
-};
-
-exports.calculate = [];
 
 exports.choose = {
     "lackChoice": [

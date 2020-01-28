@@ -47,3 +47,8 @@ exports.noZero = [ //When a command requires a nonzero amount.
     "Hey! You don't have any of this!",
     "You can't have nothing here!"
 ];
+
+exports.revoked = [ //User tried to make a new profile after deleting their data (Less than 24 hours)
+    "You can't do this yet! It's been too soon since you've deleted your own data.",
+    "Nope, wait a little longer if you want back in. There's a cooldown for deleting your own data."
+];

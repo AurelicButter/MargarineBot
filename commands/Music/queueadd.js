@@ -33,7 +33,7 @@ module.exports = class extends Command {
       
         for (var x = 0; x < id.length; x++) {
             try {
-                var info = await getInfoAsync("https://youtu.be/" + id[x]);
+                var info = await getInfoAsync(`https://youtu.be/${id[x]}`);
       
                 handler.queue.push({
                     url: `https://youtu.be/${id[x]}`,

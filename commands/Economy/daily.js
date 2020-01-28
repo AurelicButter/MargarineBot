@@ -18,6 +18,15 @@ module.exports = class extends Command {
         if (!data && user.id !== msg.author.id) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
         
         if (!data) {
+            if (this.client.settings.usedDaily.has(msg.author.id)) { //Check if user has recently deleted their own data.
+                var revokeCheck = this.client.settings.usedDaily.get(msg.author.id);
+                if ((revokeCheck + 86400000) > Date.now()) { //Revoke was executed less than 24 hours ago.
+                    return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "revoked"])); 
+                }
+
+                this.client.settings.usedDaily.delete(msg.author.id);
+            }
+
             this.client.dataManager("add", msg.author.id);
             return msg.channel.send(this.client.speech(msg, ["daily", "self"]));
         }

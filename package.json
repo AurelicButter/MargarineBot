@@ -4,21 +4,22 @@
   "description": "Javascript bot using the Klasa framework",
   "main": "index.js",
   "dependencies": {
-    "anilist-node": "^1.2.2",
+    "anilist-node": "^1.2.3",
     "better-sqlite3": "^5.4.3",
     "cheerio": "^1.0.0-rc.3",
-    "discord.js": "github:hydrabolt/discord.js",
+    "discord.js": "github:discordjs/discord.js",
     "ffmpeg": "0.0.4",
-    "klasa": "github:dirigeants/klasa",
+    "klasa": "github:dirigeants/klasa#master",
     "moment": "^2.24.0",
     "moment-duration-format": "^2.3.2",
     "ms": "^2.1.2",
     "node-fetch": "^2.6.0",
+    "opusscript": "0.0.7",
     "querystring": "^0.2.0",
     "request": "^2.88.0",
     "snekfetch": "^4.0.4",
     "youtube-playlist": "^1.0.2",
-    "ytdl-core": "^1.0.0"
+    "ytdl-core": "^1.0.7"
   },
   "devDependencies": {},
   "repository": {
@@ -26,8 +27,7 @@
     "url": "git+https://github.com/butterstroke/MargarineBot"
   },
   "scripts": {
-    "start": "node index.js",
-    "envCheck": "node ./utilities/envCheck.js"
+    "start": "node index.js"
   },
   "author": {
     "name": "Frederick Katsura",

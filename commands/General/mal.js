@@ -12,21 +12,23 @@ module.exports = class extends Command {
             cooldown: 60,
             requiredPermissions: ["ATTACH_FILES"],
             description: "Fetch a user's profile on MyAnimeList",
-            usage: "[set|search|user:usersearch] [username:str]", usageDelim: " ",
+            usage: "[set|remove|search|user:usersearch] [username:str]", usageDelim: " ",
             extendedHelp: "Note: The user must set their own account name in Margarine in order to search by a Discord user. For general searching, use the search keyword before the username."
         });
     }
 
     async run(msg, [user, username]) {
-        if (user === "set") {
+        if (user === "set" || user === "remove") {
             var data = this.client.dataManager("select", msg.author.id, "users");
             if (!data) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
 
             var profiles = JSON.parse(data.profiles);
-            profiles.MAL = username;
+            profiles.MAL = (user === "set") ? username : null;
 
             this.client.dataManager("update", [`profiles='${JSON.stringify(profiles)}'`, msg.author.id], "users");
-            return msg.channel.send(this.client.speech(msg, ["mal", "setProfile"])); //Success of setting profile.
+            
+            if (user === "set") { return msg.channel.send(this.client.speech(msg, ["mal", "setProfile"])); }
+            if (user === "remove") { return msg.channel.send(this.client.speech(msg, ["mal", "removeProfile"])); }
         }
 
         if (user === null) { return; } //Return for failed usersearch.

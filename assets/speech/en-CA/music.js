@@ -17,7 +17,8 @@ exports.join = {
 exports.leave = [
     "I have left -channel.",
     "The party is now over in -channel.",
-    "Thanks for the fun! I've cleaned up and have left -channel."
+    "Thanks for the fun! I've cleaned up and have left -channel.",
+    "And that's it for the fun in -channel! We should do that again some other time."
 ];
 
 exports.nowplaying = {

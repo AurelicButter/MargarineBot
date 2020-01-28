@@ -1,4 +1,5 @@
 const { Event } = require("klasa");
+const { Collection } = require("discord.js");
 
 module.exports = class extends Event {
 	constructor(...args) {
@@ -10,5 +11,6 @@ module.exports = class extends Event {
 
 	async run() {
 		this.client.util.presenceHelper(this.client, "-start"); //Initialize presence
+		this.client.settings.usedDaily = new Collection(); //A collection to store a tuple with a userID and a timestamp.
 	}
 };
