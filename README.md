@@ -1,4 +1,4 @@
-# MargarineBot - Version: Release 1.0 (Klasa Rewrite - Beta)
+# MargarineBot - Version: Release 1.0
 ![License](https://img.shields.io/github/license/Butterstroke/MargarineBot.svg?style=flat-square) ![Support Server](https://discordapp.com/api/guilds/303253034551476225/widget.png)
 
 <b>Dependencies</b>
@@ -20,11 +20,10 @@ Created through part-desire, part-what can I do in Discord, part-I'm going to le
 - Server/User/role info commands
 - Economy system using a SQLite database
 
-<b>Invite me!</b>
-<i>Not available at the current moment as the bot is in development.</i>
+<a href="https://discordapp.com/oauth2/authorize?client_id=315132794172997633&permissions=60482&scope=bot"> Invite me to your server!</a>
 
 <b>Contact</b>
 
 For issues, please use the issue tracker on this repository.
 
-For any thing else, either contact me by email <a href="mailto:katsurinstudios@protonmail.ch">katsurinstudios@protonmail.ch</a> or through Discord at Butterstroke#7150.
+For any thing else, either contact me by email <a href="mailto:katsurinstudios@protonmail.ch">katsurinstudios@protonmail.ch</a> or in my [Discord server](https://discord.gg/TJJ6KGd) in the #margarine-bot channel.
