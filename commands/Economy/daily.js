@@ -1,55 +1,54 @@
-const sqlite3 = require("sqlite3").verbose();
-let db = new sqlite3.Database("./assets/data/score.sqlite");
-let talk = require("../../assets/speech.json");
+const { Command } = require("klasa");
 
-exports.run = async (client, msg, [user]) => {
-    var data = await client.funcs.userSearch(msg, {user: [user], tags:["bot"], name: this.help.name});
-    if (data.valid === false) { return; }
-    user = data.user[0];
-
-    var type = (user.id === msg.author.id) ? "self" : "other";
-
-    var info = []; var talk1 = talk;
-    db.serialize(function() {
-        db.each(`SELECT daily, credits FROM scores WHERE userId IN ("${msg.author.id}", "${user.id}")`, function (err, row) {
-            if (err) { return console.log(err); }
-            if (!row) { 
-                if (type === "self") { client.funcs.sqlTables(user, "add"); }
-                else if (type === "other") { info.push("noRow"); }
-            } else if (Number(row.daily) + 86400000 > Date.now()) { info.push("multi"); }
-            else { info.push(type); }
-            info.push(row.credits);
-        }, function() {
-            var valid = (type !== info[0]) ? false : true;
-            if (info[2] !== "noRow") { talk1 = talk1["daily"]; }
-            var x = 0;
-
-            if (valid === true) {
-                var credit = (type === "other") ? Number((100 * (1 + Math.random())).toFixed(0)) : 100; 
-                if (info[2] === "multi" || info[2] === "noRow") { var x = 2; }
-                else { 
-                    db.run(`UPDATE scores SET daily = ${Date.now()} WHERE userId = ${msg.author.id}`);
-                    db.run(`UPDATE scores SET credits = ${info[1] + credit} WHERE userId = ${user.id}`);
-                }
-            }
-        
-            msg.channel.send(talk1[info[x]][Math.floor(Math.random() * talk1[info[x]].length)].replace('-user-', user.prefered).replace('-credit-', credit));
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "daily",
+            enabled: true,
+            runIn: ["text"],
+            description: "Get a daily amount of credits or give them to someone else.",
+            usage: "[user:usersearch]"
         });
-    });
-};
+    }
 
-exports.conf = {
-    enabled: true,
-    runIn: ["text", "dm"],
-    aliases: [],
-    permLevel: 0,
-    botPerms: [],
-    requiredFuncs: ["sqlTables", "userSearch"]
-};
-  
-exports.help = {
-    name: "daily",
-    description: "Get a daily amount of credits or give them to someone else.",
-    usage: "[user:str]",
-    humanUse: "(user)"
+    async run(msg, [user]) {
+        if (user === null) { return; }
+               
+        var data = this.client.dataManager("select", msg.author.id, "users");
+        if (!data && user.id !== msg.author.id) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
+        
+        if (!data) {
+            if (this.client.settings.usedDaily.has(msg.author.id)) { //Check if user has recently deleted their own data.
+                var revokeCheck = this.client.settings.usedDaily.get(msg.author.id);
+                if ((revokeCheck + 86400000) > Date.now()) { //Revoke was executed less than 24 hours ago.
+                    return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "revoked"])); 
+                }
+
+                this.client.settings.usedDaily.delete(msg.author.id);
+            }
+
+            this.client.dataManager("add", msg.author.id);
+            return msg.channel.send(this.client.speech(msg, ["daily", "self"]));
+        }
+
+        var cooldown = JSON.parse(data.cooldowns);
+        if ((cooldown.credit + 86400000) > Date.now()) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "cooldown"])); } 
+     
+        if (user.id === msg.author.id) {
+            cooldown.credit = Date.now();
+
+            this.client.dataManager("update", [`credits=${(data.credits + 100)}, cooldowns='${JSON.stringify(cooldown)}'`, msg.author.id], "users");
+            return msg.channel.send(this.client.speech(msg, ["daily", "self"]));
+        }
+
+        var tarData = this.client.dataManager("select", user.id, "users");
+        if (!tarData) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noUser"])); }
+
+        cooldown.credit = Date.now();
+        
+        this.client.dataManager("update", [`credits=${(tarData.credits + 100)}`, user.id], "users");
+        this.client.dataManager("update", [`cooldowns='${JSON.stringify(cooldown)}'`, msg.author.id], "users");
+
+        return msg.channel.send(this.client.speech(msg, ["daily", "other"], [["-user", user.username], ["-credit", 100]]));
+    }
 };

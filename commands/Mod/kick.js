@@ -1,33 +1,31 @@
-exports.run = async (client, msg, [user, reason]) => {
-  user = await client.funcs.userSearch(msg, {user: [user], name: this.help.name});
-  if (user.valid === null) { return; }
-  user = client.users.find("username", user.user[0].username);
+const { Command } = require("klasa");
 
-  if (!reason) { return msg.reply("You must supply a reason!"); }
-  if (msg.guild.member(user).kickable === false) { return msg.reply("I cannot kick that member"); }
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "kick",
+            enabled: true,
+            runIn: ["text"],
+            aliases: ["k"],
+            permissionLevel: 5,
+            requiredPermissions: ["KICK_MEMBERS", "EMBED_LINKS"],
+            description: "Kicks the mentioned user.",
+            usage: "<user:usersearch> <reason:str>", usageDelim: ","
+        });
+    }
 
-  var Toast = await client.funcs.modEmbed(client, msg, "kick", user.user[0], reason);
-    
-  if (Toast.embed.thumbnail) {
-    await user.send({embed: Toast.DMembed});
-    await msg.client.users.fetch(user.id).kick(reason);
-  }
-    
-  await Toast.channel.send({embed: Toast[0]});
-};
+    async run(msg, [user, reason]) {
+        if (user === null) { return; }
+        user = msg.guild.members.get(user.id);
+        if (user.kickable === false) { return msg.reply("I cannot kick that member"); }
+        
+        var data = this.client.util.modEmbed(msg, "kick", user, reason);
+        
+        if (data.embed.thumbnail) {
+            await user.send({embed: data.DMembed});
+            await user.kick(`Automated Action - Moderator: ${msg.author.username} | Reason: ${reason}`);
+        }
 
-exports.conf = {
-  enabled: true,
-  runIn: ["text"],
-  aliases: ["k"],
-  permLevel: 2,
-  botPerms: ["KICK_MEMBERS", "EMBED_LINKS"],
-  requiredFuncs: ["modEmbed", "userSearch"]
-};
-      
-exports.help = {
-  name: "kick",
-  description: "Kicks the mentioned user.",
-  usage: "[user:str] [reason:str] [...]",
-  usageDelim: " "
+        this.client.util.defaultChannel(msg.guild, "mod").send({embed: data.embed});
+    }
 };

@@ -1,31 +1,29 @@
-# MargarineBot - Version: Beta 0.9
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f0cfd83063a4469b8e40bcc824c2600d)](https://www.codacy.com/app/Butterstroke/MargarineBot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Butterstroke/MargarineBot&amp;utm_campaign=Badge_Grade)
+# MargarineBot - Version: Release 1.0
+![License](https://img.shields.io/github/license/Butterstroke/MargarineBot.svg?style=flat-square) ![Support Server](https://discordapp.com/api/guilds/303253034551476225/widget.png)
 
-A Discord bot coded in Node.js using the Discord.js Library and the Komada framework.
+<b>Dependencies</b>
+
+![discord.js](https://img.shields.io/badge/discord.js-v12.0.0--dev-brightgreen.svg) ![klasa](https://img.shields.io/badge/Klasa-v0.22.0-brightgreen.svg) ![node](https://img.shields.io/badge/Node-v10.0.0+-brightgreen.svg)
+
+A Discord bot coded in Node.js using the Discord.js Library and the Klasa framework.
 
 <b>Introduction:</b>
-Created through part-desire, part-what can I do in Discord, part-I'm going to learn Javascript, and part-it's only 12 am thoughts, Margarine has been my personal project for almost 6 months now. I am quite proud of the functionality and the time I have spend into Margarine. I have received plenty of support over the months of developing him and I can't thank those people enough as without that support, Margarine would have never been as big as he is today. I hope that you enjoy either looking at/learning/using Margarine as much as I do.
 
-*Name Origin:* My typical nickname is Butter. As in the stuff that you put on toast. His name comes from the artificial butter (I tends to call it 'Fake Butter') you can buy in stores called, Margarine.
-     
+Created through part-desire, part-what can I do in Discord, part-I'm going to learn Javascript, and part-it's only 12 am thoughts, Margarine has been my personal project for several years now. For the amount of time and effort I've spent on developing him, I'm quite proud of the functionality and features that I've put into him. I have received plenty of support over his development and I can't thank those people enough as without that support, Margarine would have never been as big or as good as he is today. I hope that you enjoy either looking at/learning/using Margarine as much as I do.
+
+*Name Origin:* My typical nickname is Butter, as in the stuff that you put on toast. His name comes from the artificial butter (I tends to call it 'Fake Butter') you can buy in stores called, Margarine.
 
 <b>Features:</b>
 - Moderation commands
 - Permission levels
 - Fun, small games like Rock, Paper, Scissors
 - Server/User/role info commands
-- Economy system (No SQL or any other server needed! All data is local to the folder.)
-- Music commands (Play your favourite tunes through Youtube!)
+- Economy system using a SQLite database
 
-<b>Updates:</b>
-- 02 June 2018: Beta 0.9 Release
-- 30 November 2017: Beta 0.8 Released
-- 31 October 2017: Beta 0.7 Released
-- 30 September 2017: Beta 0.6 Released
-- 15 August 2017: Beta 0.5 Released
-- 14 July 2017: Beta 0.4 Released
-- 6 June 2017: Beta 0.3 Released
-- 30 May 2017: Beta 0.2 Released
+<a href="https://discordapp.com/oauth2/authorize?client_id=315132794172997633&permissions=60482&scope=bot"> Invite me to your server!</a>
 
-<b>Invite me!</b>
-<i>Not available at the current moment as the bot is in development.</i>
+<b>Contact</b>
+
+For issues, please use the issue tracker on this repository.
+
+For any thing else, either contact me by email <a href="mailto:katsurinstudios@protonmail.ch">katsurinstudios@protonmail.ch</a> or in my [Discord server](https://discord.gg/TJJ6KGd) in the #margarine-bot channel.

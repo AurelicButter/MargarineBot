@@ -1,24 +1,21 @@
-exports.run = async (client, msg) => {
-  if (!msg.guild.voiceConnection) { throw `I am not connected in a voice channel, please add some songs to the mix first with ${msg.guild.settings.prefix}queueadd`; }
-  if (msg.guild.voiceConnection.dispatcher.paused) { return msg.send("The stream is already paused, baka!"); }
+const { Command } = require("klasa");
 
-  msg.guild.voiceConnection.dispatcher.pause();
-  return msg.send("⏸ The mix is now paused.");
-};
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "pause",
+            runIn: ["text"],
+            description: "Pause the playlist."
+        });
+    }
 
-exports.conf = {
-  enabled: true,
-  runIn: ["text"],
-  aliases: [],
-  permLevel: 0,
-  botPerms: [],
-  requiredFuncs: [],
-};
+    async run(msg) {
+        var handler = this.client.util.musicCheck(msg, "handler");
+        if (handler === false) { return; }
+        if (handler.state === "PAUSE") { return msg.channel.send(this.client.speech(msg, ["pause", "paused"])); }
 
-exports.help = {
-  name: "pause",
-  description: "Pauses the playlist.",
-  usage: "",
-  usageDelim: "",
-  extendedHelp: "",
+        handler.dispatcher.pause(); //Breaks when the bot hasn't started to play yet. Potentially a musicCheck requirement.
+        handler.state = "PAUSE"; //Execute after since bot will not be able to resume if pause() errors
+        msg.channel.send(this.client.speech(msg, ["pause", "success"]));
+    }
 };

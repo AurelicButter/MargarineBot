@@ -2,5 +2,4 @@ node_modules/
 .vs/
 .vscode/
 bwd/
-assets/data/
 assets/settings.json

@@ -1,21 +1,21 @@
-exports.run = async (client, msg) => {
-  if (!msg.guild.voiceConnection) { throw "I am not connected in a voice channel, please add some songs to the mix first!"; }
-  if (msg.guild.voiceConnection.dispatcher.paused === false) { return msg.send("The stream is not paused, baka!"); }
+const { Command } = require("klasa");
 
-  msg.guild.voiceConnection.dispatcher.resume();
-  msg.send("▶ Now resuming your tunes. Keep partying!");
-};
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "resume",
+            runIn: ["text"],
+            description: "Resumes the playlist."
+        });
+    }
 
-exports.conf = {
-  enabled: true,
-  runIn: ["text"],
-  aliases: [],
-  permLevel: 0,
-  botPerms: []
-};
+    async run(msg) {
+        var handler = this.client.util.musicCheck(msg, "handler");
+        if (handler === false) { return; }
+        if (handler.state !== "PAUSE") { return msg.channel.send(this.client.speech(msg, ["resume", "noPause"])); }
 
-exports.help = {
-  name: "resume",
-  description: "Resumes the playlist.",
-  usage: ""
+        handler.dispatcher.resume();
+        handler.state = "PLAY";
+        msg.channel.send(this.client.speech(msg, ["resume", "success"]));
+    }
 };

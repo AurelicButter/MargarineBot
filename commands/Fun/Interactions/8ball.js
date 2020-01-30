@@ -1,19 +1,16 @@
-exports.run = async (client, message, [args]) => {
-    let response = ["Yes", "Maybe", "No", "Try again later", "Possibly", "Absolutely", "Probably not", "Outcome is looking good", "Outcome not looking good", "The stars say yes"];
+const { Command } = require("klasa");
 
-    message.channel.send(`${response[~~(Math.random() * response.length)]}, ${message.author.username}.`);    
-};
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "8ball",
+            enabled: true,
+            runIn: ["text"],
+            description: "Ask the magic 8ball wizard for an answer!"
+        });
+    }
 
-exports.conf = {
-    enabled: true,
-    runIn: ["text"],
-    aliases: [],
-    permLevel: 0,
-    botPerms: []
-};
-      
-exports.help = {
-    name: "8ball",
-    description: "Ask the magic 8ball wizard for an answer!",
-    usage: "[args:str][...]"
+    async run(msg) {
+        msg.channel.send(this.client.speech(msg, ["func-fun", "eightball"], [["-user", msg.author.username]]));
+    }
 };

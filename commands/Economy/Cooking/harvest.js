@@ -1,19 +1,27 @@
-exports.run = async (client, msg) => {
-    const sqlite3 = require("sqlite3").verbose();
-    let db = new sqlite3.Database("./assets/data/inventory.sqlite");
-    const items = require("../../../assets/values/items.json");
+const { Command } = require("klasa");
 
-    client.funcs.transactions(msg, {credit: [1, "-", 11]}, function(data) {
-        if (data.valid === false) { return; }
-    });
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "harvest",
+            enabled: true,
+            runIn: ["text"],
+            cooldown: 30,
+            description: "Harvest fruits and other foods for cooking!",
+            extendedHelp: "Spend 10 credits to gather materials! (30 second cooldown)"
+        });
+    }
 
-    db.get(`SELECT * FROM material WHERE userId = "${msg.author.id}"`, [], (err, row) => {
+    async run(msg) {
+        const items = this.client.itemData;
+
+        var data = this.client.dataManager("select", msg.author.id, "users");
+        if (!data) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
+        if (data.credits < 10) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "lackCredits"])); }
+
+        const harvType = ["greenapple", "apple", "lemon", "potato", "bread", "rice", "egg", "chocolate"];
+
         var die = Math.random();
-
-        const itemName = [
-            ["greenapple", "apple", "lemon", "potato", "bread", "rice", "egg", "chocolate"],
-            [row.greenapple, row.apple, row.lemon, row.potato, row.rice, row.egg, row.bread, row.chocolate]
-        ];
 
         if (die < .06) { var results = 0; } 
         else if (die < .12) { var results = 1; }
@@ -24,29 +32,13 @@ exports.run = async (client, msg) => {
         else if (die < .80) { var results = 6; }
         else { var results = 7; }
 
-        var item = items[itemName[0][results]];
-        var amount = Number(itemName[1][results]) + 1;
+        var item = harvType[results];
 
-        var name = (item.name === "green apple") ? "greenapple" : item.name;
+        var harvData = this.client.dataManager("select", msg.author.id, "harvest");
 
-        db.run(`UPDATE material SET ${name} = ${amount} WHERE userId = ${msg.author.id}`);
-                
-        return msg.channel.send(`${msg.author.username}, you have found ${item.emote}. The item has been placed in your inventory.`);
-    });
-    db.close();
-};
+        this.client.dataManager("update", [`${item}=${(harvData[item] + 1)}`, msg.author.id], "harvest");
+        this.client.dataManager("update", [`credits=${(data.credits - 10)}`, msg.author.id], "users");
 
-exports.conf = {
-    enabled: true,
-    runIn: ["text"],
-    aliases: [],
-    permLevel: 0,
-    botPerms: [],
-    cooldown: 30,
-};
-  
-exports.help = {
-    name: "harvest",
-    description: "Harvest fruits and other foods for cooking!",
-    usage: "",
+        msg.channel.send(this.client.speech(msg, ["harvest"], [["-kind", items[item].emote]]));
+    }
 };

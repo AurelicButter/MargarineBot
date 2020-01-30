@@ -1,32 +1,19 @@
-exports.run = async (client, message, [status, game, type]) => {
-  client.user.setStatus(status);
+const { Command } = require("klasa");
 
-  const list = {
-    play: "PLAYING", 
-    stream: "STREAMING", 
-    listen: "LISTENING", 
-    watch: "WATCHING"
-  };
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "presence",
+            enabled: true,
+            runIn: ["text", "dm"],
+            permissionLevel: 9,
+            description: "Set Margarine's status entirely",
+            usage: "<online|idle|dnd|invisible> [game:str] [play|stream|listen|watch]",
+            usageDelim: " | "
+        });
+    }
 
-  if (!game) { game = `Playing around with ${client.owner.username}`; } 
-  if (game.toLowerCase() === "null") { game = null; } 
-  else { game = `m~help | ${game}`; }
-
-  client.user.setPresence({ activity: { name: game, type: list[type] } }); 
-};
-
-exports.conf = {
-  enabled: true,
-  runIn: ["text", "dm"],
-  aliases: [],
-  permLevel: 9,
-  botPerms: [],
-};
-  
-exports.help = {
-  name: "presence",
-  description: "Sets Margarine's status entirely",
-  usage: "<online|idle|dnd|invisible> [game:str] [play|stream|listen|watch]",
-  usageDelim: " | ",
-  humanUse: "(online|idle|dnd|invisible)_(game)_(play|stream|listen|watch)"
+    async run(msg, [status, game, type="play"]) {
+        this.client.util.presenceHelper(this.client, game, type, status);
+    }
 };

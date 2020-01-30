@@ -1,18 +1,17 @@
-exports.run = async (client, message) => {
-    const msg = await message.channel.send("Pinging...");
-    await msg.edit(`🎉 Pong! (Took: ${msg.createdTimestamp - message.createdTimestamp}ms.) 🎉`);
-};
-  
-exports.conf = {
-  enabled: true,
-  runIn: ["text"],
-  aliases: [],
-  permLevel: 0,
-  botPerms: []
-};
-  
-exports.help = {
-  name: "ping",
-  description: "Ping/Pong command.",
-  usage: ""
+const { Command } = require("klasa");
+
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "ping",
+            runIn: ["text", "dm"],
+            guarded: true,
+            description: "Ping/Pong command"
+        });
+    }
+
+    async run(message) {
+        const msg = await message.channel.send("Pinging...");
+        await msg.edit(`🎉 Pong! (Took: ${(msg.editedTimestamp || msg.createdTimestamp) - (message.editedTimestamp || message.createdTimestamp)}ms.) 🎉`);
+    }
 };

@@ -1,22 +1,22 @@
-exports.run = async (client, message, [...choice]) => {
-    var results = Math.ceil(Math.random() * choice.length);
-    results = choice[(results - 1)];
+const { Command } = require("klasa");
 
-    message.channel.send(`${message.author.username}, I think **${results}** would be the best choice!`);
-};
-  
-exports.conf = {
-    enabled: true,
-    runIn: ["text"],
-    aliases: [],
-    permLevel: 0,
-    botPerms: [],
-};
-    
-exports.help = {
-    name: "choose",
-    description: "The one stop picker for hard choices!",
-    usage: "[choice:str] [...]",
-    usageDelim: " | ",
-    humanUse: "(choice)_(another one)_(etc...)"
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "choose",
+            enabled: true,
+            runIn: ["text"],
+            cooldown: 0,
+            aliases: ["choice"],
+            description: "The one stop picker for hard choices!",
+            usage: "[choice:str] [...]", usageDelim: " | "
+        });
+    }
+
+    async run(msg, [...choice]) {
+        if (choice.length < 2) { return msg.channel.send(this.client.speech(msg, ["choose", "lackChoice"])); }
+
+        var numChoice = Math.floor(Math.random() * choice.length);
+        msg.channel.send(this.client.speech(msg, ["choose", "success"], [["-user", msg.author.username], ["-result", choice[numChoice]]]));
+    }
 };

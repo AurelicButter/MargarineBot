@@ -1,23 +1,25 @@
 {
   "name": "margarine",
-  "version": "0.9.0",
-  "description": "Javascript bot using the Komada framework",
+  "version": "1.0.0",
+  "description": "Javascript bot using the Klasa framework",
   "main": "index.js",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.2",
-    "discord.js": "github:hydrabolt/discord.js",
+    "anilist-node": "^1.2.3",
+    "better-sqlite3": "^5.4.3",
+    "cheerio": "^1.0.0-rc.3",
+    "discord.js": "github:discordjs/discord.js",
     "ffmpeg": "0.0.4",
-    "komada": "^0.21.1",
-    "moment": "^2.19.3",
-    "moment-duration-format": "^1.3.0",
-    "ms": "^2.0.0",
-    "node-opus": "^0.2.7",
+    "klasa": "github:dirigeants/klasa#master",
+    "moment": "^2.24.0",
+    "moment-duration-format": "^2.3.2",
+    "ms": "^2.1.2",
+    "node-fetch": "^2.6.0",
+    "opusscript": "0.0.7",
     "querystring": "^0.2.0",
-    "request": "^2.85.0",
-    "snekfetch": "^3.5.8",
-    "sqlite3": "^3.1.13",
-    "steamapi": "^1.3.5",
-    "ytdl-core": "^0.20.4"
+    "request": "^2.88.0",
+    "snekfetch": "^4.0.4",
+    "youtube-playlist": "^1.0.2",
+    "ytdl-core": "^1.0.7"
   },
   "devDependencies": {},
   "repository": {
@@ -25,8 +27,11 @@
     "url": "git+https://github.com/butterstroke/MargarineBot"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
-  "author": "Butterstroke",
+  "author": {
+    "name": "Frederick Katsura",
+    "email": "katsurinstudios@protonmail.ch"
+  },
   "license": "Apache-2.0"
 }

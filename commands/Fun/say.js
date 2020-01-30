@@ -1,21 +1,21 @@
-exports.run = (client, message, [msg]) => { 
-    if (!msg) { return message.reply("You need to provide a message."); }
+const { Command } = require("klasa");
+
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "say",
+            runIn: ["text"],
+            aliases: ["echo", "talk"],
+            description: "Have Margarine echo what you said.",
+            usage: "[message:str]"
+        });
+    }
+
+    async run(msg, [message]) {
+        if (!message) { return msg.channel.send(this.client.speech(msg, ["say"])); }
     
-    message.delete().catch();
-    if (message.author.id === client.owner.id) { return message.channel.send(msg); }
-    return message.channel.send(`${message.author.username} (${message.author.id}) wanted to say: ${msg}`);
-};
-  
-exports.conf = {
-    enabled: true,
-    runIn: ["text"],
-    aliases: ["echo", "talk"],
-    permLevel: 0,
-    botPerms: [],
-};
-  
-exports.help = {
-    name: "say",
-    description: "Have Margarine echo what you said.",
-    usage: "[msg:str]",
+        msg.delete().catch();
+        if (msg.author.id === client.owner.id) { return msg.channel.send(message); }
+        msg.channel.send(`${msg.author.username} (${msg.author.id}) wanted to say: ${message}`);    
+    }
 };

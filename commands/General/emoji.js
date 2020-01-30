@@ -1,36 +1,43 @@
-exports.run = async (client, msg, [Name, ID]) => {
-    const prefix = msg.guild.settings.prefix || client.config.prefix;
+const { Command } = require("klasa");
 
-    msg.delete(); 
-    if (!Name) { return msg.channel.send("You need a name of an emote to search with, baka!"); }
-    if (msg.content.slice(prefix.length).startsWith("react") && (!ID)) {
-        return msg.channel.send("You need to specify a message's ID so that I can find it!").then(msg => { setTimeout(() => { msg.delete(); }, 4000); }); 
+function errMsg(msg, type) {
+    msg.channel.send(msg.client.speech(msg, ["emoji", type])).then(msg => { 
+        if (msg.channel.permissionsFor(msg.client.user).has("MANAGE_MESSAGES")) { 
+            setTimeout(() => { msg.delete(); }, 4000);
+        } 
+    }); 
+}
+
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "emoji",
+            enabled: true,
+            runIn: ["text"],
+            aliases: ["emote", "see", "react"],
+            requiredPermissions: ["ATTACH_FILES", "ADD_REACTIONS"],
+            description: "Bring in your pool of emotes from other servers! Either use the big image or use the alias of react and add a message ID to react to a message instead!",
+            usage: "[react|Name:str] [messageID:str]", usageDelim: " "
+        });
     }
 
-    let emotes = Array.from(client.emojis);
-    let emoji = emotes.filter((element) => {
-        if (element[1].name === Name) { return element; }
-    });
-    var type = emoji[0][1].animated === true ? "gif" : "png";
+    async run(msg, [Name, ID]) {
+        const prefix = msg.guild.settings.prefix;
 
-    if (msg.content.slice(prefix.length).startsWith("react")) {
-        msg.channel.messages.fetch(ID).then(msg => msg.react(client.emojis.get(emoji[0][0]))); 
-    } else { msg.channel.send({files: [`https://cdn.discordapp.com/emojis/${emoji[0][0]}.${type}`]}); }
-};
+        if (msg.channel.permissionsFor(this.client.user).has("MANAGE_MESSAGES")) { msg.delete(); }
+        if (!Name) { return errMsg(msg, "noName"); }
+        if (msg.content.slice(prefix.length).startsWith("react") && (!ID)) { return errMsg(msg, "noID"); }
+        if (Name.startsWith("<")) { Name = Name.slice(2, -20); }
 
-exports.conf = {
-    enabled: true,
-    runIn: ["text"],
-    aliases: ["see", "emote", "react"],
-    permLevel: 0,
-    botPerms: ["ATTACH_FILES", "ADD_REACTIONS", "MANAGE_MESSAGES"]
-};
-  
-exports.help = {
-    name: "emoji",
-    description: "Displays an enlargened emoji.",
-    usage: "[Name:str] [messageID:str]",
-    usageDelim: " ",
-    extendedHelp: "Bring in your pool of emotes from other servers! Either use the big image or use the alias of react and add a message ID to react to a message instead!",
-    humanUse: "(name)_([If reacting] messageID)"
+        let emoji = Array.from(this.client.emojis).filter((element) => {
+            if (element[1].name === Name) { return element; }
+        });
+
+        try { var type = emoji[0][1].animated === true ? "gif" : "png"; } 
+        catch(err) { return errMsg(msg, "badName"); }
+
+        if (msg.content.slice(prefix.length).startsWith("react")) {
+            msg.channel.messages.fetch(ID).then(msg => msg.react(this.client.emojis.get(emoji[0][0]))); 
+        } else { msg.channel.send({files: [`https://cdn.discordapp.com/emojis/${emoji[0][0]}.${type}`]}); }
+    }
 };

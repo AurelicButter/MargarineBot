@@ -1,0 +1,156 @@
+{
+    "info": {
+        "item_structure": {
+            "sell": 0,
+            "name": "item_name",
+            "emote": "item_emote",
+            "category": "Table in DB",
+            "subcategory": "Any subcategory of the table",
+            "recipe": [
+                ["material_name", "amount"]
+            ]
+        }
+    },
+    "trash": {
+        "sell": 0,
+        "name": "trash",
+        "emote": "🗑",
+        "category": "fishing",
+        "subcategory": "misc"
+    },
+    "fish": {
+        "sell": 5,
+        "name": "fish",
+        "emote": "🐟",
+        "category": "fishing"
+    },
+    "crab": {
+        "sell": 15,
+        "name": "crab",
+        "emote": "🦀",
+        "category": "fishing" 
+    },
+    "squid": {
+        "sell": 25,
+        "name": "squid",
+        "emote": "🦑",
+        "category": "fishing"
+    },
+    "shark": {
+        "sell": 75,
+        "name": "shark",
+        "emote": "🦈",
+        "category": "fishing"
+    }, 
+    "potato": {
+        "sell": 15,
+        "name": "potato",
+        "emote": "🥔",
+        "category": "harvest"
+    },
+    "egg": {
+        "sell": 5,
+        "name": "egg",
+        "emote": "🥚",
+        "category": "harvest"
+    },
+    "bread": {
+        "sell": 15,
+        "name": "bread",
+        "emote": "🍞",
+        "category": "harvest"
+    },
+    "chocolate": {
+        "sell": 15,
+        "name": "chocolate",
+        "emote": "🍫",
+        "category": "harvest"
+    },
+    "greenapple": {
+        "sell": 10,
+        "name": "green apple",
+        "emote": "🍏",
+        "category": "harvest"
+    },
+    "apple": {
+        "sell": 10,
+        "name": "apple",
+        "emote": "🍎",
+        "category": "harvest"
+    },
+    "lemon": {
+        "sell": 15,
+        "name": "lemon",
+        "emote": "🍋",
+        "category": "harvest"
+    },
+    "sake": {
+        "sell": 25,
+        "name": "sake",
+        "emote": "🍶",
+        "category": "harvest"
+    },
+    "rice": {
+        "sell": 10,
+        "name": "rice",
+        "emote": "🍚",
+        "category": "harvest"
+    },
+    "fishcake": {
+        "sell": 30,
+        "name": "fishcake",
+        "emote": "🍥",
+        "category": "product",
+        "subcategory": "food",
+        "recipe": [
+            ["fish", 1],
+            ["potato", 1] 
+        ]
+    },
+    "cookie": {
+        "sell": 25,
+        "name": "cookie",
+        "emote": "🍪",
+        "category": "product",
+        "subcategory": "food",
+        "recipe": [
+            ["egg", 1],
+            ["bread", 1],
+            ["chocolate", 2]
+        ]
+    },
+    "oden": {
+        "sell": 125,
+        "name": "oden",
+        "emote": "🍢",
+        "category": "product",
+        "subcategory": "food",
+        "recipe": [
+            ["sake", 1],
+            ["egg", 5],
+            ["squid", 1]
+        ]
+    },
+    "sushi": {
+        "sell": 75,
+        "name": "sushi",
+        "emote": "🍣",
+        "category": "product",
+        "subcategory": "food",
+        "recipe": [
+            ["fish", 1],
+            ["squid", 1],
+            ["rice", 2]
+        ]
+    },
+    "recycle": {
+        "sell": 44,
+        "name": "recycle",
+        "emote": "♻",
+        "category": "product",
+        "subcategory": "misc",
+        "recipe": [
+            ["trash", 10]
+        ]
+    }
+}

@@ -1,22 +1,19 @@
-exports.run = async (client, msg, [user]) => {
-    var data = await client.funcs.userSearch(msg, {user: [user], name: this.help.name});
-    
-    if (data.valid !== false) { 
-        client.users.fetch(data.user[0].id).then(avatar => { msg.channel.send("", { files: [avatar.displayAvatarURL()]}); }); 
+const { Command } = require("klasa");
+
+module.exports = class extends Command {
+    constructor(...args) {
+        super(...args, {
+            name: "avatar",
+            enabled: true,
+            runIn: ["text"],
+            requiredPermissions: ["ATTACH_FILES"],
+            description: "Fetch a user's avatar!",
+            usage: "[user:usersearch]"
+        });
     }
-};
-  
-exports.conf = {
-    enabled: true,
-    runIn: ["text"],
-    aliases: [],
-    permLevel: 0,
-    botPerms: ["ATTACH_FILES"],
-    requiredFuncs: ["userSearch"]
-};
-  
-exports.help = {
-    name: "avatar",
-    description: "Fetch a user's avatar!",
-    usage: "[user:str]"
+
+    async run(msg, [user]) {
+        if (user === null) { return; }
+        msg.channel.send("", { files: [user.displayAvatarURL()]});
+    }
 };
