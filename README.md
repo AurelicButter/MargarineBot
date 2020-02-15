@@ -1,4 +1,4 @@
-# MargarineBot - Version: Release 1.0
+# MargarineBot - Version: Release 1.0.1
 ![License](https://img.shields.io/github/license/Butterstroke/MargarineBot.svg?style=flat-square) ![Support Server](https://discordapp.com/api/guilds/303253034551476225/widget.png)
 
 <b>Dependencies</b>

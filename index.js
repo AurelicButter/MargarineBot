@@ -10,7 +10,7 @@ const client = new Client({
     fetchAllMembers: false,
     prefix: config.prefix,
     commandEditing: true,
-    readyMessage: (client) => `This is ${client.user.username} speaking! Online and awaiting orders!\nI'm currently serving ${client.guilds.size} guilds and ${client.users.size} people!`
+    readyMessage: (client) => `This is ${client.user.username} speaking! Online and awaiting orders!\nI'm currently serving ${client.guilds.cache.size} guilds and ${client.users.cache.size} people!`
 });
 
 Client.defaultPermissionLevels

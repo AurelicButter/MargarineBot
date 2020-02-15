@@ -21,7 +21,7 @@ module.exports = class extends Argument {
 
         if (msg.guild) {
             var regex = new RegExp(regExpEsc(arg), "i");
-            results = msg.guild.members.filter(m => regex.test(m.user.username));    
+            results = msg.guild.members.cache.filter(m => regex.test(m.user.username));    
         }
 
         if (results.size === 0) {

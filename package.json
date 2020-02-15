@@ -1,6 +1,6 @@
 {
   "name": "margarine",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Javascript bot using the Klasa framework",
   "main": "index.js",
   "dependencies": {
@@ -16,7 +16,7 @@
     "node-fetch": "^2.6.0",
     "opusscript": "0.0.7",
     "querystring": "^0.2.0",
-    "request": "^2.88.0",
+    "request": "^2.88.2",
     "snekfetch": "^4.0.4",
     "youtube-playlist": "^1.0.2",
     "ytdl-core": "^1.0.7"
