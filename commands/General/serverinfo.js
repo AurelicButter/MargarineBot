@@ -24,8 +24,8 @@ module.exports = class extends Command {
             .addField("Region:", guild.region, true)
             .addField("Created:", guild.createdAt.toLocaleString(), true)
             .addField("Owner:", `${guild.owner.user.tag} - ${guild.owner.id}`)
-            .addField("Members:", `${guild.memberCount - guild.members.filter(m => m.user.bot).size} (${guild.members.filter(m => m.user.bot).size} bots)`, true)
-            .addField("Roles:", guild.roles.size, true)
+            .addField("Members:", `${guild.memberCount - guild.members.cache.filter(m => m.user.bot).size} (${guild.members.cache.filter(m => m.user.bot).size} bots)`, true)
+            .addField("Roles:", guild.roles.cache.size, true)
             .setFooter(msg.guild.name, msg.guild.iconURL());
 
         msg.channel.send({embed});   

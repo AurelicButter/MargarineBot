@@ -50,7 +50,8 @@ exports.anime = {
         "Looks like AniList is having a bit of trouble right now. Come back and try again later."
     ],
     "noResult": [
-        "There's not an anime by that name!"
+        "There's not an anime by that name!",
+        "Looks like you have your next upcoming title for your new show! An anime does not exist with that title."
     ],
     "nsfw" : [
         "You can't search for hentai in a SFW channel!",
@@ -86,7 +87,7 @@ exports.choose = {
         "-user, I think that **-result** would be the best choice!",
         "Hmm... looks like **-result** is the best option",
         "**-result** looks rather tempting. I'd pick that one.",
-        "Why did was it so hard to choose? **-result** is obviously the best choice, -user!"
+        "Why was it so hard to choose? **-result** is obviously the best choice, -user!"
     ]
 };
 

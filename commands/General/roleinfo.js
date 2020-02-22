@@ -16,14 +16,14 @@ module.exports = class extends Command {
 
     async run(msg, [rolesrc]) {
         var role;
-        msg.guild.roles.forEach(element => { if (element.name.toLowerCase() === rolesrc.toLowerCase()) { role = element; } });
+        msg.guild.roles.cache.forEach(element => { if (element.name.toLowerCase() === rolesrc.toLowerCase()) { role = element; } });
         if (!role) { return this.client.speech(msg, ["roleinfo"]); }
 
         const embed = new MessageEmbed()
             .setTimestamp()
             .setAuthor(`${role.name} | ${role.id}`)
             .setColor(role.hexColor)
-            .addField("Position:", (msg.guild.roles.size - role.position), true)
+            .addField("Position:", (msg.guild.roles.cache.size - role.position), true)
             .addField("Hex Colour:", role.hexColor, true)
             .addField("User Count:", role.members.size, true)
             .addField("Hoisted", role.hoist, true)

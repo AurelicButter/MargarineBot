@@ -29,7 +29,7 @@ module.exports = class extends Command {
         if (msg.content.slice(prefix.length).startsWith("react") && (!ID)) { return errMsg(msg, "noID"); }
         if (Name.startsWith("<")) { Name = Name.slice(2, -20); }
 
-        let emoji = Array.from(this.client.emojis).filter((element) => {
+        let emoji = Array.from(this.client.emojis.cache).filter((element) => {
             if (element[1].name === Name) { return element; }
         });
 
@@ -37,7 +37,7 @@ module.exports = class extends Command {
         catch(err) { return errMsg(msg, "badName"); }
 
         if (msg.content.slice(prefix.length).startsWith("react")) {
-            msg.channel.messages.fetch(ID).then(msg => msg.react(this.client.emojis.get(emoji[0][0]))); 
+            msg.channel.messages.fetch(ID).then(msg => msg.react(this.client.emojis.cache.get(emoji[0][0]))); 
         } else { msg.channel.send({files: [`https://cdn.discordapp.com/emojis/${emoji[0][0]}.${type}`]}); }
     }
 };

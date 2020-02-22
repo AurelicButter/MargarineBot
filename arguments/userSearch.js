@@ -15,13 +15,13 @@ module.exports = class extends Argument {
 
     async run(arg, possible, msg) { 
         if (arg === undefined) { return msg.author; }
-        if (IDRegex.test(arg)) { return this.client.users.get(/(\d{17,21})/.exec(arg)[0]); } 
+        if (IDRegex.test(arg)) { return this.client.users.cache.get(/(\d{17,21})/.exec(arg)[0]); } 
 
         var results = [];
 
         if (msg.guild) {
             var regex = new RegExp(regExpEsc(arg), "i");
-            results = msg.guild.members.cache.filter(m => regex.test(m.user.username));    
+            results = msg.guild.members.cache.filter(m => regex.test(m.user.username));   
         }
 
         if (results.size === 0) {
@@ -29,6 +29,6 @@ module.exports = class extends Argument {
             return null;
         }
 
-        return this.client.users.get(results.keys().next().value);
+        return this.client.users.cache.get(results.keys().next().value);
     }
 };

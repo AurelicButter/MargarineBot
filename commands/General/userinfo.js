@@ -16,7 +16,7 @@ module.exports = class extends Command {
 
     async run(msg, [user]) {
         if (user === null) { return; }
-        user = msg.guild.members.get(user.id);
+        user = msg.guild.members.cache.get(user.id);
 
         const embed = new MessageEmbed()
             .setTimestamp()

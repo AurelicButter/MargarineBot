@@ -3,8 +3,8 @@
     "ownerID": "User ID",
     "prefix": "Prefix", 
     "build": {
-        "version": "Release 1.0",
-        "releaseDate": "January 30th, 2020"
+        "version": "Release 1.0.2",
+        "releaseDate": "February 22nd, 2020"
     },
     "owner": {
         "channels": {

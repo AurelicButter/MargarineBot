@@ -53,7 +53,7 @@ module.exports = class extends Command {
                 if (Number(cat) + 1 === categories.length) { msg.send("The category you were looking for does not exist."); break; }
             }
         } else {
-            cmd = this.client.commands.get(cmd) || this.client.aliases.get(cmd);
+            cmd = this.client.commands.get(cmd) || this.client.commands.aliases.get(cmd);
             if (!cmd) { return msg.send("❌ | Unknown command, please run the help command with no arguments to get a list of categories."); }
 
             var usage = cmd.humanUse ? [cmd.humanUse.trim(), "_"] : [cmd.usageString, " "];
