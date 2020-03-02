@@ -3,7 +3,7 @@
 
 <b>Dependencies</b>
 
-![discord.js](https://img.shields.io/badge/discord.js-v12.0.0--dev-brightgreen.svg) ![klasa](https://img.shields.io/badge/Klasa-v0.22.0-brightgreen.svg) ![node](https://img.shields.io/badge/Node-v10.0.0+-brightgreen.svg)
+![discord.js](https://img.shields.io/badge/discord.js-v12.0.1-brightgreen.svg) ![klasa](https://img.shields.io/badge/Klasa-v0.22.0-brightgreen.svg) ![node](https://img.shields.io/badge/Node-v10.0.0+-brightgreen.svg)
 
 A Discord bot coded in Node.js using the Discord.js Library and the Klasa framework.
 
