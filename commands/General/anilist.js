@@ -46,24 +46,38 @@ module.exports = class extends Command {
         }
 
         var data = await anilist.user.all(username);
-
         if (data.status === 404) { return msg.channel.send(this.client.speech(msg, ["anilist", "404Err"])); }
-        var anime = data.stats.animeStatusDistribution,
-            manga = data.stats.mangaStatusDistribution;
-
-        var animeL = [`💚 Watching: ${anime[0].amount}`, `🗓 Planned: ${anime[1].amount}`, `💙 Completed: ${anime[2].amount}`, `💔 Dropped: ${anime[3].amount}`, `💛 Paused: ${anime[4].amount}`];
-        var mangaL = [`📗 Reading: ${manga[0].amount}`, `🗓 Planned: ${manga[1].amount}`, `📘 Completed: ${manga[2].amount}`, `📕 Dropped: ${manga[3].amount}`, `📙 Paused: ${manga[4].amount}`];
 
         const embed = new MessageEmbed()
             .setTitle(`${username}'s AniList Profile`)
             .setURL(data.siteUrl)
-            .setDescription(`🕓 Watch Days: ${Number(data.stats.watchedTime / 60 / 24).toFixed(1)}\n🔖 Manga Chapters: ${data.stats.chaptersRead}`)
-            .addField("__Anime:__", `📊 Mean Score: ${data.stats.animeListScores.meanScore}\n${animeL.join("\n")}`, true)
-            .addField("__Manga:__", `📊 Mean Score: ${data.stats.mangaListScores.meanScore}\n${mangaL.join("\n")}`, true)
             .setTimestamp()
             .setColor(0x2E51A2)
             .setThumbnail(data.avatar.large)
             .setFooter(`Requested by: ${msg.author.tag}`);
+
+        var animeStat = data.statistics.anime,
+            mangaStat = data.statistics.manga;
+
+        var anime = { "CURRENT": 0, "PLANNING": 0, "COMPLETED": 0, "DROPPED": 0, "PAUSED": 0 },
+            manga = { "CURRENT": 0, "PLANNING": 0, "COMPLETED": 0, "DROPPED": 0, "PAUSED": 0 };
+
+        animeStat.statuses.forEach((e) => { 
+            if (e.status !== "REPEATING" || e.status !== "COMPLETED") { anime[e.status] = e.count; }
+            else { anime["COMPLETED"] += e.count; }
+        });
+
+        mangaStat.statuses.forEach((e) => {
+            if (e.status !== "REPEATING" || e.status !== "COMPLETED") { manga[e.status] = e.count; }
+            else { manga["COMPLETED"] += e.count; }
+        });
+
+        var animeL = [`💚 Watching: ${anime.CURRENT}`, `🗓 Planned: ${anime.PLANNING}`, `💙 Completed: ${anime.COMPLETED}`, `💔 Dropped: ${anime.DROPPED}`, `💛 Paused: ${anime.PAUSED}`];
+        var mangaL = [`📗 Reading: ${manga.CURRENT}`, `🗓 Planned: ${manga.PLANNING}`, `📘 Completed: ${manga.COMPLETED}`, `📕 Dropped: ${manga.DROPPED}`, `📙 Paused: ${manga.PAUSED}`];
+
+        embed.setDescription(`🕓 Watch Days: ${Number(data.statistics.anime.minutesWatched / 60 / 24).toFixed(1)}\n🔖 Manga Chapters: ${data.statistics.manga.chaptersRead}`)
+            .addField("__Anime:__", `📊 Mean Score: ${data.statistics.anime.meanScore}\n${animeL.join("\n")}`, true)
+            .addField("__Manga:__", `📊 Mean Score: ${data.statistics.manga.meanScore}\n${mangaL.join("\n")}`, true);
     
         msg.channel.send({embed});
     }

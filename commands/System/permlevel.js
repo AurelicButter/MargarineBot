@@ -22,7 +22,7 @@ module.exports = class extends Command {
             if (!guild) { permLevel = 0; }
             else if (guild.owner.id === msg.author.id) { permLevel = 3; }
             else if (author.permissions.has("ADMINISTRATOR")) { permLevel = 2; }
-            else if (author.roles.has(guild.settings.modRole)) { permLevel = 1; }
+            else if (author.roles.cache.has(guild.settings.modRole)) { permLevel = 1; }
             else { permLevel = 0; }
 
             var info = this.client.ownerSetting.get("permLevel").addPerms[permLevel];

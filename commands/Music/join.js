@@ -13,7 +13,7 @@ module.exports = class extends Command {
         var check = this.client.util.musicCheck(msg, "join");
         if (check === false) { return; }
     
-        var vcID = msg.guild.channels.get(msg.member.voice.channelID);
+        var vcID = msg.guild.channels.cache.get(msg.member.voice.channelID);
         const permissions = vcID.permissionsFor(msg.guild.me);
         if (permissions.has("CONNECT") === false) { return msg.channel.send(this.client.speech(msg, ["join", "noConnect"])); }
         if (permissions.has("SPEAK") === false) { return msg.channel.send(this.client.speech(msg, ["join", "noSpeak"])); }

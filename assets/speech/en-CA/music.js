@@ -64,10 +64,16 @@ exports.play = {
     ] //Next song playing
 };
 
-exports.queue = [ //Parameter 1: Page count
-    "I can't show you that page for its page number is greater than my queue pages. There are currently -pgs",
-    "Your number is higher than -pgs. So, there is nothing to see there."
-];
+exports.queue = {
+    "noList": [
+        "You don't have anything in your queue at the moment. Add some with the queueadd command.",
+        "There's nothing here. You should add some songs with queueadd!"
+    ],
+    "highCount": [
+        "I can't show you that page for its page number is greater than my queue pages. There are currently -pgs",
+        "Your number is higher than -pgs. So, there is nothing to see there."
+    ]
+};
 
 exports.queueadd = {
     "noURL": [

@@ -14,7 +14,7 @@ const client = new Client({
 });
 
 Client.defaultPermissionLevels
-    .add(5, ({ guild, member }) => guild && member.roles.has(guild.settings.modRole))
+    .add(5, ({ guild, member }) => guild && member.roles.cache.has(guild.settings.modRole))
     .add(6, ({ guild, member }) => guild && member.permissions.has("ADMINISTRATOR"))
     .add(9, ({ author, client }) => author === client.owner || author.id === config.secondary)
     .add(10, ({ author, client }) => author === client.owner);
