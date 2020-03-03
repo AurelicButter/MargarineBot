@@ -20,9 +20,6 @@ module.exports = class extends Command {
     async run(msg, [cmd, mod]) {
         const help = await this.buildHelp(msg);
 
-        Object.assign(help["general"], help["General"]); //Combine system "General" and Margarine "general"
-        delete help["General"]; //Delete system "General"
-
         const categories = Object.keys(help);
         const helpMessage = [];
 
