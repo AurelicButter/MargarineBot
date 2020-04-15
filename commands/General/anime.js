@@ -12,14 +12,14 @@ module.exports = class extends Command {
             cooldown: 30,
             requiredPermissions: ["ATTACH_FILES"],
             description: "Search for anime on AniList",
-            usage: "[term:str]",
+            usage: "<term:str>",
             extendedHelp: "There is a 60 second cooldown for each search to not spam the site."
         });
+
+        this.customizeResponse("term", msg => msg.client.speech(msg, ["anime", "noSearch"]));
     }
 
     async run(msg, [term]) {
-        if (!term) { return msg.channel.send(this.client.speech(msg, ["anime", "noSearch"])); }
-
         var data = await anilist.search("anime", term, 1, 3);
         if (!data || !data.media) { return msg.channel.send(this.client.speech(msg, ["anime", "searchErr"])); }
         data = await anilist.media.anime(data.media[0].id);

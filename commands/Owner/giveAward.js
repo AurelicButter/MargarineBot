@@ -10,17 +10,18 @@ module.exports = class extends Command {
             permissionLevel: 9,
             requiredPermissions: ["EMBED_LINKS"],
             description: "Award a user based on their efforts",
-            usage: "<user:usersearch> [suggest|bug|minor|major] [text:str][...]",
+            usage: "<user:usersearch> <suggest|bug|minor|major> <text:str>[...]",
             usageDelim: " "
         });
 
         this.humanUse = "<user> <suggest|bug|minor|major> <text>";
+
+        this.customizeResponse("suggest", msg => msg.client.speech(msg, ["func-system", "award", "noType"]))
+            .customizeResponse("text", msg => msg.client.speech(msg, ["func-system", "award", "noText"]));
     }
 
     async run(msg, [user, type, ...text]) {
         if (user === null) { return; }
-        if (!type) { return msg.channel.send(this.client.speech(msg, ["func-system", "award", "noType"])); }
-        if (!text) { return msg.channel.send(this.client.speech(msg, ["func-system", "award", "noText"])); }
 
         var overallData = this.client.dataManager("select", "Overall", "awards");
         var userData = this.client.dataManager("select", user.id, "awards");

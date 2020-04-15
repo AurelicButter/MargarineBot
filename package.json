@@ -5,12 +5,12 @@
   "main": "index.js",
   "dependencies": {
     "@discordjs/opus": "^0.1.0",
-    "anilist-node": "^1.3.0",
-    "better-sqlite3": "^5.4.3",
+    "anilist-node": "^1.3.1",
+    "better-sqlite3": "^6.0.1",
     "cheerio": "^1.0.0-rc.3",
-    "discord.js": "^12.0.1",
+    "discord.js": "^12.1.1",
     "ffmpeg": "0.0.4",
-    "klasa": "github:dirigeants/klasa#master",
+    "klasa": "github:dirigeants/klasa",
     "moment": "^2.24.0",
     "moment-duration-format": "^2.3.2",
     "ms": "^2.1.2",
@@ -19,7 +19,7 @@
     "request": "^2.88.2",
     "snekfetch": "^4.0.4",
     "youtube-playlist": "^1.0.2",
-    "ytdl-core": "^1.0.7"
+    "ytdl-core": "^2.0.1"
   },
   "devDependencies": {},
   "repository": {
