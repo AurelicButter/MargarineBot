@@ -73,3 +73,23 @@ exports.crash = [
     "Ouch! Am I not doing a good enough job for you? BAKA!",
     "-user! So mean! I'm just trying to have fun here!"
 ];
+
+exports.starboard = {
+    "wrongItem": [
+        "Nope, that's not going to work. You're going to need something that matches what you want to set."
+    ],
+    "set": [
+        "Okay! I've set -target to -item!",
+        "You're all set! -target is now set to -item!"
+    ],
+    "list": [
+        "Okay! Here's your starboard settings:\n__Channel:__ <#-channel>\n__Emote:__ -emote\n__Amount:__ -amount"
+    ],
+    "noItem": [
+        "Hmm... looks like you didn't want me to set anything."
+    ],
+    "remove": [
+        "Okay! I've set -target back to its original state.",
+        "-target is now back to its original state!"
+    ]
+}
