@@ -17,7 +17,7 @@ module.exports = class extends Command {
         if (msg.author === this.client.owner || msg.author.id === config.secondary) {
             var guild = msg.guild;
             var authorLvl = (msg.author === this.client.owner) ? 10 : 9;
-            var author = guild.members.get(msg.author.id);
+            var author = guild.members.cache.get(msg.author.id);
 
             if (!guild) { permLevel = 0; }
             else if (guild.owner.id === msg.author.id) { permLevel = 3; }

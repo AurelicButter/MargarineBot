@@ -26,7 +26,7 @@ module.exports = class extends Event {
         if (reaction.users.cache.has(this.client.user.id)) { sbCount++; }
 
         //Not enough reactions to pin, do nothing.
-        // /if (sbConfig.requiredAmount > emote.reaction.count) { return; }
+        if (sbConfig.requiredAmount > emote.reaction.count) { return; }
 
         //If message is produced by the starboard, return.
         if (sbConfig.sbCache.includes(msg.id)) { return; }
