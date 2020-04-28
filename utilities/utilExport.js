@@ -10,7 +10,7 @@ exports.dataManager = require("./dataManager.js");
  * @param { KlasaClient } client
  */
 exports.commandRemover = function(client) {
-    const cmdNames = ["Admin/load", "Admin/unload", "Admins/transfer", "General/Chat Bot Info/info", "General/Chat Bot Info/stats"];
+    const cmdNames = ["Admin/load", "Admin/unload", "Admins/transfer", "General/Chat Bot Info/info", "General/Chat Bot Info/stats", "General/User Settings/userconf"];
     for(var x = 0; x < cmdNames.length; x++) {
         if (existsSync(`${client.userBaseDirectory}/node_modules/klasa/src/commands/${cmdNames[x]}.js`)) {
             unlinkSync(`${client.userBaseDirectory}/node_modules/klasa/src/commands/${cmdNames[x]}.js`);
