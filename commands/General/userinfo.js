@@ -9,13 +9,12 @@ module.exports = class extends Command {
             runIn: ["text"],
             aliases: ["user"],
             description: "Get a user's information",
-            usage: "[user:usersearch]",
+            usage: "<user:usersearch>",
             extendedHelp: "Need Discord info on a specific user? I got you covered!"
         });
     }
 
     async run(msg, [user]) {
-        if (user === null) { return; }
         user = msg.guild.members.cache.get(user.id);
 
         const embed = new MessageEmbed()

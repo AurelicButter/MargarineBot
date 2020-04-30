@@ -16,17 +16,15 @@ module.exports = class extends Command {
     }
 
     show(msg) {
-        var sbChannel = msg.guild.settings.starboard.channel || "No channel set";
+        var sbChannel = msg.guild.settings.starboard.channel || msg.language.get("NOCHANNEL");
         var sbEmote = msg.guild.settings.starboard.emote;
         var sbTotal = msg.guild.settings.starboard.requiredAmount;
 
-        msg.channel.send(this.client.speech(msg, ["starboard", "list"], 
-            [["-channel", sbChannel], ["-emote", sbEmote], ["-amount", sbTotal]]
-        ));
+        msg.sendLocale("STARBOARD_SHOW", [msg, sbChannel, sbEmote, sbTotal]);
     }
 
     async remove(msg, [target]) {
-        if (!target) { return msg.channel.send(this.client.speech(msg, ["starboard", "noItem"])); }
+        if (!target) { return msg.sendLocale("STARBOARD_NOITEM", [msg]); }
         
         if (target === "emote") { 
             msg.guild.settings.update("starboard.emote", "⭐"); 
@@ -36,25 +34,25 @@ module.exports = class extends Command {
             msg.guild.settings.update("starboard.channel", null); 
         }
 
-        msg.channel.send(this.client.speech(msg, ["starboard", "remove"], [["-target", target]]));
+        msg.sendLocale("STARBOARD_REMOVE", [msg, target]);
     }
 
     async set(msg, [target, item]) {
         var starboardEdit;
-        if (!item) { return msg.channel.send(this.client.speech(msg, ["starboard", "noItem"])); }
+        if (!item) { return msg.sendLocale("STARBOARD_NOITEM", [msg]); }
 
         if (target === "channel") {
-            if (!item.includes("<#")) { return msg.channel.send(this.client.speech(msg, ["starboard", "wrongItem"])); }
+            if (!item.includes("<#")) { return msg.sendLocale("STARBOARD_WRONGITEM", [msg]); }
             starboardEdit = "starboard.channel";
         } else if (target === "emote") {
-            if (!RegExp('<:\\S*:\\d*>').test(item)) { return msg.channel.send(this.client.speech(msg, ["starboard", "wrongItem"])); }
+            if (!RegExp('<:\\S*:\\d*>').test(item)) { return msg.sendLocale("STARBOARD_WRONGITEM", [msg]); }
             starboardEdit = "starboard.emote";
         } else if (target === "amount") {
-            if (isNaN(item)) { return msg.channel.send(this.client.speech(msg, ["starboard", "wrongItem"])); }
+            if (isNaN(item)) { return msg.sendLocale("STARBOARD_WRONGITEM", [msg]); }
             starboardEdit = "starboard.requiredAmount";
-        } else { return msg.channel.send(this.client.speech(msg, ["starboard", "wrongItem"])); }
+        } else { return msg.sendLocale("STARBOARD_WRONGITEM", [msg]); }
 
         msg.guild.settings.update(starboardEdit, item);
-        msg.channel.send(this.client.speech(msg, ["starboard", "set"], [["-target", target], ["-item", item]]));
+        msg.sendLocale("STARBOARD_SETITEM", [msg, target, item]);
     }
 };

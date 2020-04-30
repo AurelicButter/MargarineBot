@@ -1,7 +1,7 @@
 const { Client } = require("klasa");
 const { Collection } = require("discord.js");
 const config = require("./assets/settings.json");
-const { envCheck, speech, dataManager, util, commandRemover } = require("./utilities/utilExport.js");
+const { envCheck, speech, dataManager, util, commandRemover, schemaManager } = require("./utilities/utilExport.js");
 const { existsSync } = require("fs");
 
 envCheck(); //Checks to make sure Margarine is running in the right enviroment.
@@ -19,19 +19,7 @@ Client.defaultPermissionLevels
     .add(9, ({ author, client }) => author === client.owner || author.id === config.secondary)
     .add(10, ({ author, client }) => author === client.owner);
 
-client.gateways.guilds.schema //Add all configurable settings
-    .add("modRole", "role")
-    .add("muteRole", "role")
-    .add("langSpeech", "language", { default: "en-CA" })
-    .add("defaultChannel", "channel")
-    .add("modlog", "channel")
-    .add("starboard", folder => folder
-        .add("channel", "TextChannel")
-        .add("emote", "string", { default: "⭐"})
-        .add("requiredAmount", "Integer", { default: 5, min: 1 }) 
-        .add("msgCache", "string", { array: true }) //Linked with sbCache. Indexes are linked as a sudo-relation.
-        .add("sbCache", "string", { array: true })   
-    );
+schemaManager(client); //Adds all configurable settings.
 
 client.speech = speech;
 client.dataManager = dataManager;

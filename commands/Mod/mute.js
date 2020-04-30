@@ -15,7 +15,6 @@ module.exports = class extends Command {
     }
 
     async run(msg, [user, reason="No reason given."]) {
-        if (user === null) { return; }
         if (msg.guild.settings.muteRole === null) { return msg.channel.send(this.client.speech(msg, ["mute", "noRole"])); }
         user = msg.guild.members.cache.get(user.id);
 

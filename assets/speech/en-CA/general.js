@@ -1,15 +1,18 @@
 exports.anilist = {
     "setProfile": [ //Activates upon a successful link of the user's AniList profile.
         "You're all set! I have your username in my systems now!",
-        "✅ Username added. You're good to go!"
+        "✅ Username added. You're good to go!",
+        "Okay! You're all set!"
     ],
     "removeProfile": [ //Successfully removed profile.
-        "Okay! That username is no longer attached to you!",
-        "✅ Username removed. You're good to go!"
+        "Okay! That username is no longer attached to you.",
+        "✅ Username removed. You're good to go!",
+        "Alright, your linked username is no more."
     ],
     "noUsername": [ //User has a profile but has not set their AniList profile.
         "Huh... that user appears to have not set their AniList profile in my systems yet.",
-        "They haven't set their AniList profile yet! Try a general search for now."
+        "They haven't set their AniList profile yet! Try a general search for now.",
+        "Try a general search, it looks like that person hasn't set their AniList username yet."
     ],
     "noTerm": [ //Missing search term
         "You forgot to include a search term!",
@@ -44,10 +47,12 @@ exports.mal = {
 
 exports.anime = {
     "noSearch": [
-        "You're missing a search term, baka!"
+        "You're missing a search term, baka!",
+        "You need a search term for me to find something, baka!"
     ],
     "searchErr": [
-        "Looks like AniList is having a bit of trouble right now. Come back and try again later."
+        "Looks like AniList is having a bit of trouble right now. Come back and try again later.",
+        "We're having a slight issue with AniList right now. Come back and try again later."
     ],
     "noResult": [
         "There's not an anime by that name!",
@@ -93,13 +98,16 @@ exports.choose = {
 
 exports.emoji = {
     "noName": [
-        "You need a name of an emote to search with, baka!"
+        "You need a name of an emote to search with, baka!",
+        "Name! I need a name to search with!"
     ],
     "noID": [
-        "You need to specify a message's ID so that I can find it!"
+        "You need to specify a message's ID so that I can find it!",
+        "There's no ID so I have no idea where to find the message."
     ],
     "badName": [
-        "Type the emote's name right and try again, baka!"
+        "Type the emote's name right and try again, baka!",
+        "There's no emote by that name, baka! Try again."
     ]
 };
 
@@ -131,3 +139,23 @@ exports.info = {
         "Looks like you provided me with an incorrect search term. I need either server, user, or role."
     ]
 };
+
+exports.giverole = {
+    "list": [
+        "__Here's a list of assignable roles__\n-list",
+        "__Behold! The list of assignable roles!__\n-list"
+    ],
+    "noAssign": [
+        "Doesn't look like there's an assignable role by that name in my systems. Try again.",
+        "Hmm... nope. I can't find a role by that name on my list.",
+        "I can't see to find a role by the name of -name on my list. Maybe you spelt it wrong?"
+    ],
+    "added": [
+        "Okay! I've assigned the role, -name, to you.",
+        "✅ I've assigned you the role. You're all set."
+    ],
+    "remove": [
+        "Okay! You no longer have the role, -name.",
+        "Alright. I've removed the role from you."
+    ]
+}

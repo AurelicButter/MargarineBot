@@ -5,6 +5,7 @@ const { version: kVersion } = require("klasa");
 
 exports.speech = require("./speechHelper.js");
 exports.dataManager = require("./dataManager.js");
+exports.schemaManager = require("./schemaManager.js");
 
 /** Removes any unnessesscary commands in the default Klasa framework.
  * @param { KlasaClient } client

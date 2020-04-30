@@ -10,13 +10,11 @@ module.exports = class extends Command {
             aliases: ["bal", "credits", "profile"],
             requiredPermissions: ["EMBED_LINKS"],
             description: "Check credit amounts and cooldowns",
-            usage: "[user:usersearch]"
+            usage: "<user:usersearch>"
         });
     }
 
     async run(msg, [user]) {
-        if (user === null) { return; }
-
         var data = this.client.dataManager("select", user.id, "users");
         if (!data) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
 
