@@ -10,7 +10,7 @@ module.exports = class extends Command {
             permissionLevel: 5,
             requiredPermissions: ["EMBED_LINKS"],
             description: "Manage a starboard within your guild!",
-            usage: "<set|remove|show> [channel|emote|amount] [item:string]", usageDelim: " ",
+            usage: "<set|remove|show:default> [channel|emote|amount] [item:string]", usageDelim: " ",
             extendedHelp: "Note: Only custom emotes can be set for the starboard currently. If there is no channel set, starboard will not be enabled."
         });
     }
