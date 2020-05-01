@@ -160,6 +160,14 @@ module.exports = class extends Language {
 			GIVEROLE_LIST: (msg, list) => this.client.speech(msg, ["giverole", "list"], [["-list", list.join("\n")]]), 
 			GIVEROLE_ADDED: (msg, name) => this.client.speech(msg, ["giverole", "added"], [["-name", name]]),
 			GIVEROLE_REMOVE: (msg, name) => this.client.speech(msg, ["giverole", "remove"], [["-name", name]]),
+			CHOOSE_LACKCHOICE: (msg) => this.client.speech(msg, ["choose", "lackChoice"]),
+			CHOOSE_SUCCESS: (msg, author, choice) => this.client.speech(msg, ["choose", "success"], [["-user", author], ["-result", choice]]),
+			ANIME_NOTERM: (msg) => this.client.speech(msg, ["anime", "noSearch"]),
+			ANIME_SEARCHERR: (msg) => this.client.speech(msg, ["anime", "searchErr"]),
+			ANIME_NSFW: (msg) => this.client.speech(msg, ["anime", "nsfw"]),
+			MANGA_NOTERM: (msg) => this.client.speech(msg, ["manga", "noSearch"]),
+			MANGA_SEARCHERR: (msg) => this.client.speech(msg, ["manga", "searchErr"]),
+			MANGA_NSFW: (msg) => this.client.speech(msg, ["manga", "nsfw"]),
         };
     }
 };

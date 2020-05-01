@@ -6,7 +6,6 @@ module.exports = class extends Command {
             name: "choose",
             enabled: true,
             runIn: ["text"],
-            cooldown: 0,
             aliases: ["choice"],
             description: "The one stop picker for hard choices!",
             usage: "[choice:str] [...]", usageDelim: " | "
@@ -14,9 +13,9 @@ module.exports = class extends Command {
     }
 
     async run(msg, [...choice]) {
-        if (choice.length < 2) { return msg.channel.send(this.client.speech(msg, ["choose", "lackChoice"])); }
+        if (choice.length < 2) { return msg.sendLocale("CHOOSE_LACKCHOICE", [msg]); }
 
         var numChoice = Math.floor(Math.random() * choice.length);
-        msg.channel.send(this.client.speech(msg, ["choose", "success"], [["-user", msg.author.username], ["-result", choice[numChoice]]]));
+        msg.sendLocale("CHOOSE_SUCCESS", [msg, msg.author.username, choice[numChoice]]);
     }
 };

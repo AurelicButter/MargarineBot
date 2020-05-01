@@ -16,15 +16,15 @@ module.exports = class extends Command {
             extendedHelp: "There is a 60 second cooldown for each search to not spam the site."
         });
 
-        this.customizeResponse("term", msg => msg.client.speech(msg, ["manga", "noSearch"]));
+        this.customizeResponse("term", msg => msg.language.get("MANGA_NOTERM", [msg]));
     }
 
     async run(msg, [term]) {
         var data = await anilist.search("manga", term, 1, 3);
-        if (!data || !data.media) { return msg.channel.send(this.client.speech(msg, ["manga", "searchErr"])); }
+        if (!data || !data.media) { return msg.sendLocale("MANGA_SEARCHERR", [msg]); }
         data = await anilist.media.manga(data.media[0].id);
 
-        if (!msg.channel.nsfw && data.isAdult) { return this.client.speech(msg, ["manga, nsfw"]); }
+        if (!msg.channel.nsfw && data.isAdult) { return msg.sendLocale("MANGA_NSFW", [msg]); }
 
         var title = data.title.romaji;
         if (data.title.english) { title = `${title} | ${data.title.english}`; }
