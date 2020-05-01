@@ -53,3 +53,31 @@ exports.usersearch = [
     "You say user, I say doesn't exist. Baka!",
     "BAKA! That user doesn't exist! Stop trying to trick me."
 ];
+
+exports.rolesearch = [
+    "Huh... doesn't look like there is a role by that name here.",
+    "Nope, there's no role by that name here."
+];
+
+exports.inhibitor = {
+    "cooldown": [
+        "Hold up! You can't use this yet! Try again in -remaining.",
+        "You have just used this command. You can use this command again in -remaining."
+    ],
+    "guildDisable": [
+        "Whoops! Looks like this command is disabled here!",
+        "Looks like an admin didn't like this command running here seeing as it's disabled here."
+    ],
+    "globalDisable": [
+        "Looks like the bot owner has disabled this command globally. Let's hope it becomes enabled soon!",
+        "This command seems to be disabled across all servers at the moment. I wonder why..."
+    ],
+    "NSFW": [
+        "Hey! You can't be lewd in this channel, baka!",
+        "That's NSFW! You can't have that here!"
+    ],
+    "noPermission": [
+        "Doesn't look like you have the right permissions to use this. Try again when you do.",
+        "Nope, sorry. You don't have the right permissions to use this."
+    ]
+};

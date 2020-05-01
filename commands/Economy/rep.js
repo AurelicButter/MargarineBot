@@ -7,12 +7,11 @@ module.exports = class extends Command {
             enabled: true,
             runIn: ["text"],
             description: "Give someone a reputation point!",
-            usage: "[user:usersearch] [note:str]", usageDelim: "|"
+            usage: "<user:usersearch> [note:str]", usageDelim: "|"
         });
     }
 
     async run(msg, [user, note]) {
-        if (user === null) { return; }
         if (user.id === msg.author.id) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "sameUser"])); }
         
         var data = this.client.dataManager("select", msg.author.id, "users");

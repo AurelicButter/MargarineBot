@@ -1,7 +1,7 @@
 const { Client } = require("klasa");
 const { Collection } = require("discord.js");
 const config = require("./assets/settings.json");
-const { envCheck, speech, dataManager, util, commandRemover } = require("./utilities/utilExport.js");
+const { envCheck, speech, dataManager, util, commandRemover, schemaManager } = require("./utilities/utilExport.js");
 const { existsSync } = require("fs");
 
 envCheck(); //Checks to make sure Margarine is running in the right enviroment.
@@ -9,6 +9,7 @@ envCheck(); //Checks to make sure Margarine is running in the right enviroment.
 const client = new Client({
     fetchAllMembers: false,
     prefix: config.prefix,
+    language: "en-CA",
     commandEditing: true,
     readyMessage: (client) => `This is ${client.user.username} speaking! Online and awaiting orders!\nI'm currently serving ${client.guilds.cache.size} guilds and ${client.users.cache.size} people!`
 });
@@ -19,12 +20,7 @@ Client.defaultPermissionLevels
     .add(9, ({ author, client }) => author === client.owner || author.id === config.secondary)
     .add(10, ({ author, client }) => author === client.owner);
 
-client.gateways.guilds.schema //Add all configurable settings
-    .add("modRole", "role")
-    .add("muteRole", "role")
-    .add("langSpeech", "language", { default: "en-CA" })
-    .add("defaultChannel", "channel")
-    .add("modlog", "channel");
+schemaManager(client); //Adds all configurable settings.
 
 client.speech = speech;
 client.dataManager = dataManager;

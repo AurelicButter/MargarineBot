@@ -8,12 +8,11 @@ module.exports = class extends Command {
             runIn: ["text"],
             cooldown: 10,
             description: "Give someone some of your credits",
-            usage: "[user:usersearch] [credit:int]", usageDelim: " "
+            usage: "<user:usersearch> [credit:int]", usageDelim: " "
         });
     }
 
     async run(msg, [user, credit]) {
-        if (user === null) { return; }
         if (user.id === msg.author.id) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "sameUser"])); }
 
         var data = this.client.dataManager("select", msg.author.id, "users");

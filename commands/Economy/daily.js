@@ -7,13 +7,11 @@ module.exports = class extends Command {
             enabled: true,
             runIn: ["text"],
             description: "Get a daily amount of credits or give them to someone else.",
-            usage: "[user:usersearch]"
+            usage: "<user:usersearch>"
         });
     }
 
-    async run(msg, [user]) {
-        if (user === null) { return; }
-               
+    async run(msg, [user]) {               
         var data = this.client.dataManager("select", msg.author.id, "users");
         if (!data && user.id !== msg.author.id) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
         

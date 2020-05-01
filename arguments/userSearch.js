@@ -21,13 +21,10 @@ module.exports = class extends Argument {
 
         if (msg.guild) {
             var regex = new RegExp(regExpEsc(arg), "i");
-            results = msg.guild.members.cache.filter(m => regex.test(m.user.username));   
+            results = msg.guild.members.cache.filter(m => regex.test(m.user.username));
         }
 
-        if (results.size === 0) {
-            msg.channel.send(this.client.speech(msg, ["func-system", "usersearch"]));
-            return null;
-        }
+        if (results.size === 0) { throw msg.language.get("USERSEARCH_FAIL", msg); }
 
         return this.client.users.cache.get(results.keys().next().value);
     }

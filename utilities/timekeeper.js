@@ -40,8 +40,14 @@ module.exports = {
      */
     dateMaker: (date) => {
         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        var d = date.toLocaleString().split(" ")[0].split("/");
 
-        return `${months[d[0]]} ${d[1]}, ${d[2].slice(0, -1)}`;
-    }
+        return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+    },
+
+    /**
+     * Creates a full human readable timestamp from a date object
+     * @param { Date } date - Required
+     * @returns { String } Returns a human readable date. For example, "May 26, 2017 at 10:10"
+     */
+    timeMaker: (date) => { return `${module.exports.dateMaker(date)} at ${date.getHours()}:${date.getMinutes()}`; }
 };

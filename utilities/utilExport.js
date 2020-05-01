@@ -5,12 +5,13 @@ const { version: kVersion } = require("klasa");
 
 exports.speech = require("./speechHelper.js");
 exports.dataManager = require("./dataManager.js");
+exports.schemaManager = require("./schemaManager.js");
 
 /** Removes any unnessesscary commands in the default Klasa framework.
  * @param { KlasaClient } client
  */
 exports.commandRemover = function(client) {
-    const cmdNames = ["Admin/load", "Admin/unload", "Admins/transfer", "General/Chat Bot Info/info", "General/Chat Bot Info/stats"];
+    const cmdNames = ["Admin/load", "Admin/unload", "Admins/transfer", "General/Chat Bot Info/info", "General/Chat Bot Info/stats", "General/User Settings/userconf"];
     for(var x = 0; x < cmdNames.length; x++) {
         if (existsSync(`${client.userBaseDirectory}/node_modules/klasa/src/commands/${cmdNames[x]}.js`)) {
             unlinkSync(`${client.userBaseDirectory}/node_modules/klasa/src/commands/${cmdNames[x]}.js`);
@@ -29,7 +30,7 @@ exports.envCheck = function() {
     var nVersion = process.version.split("v")[1].split(".");
     nVersion = Number(`${nVersion[0]}.${nVersion[1]}`);
 
-    if (djsVersion !== "12.0.1") { missingDep.push("You are not using the right discord.js package! Required version: v12.0.1"); }
+    if (djsVersion !== "12.2.0") { missingDep.push("You are not using the right discord.js package! Required version: v12.2.0"); }
     if (kVersion !== "0.5.0-dev") { missingDep.push("You are not using the right Klasa version! Required version: v0.5.0-dev"); }
     if (nVersion < 10.0) { missingDep.push("You are not using the right node.js version! Required version: v10.0.0+"); }
 

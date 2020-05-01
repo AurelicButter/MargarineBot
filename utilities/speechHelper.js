@@ -1,9 +1,10 @@
 const { existsSync } = require("fs");
+const baseSpeechDir = `${process.cwd()}/assets/speech/`;
 
 /**
- * Picks a random speech line to simulate speech.
- * @param {KlasaMessage} msg - Required.
- * @param {Object[]} keys - Required. Value 0 is the command or function name for searching and Value 1 is the context.
+ * Picks a random line to simulate speech.
+ * @param {KlasaMessage} msg - The message that was sent.
+ * @param {Object[]} keys - Value 0 is the command or function name for searching and Value 1 is the context.
  * @param {Object[]} [replace] - Can be null. Any value to replace in the text. Denoted as a tuple [replace, new] for each item
  * @returns {string} Randomly selected speech line.
  */
@@ -17,15 +18,13 @@ module.exports = function speech(msg, keys, replace=[]) {
         category = category[category.length - 1].toLowerCase();
     }
 
-    var baseLocation = `${msg.client.userBaseDirectory}/assets/speech/`;
-    var speechLocation = existsSync(baseLocation + msg.guild.settings.langSpeech) ? `${baseLocation}${msg.guild.settings.langSpeech}` : `${baseLocation}${msg.client.gateways.guilds.schema.get("langSpeech").default}`;
-
+    var speechLocation = existsSync(baseSpeechDir + msg.guild.settings.language) ? `${baseSpeechDir}${msg.guild.settings.language}` : `${baseSpeechDir}${msg.client.gateways.guilds.schema.get("language").default}`;
     var PATH = `${speechLocation}/${category}.js`;
 
-    if (!existsSync(baseLocation + msg.guild.settings.langSpeech)) {
-        msg.channel.send("Whoops! Your langSpeech settings on here don't exist in my records. I've defaulted to the default as a backup.");
+    if (!existsSync(baseSpeechDir + msg.guild.settings.language)) {
+        msg.channel.send("Whoops! Your language settings on here don't exist in my records. I've defaulted to the default as a backup.");
 
-        console.error(`Localization file is missing. Defaulted to the original language.\nLanguage: ${msg.guild.settings.langSpeech}\nCategory: ${category}\nCommand: ${name}\n${PATH}\n\n`);
+        console.error(`Localization file is missing. Defaulted to the original language.\nLanguage: ${msg.guild.settings.language}\nCategory: ${category}\nCommand: ${name}\n${PATH}\n\n`);
     }
 
     var t = require(PATH); var n;
