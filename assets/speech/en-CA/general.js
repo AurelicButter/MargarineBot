@@ -141,6 +141,10 @@ exports.info = {
 };
 
 exports.giverole = {
+    "noList": [
+        "It doesn't look like there is anything to list out here.",
+        "There's no assignable roles you can get. Ask your moderators to see if they could add some."
+    ],
     "list": [
         "__Here's a list of assignable roles__\n-list",
         "__Behold! The list of assignable roles!__\n-list"

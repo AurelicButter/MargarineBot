@@ -15,7 +15,10 @@ module.exports = class extends Command {
     }
 
     async run(msg, [role="list"]) {
-        if (role === "list") { return msg.sendLocale("GIVEROLE_LIST", [msg, msg.guild.settings.roles.name]); }
+        if (role === "list") { 
+            if (msg.guild.settings.roles.name.length < 1) { return msg.sendLocale("GIVEROLE_NOLIST", [msg]); }
+            return msg.sendLocale("GIVEROLE_LIST", [msg, msg.guild.settings.roles.name]); 
+        }
 
         let user = msg.guild.members.cache.get(msg.author.id);
         var roleIndex = msg.guild.settings.roles.name.findIndex(item => item.toLowerCase() === role.toLowerCase());

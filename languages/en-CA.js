@@ -8,7 +8,7 @@ const falseMsg = {
 	guild: { 
 		settings: {
 			prefix: "m~", //Use default global prefix for now.
-			langSpeech: "en-CA"
+			language: "en-CA"
 		}
 	}
 }
@@ -156,6 +156,7 @@ module.exports = class extends Language {
 			 * Commands - General
 			 */
 			GIVEROLE_CANTGIVE: (msg, name) => this.client.speech(msg, ["giverole", "noAssign"], [["-name", name]]),
+			GIVEROLE_NOLIST: (msg) => this.client.speech(msg, ["giverole", "noList"]),
 			GIVEROLE_LIST: (msg, list) => this.client.speech(msg, ["giverole", "list"], [["-list", list.join("\n")]]), 
 			GIVEROLE_ADDED: (msg, name) => this.client.speech(msg, ["giverole", "added"], [["-name", name]]),
 			GIVEROLE_REMOVE: (msg, name) => this.client.speech(msg, ["giverole", "remove"], [["-name", name]]),

@@ -9,6 +9,7 @@ envCheck(); //Checks to make sure Margarine is running in the right enviroment.
 const client = new Client({
     fetchAllMembers: false,
     prefix: config.prefix,
+    language: "en-CA",
     commandEditing: true,
     readyMessage: (client) => `This is ${client.user.username} speaking! Online and awaiting orders!\nI'm currently serving ${client.guilds.cache.size} guilds and ${client.users.cache.size} people!`
 });

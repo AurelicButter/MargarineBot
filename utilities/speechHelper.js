@@ -18,13 +18,13 @@ module.exports = function speech(msg, keys, replace=[]) {
         category = category[category.length - 1].toLowerCase();
     }
 
-    var speechLocation = existsSync(baseSpeechDir + msg.guild.settings.langSpeech) ? `${baseSpeechDir}${msg.guild.settings.langSpeech}` : `${baseSpeechDir}${msg.client.gateways.guilds.schema.get("langSpeech").default}`;
+    var speechLocation = existsSync(baseSpeechDir + msg.guild.settings.language) ? `${baseSpeechDir}${msg.guild.settings.language}` : `${baseSpeechDir}${msg.client.gateways.guilds.schema.get("language").default}`;
     var PATH = `${speechLocation}/${category}.js`;
 
-    if (!existsSync(baseSpeechDir + msg.guild.settings.langSpeech)) {
-        msg.channel.send("Whoops! Your langSpeech settings on here don't exist in my records. I've defaulted to the default as a backup.");
+    if (!existsSync(baseSpeechDir + msg.guild.settings.language)) {
+        msg.channel.send("Whoops! Your language settings on here don't exist in my records. I've defaulted to the default as a backup.");
 
-        console.error(`Localization file is missing. Defaulted to the original language.\nLanguage: ${msg.guild.settings.langSpeech}\nCategory: ${category}\nCommand: ${name}\n${PATH}\n\n`);
+        console.error(`Localization file is missing. Defaulted to the original language.\nLanguage: ${msg.guild.settings.language}\nCategory: ${category}\nCommand: ${name}\n${PATH}\n\n`);
     }
 
     var t = require(PATH); var n;

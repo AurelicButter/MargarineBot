@@ -13,7 +13,7 @@ module.exports = class extends Event {
         });
     }
 
-    run(message) {
+    async run(message) {
         //Message is not in a guild, do nothing.
         if (message.guild === undefined) { return; }
 
