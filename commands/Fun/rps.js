@@ -9,6 +9,8 @@ module.exports = class extends Command {
             description: "Play Rock, Paper, Scissors",
             usage: "<paper|scissors|rock> [user:usersearch]", usageDelim: " "
         });
+
+        this.humanUse = "<paper|scissors|rock> [user]";
     }
 
     async run(msg, [choice, user]) {
@@ -19,7 +21,7 @@ module.exports = class extends Command {
         var hand = types[Math.floor(Math.random() * (Math.floor(2) - Math.ceil(1) + 1)) + Math.ceil(1)];  
                 
         if ((choice === "rock" && hand === "scissors") || (choice === "paper" && hand === "rock") || (choice === "scissors" && hand === "paper")) { var result = `${msg.author.username} wins`; } 
-        else if ((choice === "rock" && hand === "paper") || (choice === "paper" && hand === "scissors") || (choice === "scissors" && hand === "rock")) { var result = `${data.user.username} wins`; }
+        else if ((choice === "rock" && hand === "paper") || (choice === "paper" && hand === "scissors") || (choice === "scissors" && hand === "rock")) { var result = `${user.username} wins`; }
         else { var result = "Draw"; }
 
         msg.channel.send(this.client.speech(msg, ["rps", "success"], [

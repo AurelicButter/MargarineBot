@@ -7,13 +7,11 @@ module.exports = class extends Command {
             enabled: true,
             runIn: ["text"],
             description: "For the stupid people",
-            usage: "[user:usersearch]"
+            usage: "<user:usersearch>"
         });
+
+        this.humanUse = "<user>";
     }
 
-    async run(msg, [user]) {
-        if (user === null) { return; }
-
-        msg.channel.send(`Baka ${user.username}!`);
-    }
+    async run(msg, [user]) { msg.channel.send(`Baka ${user.username}!`); }
 };

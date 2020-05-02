@@ -9,16 +9,14 @@ module.exports = class extends Command {
             runIn: ["text"],
             aliases: ["role"],
             description: "Get information on a role",
-            usage: "[rolesrc:str]",
+            usage: "<role:rolesearch>",
             extendedHelp: "Need Discord info on a specific role? I got you covered!"
         });
+
+        this.humanUse = "<role>";
     }
 
-    async run(msg, [rolesrc]) {
-        var role;
-        msg.guild.roles.cache.forEach(element => { if (element.name.toLowerCase() === rolesrc.toLowerCase()) { role = element; } });
-        if (!role) { return this.client.speech(msg, ["roleinfo"]); }
-
+    async run(msg, [role]) {
         const embed = new MessageEmbed()
             .setTimestamp()
             .setAuthor(`${role.name} | ${role.id}`)

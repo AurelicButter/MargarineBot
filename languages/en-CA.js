@@ -168,6 +168,8 @@ module.exports = class extends Language {
 			MANGA_NOTERM: (msg) => this.client.speech(msg, ["manga", "noSearch"]),
 			MANGA_SEARCHERR: (msg) => this.client.speech(msg, ["manga", "searchErr"]),
 			MANGA_NSFW: (msg) => this.client.speech(msg, ["manga", "nsfw"]),
+			GREET_MYSELF: (msg, username) => this.client.speech(msg, ["greet", "me"], [["-param1", username]]),
+			GREET_SOMEONE: (msg, username) => this.client.speech(msg, ["greet", "success"], [["-param1", username]]),
         };
     }
 };

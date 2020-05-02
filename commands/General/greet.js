@@ -9,11 +9,13 @@ module.exports = class extends Command {
             description: "Have Margarine greet you or someone with a hello!",
             usage: "<user:usersearch>"
         });
+
+        this.humanUse = "<user>";
     }
 
     async run(msg, [user]) {      
-        if (user.id === this.client.user.id) { return msg.send(this.client.speech(msg, ["greet", "me"], [["-param1", msg.author.username]])); }
+        if (user.id === this.client.user.id) { return msg.sendLocale("GREET_MYSELF", [msg, msg.author.username]); }
 
-        msg.channel.send(this.client.speech(msg, ["greet", "success"], [["-param1", user.username]]));
+        msg.sendLocale("GREET_SOMEONE", [msg, user.username]);
     }
 };
