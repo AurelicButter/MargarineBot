@@ -38,7 +38,6 @@ module.exports = class extends Language {
 			COMMANDMESSAGE_MISSING: this.client.speech(falseMsg, ["func-system", "commandhandler", "missing"]),
 			COMMANDMESSAGE_MISSING_OPTIONALS: (possibles) => this.client.speech(falseMsg, ["func-system", "commandhandler", "optMissing"], [["-possibles", possibles]]),
 			COMMANDMESSAGE_NOMATCH: (possibles) => this.client.speech(falseMsg, ["func-system", "commandhandler", "noMatch"], [["-possibles", possibles]]),
-
 			RESOLVER_MINMAX_EXACTLY: (name, min, suffix) => this.client.speech(falseMsg, ["func-system", "resolver", "minMax", "exactly"], [
 				["-name", name], ["-min", min], ["-suffix", suffix]
 			]),
@@ -182,10 +181,12 @@ module.exports = class extends Language {
 			CHOOSE_SUCCESS: (msg, author, choice) => this.client.speech(msg, ["choose", "success"], [["-user", author], ["-result", choice]]),
 			ANIME_NOTERM: (msg) => this.client.speech(msg, ["anime", "noSearch"]),
 			ANIME_SEARCHERR: (msg) => this.client.speech(msg, ["anime", "searchErr"]),
+			ANIME_NORESULT: (msg) => this.client.speech(msg, ["anime", "noResult"]),
 			ANIME_NSFW: (msg) => this.client.speech(msg, ["anime", "nsfw"]),
 			MANGA_NOTERM: (msg) => this.client.speech(msg, ["manga", "noSearch"]),
 			MANGA_SEARCHERR: (msg) => this.client.speech(msg, ["manga", "searchErr"]),
 			MANGA_NSFW: (msg) => this.client.speech(msg, ["manga", "nsfw"]),
+			MANGA_NORESULT: (msg) => this.client.speech(msg, ["manga", "noResult"]),
 			GREET_MYSELF: (msg, username) => this.client.speech(msg, ["greet", "me"], [["-param1", username]]),
 			GREET_SOMEONE: (msg, username) => this.client.speech(msg, ["greet", "success"], [["-param1", username]]),
 			MAL_SETPROFILE: (msg) => this.client.speech(msg, ["mal", "setProfile"]),

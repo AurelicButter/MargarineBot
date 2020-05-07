@@ -56,7 +56,9 @@ exports.anime = {
     ],
     "noResult": [
         "There's not an anime by that name!",
-        "Looks like you have your next upcoming title for your new show! An anime does not exist with that title."
+        "Looks like you have your next upcoming title for your new show! An anime does not exist with that title.",
+        "Whoops! Looks like that term doesn't have any results. Try again with something else.",
+        "Nope! No results with that term. Looks like you'll have to try something else."
     ],
     "nsfw" : [
         "You can't search for hentai in a SFW channel!",
@@ -70,9 +72,15 @@ exports.manga = {
         "I need a title or something, baka! Come back with one!",
         "Searching for nothing... Oh wait. I don't have to. Give me a search term next time, baka!"
     ],
+    "searchErr": [
+        "Looks like AniList is having a bit of trouble right now. Come back and try again later.",
+        "We're having a slight issue with AniList right now. Come back and try again later."
+    ],
     "noResult": [
         "There's not a manga by that name!",
-        "Good news! You can use that for your next upcoming book! There isn't a manga by that name."
+        "Good news! You can use that for your next upcoming book! There isn't a manga by that name.",
+        "Whoops! Looks like that term doesn't have any results. Try again with something else.",
+        "Nope! No results with that term. Looks like you'll have to try something else."
     ],
     "nsfw" : [
         "You can't search for hentai in a SFW channel!",

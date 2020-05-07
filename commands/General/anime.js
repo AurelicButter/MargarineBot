@@ -22,6 +22,7 @@ module.exports = class extends Command {
     async run(msg, [term]) {
         var data = await anilist.search("anime", term, 1, 3);
         if (!data || !data.media) { return msg.sendLocale("ANIME_SEARCHERR", [msg]); }
+        if (data.media.length === 0) { return msg.sendLocale("ANIME_NORESULT", [msg]); }
         data = await anilist.media.anime(data.media[0].id);
 
         if (!msg.channel.nsfw && data.isAdult) { return msg.sendLocale("ANIME_NSFW", [msg]); }
