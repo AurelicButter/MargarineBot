@@ -12,15 +12,18 @@ module.exports = class extends Command {
             cooldown: 60,
             requiredPermissions: ["ATTACH_FILES"],
             description: "Fetch a someone's profile on AniList.",
-            usage: "[set|remove|search|user:usersearch] [username:str]", usageDelim: " ",
+            usage: "<set|remove|search|user:usersearch> [username:str]", usageDelim: " ",
             extendedHelp: "Note: The user must set their own account name in Margarine in order to search by a Discord user. For general searching, use the search keyword before the username."
         });
+
+        //Defaults to finding the user. If no user, send usersearch fail message as usage prevents the argument to post.
+        this.customizeResponse("set", msg => msg.language.get("USERSEARCH_FAIL", [msg]));
     }
 
     async run(msg, [user, username]) {
         if (user === "set" || user === "remove") {
             var data = this.client.dataManager("select", msg.author.id, "users");
-            if (!data) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
+            if (!data) { return msg.sendLocale("DATACHECK_NOACCOUNT"); }
 
             var profiles = JSON.parse(data.profiles);
             profiles.Anilist = (user === "set") ? username : null;
@@ -28,25 +31,24 @@ module.exports = class extends Command {
             this.client.dataManager("update", [`profiles='${JSON.stringify(profiles)}'`, msg.author.id], "users");
 
             //Action success. Send message and return.
-            if (user === "set") { return msg.channel.send(this.client.speech(msg, ["anilist", "setProfile"])); }
-            if (user === "remove") { return msg.channel.send(this.client.speech(msg, ["anilist", "removeProfile"])); }
+            if (user === "set") { return msg.sendLocale("ANILIST_SETPROFILE", [msg]); }
+            return msg.sendLocale("ANILIST_REMOVEPROFILE", [msg]);
         }
 
-        if (user === null) { return; } //Return for failed usersearch.
-        if (user === "search" & username === null) { return msg.channel.send(this.client.speech(msg, ["anilist", "noTerm"])); }
+        if (user === "search" & username === null) { return msg.sendLocale("ANILIST_NOTERM", [msg]); }
         if (user !== "search") { //Replace username value with stored AniList username in Margarine.
             var userData = this.client.dataManager("select", user.id, "users");
             if (!userData) { 
-                if (user.id !== msg.author.id) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noUser"])); }
-                return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); 
+                if (user.id !== msg.author.id) { return msg.sendLocale("DATACHECK_NOUSER"); }
+                return msg.sendLocale("DATACHECK_NOACCOUNT"); 
             }
 
             username = JSON.parse(userData.profiles).Anilist;
-            if (!username) { return msg.channel.send(this.client.speech(msg, ["anilist", "noUsername"])); }
+            if (!username) { return msg.sendLocale("ANILIST_NOUSER", [msg]); }
         }
 
         var data = await anilist.user.all(username);
-        if (data.status === 404) { return msg.channel.send(this.client.speech(msg, ["anilist", "404Err"])); }
+        if (data.status === 404) { return msg.sendLocale("ANILIST_404ERR", [msg]); }
 
         const embed = new MessageEmbed()
             .setTitle(`${username}'s AniList Profile`)
@@ -56,18 +58,15 @@ module.exports = class extends Command {
             .setThumbnail(data.avatar.large)
             .setFooter(`Requested by: ${msg.author.tag}`);
 
-        var animeStat = data.statistics.anime,
-            mangaStat = data.statistics.manga;
-
         var anime = { "CURRENT": 0, "PLANNING": 0, "COMPLETED": 0, "DROPPED": 0, "PAUSED": 0 },
             manga = { "CURRENT": 0, "PLANNING": 0, "COMPLETED": 0, "DROPPED": 0, "PAUSED": 0 };
 
-        animeStat.statuses.forEach((e) => { 
+        data.statistics.anime.statuses.forEach((e) => { 
             if (e.status !== "REPEATING" || e.status !== "COMPLETED") { anime[e.status] = e.count; }
             else { anime["COMPLETED"] += e.count; }
         });
 
-        mangaStat.statuses.forEach((e) => {
+        data.statistics.manga.statuses.forEach((e) => {
             if (e.status !== "REPEATING" || e.status !== "COMPLETED") { manga[e.status] = e.count; }
             else { manga["COMPLETED"] += e.count; }
         });

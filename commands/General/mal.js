@@ -12,36 +12,38 @@ module.exports = class extends Command {
             cooldown: 60,
             requiredPermissions: ["ATTACH_FILES"],
             description: "Fetch a user's profile on MyAnimeList",
-            usage: "[set|remove|search|user:usersearch] [username:str]", usageDelim: " ",
+            usage: "<set|remove|search|user:usersearch> [username:str]", usageDelim: " ",
             extendedHelp: "Note: The user must set their own account name in Margarine in order to search by a Discord user. For general searching, use the search keyword before the username."
         });
+
+        //Defaults to finding the user. If no user, send usersearch fail message as usage prevents the argument to post.
+        this.customizeResponse("set", msg => msg.language.get("USERSEARCH_FAIL", [msg]));
     }
 
     async run(msg, [user, username]) {
         if (user === "set" || user === "remove") {
             var data = this.client.dataManager("select", msg.author.id, "users");
-            if (!data) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
+            if (!data) { return msg.sendLocale("DATACHECK_NOACCOUNT"); }
 
             var profiles = JSON.parse(data.profiles);
             profiles.MAL = (user === "set") ? username : null;
 
             this.client.dataManager("update", [`profiles='${JSON.stringify(profiles)}'`, msg.author.id], "users");
             
-            if (user === "set") { return msg.channel.send(this.client.speech(msg, ["mal", "setProfile"])); }
-            if (user === "remove") { return msg.channel.send(this.client.speech(msg, ["mal", "removeProfile"])); }
+            if (user === "set") { return msg.sendLocale("MAL_SETPROFILE", [msg]); }
+            return msg.sendLocale("MAL_REMOVEPROFILE", [msg]);
         }
 
-        if (user === null) { return; } //Return for failed usersearch.
-        if (user === "search" & username === null) { return msg.channel.send(this.client.speech(msg, ["mal", "noTerm"])); }
+        if (user === "search" & username === null) { return msg.sendLocale("MAL_NOTERM", [msg]); }
         if (user !== "search") { //Replace username value with stored MAL username in Margarine.
             var userData = this.client.dataManager("select", user.id, "users");
             if (!userData) { 
-                if (user.id !== msg.author.id) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noUser"])); }
-                return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); 
+                if (user.id !== msg.author.id) { return msg.sendLocale("DATACHECK_NOUSER"); }
+                return msg.sendLocale("DATACHECK_NOACCOUNT"); 
             }
 
             username = JSON.parse(userData.profiles).MAL;
-            if (!username) { return msg.channel.send(this.client.speech(msg, ["mal", "noUsername"])); }
+            if (!username) { return msg.sendLocale("MAL_NOUSER", [msg]); }
         }        
 
         const url = `https://myanimelist.net/profile/${username}`;
@@ -52,14 +54,14 @@ module.exports = class extends Command {
 
             do {
                 var z = text[x].trim(); var y = text[x + 1] ? text[x + 1].trim() : ""; var zed = text[x + 2] ? text[x + 2].trim() : "";
-                if (z + y + zed === "404NotFound") { return msg.channel.send(this.client.speech(msg, ["MAL", "404Err"])); }
+                if (z + y + zed === "404NotFound") { return msg.sendLocale("MAL_404ERR", [msg]); }
                 else if (z.length > 1) {
                     if (z.startsWith("Online")) {
                         if (zed.startsWith("ago")) { info.status = `${z.slice(6)} ${y} ago`; }
                         else if (z.startsWith("OnlineNow")) { info.status = z.slice(6, z.search("Gender")); }
                         else if (zed.includes(":")) { info.status = `${z.slice(6)} ${y} ${(new Date()).getFullYear()}`; }
                         else if (z.includes("Yesterday") || z.includes("Today") && zed.slice(1, 2) === "M") { 
-                            info.status = `${z.slice(6, -1)} at  ${y}${zed.slice(0, 2)}`; 
+                            info.status = `${z.slice(6, -1)} at ${y}${zed.slice(0, 2)}`; 
                         }
                         else if (isNaN(zed) === false) { info.status = `${z.slice(6)} ${y} ${zed}`; }
                     } if (z.includes("Birthday") && !info.birthday) {

@@ -8,19 +8,21 @@ module.exports = class extends Command {
             runIn: ["text"],
             cooldown: 10,
             description: "Give someone some of your credits",
-            usage: "<user:usersearch> [credit:int]", usageDelim: " "
+            usage: "<user:usersearch> [credit:intcheck{1,}]", usageDelim: " "
         });
+
+        this.humanUse = "<user> <credit (1 or greater)>";
     }
 
     async run(msg, [user, credit]) {
-        if (user.id === msg.author.id) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "sameUser"])); }
+        if (user.id === msg.author.id) { return msg.sendLocale("DATACHECK_SAMEUSER"); }
 
         var data = this.client.dataManager("select", msg.author.id, "users");
-        if (!data) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
-        if (data.credits < credit) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "lackCredits"])); }
+        if (!data) { return msg.sendLocale("DATACHECK_NOACCOUNT"); }
+        if (data.credits < credit) { return msg.sendLocale("DATACHECK_LACKCREDIT"); }
 
         var tarData = this.client.dataManager("select", user.id, "users");
-        if (!tarData) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noUser"])); }
+        if (!tarData) { return msg.sendLocale("DATACHECK_NOUSER"); }
 
         data.credits -= credit;
         tarData.credits += credit;

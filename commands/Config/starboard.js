@@ -45,7 +45,7 @@ module.exports = class extends Command {
             if (!item.includes("<#")) { return msg.sendLocale("STARBOARD_WRONGITEM", [msg]); }
             starboardEdit = "starboard.channel";
         } else if (target === "emote") {
-            if (!RegExp('<:\\S*:\\d*>').test(item)) { return msg.sendLocale("STARBOARD_WRONGITEM", [msg]); }
+            if (!RegExp("<:\\S*:\\d*>").test(item)) { return msg.sendLocale("STARBOARD_WRONGITEM", [msg]); }
             starboardEdit = "starboard.emote";
         } else if (target === "amount") {
             if (isNaN(item)) { return msg.sendLocale("STARBOARD_WRONGITEM", [msg]); }

@@ -12,11 +12,13 @@ module.exports = class extends Command {
             description: "Check credit amounts and cooldowns",
             usage: "<user:usersearch>"
         });
+
+        this.humanUse = "[user]";
     }
 
     async run(msg, [user]) {
         var data = this.client.dataManager("select", user.id, "users");
-        if (!data) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
+        if (!data) { return msg.sendLocale("DATACHECK_NOACCOUNT"); }
 
         var cooldown = JSON.parse(data.cooldowns);
         let time = [((Date.now() - cooldown.credit) / 86400000), ((Date.now() - cooldown.rep) / 86400000)];

@@ -9,17 +9,19 @@ module.exports = class extends Command {
             description: "Get a daily amount of credits or give them to someone else.",
             usage: "<user:usersearch>"
         });
+
+        this.humanUse = "[user]";
     }
 
     async run(msg, [user]) {               
         var data = this.client.dataManager("select", msg.author.id, "users");
-        if (!data && user.id !== msg.author.id) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
+        if (!data && user.id !== msg.author.id) { return msg.sendLocale("DATACHECK_NOACCOUNT"); }
         
         if (!data) {
             if (this.client.settings.usedDaily.has(msg.author.id)) { //Check if user has recently deleted their own data.
                 var revokeCheck = this.client.settings.usedDaily.get(msg.author.id);
                 if ((revokeCheck + 86400000) > Date.now()) { //Revoke was executed less than 24 hours ago.
-                    return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "revoked"])); 
+                    return msg.sendLocale("DATACHECK_REVOKE");
                 }
 
                 this.client.settings.usedDaily.delete(msg.author.id);
@@ -30,7 +32,7 @@ module.exports = class extends Command {
         }
 
         var cooldown = JSON.parse(data.cooldowns);
-        if ((cooldown.credit + 86400000) > Date.now()) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "cooldown"])); } 
+        if ((cooldown.credit + 86400000) > Date.now()) { return msg.sendLocale("DATACHECK_COOLDOWN"); } 
      
         if (user.id === msg.author.id) {
             cooldown.credit = Date.now();
@@ -40,7 +42,7 @@ module.exports = class extends Command {
         }
 
         var tarData = this.client.dataManager("select", user.id, "users");
-        if (!tarData) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noUser"])); }
+        if (!tarData) { return msg.sendLocale("DATACHECK_NOUSER"); }
 
         cooldown.credit = Date.now();
         

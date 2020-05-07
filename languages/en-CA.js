@@ -24,6 +24,7 @@ module.exports = class extends Language {
             DEFAULT: (key) => `${key} has not been localized for en-CA yet.`,
 			DEFAULT_LANGUAGE: "Default Language",
 			NOCHANNEL: "No channel set",
+			MISSINGTERM: (action) => this.client.speech(falseMsg, ["func-system", "missingterm"], ["-action", action]),
 
 			/*
 			 * Klasa System - Margarine Style Responses
@@ -33,7 +34,23 @@ module.exports = class extends Language {
 			INHIBITOR_DISABLED_GLOBAL: this.client.speech(falseMsg, ["func-system", "inhibitor", "globalDisable"]),
 			INHIBITOR_NSFW: this.client.speech(falseMsg, ["func-system", "inhibitor", "NSFW"]),
 			INHIBITOR_PERMISSIONS: this.client.speech(falseMsg, ["func-system", "inhibitor", "noPermission"]),
+			COMMANDMESSAGE_MISSING_REQUIRED: (name) => this.client.speech(falseMsg, ["func-system", "commandhandler", "missingArg"], [["-name", name]]),
+			COMMANDMESSAGE_MISSING: this.client.speech(falseMsg, ["func-system", "commandhandler", "missing"]),
+			COMMANDMESSAGE_MISSING_OPTIONALS: (possibles) => this.client.speech(falseMsg, ["func-system", "commandhandler", "optMissing"], [["-possibles", possibles]]),
+			COMMANDMESSAGE_NOMATCH: (possibles) => this.client.speech(falseMsg, ["func-system", "commandhandler", "noMatch"], [["-possibles", possibles]]),
 
+			RESOLVER_MINMAX_EXACTLY: (name, min, suffix) => this.client.speech(falseMsg, ["func-system", "resolver", "minMax", "exactly"], [
+				["-name", name], ["-min", min], ["-suffix", suffix]
+			]),
+			RESOLVER_MINMAX_BOTH: (name, min, max, suffix) => this.client.speech(falseMsg, ["func-system", "resolver", "minMax", "both"], [
+				["-name", name], ["-min", min], ["-max", max] ["-suffix", suffix]
+			]),
+			RESOLVER_MINMAX_MIN: (name, min, suffix) => this.client.speech(falseMsg, ["func-system", "resolver", "minMax", "min"], [
+				["-name", name], ["-min", min]
+			]),
+			RESOLVER_MINMAX_MAX: (name, max, suffix) => this.client.speech(falseMsg, ["func-system", "resolver", "minMax", "max"], [
+				["-name", name], ["-max", max]
+			]),
 
 			/*
 			 * Klasa System. Copied over from Klasa's en-US.
@@ -67,15 +84,7 @@ module.exports = class extends Language {
 			RESOLVER_INVALID_URL: (name) => `${name} must be a valid url.`,
 			RESOLVER_INVALID_USER: (name) => `${name} must be a mention or valid user id.`,
 			RESOLVER_STRING_SUFFIX: ' characters',
-			RESOLVER_MINMAX_EXACTLY: (name, min, suffix) => `${name} must be exactly ${min}${suffix}.`,
-			RESOLVER_MINMAX_BOTH: (name, min, max, suffix) => `${name} must be between ${min} and ${max}${suffix}.`,
-			RESOLVER_MINMAX_MIN: (name, min, suffix) => `${name} must be greater than ${min}${suffix}.`,
-			RESOLVER_MINMAX_MAX: (name, max, suffix) => `${name} must be less than ${max}${suffix}.`,
 			REACTIONHANDLER_PROMPT: 'Which page would you like to jump to?',
-			COMMANDMESSAGE_MISSING: 'Missing one or more required arguments after end of input.',
-			COMMANDMESSAGE_MISSING_REQUIRED: (name) => `${name} is a required argument.`,
-			COMMANDMESSAGE_MISSING_OPTIONALS: (possibles) => `Missing a required option: (${possibles})`,
-			COMMANDMESSAGE_NOMATCH: (possibles) => `Your option didn't match any of the possibilities: (${possibles})`,
 			// eslint-disable-next-line max-len
 			MONITOR_COMMAND_HANDLER_REPROMPT: (tag, error, time, abortOptions) => `${tag} | **${error}** | You have **${time}** seconds to respond to this prompt with a valid argument. Type **${abortOptions.join('**, **')}** to abort this prompt.`,
 			// eslint-disable-next-line max-len
@@ -129,16 +138,24 @@ module.exports = class extends Language {
 			COMMAND_CONF_NOCHANGE: (key) => `The value for **${key}** was already that value.`,
 			COMMAND_CONF_SERVER_DESCRIPTION: 'Define per-guild settings.',
 			COMMAND_CONF_SERVER: (key, list) => `**Guild Settings${key}**\n${list}`,
-			COMMAND_CONF_USER_DESCRIPTION: 'Define per-user settings.',
-			COMMAND_CONF_USER: (key, list) => `**User Settings${key}**\n${list}`,
 			MESSAGE_PROMPT_TIMEOUT: 'The prompt has timed out.',
 			TEXT_PROMPT_ABORT_OPTIONS: ['abort', 'stop', 'cancel'],
 
 			/*
-			 * Arguments
+			 * Arguments and Utilities. Note: All of these should utilize falseMsg as KlasaMessage 
+			 * parameters aren't needed.
 			 */
-			USERSEARCH_FAIL: (msg) => this.client.speech(msg, ["func-system", "usersearch"]),
-			ROLESEARCH_FAIL: (msg) => this.client.speech(msg, ["func-system", "rolesearch"]),
+			USERSEARCH_FAIL: this.client.speech(falseMsg, ["func-system", "usersearch"]),
+			ROLESEARCH_FAIL: this.client.speech(falseMsg, ["func-system", "rolesearch"]),
+			INTEGERCHECK_NONUMBER: this.client.speech(falseMsg, ["func-system", "integercheck", "noNumber"]),
+			INTEGERCHECK_FLOAT: this.client.speech(falseMsg, ["func-system", "integercheck", "float"]),
+			INTEGERCHECK_FAIL: this.client.speech(falseMsg, ["func-system", "integercheck", "fail"]),
+			DATACHECK_NOACCOUNT: this.client.speech(falseMsg, ["func-dataCheck", "noAccount"]),
+			DATACHECK_NOUSER: this.client.speech(falseMsg, ["func-dataCheck", "noUser"]),
+			DATACHECK_REVOKE: this.client.speech(falseMsg, ["func-dataCheck", "revoked"]),
+			DATACHECK_LACKCREDIT: this.client.speech(falseMsg, ["func-dataCheck", "lackCredits"]),
+			DATACHECK_SAMEUSER: this.client.speech(falseMsg, ["func-dataCheck", "sameUser"]),
+			DATACHECK_COOLDOWN: this.client.speech(falseMsg, ["func-dataCheck", "cooldown"]),
 			
 			/* 
 			 * Commands - Config
@@ -151,6 +168,7 @@ module.exports = class extends Language {
 			STARBOARD_NOITEM: (msg) => this.client.speech(msg, ["starboard", "noItem"]),
 			STARBOARD_WRONGITEM: (msg) => this.client.speech(msg, ["starboard", "wrongItem"]),
 			STARBOARD_SETITEM: (msg, target, item) => this.client.speech(msg, ["starboard", "set"], [["-target", target], ["-item", item]]), 
+			SETPREFIX: (msg, prefix) => this.client.speech(msg, ["setprefix"], [["-editPrefix", prefix]]),
 
 			/*
 			 * Commands - General
@@ -170,6 +188,23 @@ module.exports = class extends Language {
 			MANGA_NSFW: (msg) => this.client.speech(msg, ["manga", "nsfw"]),
 			GREET_MYSELF: (msg, username) => this.client.speech(msg, ["greet", "me"], [["-param1", username]]),
 			GREET_SOMEONE: (msg, username) => this.client.speech(msg, ["greet", "success"], [["-param1", username]]),
+			MAL_SETPROFILE: (msg) => this.client.speech(msg, ["mal", "setProfile"]),
+			MAL_REMOVEPROFILE: (msg) => this.client.speech(msg, ["mal", "removeProfile"]),
+			MAL_NOTERM: (msg) => this.client.speech(msg, ["mal", "noTerm"]),
+			MAL_NOUSER: (msg) => this.client.speech(msg, ["mal", "noUsername"]),
+			MAL_404ERR: (msg) => this.client.speech(msg, ["MAL", "404Err"]),
+			ANILIST_SETPROFILE: (msg) => this.client.speech(msg, ["anilist", "setProfile"]),
+			ANILIST_REMOVEPROFILE: (msg) => this.client.speech(msg, ["anilist", "removeProfile"]),
+			ANILIST_NOTERM: (msg) => this.client.speech(msg, ["anilist", "noTerm"]),
+			ANILIST_NOUSER: (msg) => this.client.speech(msg, ["anilist", "noUsername"]),
+			ANILIST_404ERR: (msg) => this.client.speech(msg, ["anilist", "404Err"]),
+
+			/*
+			 * Commands - Fun
+			 */
+			ROLL_NOZERO: (msg) => this.client.speech(msg, ["roll", "zero"]),
+			ROLL_NONEGATIVE: (msg) => this.client.speech(msg, ["roll", "negative"]),
+			ROLL_SUCCESS: (msg, value) => this.client.speech(msg, ["roll", "success"]).replace("-value", value),
         };
     }
 };

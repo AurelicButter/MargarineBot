@@ -35,3 +35,8 @@ exports.setrole = {
         "-role has been removed from my list of assignables!"
     ]
 };
+
+exports.setprefix = [
+    "Okay! I've updated the guild prefix to -editPrefix.",
+    "I'll be sure to stay on the lookout for -editPrefix now."
+];
