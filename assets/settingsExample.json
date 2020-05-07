@@ -2,8 +2,8 @@
     "token": "Token Key",
     "prefix": "Prefix", 
     "build": {
-        "version": "Release 1.2.1",
-        "releaseDate": "May 2nd, 2020"
+        "version": "Release 1.2.2",
+        "releaseDate": "May 7th, 2020"
     },
     "owner": {
         "channels": {
