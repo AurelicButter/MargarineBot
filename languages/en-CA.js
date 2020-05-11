@@ -25,6 +25,22 @@ module.exports = class extends Language {
 			DEFAULT_LANGUAGE: "Default Language",
 			NOCHANNEL: "No channel set",
 			MISSINGTERM: (action) => this.client.speech(falseMsg, ["func-system", "missingterm"], ["-action", action]),
+			PERMLEVEL: [
+				"Level 0 - Everyone",
+				"Level 1 - Placeholder", "Level 2 - Placeholder", "Level 3 - Placeholder", "Level 4 - Placeholder",
+				"Level 5 - Guild Moderators", 
+				"Level 6 - Guild Admins", 
+				"Level 7 - Guild Owners", 
+				"Level 8 - Placeholder",
+				"Level 9 - Toast & Butter",
+				"Level 10 - Bot Owner"
+			],
+			ADDPERMS: [
+				"with no additional permissions",
+				"with guild moderator permissions",
+				"with guild admin permissions",
+				"with guild owner permissions"
+			],
 
 			/*
 			 * Klasa System - Margarine Style Responses
@@ -206,6 +222,18 @@ module.exports = class extends Language {
 			ROLL_NOZERO: (msg) => this.client.speech(msg, ["roll", "zero"]),
 			ROLL_NONEGATIVE: (msg) => this.client.speech(msg, ["roll", "negative"]),
 			ROLL_SUCCESS: (msg, value) => this.client.speech(msg, ["roll", "success"]).replace("-value", value),
+
+			/*
+			 * Commands - Economy
+			 */
+			DAILY_SELF: (msg) => this.client.speech(msg, ["daily", "self"]),
+			DAILY_SUCCESS: (msg, target, amount) => this.client.speech(msg, ["daily", "other"], [["-user", target], ["-credit", amount]]),
+			EXCHANGE: (msg, author, target, credit) => this.client.speech(msg, ["exchange"], [["-user1", author], ["-user2", target], ["-credit", credit]]),
+			REP: (msg, target) => this.client.speech(msg, ["rep"], [["-mention", target]]),
+			REVOKE_PROMPT: (msg) => this.client.speech(msg, ["revoke", "prompt"]),
+			REVOKE_STOPPED: (msg) => this.client.speech(msg, ["revoke", "stopped"]),
+			REVOKE_TIMEOUT: (msg) => this.client.speech(msg, ["revoke", "timeout"]),
+			REVOKE_SUCCESS: (msg) => this.client.speech(msg, ["revoke", "success"]),
         };
     }
 };

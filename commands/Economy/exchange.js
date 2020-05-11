@@ -8,7 +8,7 @@ module.exports = class extends Command {
             runIn: ["text"],
             cooldown: 10,
             description: "Give someone some of your credits",
-            usage: "<user:usersearch> [credit:intcheck{1,}]", usageDelim: " "
+            usage: "<user:usersearch> <credit:intcheck{1,}>", usageDelim: " "
         });
 
         this.humanUse = "<user> <credit (1 or greater)>";
@@ -24,12 +24,9 @@ module.exports = class extends Command {
         var tarData = this.client.dataManager("select", user.id, "users");
         if (!tarData) { return msg.sendLocale("DATACHECK_NOUSER"); }
 
-        data.credits -= credit;
-        tarData.credits += credit;
+        this.client.dataManager("update", [`credits=${(tarData.credits + credit)}`, user.id], "users");
+        this.client.dataManager("update", [`credits=${(data.credits - credit)}`, msg.author.id], "users");
 
-        this.client.dataManager("update", [`credits=${tarData.credits}`, user.id], "users");
-        this.client.dataManager("update", [`credits=${data.credits}`, msg.author.id], "users");
-
-        msg.channel.send(this.client.speech(msg, ["exchange"], [["-user1", msg.author.username], ["-user2", `<@${user.id}>`], ["-credit", credit]]));
+        msg.sendLocale("EXCHANGE", [msg, msg.author.username, `<@${user.id}>`, credit]);
     }
 };

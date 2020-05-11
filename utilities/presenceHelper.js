@@ -10,10 +10,10 @@ function Presence(client, type, name, status) {
 
 /**
  * Sets the presence for Margarine and starts a 15 minute interval for automatic change
- * @param { KlasaClient } client - Required. Needed to grab the user and additional functions.
+ * @param { KlasaClient } client - Needed to grab the user and additional functions.
  * @param { String } name - Customize a presence. Will not reset until the user sends additional commands.
- * @param { String } type - Type of activity to be displayed. Either play, stream, listen, or watch.
- * @param { String } status - Changes the colour on the status. Either online, idle, dnd, or invisible.
+ * @param { String } [type=play] - Type of activity to be displayed. Either play, stream, listen, or watch.
+ * @param { String } [status=online] - Changes the colour on the status. Either online, idle, dnd, or invisible.
  */
 module.exports = (client, name, type=0, status="online") => { //Type defaulted to play and status defaulted to online.
     const sliceCheck = `${client.ownerSetting.get("globalPrefix")}help |`.length;

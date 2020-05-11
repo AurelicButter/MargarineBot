@@ -28,7 +28,7 @@ module.exports = class extends Command {
             }
 
             this.client.dataManager("add", msg.author.id);
-            return msg.channel.send(this.client.speech(msg, ["daily", "self"]));
+            return msg.sendLocale("DAILY_SELF", [msg]);
         }
 
         var cooldown = JSON.parse(data.cooldowns);
@@ -38,7 +38,7 @@ module.exports = class extends Command {
             cooldown.credit = Date.now();
 
             this.client.dataManager("update", [`credits=${(data.credits + 100)}, cooldowns='${JSON.stringify(cooldown)}'`, msg.author.id], "users");
-            return msg.channel.send(this.client.speech(msg, ["daily", "self"]));
+            return msg.sendLocale("DAILY_SELF", [msg]);
         }
 
         var tarData = this.client.dataManager("select", user.id, "users");
@@ -49,6 +49,6 @@ module.exports = class extends Command {
         this.client.dataManager("update", [`credits=${(tarData.credits + 100)}`, user.id], "users");
         this.client.dataManager("update", [`cooldowns='${JSON.stringify(cooldown)}'`, msg.author.id], "users");
 
-        return msg.channel.send(this.client.speech(msg, ["daily", "other"], [["-user", user.username], ["-credit", 100]]));
+        msg.sendLocale("DAILY_SUCCESS", [msg, user.username, 100]);
     }
 };

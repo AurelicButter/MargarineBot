@@ -42,7 +42,6 @@ for (var x = 0; keys.length > x; x++) {
     }
 }
 
-client.ownerSetting.set("permLevel", config.permLevels);
 client.ownerSetting.set("globalPrefix", config.prefix);
 
 client.itemData = require("./assets/items.json");

@@ -62,7 +62,7 @@ module.exports = class extends Command {
                 .setTitle(cmd.name + alias)
                 .setDescription(cmd.description)
                 .addField("Usage:", `\`${msg.guild.settings.prefix + cmd.name} ${usageAct}\``)
-                .addField("Permission level:", this.client.ownerSetting.get("permLevel").general[cmd.permissionLevel]);
+                .addField("Permission level:", msg.language.get("PERMLEVEL")[cmd.permissionLevel]);
                 if (typeof cmd.extendedHelp === "string") { embed.addField("Extended Help:", cmd.extendedHelp); }
             msg.send({embed});
         }

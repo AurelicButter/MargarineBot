@@ -25,8 +25,10 @@ module.exports = class extends Command {
             else if (author.roles.cache.has(guild.settings.modRole)) { permLevel = 1; }
             else { permLevel = 0; }
 
-            var info = this.client.ownerSetting.get("permLevel").addPerms[permLevel];
-            return msg.channel.send(`Your permission level is ${this.client.ownerSetting.get("permLevel").general[authorLvl]} ${info}`);
+            
+
+            var info = msg.language.get("ADDPERMS")[permLevel];
+            return msg.channel.send(`Your permission level is ${msg.language.get("PERMLEVEL")[authorLvl]} ${info}`);
         } 
         
         for (var i = 5; i < 8; i++) {
@@ -34,6 +36,6 @@ module.exports = class extends Command {
             if (check) { permLevel = i; }
         }
 
-        msg.channel.send(`Your permission level is ${this.client.ownerSetting.get("permLevel").general[permLevel]}`);
+        msg.channel.send(`Your permission level is ${msg.language.get("PERMLEVEL")[permLevel]}`);
     }
 };
