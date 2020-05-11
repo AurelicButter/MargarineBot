@@ -234,6 +234,16 @@ module.exports = class extends Language {
 			REVOKE_STOPPED: (msg) => this.client.speech(msg, ["revoke", "stopped"]),
 			REVOKE_TIMEOUT: (msg) => this.client.speech(msg, ["revoke", "timeout"]),
 			REVOKE_SUCCESS: (msg) => this.client.speech(msg, ["revoke", "success"]),
+
+			/*
+			 * Commands - Economy => Games
+			 */
+			TWOUP_SUCCESS: (msg, result, bet) => this.client.speech(msg, ["twoup", "win"], [["-result", result], ["-earnings", bet]]),
+			TWOUP_LOSS: (msg, result, bet) => this.client.speech(msg, ["twoup", "lose"], [["-result", result], ["-earnings", bet]]),
+			COIN_SUCCESS: (msg, result, bet) => this.client.speech(msg, ["coin", "win"], [["-result", result], ["-earning", bet]]),
+			COIN_LOSS: (msg, result, bet) => this.client.speech(msg, ["coin", "lose"], [["-result", result], ["-earning", bet]]),
+			CHOUHAN_SUCCESS: (msg, sum, guess, bet) => this.client.speech(msg, ["chouhan", "win"], [["-sum", sum], ["-guess", guess], ["-earning", (bet * 2)]]),
+			CHOUHAN_LOSS: (msg, sum, guess, bet) => this.client.speech(msg, ["chouhan", "lose"], [["-sum", sum], ["-guess", guess], ["-earning", bet]]),
         };
     }
 };

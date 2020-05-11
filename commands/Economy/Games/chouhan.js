@@ -8,7 +8,7 @@ module.exports = class extends Command {
             runIn: ["text"],
             aliases: ["chōhan"],
             description: "Bet your credits on if the sum of six dice are even or odd.",
-            usage: "<even|odd> <bet:int>", usageDelim: " ",
+            usage: "<even|odd> <bet:intcheck{1,}>", usageDelim: " ",
             extendedHelp: "A simple Japanese dice game. Six dice are rolled and the results kept secret. Players bet on whether the sum on the dice is odd or even."
         });
 
@@ -17,8 +17,8 @@ module.exports = class extends Command {
 
     async run(msg, [choice=choice.toLowerCase(), bet]) {
         var data = this.client.dataManager("select", msg.author.id, "users");
-        if (!data) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
-        if (data.credits < bet) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "lackCredits"])); }
+        if (!data) { return msg.sendLocale("DATACHECK_NOACCOUNT"); }
+        if (data.credits < bet) { return msg.sendLocale("DATACHECK_LACKCREDIT"); }
 
         let rolls = [];
         for (var z = 0; z < 6; z++) { rolls.push(Math.floor(Math.random() * (Math.floor(6) - Math.ceil(1) + 1)) + Math.ceil(1)); }
@@ -27,10 +27,10 @@ module.exports = class extends Command {
 
         if ((sum%2 === 0 && bet === "even") || (sum%2 !== 0 && bet === "odd")) { 
             this.client.dataManager("update", [`credits=${data.credits + (bet * 2)}`, msg.author.id], "users");
-            return msg.channel.send(this.client.speech(msg, ["chouhan", "win"], [["-sum", sum], ["-guess", choice], ["-earning", (bet * 2)]]));
+            return msg.sendLocale("CHOUHAN_SUCCESS", [msg, sum, choice, (bet * 2)]);
         }
         
         this.client.dataManager("update", [`credits=${data.credits - bet}`, msg.author.id], "users");
-        msg.channel.send(this.client.speech(msg, ["chouhan", "lose"], [["-sum", sum], ["-guess", choice], ["-earning", bet]]));
+        msg.sendLocale("CHOUHAN_LOSS", [msg, sum, choice, bet]);
     }
 };
