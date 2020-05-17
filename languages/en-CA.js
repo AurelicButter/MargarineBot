@@ -223,9 +223,7 @@ module.exports = class extends Language {
 			/*
 			 * Commands - Fun
 			 */
-			ROLL_NOZERO: (msg) => this.client.speech(msg, ["roll", "zero"]),
-			ROLL_NONEGATIVE: (msg) => this.client.speech(msg, ["roll", "negative"]),
-			ROLL_SUCCESS: (msg, value) => this.client.speech(msg, ["roll", "success"], [["-value", value]]),
+			ROLL: (msg, value) => this.client.speech(msg, ["roll"], [["-value", value]]),
 			POLL_CREATED: (msg) => this.client.speech(msg, ["poll", "created"]),
 			POLL_VOTED: (msg, option) => this.client.speech(msg, ["poll", "voted"], [["-option", option]]),
 			POLL_NOPOLL: (msg) => this.client.speech(msg, ["poll", "noPoll"]),
@@ -262,6 +260,9 @@ module.exports = class extends Language {
 			 * Commands - System
 			 */
 			REPORT_NOCHANNEL: this.client.speech(falseMsg, ["func-system", "report", "noChannel"]),
-        };
+			INVITE: (invite) => `My invite link: <${invite}> \nThe above invite link is generated requesting the minimum permissions required to run all of my current commands. If there is a command that requires another permission that is not selected, I will let you know so that you can make those changes. :smile:`,
+			PERMLEVEL_OWNER: (permLvl, info) => `Your permission level is ${permLvl} ${info}`,
+			PERMLEVEL_USER: (permLvl) => `Your permission level is ${permLvl}`,
+		};
     }
 };

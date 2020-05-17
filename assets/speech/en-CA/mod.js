@@ -7,10 +7,12 @@ module.exports = {
     "ban": null, //Placeholder
     "mute": {
         "noRole": [
-            "Your server does not have a mute role set up!"
+            "Your server does not have a mute role set up!",
+            "There is no mute role set up in this server. I can't mute anyone!"
         ],
         "admin": [
-            "I guess you can... they are an admin so this won't be effective at all..."
+            "I guess you can... they are an admin so this won't be effective at all...",
+            "This won't be effective at all... they are an admin."
         ],
         "rolePos": [
             "I can't do this! The role is too high for me to access!"
@@ -24,12 +26,8 @@ module.exports = {
             "There shall be silence! -user has been muted."
         ]
     },
-    "purge": {
-        "badCount": [ //Count is not between 2 and 99
-            "You didn't give me an amount between 2 and 99 to delete!"
-        ],
-        "success": [
-            "Purged -amount messages -userfrom the channel."
-        ]
-    }
+    "purge": [
+        "Purged -amount messages -userfrom the channel.",
+        "-amount message -userhas been removed from the channel!"
+    ]
 };

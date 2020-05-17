@@ -13,10 +13,7 @@ module.exports = class extends Command {
     }
 
     async run(msg, [sides]) {
-        if (sides === 0) { return msg.sendLocale("ROLL_NOZERO", [msg]); }
-        if (sides < 0) { return msg.sendLocale("ROLL_NOZERO", [msg]); }
-
         var value = Math.floor(Math.random() * (Math.floor(sides) - Math.ceil(1) + 1)) + Math.ceil(1);
-        msg.sendLocale("ROLL_SUCCESS", [msg, value]);
+        msg.sendLocale("ROLL", [msg, value]);
     }
 };

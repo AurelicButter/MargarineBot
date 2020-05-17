@@ -27,7 +27,7 @@ module.exports = function dataManager(args, values, table) {
             
             db.prepare("CREATE TABLE fishing (userID TEXT, trash INTEGER, fish INTEGER, crab INTEGER, squid INTEGER, shark INTEGER)").run();
             db.prepare("CREATE TABLE harvest (userID TEXT, potato INTEGER, egg INTEGER, bread INTEGER, chocolate INTEGER, greenapple INTEGER, apple INTEGER, lemon INTEGER, rice INTEGER)").run();
-            db.prepare("CREATE TABLE product (userID TEXT, recycle INTEGER, fishcake INTEGER, cookie INTEGER, oden INTEGER, sushi INTEGER, sake INTEGER)").run();
+            db.prepare("CREATE TABLE product (userID TEXT, recycle INTEGER, fishcake INTEGER, cookie INTEGER, oden INTEGER, sushi INTEGER, sake INTEGER, pancake INTEGER)").run();
             return;
         case "add":
             var data = db.prepare("SELECT * FROM users WHERE userID=?").get(values[0]);

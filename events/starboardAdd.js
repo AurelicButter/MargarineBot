@@ -46,9 +46,9 @@ module.exports = class extends Event {
 
             const embed = new MessageEmbed()
                 .setColor(0x04d5fd)
-                .setDescription("*On " + this.client.util.timekeeper.timeMaker(msg.createdAt) + "*")
+                .setDescription(`*On ${this.client.util.timekeeper.timeMaker(msg.createdAt)}*`)
                 .setThumbnail(msg.author.displayAvatarURL())
-                .setFooter("Count: " + reaction.count)
+                .setFooter(`Count: ${reaction.count}`)
                 .setAuthor(`${msg.author.tag} posted about...`, null, msg.url)
                 .setTimestamp();
                 

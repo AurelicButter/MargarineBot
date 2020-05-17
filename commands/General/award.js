@@ -14,7 +14,7 @@ module.exports = class extends Command {
 
     async run(msg) {
         var statData = this.client.dataManager("select", "Overall", "awards");
-        var awardAmt = this.client.ownerSetting.get("awards");
+        var awardAmt = this.client.settings.get("awards");
 
         var sum = statData.suggest + statData.bug + statData.minor + statData.major;
         var rewarded = (statData.suggest * awardAmt.suggest) + (statData.bug * awardAmt.bug) + (statData.minor * awardAmt.minor) + (statData.major * awardAmt.major);

@@ -3,22 +3,12 @@
  */
 
 module.exports = {
-    "roll": {
-        "zero": [
-            "You can't roll from 0!",
-            "A die with 0 sides? You got to be joking.",
-            "Rolling a die is like dividing... you can't have zero in certain places!"
-        ],
-        "negative": [
-            "You can't roll a negative number, baka!",
-            "You need a positive number! A negative sided die is impossible!"
-        ],
-        "success": [
-            "🎲 You rolled a -value! 🎲",
-            "You've rolled -value! 🎲",
-            "🎲 Ah ha! You've rolled a -value!"
-        ]
-    },
+    "roll": [
+        "🎲 You rolled a -value! 🎲",
+        "You've rolled -value! 🎲",
+        "🎲 Ah ha! You've rolled a -value!",
+        "BEHOLD! 🎲 You've rolled -value! *Is that a good thing?*"
+    ],
     "rps": {
         "sameUser": [
             "Hey! You can't play rock, paper, scissors with yourself! Invite someone into the mix or play with me instead!",

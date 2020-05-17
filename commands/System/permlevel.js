@@ -28,7 +28,7 @@ module.exports = class extends Command {
             
 
             var info = msg.language.get("ADDPERMS")[permLevel];
-            return msg.channel.send(`Your permission level is ${msg.language.get("PERMLEVEL")[authorLvl]} ${info}`);
+            return msg.sendLocale("PERMLEVEL_OWNER", [msg.language.get("PERMLEVEL")[authorLvl], info]);
         } 
         
         for (var i = 5; i < 8; i++) {
@@ -36,6 +36,6 @@ module.exports = class extends Command {
             if (check) { permLevel = i; }
         }
 
-        msg.channel.send(`Your permission level is ${msg.language.get("PERMLEVEL")[permLevel]}`);
+        msg.sendLocale("PERMLEVEL_USER", [msg.language.get("PERMLEVEL")[permLevel]]);
     }
 };

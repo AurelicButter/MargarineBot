@@ -6,11 +6,12 @@ module.exports = {
     "balance": null, //Placeholder
     "daily": {
         "self": [
-            "You have redeemed 100 credits!",
-            "Poof! You are 100 credits richer now!",
-            "Don't go gambling your 100 credits all in one place now.",
+            "You have redeemed -credit credits!",
+            "Poof! You are -credit credits richer now!",
+            "Don't go gambling your -credit credits all in one place now.",
             "You have redeemed your daily credits. Come back tomorrow at the same time for more!",
-            "You should buy me a game with those credits. I won't take all 100 on you, I swear."
+            "You should buy me a game with those credits. I won't take all -credit on you, I swear.",
+            "Nice! Now you'll be able to buy me a game with those credits! Don't worry, I won't take all -credit on you."
         ],
         "other": [
             "Oh? Feeling generous are we? You have given -user -credit credits!",
@@ -26,7 +27,8 @@ module.exports = {
     ],
     "rep": [
         "You have given -mention a reputation point!",
-        "One new, shiny reputation point for -mention has been given!"
+        "One new, shiny reputation point for -mention has been given!",
+        "-mention has been awarded a reputation point!"
     ],
     "revoke": {
         "prompt": [
