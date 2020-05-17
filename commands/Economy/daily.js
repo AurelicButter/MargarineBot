@@ -16,6 +16,7 @@ module.exports = class extends Command {
     async run(msg, [user]) {               
         var data = this.client.dataManager("select", msg.author.id, "users");
         if (!data && user.id !== msg.author.id) { return msg.sendLocale("DATACHECK_NOACCOUNT"); }
+        var dailyAmt = this.client.settings.get("daily");
         
         if (!data) {
             if (this.client.settings.usedDaily.has(msg.author.id)) { //Check if user has recently deleted their own data.
@@ -27,8 +28,8 @@ module.exports = class extends Command {
                 this.client.settings.usedDaily.delete(msg.author.id);
             }
 
-            this.client.dataManager("add", msg.author.id);
-            return msg.sendLocale("DAILY_SELF", [msg]);
+            this.client.dataManager("add", [msg.author.id, dailyAmt]);
+            return msg.sendLocale("DAILY_SELF", [msg, dailyAmt]);
         }
 
         var cooldown = JSON.parse(data.cooldowns);
@@ -37,7 +38,7 @@ module.exports = class extends Command {
         if (user.id === msg.author.id) {
             cooldown.credit = Date.now();
 
-            this.client.dataManager("update", [`credits=${(data.credits + 100)}, cooldowns='${JSON.stringify(cooldown)}'`, msg.author.id], "users");
+            this.client.dataManager("update", [`credits=${(data.credits + dailyAmt)}, cooldowns='${JSON.stringify(cooldown)}'`, msg.author.id], "users");
             return msg.sendLocale("DAILY_SELF", [msg]);
         }
 
@@ -46,9 +47,9 @@ module.exports = class extends Command {
 
         cooldown.credit = Date.now();
         
-        this.client.dataManager("update", [`credits=${(tarData.credits + 100)}`, user.id], "users");
+        this.client.dataManager("update", [`credits=${(tarData.credits + dailyAmt)}`, user.id], "users");
         this.client.dataManager("update", [`cooldowns='${JSON.stringify(cooldown)}'`, msg.author.id], "users");
 
-        msg.sendLocale("DAILY_SUCCESS", [msg, user.username, 100]);
+        msg.sendLocale("DAILY_SUCCESS", [msg, user.username, dailyAmt]);
     }
 };

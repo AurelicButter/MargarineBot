@@ -31,7 +31,11 @@ module.exports = {
                 "It seems you have timed out with making a report. When you are ready, feel free to try again!",
                 "Looks like the time ran out! Take a moment to prepare yourself and then contact me when ready."
             ]
-        }
+        },
+        "noChannel": [
+            "Huh, it looks like the owner hasn't setup a report channel to recieve feedback.",
+            "There's no report channel to send your feedback to... looks like the owner doesn't want any feedback."
+        ]
     },
     "award": {
         "noType": [ //User does not provide an award type.

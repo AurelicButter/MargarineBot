@@ -18,8 +18,8 @@
     "querystring": "^0.2.0",
     "request": "^2.88.2",
     "snekfetch": "^4.0.4",
-    "youtube-playlist": "^1.0.2",
-    "ytdl-core": "^2.1.0"
+    "youtube-playlist": "^1.0.3",
+    "ytdl-core": "^2.1.2"
   },
   "devDependencies": {},
   "repository": {

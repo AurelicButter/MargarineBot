@@ -32,7 +32,7 @@ exports.envCheck = function() {
 
     if (djsVersion !== "12.2.0") { missingDep.push("You are not using the right discord.js package! Required version: v12.2.0"); }
     if (kVersion !== "0.5.0-dev") { missingDep.push("You are not using the right Klasa version! Required version: v0.5.0-dev"); }
-    if (nVersion < 10.0) { missingDep.push("You are not using the right node.js version! Required version: v10.0.0+"); }
+    if (nVersion < 12.0) { missingDep.push("You are not using the right node.js version! Required version: v12.0.0+"); }
 
     if (missingDep.length > 0) { console.log(missingDep.join("\n")); process.exit(); }
 };
@@ -43,8 +43,8 @@ exports.util = {
     modEmbed: require("./modEmbed.js"),
     /**
       * Returns the best matching channel for channel messages.
-      * @param { KlasaGuild } guild - Required. Needed to search for the channel and settings.
-      * @param { String } args - Defaults to "default". Takes either "default" or "mod" depending on the action needed.
+      * @param { KlasaGuild } guild - Needed to search for the channel and settings.
+      * @param { String } [args] - Defaults to "default". Takes either "default" or "mod" depending on the action needed.
       * @returns { KlasaChannel } Returns a channel that best fits the arguements given.
     */
     defaultChannel: (guild, args="default") => {
@@ -68,25 +68,24 @@ exports.util = {
     },
     /**
      * Goes over all common checks to ensure the user is able to interact with a music command
-     * @param { KlasaMessage } msg - Required
+     * @param { KlasaMessage } msg
      * @param { String } tag - A tag for specific cases such as the join command.
      * @returns { Boolean | Object } Returns true if passed and false if failed. If tag is not join, will return the music instance.
      */
     musicCheck: (msg, tag) => {
-        var client = msg.client;
         if (!msg.member.voice.channelID) { 
-            msg.channel.send(client.speech(msg, ["func-music", "general", "userVC"]));
+            msg.sendLocale("MUSICCHECK_USERNOVC");
             return false;
         } else if (tag !== "join") {
-            var handler = client.music.get(msg.guild.id);
+            var handler = msg.client.music.get(msg.guild.id);
             if (!handler) {
-                msg.channel.send(client.speech(msg, ["func-music", "general", "noQueue"]));
+                msg.sendLocale("MUSICCHECK_NOQUEUE");
                 return false;
             } else if (msg.member.voice.channelID !== handler.channel.id) {
-                msg.channel.send(client.speech(msg, ["func-music", "general", "mismatch"]));
+                msg.sendLocale("MUSICCHECK_MISMATCHVC");
                 return false;
             } else if (tag === "handler" && !handler.dispatcher) {
-                msg.channel.send(client.speech(msg, ["func-music", "general", "noHandler"]));
+                msg.sendLocale("MUSICCHECK_NOHANDLER");
             }
         
             return handler;

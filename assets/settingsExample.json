@@ -5,17 +5,5 @@
         "version": "Release 1.2.2",
         "releaseDate": "May 7th, 2020"
     },
-    "owner": {
-        "channels": {
-            "award": "Channel ID",
-            "report": "Channel ID"
-        },
-        "awards": {
-            "suggest": 250,
-            "bug": 500,
-            "minor": 600,
-            "major": 2000
-        }
-    },
     "database": "./assets/MargarineData.sqlite"
 }

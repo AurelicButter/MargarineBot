@@ -24,6 +24,8 @@ module.exports = class extends Command {
 
         const filter = m => Object.keys(reportTypes).includes(m.content.toLowerCase());
 
+        if (!this.client.settings.reportChannel) { return msg.sendLocale("REPORT_NOCHANNEL"); }
+
         await msg.reply(this.client.speech(msg, ["report", "start"]));
         await msg.author.send(this.client.speech(msg, ["report", "q1"])).then(() => {
             msg.author.dmChannel.awaitMessages(filter, { max: 1, time: 160000, errors: ["time"], }).then((collected) => {
@@ -47,8 +49,8 @@ module.exports = class extends Command {
                             .setTimestamp()
                             .setDescription(`**Report number:** ${reportNumber} \n**Issue:** ${desc.first().content} 
                             \nYour report has been sent! Any more questions, please ask ${this.client.owner.tag}!`);
-
-                        this.client.channels.get(this.client.ownerSetting.get("channels").report).send(embed);
+                        
+                        this.client.channels.cache.get(this.client.settings.reportChannel).send(embed);
                         msg.author.send({embed: DMembed});  
                         this.client.dataManager("update", [`count=${reportNumber}`, "report"], "stats");
                     }).catch(() => { msg.author.send(this.client.speech(msg, ["report", "timeout", "t2"])); }); 

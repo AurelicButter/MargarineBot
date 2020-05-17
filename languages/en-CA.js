@@ -171,6 +171,10 @@ module.exports = class extends Language {
 			DATACHECK_LACKCREDIT: this.client.speech(falseMsg, ["func-dataCheck", "lackCredits"]),
 			DATACHECK_SAMEUSER: this.client.speech(falseMsg, ["func-dataCheck", "sameUser"]),
 			DATACHECK_COOLDOWN: this.client.speech(falseMsg, ["func-dataCheck", "cooldown"]),
+			MUSICCHECK_USERNOVC: this.client.speech(falseMsg, ["func-music", "general", "userVC"]),
+			MUSICCHECK_NOQUEUE: this.client.speech(falseMsg, ["func-music", "general", "noQueue"]),
+			MUSICCHECK_MISMATCHVC: this.client.speech(falseMsg, ["func-music", "general", "mismatch"]),
+			MUSICCHECK_NOHANDLER: this.client.speech(falseMsg, ["func-music", "general", "noHandler"]),
 			
 			/* 
 			 * Commands - Config
@@ -221,12 +225,15 @@ module.exports = class extends Language {
 			 */
 			ROLL_NOZERO: (msg) => this.client.speech(msg, ["roll", "zero"]),
 			ROLL_NONEGATIVE: (msg) => this.client.speech(msg, ["roll", "negative"]),
-			ROLL_SUCCESS: (msg, value) => this.client.speech(msg, ["roll", "success"]).replace("-value", value),
+			ROLL_SUCCESS: (msg, value) => this.client.speech(msg, ["roll", "success"], [["-value", value]]),
+			POLL_CREATED: (msg) => this.client.speech(msg, ["poll", "created"]),
+			POLL_VOTED: (msg, option) => this.client.speech(msg, ["poll", "voted"], [["-option", option]]),
+			POLL_NOPOLL: (msg) => this.client.speech(msg, ["poll", "noPoll"]),
 
 			/*
 			 * Commands - Economy
 			 */
-			DAILY_SELF: (msg) => this.client.speech(msg, ["daily", "self"]),
+			DAILY_SELF: (msg, amount) => this.client.speech(msg, ["daily", "self"], [["-credit", amount]]),
 			DAILY_SUCCESS: (msg, target, amount) => this.client.speech(msg, ["daily", "other"], [["-user", target], ["-credit", amount]]),
 			EXCHANGE: (msg, author, target, credit) => this.client.speech(msg, ["exchange"], [["-user1", author], ["-user2", target], ["-credit", credit]]),
 			REP: (msg, target) => this.client.speech(msg, ["rep"], [["-mention", target]]),
@@ -244,6 +251,17 @@ module.exports = class extends Language {
 			COIN_LOSS: (msg, result, bet) => this.client.speech(msg, ["coin", "lose"], [["-result", result], ["-earning", bet]]),
 			CHOUHAN_SUCCESS: (msg, sum, guess, bet) => this.client.speech(msg, ["chouhan", "win"], [["-sum", sum], ["-guess", guess], ["-earning", (bet * 2)]]),
 			CHOUHAN_LOSS: (msg, sum, guess, bet) => this.client.speech(msg, ["chouhan", "lose"], [["-sum", sum], ["-guess", guess], ["-earning", bet]]),
+
+			/*
+			 * Commands - Owner
+			 */
+			CHANNEL_UPDATE: (type, channel) => this.client.speech(falseMsg, ["func-owner", "setchannel"], [["-target", type], ["-channel", channel]]),
+			DAILY_UPDATE: (amount) => this.client.speech(falseMsg, ["func-owner", "setdaily"], [["-amount", amount]]),
+
+			/*
+			 * Commands - System
+			 */
+			REPORT_NOCHANNEL: this.client.speech(falseMsg, ["func-system", "report", "noChannel"]),
         };
     }
 };
