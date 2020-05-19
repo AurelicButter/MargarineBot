@@ -39,7 +39,7 @@ module.exports = class extends Command {
             cooldown.credit = Date.now();
 
             this.client.dataManager("update", [`credits=${(data.credits + dailyAmt)}, cooldowns='${JSON.stringify(cooldown)}'`, msg.author.id], "users");
-            return msg.sendLocale("DAILY_SELF", [msg]);
+            return msg.sendLocale("DAILY_SELF", [msg, dailyAmt]);
         }
 
         var tarData = this.client.dataManager("select", user.id, "users");
