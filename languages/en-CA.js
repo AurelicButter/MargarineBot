@@ -258,7 +258,7 @@ module.exports = class extends Language {
 			/*
 			 * Commands - Owner
 			 */
-			CHANNEL_UPDATE: (type, channel) => this.client.speech(falseMsg, ["func-owner", "setchannel"], [["-target", type], ["-channel", channel]]),
+			CHANNEL_UPDATE: (type, channel) => this.client.speech(falseMsg, ["func-owner", "setchannel"], [["-type", type], ["-channel", channel]]),
 			DAILY_UPDATE: (amount) => this.client.speech(falseMsg, ["func-owner", "setdaily"], [["-amount", amount]]),
 			AWARD_UPDATE: (type, amount) => this.client.speech(falseMsg, ["func-owner", "setaward"], [["-type", type], ["-amount", amount]]),
 			AVATAR_UPDATE: this.client.speech(falseMsg, ["func-owner", "setavatar"]),
