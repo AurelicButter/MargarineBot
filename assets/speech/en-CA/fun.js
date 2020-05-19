@@ -19,17 +19,21 @@ module.exports = {
         ]
     },
     "poll": {
-        "noQuestion": [
-            "You need to provide a question!",
-            "There's no question here!"
+        "noTitle": [
+            "You need to explain what this poll is before starting one!",
+            "So you want to create a poll but not add in the details? That's not going to happen."
+        ],
+        "noDesc": [
+            "I recommend explaining your poll before starting one. That way everyone knows what it's for!",
+            "No description, no poll. Is this just a weeb reference? Yes, but it's true."
         ],
         "noChoice": [
             "You'll need more options than that!",
             "You need to provide at least two options!"
         ],
-        "maxChoice": [
-            "That's a really large list you got there. Shrink it a bit and come back.",
-            "Whoa! You have a giant list of options! Not even I can handle all of these!"
+        "noCreate": [
+            "Nope! There's already a poll ongoing!",
+            "You can't have more than one poll at once. Try again once the other one has finished"
         ],
         "created": [
             "Okay! Your poll is up and ready for voting!",

@@ -50,7 +50,7 @@ module.exports = class extends Command {
 
         request(url, function(err, res, body) {
             var loadBody = cheerio.load(body);
-            var text = loadBody.text().split(" "); var x = 0; var info = { aStats: {}, mStats: {} };
+            var text = loadBody.text().split(" "); var x = 100; var info = { aStats: {}, mStats: {} };
 
             do {
                 var z = text[x].trim(); var y = text[x + 1] ? text[x + 1].trim() : ""; var zed = text[x + 2] ? text[x + 2].trim() : "";
@@ -87,19 +87,17 @@ module.exports = class extends Command {
                             }
                         }
                     } else if (z === "All" && !info.friends) { info.friends = `👫 Friends: ${y.slice(1, -8)}`; }
-                    else if (isNaN(y) === false) {
-                        if (z === "Days:") { 
-                            if (!info.aStats.days) { info.aStats.days = y; }
-                            else { info.mStats.days = y; }
-                        } 
-                        else if (z === "Score:") {
-                            if (!info.aStats.mean) { info.aStats.mean = y; }
-                            else { info.mStats.mean = y; }
-                        }
-                    }
                 }
                 x++;
-            } while (x < text.length);
+            } while (!info.mStats.plan);
+
+            var animeStats = loadBody(".anime")[0].children[3];
+            info.aStats.days = animeStats.children[1].children[1].data;
+            info.aStats.mean = animeStats.children[3].children[3].children[0].data;
+
+            var mangaStats = loadBody(".manga")[0].children[3];
+            info.mStats.days = mangaStats.children[1].children[1].data;
+            info.mStats.mean = mangaStats.children[3].children[3].children[0].data;
 
             var list = [];
             if (info.gender) { list.push(info.gender); }

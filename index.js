@@ -32,8 +32,8 @@ if (!existsSync(config.database)) { dataManager("init"); } //Init the SQLite Dat
 client.ownerSetting = new Collection();
 client.music = new Collection();
 
-client.ownerSetting.set("build", config.build);
-client.ownerSetting.set("globalPrefix", config.prefix);
+client.build = config.build;
+client.globalPrefix = config.prefix;
 
 client.itemData = require("./assets/items.json");
 

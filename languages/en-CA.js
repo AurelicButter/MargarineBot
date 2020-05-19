@@ -24,6 +24,7 @@ module.exports = class extends Language {
             DEFAULT: (key) => `${key} has not been localized for en-CA yet.`,
 			DEFAULT_LANGUAGE: "Default Language",
 			NOCHANNEL: "No channel set",
+			MISSINGPERMISSION: "❌ ERROR: MISSING PERMISSIONS! ❌",
 			MISSINGTERM: (action) => this.client.speech(falseMsg, ["func-system", "missingterm"], ["-action", action]),
 			PERMLEVEL: [
 				"Level 0 - Everyone",
@@ -66,6 +67,8 @@ module.exports = class extends Language {
 			RESOLVER_MINMAX_MAX: (name, max, suffix) => this.client.speech(falseMsg, ["func-system", "resolver", "minMax", "max"], [
 				["-name", name], ["-max", max]
 			]),
+			RESOLVER_INVALID_CHANNEL: (name) => this.client.speech(falseMsg, ["func-system", "resolver", "channel"], [["-name", name]]),
+			RESOLVER_INVALID_INT: (name) => this.client.speech(falseMsg, ["func-system", "resolver", "integer"], [["-name", name]]),
 
 			/*
 			 * Klasa System. Copied over from Klasa's en-US.
@@ -80,14 +83,12 @@ module.exports = class extends Language {
 			SETTING_GATEWAY_INVALID_FILTERED_VALUE: (piece, value) => `${piece.key} doesn't accept the value: ${value}`,
 			RESOLVER_MULTI_TOO_FEW: (name, min = 1) => `Provided too few ${name}s. At least ${min} ${min === 1 ? 'is' : 'are'} required.`,
 			RESOLVER_INVALID_BOOL: (name) => `${name} must be true or false.`,
-			RESOLVER_INVALID_CHANNEL: (name) => `${name} must be a channel tag or valid channel id.`,
 			RESOLVER_INVALID_CUSTOM: (name, type) => `${name} must be a valid ${type}.`,
 			RESOLVER_INVALID_DATE: (name) => `${name} must be a valid date.`,
 			RESOLVER_INVALID_DURATION: (name) => `${name} must be a valid duration string.`,
 			RESOLVER_INVALID_EMOJI: (name) => `${name} must be a custom emoji tag or valid emoji id.`,
 			RESOLVER_INVALID_FLOAT: (name) => `${name} must be a valid number.`,
 			RESOLVER_INVALID_GUILD: (name) => `${name} must be a valid guild id.`,
-			RESOLVER_INVALID_INT: (name) => `${name} must be an integer.`,
 			RESOLVER_INVALID_LITERAL: (name) => `Your option did not match the only possibility: ${name}`,
 			RESOLVER_INVALID_MEMBER: (name) => `${name} must be a mention or valid user id.`,
 			RESOLVER_INVALID_MESSAGE: (name) => `${name} must be a valid message id.`,
@@ -224,6 +225,10 @@ module.exports = class extends Language {
 			 * Commands - Fun
 			 */
 			ROLL: (msg, value) => this.client.speech(msg, ["roll"], [["-value", value]]),
+			POLL_NOTITLE: (msg) => this.client.speech(msg, ["poll", "noTitle"]),
+			POLL_NODESC: (msg) => this.client.speech(msg, ["poll", "noDesc"]),
+			POLL_NOOPTIONS: (msg) => this.client.speech(msg, ["poll", "noChoice"]),
+			POLL_NOCREATE: (msg) => this.client.speech(msg, ["poll", "noCreate"]),
 			POLL_CREATED: (msg) => this.client.speech(msg, ["poll", "created"]),
 			POLL_VOTED: (msg, option) => this.client.speech(msg, ["poll", "voted"], [["-option", option]]),
 			POLL_NOPOLL: (msg) => this.client.speech(msg, ["poll", "noPoll"]),
@@ -255,6 +260,8 @@ module.exports = class extends Language {
 			 */
 			CHANNEL_UPDATE: (type, channel) => this.client.speech(falseMsg, ["func-owner", "setchannel"], [["-target", type], ["-channel", channel]]),
 			DAILY_UPDATE: (amount) => this.client.speech(falseMsg, ["func-owner", "setdaily"], [["-amount", amount]]),
+			AWARD_UPDATE: (type, amount) => this.client.speech(falseMsg, ["func-owner", "setaward"], [["-type", type], ["-amount", amount]]),
+			AVATAR_UPDATE: this.client.speech(falseMsg, ["func-owner", "setavatar"]),
 
 			/*
 			 * Commands - System

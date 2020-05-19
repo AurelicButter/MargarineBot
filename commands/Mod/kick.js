@@ -13,7 +13,7 @@ module.exports = class extends Command {
             usage: "<user:usersearch> <reason:str>", usageDelim: ","
         });
 
-        this.humanUse = "<user>_<reason>"
+        this.humanUse = "<user>_<reason>";
     }
 
     async run(msg, [user, reason]) {

@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 
 /**
  * Creates an embed for a moderation action.
- * @param { KlasaMessage } msg - Required.
+ * @param { KlasaMessage } msg 
  * @param { String } action - The action done. Either ban or kick.
  * @param { KlasaUser } user - The user affected by the action.
  * @param { String } reason - The reason behind the action.
@@ -23,11 +23,11 @@ module.exports = function(msg, action=action.toLowerCase(), user, reason) {
   
     if (msg.channel.permissionsFor(msg.author).has(options[0]) === false) { 
         embed.setColor(0xDD2E44)
-        .setTitle("❌ ERROR: MISSING PERMISSIONS! ❌")
+        .setTitle(msg.language.get("MISSINGPERMISSION"))
         .setDescription("You do not have the correct permissions for this command!");
     } else if (msg.channel.permissionsFor(client.user).has(options[0]) === false) {
         embed.setColor(0xDD2E44)
-        .setTitle("❌ ERROR: MISSING PERMISSIONS! ❌")
+        .setTitle(msg.language.get("MISSINGPERMISSION"))
         .setDescription("I do not have the correct permissions for this command!");
     } else {
         embed.setColor(options[2])

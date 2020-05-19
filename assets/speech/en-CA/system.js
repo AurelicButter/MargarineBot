@@ -117,7 +117,15 @@ module.exports = {
                 "-name has to be less than -max.",
                 "That's too high! -name has to be less than -max."
             ]
-        }
+        },
+        "channel": [
+            "Hold on! -name must be a channel tag or valid channel id!",
+            "That's not a channel tag or valid channel id, so I can't do anything with this!"
+        ],
+        "integer": [
+            "-name needs to be an integer. And that doesn't look like one!",
+            "That doesn't look like an integer. -name needs to be an integer if it's to work!"
+        ]
     },
     "commandhandler": {
         "missing": [

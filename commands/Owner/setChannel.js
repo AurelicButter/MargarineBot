@@ -8,7 +8,7 @@ module.exports = class extends Command {
             runIn: ["text", "dm"],
             permissionLevel: 10,
             description: "Set the award or report channels.",
-            usage: "<award|report> <channel:channel>"
+            usage: "<award|report> <channel:channel>", usageDelim: " "
         });
 
         this.humanUse = "<award|report> <target channel>";
