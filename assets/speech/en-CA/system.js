@@ -31,7 +31,11 @@ module.exports = {
                 "It seems you have timed out with making a report. When you are ready, feel free to try again!",
                 "Looks like the time ran out! Take a moment to prepare yourself and then contact me when ready."
             ]
-        }
+        },
+        "noChannel": [
+            "Huh, it looks like the owner hasn't setup a report channel to recieve feedback.",
+            "There's no report channel to send your feedback to... looks like the owner doesn't want any feedback."
+        ]
     },
     "award": {
         "noType": [ //User does not provide an award type.
@@ -113,7 +117,15 @@ module.exports = {
                 "-name has to be less than -max.",
                 "That's too high! -name has to be less than -max."
             ]
-        }
+        },
+        "channel": [
+            "Hold on! -name must be a channel tag or valid channel id!",
+            "That's not a channel tag or valid channel id, so I can't do anything with this!"
+        ],
+        "integer": [
+            "-name needs to be an integer. And that doesn't look like one!",
+            "That doesn't look like an integer. -name needs to be an integer if it's to work!"
+        ]
     },
     "commandhandler": {
         "missing": [

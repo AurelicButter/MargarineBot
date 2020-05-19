@@ -12,6 +12,8 @@ module.exports = class extends Command {
             description: "Kicks the mentioned user.",
             usage: "<user:usersearch> <reason:str>", usageDelim: ","
         });
+
+        this.humanUse = "<user>_<reason>";
     }
 
     async run(msg, [user, reason]) {

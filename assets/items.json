@@ -119,6 +119,17 @@
             ["chocolate", 2]
         ]
     },
+    "pancake": {
+        "sell": 30,
+        "name": "pancake",
+        "emote": "🥞",
+        "category": "product",
+        "subcategory": "food",
+        "recipe": [
+            ["egg", 2],
+            ["bread", 2]
+        ]
+    },
     "oden": {
         "sell": 125,
         "name": "oden",

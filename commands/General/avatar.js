@@ -10,6 +10,8 @@ module.exports = class extends Command {
             description: "Fetch a user's avatar!",
             usage: "<user:usersearch>"
         });
+
+        this.humanUse = "<user>";
     }
 
     async run(msg, [user]) { msg.channel.send("", { files: [user.displayAvatarURL()]}); }

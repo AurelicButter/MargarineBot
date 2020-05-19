@@ -32,18 +32,8 @@ if (!existsSync(config.database)) { dataManager("init"); } //Init the SQLite Dat
 client.ownerSetting = new Collection();
 client.music = new Collection();
 
-var keys = Object.keys(config);
-for (var x = 0; keys.length > x; x++) { 
-    switch (keys[x]) {
-        case "owner":
-            var key = Object.keys(config.owner);
-            for (var y = 0; key.length > y; y++) { client.ownerSetting.set(key[y], config.owner[key[y]]); } break;
-        case "build": client.ownerSetting.set("build", config.build); break;
-    }
-}
-
-client.ownerSetting.set("permLevel", config.permLevels);
-client.ownerSetting.set("globalPrefix", config.prefix);
+client.build = config.build;
+client.globalPrefix = config.prefix;
 
 client.itemData = require("./assets/items.json");
 

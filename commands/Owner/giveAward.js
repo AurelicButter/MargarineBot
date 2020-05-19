@@ -25,10 +25,10 @@ module.exports = class extends Command {
 
         var overallData = this.client.dataManager("select", "Overall", "awards");
         var userData = this.client.dataManager("select", user.id, "awards");
-        if (!userData) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noUser"])); }
+        if (!userData) { return msg.sendLocale("DATACHECK_NOUSER"); }
 
         type = type.toLowerCase();
-        const awards = this.client.ownerSetting.get("awards");
+        const awards = this.client.settings.get("awards");
 
         this.client.dataManager("update", [`${type}=${overallData[type] + 1}`, "Overall"], "awards");
         this.client.dataManager("update", [`${type}=${userData[type] + 1}`, user.id], "awards");
@@ -44,6 +44,6 @@ module.exports = class extends Command {
             .setFooter(`Awarded to: ${user.tag} (${user.id}) on`, user.displayAvatarURL());
 
         msg.channel.send(this.client.speech(msg, ["func-system", "award", "success"], [["-id", user.id], ["-credit", awards[type]]]));
-        this.client.channels.get(this.client.ownerSetting.get("channels").award).send({embed});       
+        this.client.channels.get(this.client.settings.get("awardChannel")).send({embed});       
     }
 };

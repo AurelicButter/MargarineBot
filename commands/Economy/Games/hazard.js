@@ -18,7 +18,7 @@ module.exports = class extends Command {
             enabled: true,
             runIn: ["text"],
             description: "Gamble your credits in a early version of craps, a dice game.",
-            usage: "<bet:int>", usageDelim: " ",
+            usage: "<bet:intcheck{1,}>", usageDelim: " ",
             extendedHelp: "An early English game played with two dice. The game 'Craps' developed from hazard. The game is popular in North America but is not in the rest of the world."
         });
 
@@ -27,8 +27,8 @@ module.exports = class extends Command {
 
     async run(msg, [bet]) {
         var data = this.client.dataManager("select", msg.author.id, "users");
-        if (!data) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
-        if (data.credits < bet) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "lackCredits"])); }
+        if (!data) { return msg.sendLocale("DATACHECK_NOACCOUNT"); }
+        if (data.credits < bet) { return msg.sendLocale("DATACHECK_LACKCREDIT"); }
 
         const embed = new MessageEmbed()
             .setTimestamp()

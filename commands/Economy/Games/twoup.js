@@ -7,7 +7,7 @@ module.exports = class extends Command {
             enabled: true,
             runIn: ["text"],
             description: "Bet on coin flips. Get two heads in a row and win or hope for all five odds!",
-            usage: "<bet:int>",
+            usage: "<bet:intcheck{1,}>",
             extendedHelp: "Two-up is a traditional Australian gambling game, involving a designated 'spinner' throwing two coins into the air. Players bet on whether the coins will fall with both heads up, both tails up, or with one head and one tail up (known as 'odds'). It is traditionally played on Anzac Day in pubs and clubs throughout Australia."
         });
 
@@ -16,13 +16,12 @@ module.exports = class extends Command {
 
     async run(msg, [bet]) {
         var data = this.client.dataManager("select", msg.author.id, "users");
-        if (!data) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
-        if (data.credits < bet) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "lackCredits"])); }
+        if (!data) { return msg.sendLocale("DATACHECK_NOACCOUNT"); }
+        if (data.credits < bet) { return msg.sendLocale("DATACHECK_LACKCREDIT"); }
     
         let rolls = [];
         for (var z = 0; z < 7; z++) {
-            var x = (Math.random() > .5) ? "heads" : "tails";
-            rolls.push(x);
+            rolls.push(((Math.random() > .5) ? "heads" : "tails"));
         }
     
         let fact = [];
@@ -35,10 +34,10 @@ module.exports = class extends Command {
     
         if (result[0] === "won") { 
             this.client.dataManager("update", [`credits=${data.credits + (bet * result[1])}`, msg.author.id], "users");
-            msg.channel.send(this.client.speech(msg, ["twoup", "win"], [["-result", rolls.join(", ")], ["-earnings", bet]]));
+            return msg.sendLocale("TWOUP_SUCCESS", [msg, rolls.join(", "), bet]);
         }
     
-        this.client.dataManager("update", [`credits=${data.credits - bet}`, msg.author.id], "users");
-        msg.channel.send(this.client.speech(msg, ["twoup", "lose"], [["-result", rolls.join(", ")], ["-earnings", bet]]));    
+        this.client.dataManager("update", [`credits=${data.credits - bet}`, msg.author.id], "users");   
+        msg.sendLocale("TWOUP_LOSS", [msg, rolls.join(", "), bet]);
     }
 };

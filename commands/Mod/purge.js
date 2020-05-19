@@ -10,15 +10,16 @@ module.exports = class extends Command {
             permissionLevel: 5,
             cooldown: 30,
             requiredPermissions: ["MANAGE_MESSAGES"],
-            description: "Purges X amount of messages from a given channel. Amount will default to 10, if none is given.",
-            usage: "[amount:int] [user:usersearch]", usageDelim: " ",
+            description: "Purges X amount of messages from a given channel.",
+            usage: "<amount:intcheck{2,99}> [user:usersearch]", usageDelim: " ",
             extendedHelp: "Due to limitations, purge can only delete between 2 and 99 messages. If you wish to purge more, please wait out the cooldown (30 seconds) and do it again."
         });
+
+        this.humanUse = "<amount> [user]";
     }
 
-    async run(msg, [amount=10, user]) {
+    async run(msg, [amount, user]) {
         let msgCount = amount + 1;
-        if (msgCount < 2 || msgCount > 100) { return msg.channel.send(this.client.speech(msg, ["purge", "badCount"])); }
 
         let userCheck = msg.content.slice(msg.content.search("purge")).split(this.usageDelim);
         if (user === null && userCheck[2]) { return; } //User not found. Exit command.
@@ -41,7 +42,7 @@ module.exports = class extends Command {
             }
 
             msg.channel.bulkDelete(messages).catch(error => console.log(error.stack));
-            msg.channel.send(this.client.speech(msg, ["purge", "success"], [["-amount", amount], ["-user", (extra || "")]]));
+            msg.channel.send(this.client.speech(msg, ["purge"], [["-amount", amount], ["-user", (extra || "")]]));
         });
     }
 };

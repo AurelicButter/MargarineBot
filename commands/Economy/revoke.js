@@ -13,20 +13,20 @@ module.exports = class extends Command {
 
     async run(msg) {
         var data = this.client.dataManager("select", msg.author.id, "users"); 
-        if (!data) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
+        if (!data) { return msg.sendLocale("DATACHECK_NOACCOUNT"); }
 
         let filterArr = ["yes", "no"];
         let filter = m => filterArr.includes(m.content.toLowerCase()) && m.author === msg.author;
 
-        await msg.channel.send(this.client.speech(msg, ["revoke", "prompt"])).then(() => {
+        await msg.sendLocale("REVOKE_PROMPT", [msg]).then(() => {
             msg.channel.awaitMessages(filter, { max: 1, time: 130000, errors: ["time"] }).then((answer) => {
                 answer = answer.first().content.toLowerCase();
-                if (answer === "no") { return msg.channel.send(this.client.speech(msg, ["revoke", "stopped"])); }
+                if (answer === "no") { return msg.sendLocale("REVOKE_STOPPED", [msg]); }
     
                 this.client.settings.usedDaily.set(msg.author.id, Date.now()); //Start cooldown timer.
                 this.client.dataManager("delete", msg.author.id); //Purge data in the database
-                msg.channel.send(this.client.speech(msg, ["revoke", "success"])); //Respond with success
-            }).catch((collected) => { msg.channel.send(this.client.speech(msg, ["revoke", "timeout"])); });
+                msg.sendLocale("REVOKE_SUCCESS", [msg]); //Respond with success
+            }).catch((collected) => { msg.sendLocale("REVOKE_TIMEOUT", [msg]); });
         });
     }
 };

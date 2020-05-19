@@ -3,20 +3,20 @@ let games = require("../assets/localization.json")["games"];
 function Presence(client, type, name, status) {
     const tList = { "play": "PLAYING", "stream": "STREAMING", "listen": "LISTENING", "watch": "WATCHING" };
     type = tList[type];
-    name = (name !== "-null") ? `${client.ownerSetting.get("globalPrefix")}help | ${name}` : null;
+    name = (name !== "-null") ? `${client.globalPrefix}help | ${name}` : null;
 
     client.user.setPresence({ activity: { name, type }, status });
 }
 
 /**
  * Sets the presence for Margarine and starts a 15 minute interval for automatic change
- * @param { KlasaClient } client - Required. Needed to grab the user and additional functions.
+ * @param { KlasaClient } client - Needed to grab the user and additional functions.
  * @param { String } name - Customize a presence. Will not reset until the user sends additional commands.
- * @param { String } type - Type of activity to be displayed. Either play, stream, listen, or watch.
- * @param { String } status - Changes the colour on the status. Either online, idle, dnd, or invisible.
+ * @param { String } [type=play] - Type of activity to be displayed. Either play, stream, listen, or watch.
+ * @param { String } [status=online] - Changes the colour on the status. Either online, idle, dnd, or invisible.
  */
 module.exports = (client, name, type=0, status="online") => { //Type defaulted to play and status defaulted to online.
-    const sliceCheck = `${client.ownerSetting.get("globalPrefix")}help |`.length;
+    const sliceCheck = `${client.globalPrefix}help |`.length;
 
     if (name === "-start" || name === "-reset") {
         var items = games[Math.floor(Math.random() * games.length)]; //For random status upon startup

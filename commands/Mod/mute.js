@@ -12,6 +12,8 @@ module.exports = class extends Command {
             extendedHelp: "Requires a server moderator to identify the mute role in the guild configurations first.",
             usage: "<user:usersearch> [reason:str]", usageDelim: ","
         });
+
+        this.humanUse = "<user>_[reason]";
     }
 
     async run(msg, [user, reason="No reason given."]) {

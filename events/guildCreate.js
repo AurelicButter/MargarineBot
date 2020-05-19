@@ -22,9 +22,5 @@ module.exports = class extends Event {
                 
         var channel = this.client.util.defaultChannel(guild);
         await channel.send({ embed });
-
-        guild.members.fetch(this.client.owner.id).then(data => {
-            if (data !== null) { channel.send(`Oh! こんにちは <@${this.client.owner.id}>. I'm ready to work here! Watch me excel! :thumbsup:`); }
-        });
     }
 };

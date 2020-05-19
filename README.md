@@ -1,9 +1,9 @@
-# MargarineBot - Version: Release 1.2.2
+# MargarineBot - Version: Release 1.3.0
 ![License](https://img.shields.io/github/license/Butterstroke/MargarineBot.svg?style=flat-square) ![Support Server](https://discordapp.com/api/guilds/303253034551476225/widget.png)
 
 <b>Dependencies</b>
 
-![discord.js](https://img.shields.io/badge/discord.js-v12.2.0-brightgreen.svg) ![klasa](https://img.shields.io/badge/Klasa-v0.22.0-brightgreen.svg) ![node](https://img.shields.io/badge/Node-v10.0.0+-brightgreen.svg)
+![discord.js](https://img.shields.io/badge/discord.js-v12.2.0-brightgreen.svg) ![klasa](https://img.shields.io/badge/Klasa-v0.22.0-brightgreen.svg) ![node](https://img.shields.io/badge/Node-v12.0.0+-brightgreen.svg)
 
 A Discord bot coded in Node.js using the Discord.js Library and the Klasa framework.
 
@@ -11,7 +11,7 @@ A Discord bot coded in Node.js using the Discord.js Library and the Klasa framew
 
 MargarineBot is a multi-purpose Discord bot that ranges in features such as server moderation, to an economy system using a SQLite database, to starboards, and much more. MargarineBot also features highly customizable settings for your guild to personalize and maximize his potential in your server!
 
-Created through part-desire, part-what can I do in Discord, part-I'm going to learn Javascript, and part-it's only midnight thoughts, MargarineBot has been my personal project for several years now. For the amount of time and effort I've spent, I'm quite proud of my work and the functionality I've be able to pull off. Ever since the start of his development, I've recieved plenty of support and can't thank those people enough. As without it, Margarine would never be as big or as good as he is today. So, take a look...get some inspiration...just be sure to enjoy Margarine as much as I do.
+Created through part-desire, part-what can I do in Discord, part-I'm going to learn Javascript, and part-it's only midnight thoughts, MargarineBot has been my personal project for several years now. For the amount of time and effort I've spent, I'm quite proud of my work and the functionality I've be able to pull off. Ever since the start of his development, I've recieved plenty of support and can't thank those people enough. As without it, Margarine would never be as big or as good as he is today. So, take a look... get some inspiration... just be sure to enjoy Margarine as much as I do.
 
 ### Looking to invite me?
 <a href="https://discordapp.com/oauth2/authorize?client_id=315132794172997633&permissions=60482&scope=bot"> You can do so here!</a> However, music is a self-hosted feature and is not present in the bot.
