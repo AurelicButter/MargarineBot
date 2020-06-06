@@ -13,11 +13,13 @@ module.exports = {
             "You're all set! -target is now set to -item!"
         ],
         "list": [
-            "Okay! Here's your starboard settings:\n__Channel:__ <#-channel>\n__Emote:__ -emote\n__Amount:__ -amount"
+            "Okay! Here's your starboard settings:\n__Channel:__ <#-channel>\n__Emote:__ -emote\n__Amount:__ -amount",
+            "Behold! Your starboard settings:\n__Channel:__ <#-channel>\n__Emote:__ -emote\n__Amount:__ -amount"
         ],
         "noItem": [
             "Hmm... looks like you didn't want me to set anything.",
-            "Didn't want me to set anything? Okay then..."
+            "Didn't want me to set anything? Okay then...",
+            "Nothing to set this to? Okay, I guess I won't set anything then."
         ],
         "remove": [
             "Okay! I've set -target back to its original state.",

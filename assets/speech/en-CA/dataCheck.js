@@ -44,12 +44,19 @@ module.exports = {
     "noItems": [ //When an item does not exist in the items.json file.
         "Hmm... nope. Not finding that item here.",
         "That's not an item.",
-        "Does that... even exist? I can't find that item"
+        "Does that... even exist? I can't find that item",
+        "That's a thing? Huh, must be exotic since I've never heard about that item."
+    ],
+    "noRecipe": [ //When there is no recipes attached to an item in the items.json file.
+        "I couldn't find a recipe like that!",
+        "There's no recipe like that!",
+        "Ditto... the recipe for this doesn't exist." 
     ],
     "noZero": [ //When a command requires a nonzero amount.
         "Hey! You don't have any of this!",
         "You can't have nothing here!",
-        "Zero... you can't have zero be an amount here."
+        "Zero... you can't have zero be an amount here.",
+        "No zeros! I need something other than that!"
     ],
     "revoked": [ //User tried to make a new profile after deleting their data (Less than 24 hours)
         "You can't do this yet! It's been too soon since you've deleted your own data.",

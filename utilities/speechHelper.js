@@ -2,6 +2,16 @@ const { existsSync } = require("fs");
 const baseSpeechDir = `${process.cwd()}/assets/speech/`;
 
 /**
+ * Reload a speech module to have the most current changes.
+ * @param {String} PATH - Target file location to reload.
+ * @returns New cached require of the target location
+ */
+function recacheSpeech(PATH) {
+    delete require.cache[require.resolve(PATH)];
+    return require(PATH);
+}
+
+/**
  * Picks a random line to simulate speech.
  * @param {KlasaMessage} msg - The message that was sent.
  * @param {Object[]} keys - Value 0 is the command or function name for searching and Value 1 is the context.
@@ -27,7 +37,9 @@ module.exports = function speech(msg, keys, replace=[]) {
         console.error(`Localization file is missing. Defaulted to the original language.\nLanguage: ${msg.guild.settings.language}\nCategory: ${category}\nCommand: ${name}\n${PATH}\n\n`);
     }
 
-    var t = require(PATH); var n;
+    var t = recacheSpeech(PATH);
+    var n;
+
     if (!name.startsWith("func-")) { t = t[name]; n = 1; }
     else { t = t[keys[1]]; n = 2; }
     for (var x = n; x < keys.length; x++) { t = t[keys[x]]; }

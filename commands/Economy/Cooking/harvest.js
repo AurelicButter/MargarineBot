@@ -13,11 +13,9 @@ module.exports = class extends Command {
     }
 
     async run(msg) {
-        const items = this.client.itemData;
-
         var data = this.client.dataManager("select", msg.author.id, "users");
-        if (!data) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
-        if (data.credits < 10) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "lackCredits"])); }
+        if (!data) { return msg.sendLocale("DATACHECK_NOACCOUNT"); }
+        if (data.credits < 10) { return msg.sendLocale("DATACHECK_LACKCREDIT"); }
 
         const harvType = ["greenapple", "apple", "lemon", "potato", "bread", "rice", "egg", "chocolate"];
 
@@ -39,6 +37,6 @@ module.exports = class extends Command {
         this.client.dataManager("update", [`${item}=${(harvData[item] + 1)}`, msg.author.id], "harvest");
         this.client.dataManager("update", [`credits=${(data.credits - 10)}`, msg.author.id], "users");
 
-        msg.channel.send(this.client.speech(msg, ["harvest"], [["-kind", items[item].emote]]));
+        msg.sendLocale("HARVEST", [msg, this.client.itemData[item].emote]);
     }
 };

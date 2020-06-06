@@ -172,6 +172,9 @@ module.exports = class extends Language {
 			DATACHECK_LACKCREDIT: this.client.speech(falseMsg, ["func-dataCheck", "lackCredits"]),
 			DATACHECK_SAMEUSER: this.client.speech(falseMsg, ["func-dataCheck", "sameUser"]),
 			DATACHECK_COOLDOWN: this.client.speech(falseMsg, ["func-dataCheck", "cooldown"]),
+			DATACHECK_NOITEMS: this.client.speech(falseMsg, ["func-dataCheck", "noItems"]),
+			DATACHECK_NORECIPE: this.client.speech(falseMsg, ["func-dataCheck", "noRecipe"]),
+			DATACHECK_NOZERO: this.client.speech(falseMsg, ["func-dataCheck", "noZero"]),
 			MUSICCHECK_USERNOVC: this.client.speech(falseMsg, ["func-music", "general", "userVC"]),
 			MUSICCHECK_NOQUEUE: this.client.speech(falseMsg, ["func-music", "general", "noQueue"]),
 			MUSICCHECK_MISMATCHVC: this.client.speech(falseMsg, ["func-music", "general", "mismatch"]),
@@ -254,6 +257,12 @@ module.exports = class extends Language {
 			COIN_LOSS: (msg, result, bet) => this.client.speech(msg, ["coin", "lose"], [["-result", result], ["-earning", bet]]),
 			CHOUHAN_SUCCESS: (msg, sum, guess, bet) => this.client.speech(msg, ["chouhan", "win"], [["-sum", sum], ["-guess", guess], ["-earning", (bet * 2)]]),
 			CHOUHAN_LOSS: (msg, sum, guess, bet) => this.client.speech(msg, ["chouhan", "lose"], [["-sum", sum], ["-guess", guess], ["-earning", bet]]),
+
+			/*
+			 * Commands - Economy => Cooking
+			 */
+			FISH: (msg, emote) => this.client.speech(msg, ["fish"], [["-kind", emote]]),
+			HARVEST: (msg, emote) => this.client.speech(msg, ["harvest"], [["-kind", emote]]),
 
 			/*
 			 * Commands - Owner

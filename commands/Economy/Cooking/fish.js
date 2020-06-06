@@ -13,11 +13,9 @@ module.exports = class extends Command {
     }
 
     async run(msg) {
-        const items = this.client.itemData;
-
         var data = this.client.dataManager("select", msg.author.id, "users");
-        if (!data) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
-        if (data.credits < 10) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "lackCredits"])); }
+        if (!data) { return msg.sendLocale("DATACHECK_NOACCOUNT"); }
+        if (data.credits < 10) { return msg.sendLocale("DATACHECK_LACKCREDIT"); }
 
         const fishType = ["trash", "fish", "crab", "squid", "shark"];
 
@@ -36,6 +34,6 @@ module.exports = class extends Command {
         this.client.dataManager("update", [`${kind}=${(fishData[kind] + 1)}`, msg.author.id], "fishing");
         this.client.dataManager("update", [`credits=${(data.credits - 10)}`, msg.author.id], "users");
 
-        msg.channel.send(this.client.speech(msg, ["fish"], [["-kind", items[kind].emote]]));
+        msg.sendLocale("FISH", [msg, this.client.itemData[kind].emote]);
     }
 };
