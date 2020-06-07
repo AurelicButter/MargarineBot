@@ -37,6 +37,6 @@ client.globalPrefix = config.prefix;
 
 client.itemData = require("./assets/items.json");
 
-commandRemover(client);
+commandRemover();
 
 client.login(config.token);
