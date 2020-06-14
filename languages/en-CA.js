@@ -263,6 +263,8 @@ module.exports = class extends Language {
 			 */
 			FISH: (msg, emote) => this.client.speech(msg, ["fish"], [["-kind", emote]]),
 			HARVEST: (msg, emote) => this.client.speech(msg, ["harvest"], [["-kind", emote]]),
+			CRAFT: (msg, amount, emote) => this.client.speech(msg, ["craft", "success"], [["-amount", amount], ["-item", emote]]),
+			SELL: (msg, emote, amount, price)=> this.client.speech(msg, ["sell", "success"], [["-item", emote], ["-amount", amount], ["-price", price]]), 
 
 			/*
 			 * Commands - Owner

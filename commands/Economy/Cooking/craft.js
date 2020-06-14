@@ -10,15 +10,15 @@ module.exports = class extends Command {
             aliases: ["cook"],
             cooldown: 30,
             description: "Make items",
-            usage: "[item:str] [amount:str]", usageDelim: " "
+            usage: "<item:str> [amount:intCheck{1,}]", usageDelim: " "
         });
     }
 
     async run(msg, [item=item.toLowerCase(), amount=1]) {
         const itemDB = this.client.itemData;
         let tarItem = itemDB[item];
-        if (!tarItem) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noItems"])); }
-        if (!tarItem.recipe) { return msg.channel.send(this.client.speech(msg, ["craft", "noRecipe"])); }
+        if (!tarItem) { return msg.sendLocale("DATACHECK_NOITEMS"); }
+        if (!tarItem.recipe) { return msg.sendLocale("DATACHECK_NORECIPE"); }
 
         if (amount === "help") {
             var recipeList = [];
@@ -36,7 +36,7 @@ module.exports = class extends Command {
         }
 
         var prodData = this.client.dataManager("select", msg.author.id, "product");
-        if (!prodData) { return msg.channel.send(this.client.speech(msg, ["func-dataCheck", "noAccount"])); }
+        if (!prodData) { return msg.sendLocale("DATACHECK_NOACCOUNT"); }
         
         var fishData = this.client.dataManager("select", msg.author.id, "fishing");
         var harvData = this.client.dataManager("select", msg.author.id, "harvest");
@@ -61,6 +61,6 @@ module.exports = class extends Command {
         }
 
         this.client.dataManager("update", [`${tarItem.name}=${(prodData[tarItem.name] + amount)}`, msg.author.id], "product");
-        msg.channel.send(this.client.speech(msg, ["craft", "success"], [["-amount", amount], ["-item", tarItem.emote]]));
+        msg.sendLocale("CRAFT", [msg, amount, tarItem.emote]);
     }
 };

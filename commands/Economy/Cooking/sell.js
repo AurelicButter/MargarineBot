@@ -26,6 +26,6 @@ module.exports = class extends Command {
         this.client.dataManager("update", [`credits=${(data.credits + (itemDB.sell * amount))}`, msg.author.id], "users");
         this.client.dataManager("update", [`${item}=${(itemData[item] - amount)}`, msg.author.id], itemDB.category);
 
-        msg.channel.send(this.client.speech(msg, ["sell", "success"], [["-item", itemDB.emote], ["-amount", amount], ["-price", (itemDB.sell * amount)]]));        
+        msg.sendLocale("SELL", [msg, itemDB.emote, amount, (itemDB.sell * amount)]);       
     }
 };
