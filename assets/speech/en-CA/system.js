@@ -82,7 +82,9 @@ module.exports = {
     "inhibitor": {
         "cooldown": [
             "Hold up! You can't use this yet! Try again in -remaining.",
-            "You have just used this command. You can use this command again in -remaining."
+            "You have just used this command. You can use this command again in -remaining.",
+            "You'll have to wait! This command's cooldown still has -remaining left.",
+            "Not yet! You'll have to wait for another -remaining before trying again."
         ],
         "guildDisable": [
             "Whoops! Looks like this command is disabled here!",
