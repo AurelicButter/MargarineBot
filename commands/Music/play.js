@@ -21,16 +21,16 @@ module.exports = class extends Command {
                 return this.run(msg);
             }
 
-            throw msg.channel.send(this.client.speech(msg, ["func-music", "general", "userVC"]));
+            throw msg.sendLocale("MUSICCHECK_USERNOVC");
         }
 
         if (handler.state === "PLAY") { 
-            if (msg.member.voice.channelID !== handler.channel.id) { throw msg.channel.send(this.client.speech(msg, ["func-music", "general", "mismatch"])); }
+            if (msg.member.voice.channelID !== handler.channel.id) { throw msg.sendLocale("MUSICCHECK_MISMATCHVC"); }
 
-            throw msg.channel.send(this.client.speech(msg, ["play", "alreadyPlay"]));
+            throw msg.sendLocale("PLAY_ALREADY", [msg]);
         } else if (handler.state === "PAUSE") { return this.client.commands.get("resume").run(msg); }
 
-        if (handler.queue.length === 0) { return msg.channel.send(this.client.speech(msg, ["play", "noQueue"])); }
+        if (handler.queue.length === 0) { return msg.sendLocale("PLAY_NOQUEUE", [msg]); }
     
         handler.state = "PLAY";
         this.play(msg, handler, handler.queue[0]);
@@ -40,12 +40,12 @@ module.exports = class extends Command {
 
     play(msg, handler, song) {
         if (song === undefined) {
-            return msg.channel.send(this.client.speech(msg, ["play", "allDone"])).then(() => {
+            return msg.sendLocale("PLAY_FINISHED", [msg]).then(() => {
                 handler.state = "STOP";
             });
         }
 
-        msg.channel.send(this.client.speech(msg, ["play", "nextSong"], [["-param1", song.requester], ["-param2", song.title]]));
+        msg.sendLocale("PLAY_NEXTSONG", [msg, song.requester, song.title]);
   
         return handler.dispatcher = handler.connection.play(yt(song.url, { audioonly: true }), { passes: 2 })
             .on("end", () => { setTimeout(() => {

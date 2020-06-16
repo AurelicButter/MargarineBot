@@ -6,6 +6,7 @@ module.exports = class extends Command {
         super(...args, {
             name: "report",
             enabled: true,
+            guarded: true,
             runIn: ["text"],
             requiredPermissions: ["EMBED_LINKS"],
             description: "File a report to the bot owner. (ie: Bug, issue, complaint)",

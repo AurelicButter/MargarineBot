@@ -21,7 +21,7 @@ module.exports = class extends Command {
         var id = [];
       
         if (song.match(/(playlist\?list=\S{30,34})/)) { 
-            msg.channel.send(this.client.speech(msg, ["queueadd", "listDetect"]));
+            msg.sendLocale("QUEUEADD_LISTDETECT", [msg]);
             var list = await Promise.resolve(ytPlay(song, "id"));
               
             for(var x = 0; x < list.data.playlist.length; x++) {
@@ -29,8 +29,8 @@ module.exports = class extends Command {
             }
         } else if (song.match(/(?:v=)(\S{11})/)) {
             id.push(song.match(/(?:v=)(\S{11})/)[1]);
-        } else { throw msg.channel.send(this.client.speech(msg, ["queueadd", "noURL"])); }
-      
+        } else { throw msg.sendLocale("QUEUEADD_NOURL", [msg]); } 
+       
         for (var x = 0; x < id.length; x++) {
             try {
                 var info = await getInfoAsync(`https://youtu.be/${id[x]}`);
@@ -41,10 +41,10 @@ module.exports = class extends Command {
                     seconds: info.length_seconds,
                     requester: msg.author.tag
                 });
-            } catch(err) { msg.channel.send(this.client.speech(msg, ["queueadd", "errCatch"], [["-param1", id[x]]])); }    
+            } catch(err) { msg.sendLocale("QUEUEADD_ERRCATCH", [msg, id[x]]); }
         }
       
-        if (id.length === 1) { msg.channel.send(this.client.speech(msg, ["queueadd", "success"], [["-param1", info.title]])); }
-        else { msg.channel.send(this.client.speech(msg, ["queueadd", "multi"], [["-param1", id.length]])); }
+        if (id.length === 1) { msg.sendLocale("QUEUEADD_SUCCESS", [msg, info.title]); }
+        else { msg.sendLocale("QUEUEADD_MULTI", [msg, id.length]); }
     }
 };

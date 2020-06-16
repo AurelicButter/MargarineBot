@@ -3,3 +3,4 @@ node_modules/
 .vscode/
 bwd/
 assets/settings.json
+assets/MargarineData.sqlite

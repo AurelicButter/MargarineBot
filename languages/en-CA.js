@@ -172,6 +172,9 @@ module.exports = class extends Language {
 			DATACHECK_LACKCREDIT: this.client.speech(falseMsg, ["func-dataCheck", "lackCredits"]),
 			DATACHECK_SAMEUSER: this.client.speech(falseMsg, ["func-dataCheck", "sameUser"]),
 			DATACHECK_COOLDOWN: this.client.speech(falseMsg, ["func-dataCheck", "cooldown"]),
+			DATACHECK_NOITEMS: this.client.speech(falseMsg, ["func-dataCheck", "noItems"]),
+			DATACHECK_NORECIPE: this.client.speech(falseMsg, ["func-dataCheck", "noRecipe"]),
+			DATACHECK_NOZERO: this.client.speech(falseMsg, ["func-dataCheck", "noZero"]),
 			MUSICCHECK_USERNOVC: this.client.speech(falseMsg, ["func-music", "general", "userVC"]),
 			MUSICCHECK_NOQUEUE: this.client.speech(falseMsg, ["func-music", "general", "noQueue"]),
 			MUSICCHECK_MISMATCHVC: this.client.speech(falseMsg, ["func-music", "general", "mismatch"]),
@@ -189,6 +192,10 @@ module.exports = class extends Language {
 			STARBOARD_WRONGITEM: (msg) => this.client.speech(msg, ["starboard", "wrongItem"]),
 			STARBOARD_SETITEM: (msg, target, item) => this.client.speech(msg, ["starboard", "set"], [["-target", target], ["-item", item]]), 
 			SETPREFIX: (msg, prefix) => this.client.speech(msg, ["setprefix"], [["-editPrefix", prefix]]),
+			DCOMMAND_NOSTR: (msg) => this.client.speech(msg, ["disablecommand", "noStr"]),
+            DCOMMAND_DISABLE: (msg, name) => this.client.speech(msg, ["disablecommand", "disable"], [["-name", name]]),
+			DCOMMAND_ENABLE: (msg, name) => this.client.speech(msg, ["disablecommand", "enable"], [["-name", name]]),
+			DCOMMAND_GUARDED: (msg) => this.client.speech(msg, ["disablecommand", "guarded"]),
 
 			/*
 			 * Commands - General
@@ -256,6 +263,14 @@ module.exports = class extends Language {
 			CHOUHAN_LOSS: (msg, sum, guess, bet) => this.client.speech(msg, ["chouhan", "lose"], [["-sum", sum], ["-guess", guess], ["-earning", bet]]),
 
 			/*
+			 * Commands - Economy => Cooking
+			 */
+			FISH: (msg, emote) => this.client.speech(msg, ["fish"], [["-kind", emote]]),
+			HARVEST: (msg, emote) => this.client.speech(msg, ["harvest"], [["-kind", emote]]),
+			CRAFT: (msg, amount, emote) => this.client.speech(msg, ["craft", "success"], [["-amount", amount], ["-item", emote]]),
+			SELL: (msg, emote, amount, price)=> this.client.speech(msg, ["sell", "success"], [["-item", emote], ["-amount", amount], ["-price", price]]), 
+
+			/*
 			 * Commands - Owner
 			 */
 			CHANNEL_UPDATE: (type, channel) => this.client.speech(falseMsg, ["func-owner", "setchannel"], [["-type", type], ["-channel", channel]]),
@@ -270,6 +285,38 @@ module.exports = class extends Language {
 			INVITE: (invite) => `My invite link: <${invite}> \nThe above invite link is generated requesting the minimum permissions required to run all of my current commands. If there is a command that requires another permission that is not selected, I will let you know so that you can make those changes. :smile:`,
 			PERMLEVEL_OWNER: (permLvl, info) => `Your permission level is ${permLvl} ${info}`,
 			PERMLEVEL_USER: (permLvl) => `Your permission level is ${permLvl}`,
+
+			/*
+			 * Commands - Music
+			 */
+			JOIN_NOCONNECT: (msg) => this.client.speech(msg, ["join", "noConnect"]),
+			JOIN_NOSPEAK: (msg) => this.client.speech(msg, ["join", "noSpeak"]),
+			JOIN_SUCCESS: (msg, channelName) => this.client.speech(msg, ["join", "success"], [["-param1", channelName]]),
+			LEAVE: (msg, channelName) => this.client.speech(msg, ["leave"], [["-channel", channelName]]),
+			NOWPLAYING_NOQUEUE: (msg) => this.client.speech(msg, ["nowplaying", "noQueue"]),
+			NOWPLAYING_PAUSED: (msg) => this.client.speech(msg, ["nowplaying", "notPlay"]),
+			PAUSE_ALREADY: (msg) => this.client.speech(msg, ["pause", "paused"]),
+			PAUSE_SUCCESS: (msg) => this.client.speech(msg, ["pause", "success"]),
+			PLAY_ALREADY: (msg) => this.client.speech(msg, ["play", "alreadyPlay"]),
+			PLAY_NOQUEUE: (msg) => this.client.speech(msg, ["play", "noQueue"]),
+			PLAY_FINISHED: (msg) => this.client.speech(msg, ["play", "allDone"]),
+			PLAY_NEXTSONG: (msg, requester, title) => this.client.speech(msg, ["play", "nextSong"], [["-param1", requester], ["-param2", title]]),
+			QUEUE_NOQUEUE: (msg) => this.client.speech(msg, ["queue", "noList"]),
+			QUEUE_HIGHCOUNT: (msg, pageCount) => this.client.speech(msg, ["queue", "highCount"], [["-pgs", pageCount]]),
+			QUEUEADD_LISTDETECT: (msg) => this.client.speech(msg, ["queueadd", "listDetect"]),
+			QUEUEADD_NOURL: (msg) => this.client.speech(msg, ["queueadd", "noURL"]),
+			QUEUEADD_ERRCATCH: (msg, songID) => this.client.speech(msg, ["queueadd", "errCatch"], [["-param1", songID]]),
+			QUEUEADD_SUCCESS: (msg, title) => this.client.speech(msg, ["queueadd", "success"], [["-param1", title]]),
+			QUEUEADD_MULTI: (msg, amount) => this.client.speech(msg, ["queueadd", "multi"], [["-param1", amount]]),
+			REMOVEMUSIC: (msg, title) => this.client.speech(msg, ["remove"], [["-song", title]]),
+			RESUME_NOPAUSE: (msg) => this.client.speech(msg, ["resume", "noPause"]),
+			RESUME_SUCCESS: (msg) => this.client.speech(msg, ["resume", "success"]),
+			SKIPMUSIC: (msg) => this.client.speech(msg, ["skip"]),
+			VOLUME_NOARGS: (msg, vol) => this.client.speech(msg, ["volume", "noArgs"], [["-vol", vol]]),
+			VOLUME_ZERO: (msg) => this.client.speech(msg, ["volume", "zero"]),
+			VOLUME_MAX: (msg) => this.client.speech(msg, ["volume", "overHun"]),
+			VOLUME_PAUSED: (msg) => this.client.speech(msg, ["volume", "notPlay"]),
+			VOLUME_SUCCESS: (msg, change, vol) => this.client.speech(msg, ["volume", "success"], [["-param1", change], ["-param2", vol]]),
 		};
     }
 };

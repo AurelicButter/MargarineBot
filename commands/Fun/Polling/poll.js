@@ -27,7 +27,7 @@ module.exports = class extends Command {
             extendedHelp: "Note: end will bring up the display one more time and then clear the poll."
         });
 
-        this.humanUse = "<new|vote|end|show>_[title (if new) or option number (if vote)]_[description (new only)]_[...options (new only)]"
+        this.humanUse = "";
     }
 
     async new(msg, [title, desc, ...option]) {

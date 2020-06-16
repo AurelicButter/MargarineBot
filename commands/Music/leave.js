@@ -15,6 +15,6 @@ module.exports = class extends Command {
 
         vcID.channel.leave();
         this.client.music.delete(msg.guild.id);
-        msg.channel.send(this.client.speech(msg, ["leave"], [["-channel", vcID.channel.name]]));  
+        msg.sendLocale("LEAVE", [msg, vcID.channel.name]);
     }
 };

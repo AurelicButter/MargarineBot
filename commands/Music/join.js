@@ -15,8 +15,8 @@ module.exports = class extends Command {
     
         var vcID = msg.guild.channels.cache.get(msg.member.voice.channelID);
         const permissions = vcID.permissionsFor(msg.guild.me);
-        if (permissions.has("CONNECT") === false) { return msg.channel.send(this.client.speech(msg, ["join", "noConnect"])); }
-        if (permissions.has("SPEAK") === false) { return msg.channel.send(this.client.speech(msg, ["join", "noSpeak"])); }
+        if (permissions.has("CONNECT") === false) { return msg.sendLocale("JOIN_NOCONNECT", [msg]); }
+        if (permissions.has("SPEAK") === false) { return msg.sendLocale("JOIN_NOSPEAK", [msg]); }
 
         var vcSettings = {
             channel: vcID,
@@ -30,6 +30,6 @@ module.exports = class extends Command {
         vcID.join().then(connection => { vcSettings.connection = connection; });
         this.client.music.set(msg.guild.id, vcSettings);
 
-        msg.channel.send(this.client.speech(msg, ["join", "success"], [["-param1", vcID.name]]));    
+        msg.sendLocale("JOIN_SUCCESS", [msg, vcID.name]);  
     }
 };
