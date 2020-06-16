@@ -16,9 +16,9 @@ module.exports = class extends Command {
 
     async run(msg) {
         const handler = this.client.music.get(msg.guild.id, "handler");
-        if (!handler) { throw this.client.speech(msg, ["func-music", "general", "noQueue"]); }
-        if (handler.queue.length < 1) { return this.client.speech(msg, ["nowplaying", "noQueue"]); }
-        if (handler.state !== "PLAY") { return this.client.speech(msg, ["nowplaying", "notPlay"]); }
+        if (!handler) { throw msg.language.get("MUSICCHECK_NOQUEUE"); } 
+        if (handler.queue.length < 1) { return msg.sendLocale("NOWPLAYING_NOQUEUE", [msg]); }
+        if (handler.state !== "PLAY") { return msg.sendLocale("NOWPLAYING_PAUSED", [msg]); }
   
         let song = handler.queue[0];
         const embed = new MessageEmbed()

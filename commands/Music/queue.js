@@ -16,13 +16,13 @@ module.exports = class extends Command {
 
     async run(msg, [page=1]) {
         const handler = this.client.music.get(msg.guild.id);
-        if (!handler) { throw this.client.speech(msg, ["func-music", "general", "noQueue"]); }
-        if (handler.queue.length < 1) { throw this.client.speech(msg, ["queue", "noList"]); }
+        if (!handler) { throw msg.sendLocale("MUSICCHECK_NOQUEUE"); } 
+        if (handler.queue.length < 1) { throw msg.sendLocale("QUEUE_NOQUEUE", [msg]); }
       
         if (page.length < 1 || page === 1) { page = 1; var count = 0; }
         else { var count = (10 * (page - 1)); } 
       
-        if (handler.queue.length < count) { return this.client.speech(msg, ["queue", "highCount"], [Math.ceil(handler.queue.length / 10)]); }
+        if (handler.queue.length < count) { return msg.sendLocale("QUEUE_HIGHCOUNT", [msg, Math.ceil(handler.queue.length / 10)]); }
       
         const embed = new MessageEmbed()
             .setColor(0x04d5fd)

@@ -10,7 +10,7 @@ exports.schemaManager = require("./schemaManager.js");
 /** Removes any unnessesscary commands in the default Klasa framework.
  */
 exports.commandRemover = function() {
-    const cmdNames = ["Admin/load", "Admin/unload", "Admins/transfer"];
+    const cmdNames = ["Admin/load", "Admin/unload", "Admin/transfer", "Admin/reboot"];
     if (existsSync(`${process.cwd()}/node_modules/klasa/src/commands/General`)) {
         rmdirSync(`${process.cwd()}/node_modules/klasa/src/commands/General`, { recursive: true });
     }

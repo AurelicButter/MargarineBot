@@ -281,6 +281,24 @@ module.exports = class extends Language {
 			INVITE: (invite) => `My invite link: <${invite}> \nThe above invite link is generated requesting the minimum permissions required to run all of my current commands. If there is a command that requires another permission that is not selected, I will let you know so that you can make those changes. :smile:`,
 			PERMLEVEL_OWNER: (permLvl, info) => `Your permission level is ${permLvl} ${info}`,
 			PERMLEVEL_USER: (permLvl) => `Your permission level is ${permLvl}`,
+
+			/*
+			 * Commands - Music
+			 */
+			JOIN_NOCONNECT: (msg) => this.client.speech(msg, ["join", "noConnect"]),
+			JOIN_NOSPEAK: (msg) => this.client.speech(msg, ["join", "noSpeak"]),
+			JOIN_SUCCESS: (msg, channelName) => this.client.speech(msg, ["join", "success"], [["-param1", channelName]]),
+			LEAVE: (msg, channelName) => this.client.speech(msg, ["leave"], [["-channel", channelName]]),
+			NOWPLAYING_NOQUEUE: (msg) => this.client.speech(msg, ["nowplaying", "noQueue"]),
+			NOWPLAYING_PAUSED: (msg) => this.client.speech(msg, ["nowplaying", "notPlay"]),
+			PAUSE_ALREADY: (msg) => this.client.speech(msg, ["pause", "paused"]),
+			PAUSE_SUCCESS: (msg) => this.client.speech(msg, ["pause", "success"]),
+			PLAY_ALREADY: (msg) => this.client.speech(msg, ["play", "alreadyPlay"]),
+			PLAY_NOQUEUE: (msg) => this.client.speech(msg, ["play", "noQueue"]),
+			PLAY_FINISHED: (msg) => this.client.speech(msg, ["play", "allDone"]),
+			PLAY_NEXTSONG: (msg, requester, title) => this.client.speech(msg, ["play", "nextSong"], [["-param1", requester], ["-param2", title]]),
+			QUEUE_NOQUEUE: (msg) => this.client.speech(msg, ["queue", "noList"]),
+			QUEUE_HIGHCOUNT: (msg, pageCount) => this.client.speech(msg, ["queue", "highCount"], [["-pgs", pageCount]]),
 		};
     }
 };
