@@ -192,6 +192,10 @@ module.exports = class extends Language {
 			STARBOARD_WRONGITEM: (msg) => this.client.speech(msg, ["starboard", "wrongItem"]),
 			STARBOARD_SETITEM: (msg, target, item) => this.client.speech(msg, ["starboard", "set"], [["-target", target], ["-item", item]]), 
 			SETPREFIX: (msg, prefix) => this.client.speech(msg, ["setprefix"], [["-editPrefix", prefix]]),
+			DCOMMAND_NOSTR: (msg) => this.client.speech(msg, ["disablecommand", "noStr"]),
+            DCOMMAND_DISABLE: (msg, name) => this.client.speech(msg, ["disablecommand", "disable"], [["-name", name]]),
+			DCOMMAND_ENABLE: (msg, name) => this.client.speech(msg, ["disablecommand", "enable"], [["-name", name]]),
+			DCOMMAND_GUARDED: (msg) => this.client.speech(msg, ["disablecommand", "guarded"]),
 
 			/*
 			 * Commands - General
@@ -299,6 +303,20 @@ module.exports = class extends Language {
 			PLAY_NEXTSONG: (msg, requester, title) => this.client.speech(msg, ["play", "nextSong"], [["-param1", requester], ["-param2", title]]),
 			QUEUE_NOQUEUE: (msg) => this.client.speech(msg, ["queue", "noList"]),
 			QUEUE_HIGHCOUNT: (msg, pageCount) => this.client.speech(msg, ["queue", "highCount"], [["-pgs", pageCount]]),
+			QUEUEADD_LISTDETECT: (msg) => this.client.speech(msg, ["queueadd", "listDetect"]),
+			QUEUEADD_NOURL: (msg) => this.client.speech(msg, ["queueadd", "noURL"]),
+			QUEUEADD_ERRCATCH: (msg, songID) => this.client.speech(msg, ["queueadd", "errCatch"], [["-param1", songID]]),
+			QUEUEADD_SUCCESS: (msg, title) => this.client.speech(msg, ["queueadd", "success"], [["-param1", title]]),
+			QUEUEADD_MULTI: (msg, amount) => this.client.speech(msg, ["queueadd", "multi"], [["-param1", amount]]),
+			REMOVEMUSIC: (msg, title) => this.client.speech(msg, ["remove"], [["-song", title]]),
+			RESUME_NOPAUSE: (msg) => this.client.speech(msg, ["resume", "noPause"]),
+			RESUME_SUCCESS: (msg) => this.client.speech(msg, ["resume", "success"]),
+			SKIPMUSIC: (msg) => this.client.speech(msg, ["skip"]),
+			VOLUME_NOARGS: (msg, vol) => this.client.speech(msg, ["volume", "noArgs"], [["-vol", vol]]),
+			VOLUME_ZERO: (msg) => this.client.speech(msg, ["volume", "zero"]),
+			VOLUME_MAX: (msg) => this.client.speech(msg, ["volume", "overHun"]),
+			VOLUME_PAUSED: (msg) => this.client.speech(msg, ["volume", "notPlay"]),
+			VOLUME_SUCCESS: (msg, change, vol) => this.client.speech(msg, ["volume", "success"], [["-param1", change], ["-param2", vol]]),
 		};
     }
 };

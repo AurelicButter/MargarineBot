@@ -5,6 +5,7 @@ module.exports = class extends Command {
         super(...args, {
             name: "revoke",
             enabled: true,
+            guarded: true,
             runIn: ["text"],
             description: "Delete your user data in Margarine's systems.",
             extendedHelp: "By deleting your data, you will not be able to create another profile for another 24 hours since deletion. The data is not recoverable."

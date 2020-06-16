@@ -12,10 +12,10 @@ module.exports = class extends Command {
     async run(msg) {
         var handler = this.client.util.musicCheck(msg, "handler");
         if (handler === false) { return; }
-        if (handler.state !== "PAUSE") { return msg.channel.send(this.client.speech(msg, ["resume", "noPause"])); }
+        if (handler.state !== "PAUSE") { return msg.sendLocale("RESUME_NOPAUSE", [msg]); }
 
         handler.dispatcher.resume();
         handler.state = "PLAY";
-        msg.channel.send(this.client.speech(msg, ["resume", "success"]));
+        msg.sendLocale("RESUME_SUCCESS", [msg]);
     }
 };

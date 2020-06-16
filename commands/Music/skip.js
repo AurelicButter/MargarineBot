@@ -14,6 +14,6 @@ module.exports = class extends Command {
         if (handler === false) { return; }
 
         handler.dispatcher.end();
-        msg.channel.send(this.client.speech(msg, ["skip"])); 
+        msg.sendLocale("SKIPMUSIC", [msg]);
     }
 };

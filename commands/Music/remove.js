@@ -17,6 +17,6 @@ module.exports = class extends Command {
         
         var title = handler.queue[songID].title;
         handler.queue.splice(songID, 1);
-        msg.channel.send(this.client.speech(msg, ["remove"], [["-song", title]]));  
+        msg.sendLocale("REMOVEMUSIC", [msg, title]);
     }
 };

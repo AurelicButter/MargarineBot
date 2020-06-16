@@ -44,5 +44,25 @@ module.exports = {
     "setprefix": [
         "Okay! I've updated the guild prefix to -editPrefix.",
         "I'll be sure to stay on the lookout for -editPrefix now."
-    ]
+    ],
+    "disablecommand": {
+        "noStr": [
+            "I need a command name to disable something!",
+            "You can't expect me to read your mind! Give me a command name to work with!"
+        ],
+        "guarded": [
+            "This command is guarded. I can't disable it as it will affect my abilities too much.",
+            "No can do. This is a guarded command and I'm not willing to disable those as it will break your experience."
+        ],
+        "disable": [
+            "Okay! I've disabled -name. You are no longer able to use it.",
+            "-name is no longer enabled.",
+            "And... done! You no longer have to worry about -name running in the guild now."
+        ],
+        "enable": [
+            "Okay! I've reenabled -name. You are able to use it.",
+            "-name has been reenabled!",
+            "*Flicks switch* Okay! -name has been reenabled!"
+        ]
+    }
 };
