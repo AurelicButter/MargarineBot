@@ -14,7 +14,7 @@ module.exports = class extends Command {
     async run(msg) {
         var permLevel = 0;
 
-        if (msg.author === this.client.owner || msg.author.id === config.secondary) {
+        if (msg.author === this.client.owner || this.client.secondary.includes(msg.author.id)) {
             var guild = msg.guild;
             var authorLvl = (msg.author === this.client.owner) ? 10 : 9;
             var author = guild.members.cache.get(msg.author.id);

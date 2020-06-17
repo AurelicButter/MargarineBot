@@ -18,7 +18,7 @@ Client.defaultPermissionLevels
     .add(5, ({ guild, member }) => guild && member.roles.cache.has(guild.settings.modRole))
     .add(6, ({ guild, member }) => guild && member.permissions.has("ADMINISTRATOR"))
     .add(7, ({ guild, member }) => guild && guild.ownerID === member.id)
-    .add(9, ({ author, client }) => author === client.owner || author.id === config.secondary || config.secondary.contains(author.id))
+    .add(9, ({ author, client }) => author === client.owner || client.secondary.includes(author.id))
     .add(10, ({ author, client }) => author === client.owner);
 
 schemaManager(client); //Adds all configurable settings.

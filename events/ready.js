@@ -17,13 +17,13 @@ module.exports = class extends Event {
 		//Figure out and apply level 10 permission to application owner and level 9 permission to any listed
 		//Secondary accounts or team members (if owner is team based)
 		var botApp = this.client.application.owner;
+		this.client.secondary = [];
 
 		if (botApp instanceof KlasaUser) { 
 			this.client.owner = botApp; 
-			this.client.secondary = secondary;
+			this.client.secondary.push(secondary);
 		} else { 
 			this.client.owner = botApp.owner.user;
-			this.client.secondary = [];
 
 			botApp.members.each(user => {
 				this.client.secondary.push(user.id);
