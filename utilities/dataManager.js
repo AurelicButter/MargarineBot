@@ -34,11 +34,11 @@ module.exports = function dataManager(args, values, table) {
             if (data) { return console.log("ERROR: This user already exists"); }
                     
             db.prepare("INSERT INTO users (userID, credits, rep, cooldowns, profiles) VALUES (?, ?, ?, ?, ?)").run(values[0], values[1], 0, JSON.stringify({ credit: Date.now(), rep: null }), JSON.stringify({ Anilist: "", MAL: "" }));
-            db.prepare("INSERT INTO awards (userID) VALUES (?)").run(values);
+            db.prepare("INSERT INTO awards (userID) VALUES (?)").run(values[0]);
 
-            db.prepare("INSERT INTO fishing (userID) VALUES (?)").run(values);
-            db.prepare("INSERT INTO harvest (userID) VALUES (?)").run(values);
-            db.prepare("INSERT INTO product (userID) VALUES (?)").run(values);
+            db.prepare("INSERT INTO fishing (userID) VALUES (?)").run(values[0]);
+            db.prepare("INSERT INTO harvest (userID) VALUES (?)").run(values[0]);
+            db.prepare("INSERT INTO product (userID) VALUES (?)").run(values[0]);
             break;
         case "select":
             var data;
