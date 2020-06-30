@@ -11,6 +11,6 @@ module.exports = class extends Command {
     }
 
     async run(msg) {
-        msg.channel.send(this.client.speech(msg, ["func-fun", "eightball"], [["-user", msg.author.username]]));
+        msg.sendLocale("EIGHTBALL", [msg, msg.author.username]);
     }
 };

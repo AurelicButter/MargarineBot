@@ -1,9 +1,9 @@
-# MargarineBot - Version: Release 1.3.3
+# MargarineBot
 ![License](https://img.shields.io/github/license/Butterstroke/MargarineBot.svg?style=flat-square) ![Support Server](https://discordapp.com/api/guilds/303253034551476225/widget.png)
 
 <b>Dependencies</b>
 
-![discord.js](https://img.shields.io/badge/discord.js-v12.2.0-brightgreen.svg) ![klasa](https://img.shields.io/badge/Klasa-v0.22.0-brightgreen.svg) ![node](https://img.shields.io/badge/Node-v12.0.0+-brightgreen.svg)
+![discord.js](https://img.shields.io/badge/discord.js-v12.2.0-brightgreen.svg) ![klasa](https://img.shields.io/badge/Klasa-v0.5.0-brightgreen.svg) ![node](https://img.shields.io/badge/Node-v12.0.0+-brightgreen.svg)
 
 A Discord bot coded in Node.js using the Discord.js Library and the Klasa framework.
 
