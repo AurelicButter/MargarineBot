@@ -15,7 +15,8 @@ module.exports = {
             "You can't play rock, paper, scissors by yourself! At least invite me to play!"
         ],
         "success": [
-            "-user1 plays -hand1! -user2 plays -hand2! **-result!**"
+            "-user1 plays -hand1! -user2 plays -hand2! **-result!**",
+            "-user1 reveals -hand1! -user2 reveals -hand2! **-result!**"
         ]
     },
     "poll": {

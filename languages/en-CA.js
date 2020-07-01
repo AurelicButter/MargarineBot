@@ -238,13 +238,13 @@ module.exports = class extends Language {
 			EIGHTBALL: (msg, username) => this.client.speech(msg, ["func-fun", "eightball"], [["-user", username]]),
 			CRASH: (msg, username) => this.client.speech(msg, ["func-fun", "crash"], [["-user", username]]),
 			ROLL: (msg, value) => this.client.speech(msg, ["roll"], [["-value", value]]),
-			POLL_NOTITLE: (msg) => this.client.speech(msg, ["poll", "noTitle"]),
-			POLL_NODESC: (msg) => this.client.speech(msg, ["poll", "noDesc"]),
-			POLL_NOOPTIONS: (msg) => this.client.speech(msg, ["poll", "noChoice"]),
-			POLL_NOCREATE: (msg) => this.client.speech(msg, ["poll", "noCreate"]),
-			POLL_CREATED: (msg) => this.client.speech(msg, ["poll", "created"]),
-			POLL_VOTED: (msg, option) => this.client.speech(msg, ["poll", "voted"], [["-option", option]]),
-			POLL_NOPOLL: (msg) => this.client.speech(msg, ["poll", "noPoll"]),
+			POLL_NOTITLE: (msg) => this.client.speech(msg, ["func-fun", "poll", "noTitle"]),
+			POLL_NODESC: (msg) => this.client.speech(msg, ["func-fun", "poll", "noDesc"]),
+			POLL_NOOPTIONS: (msg) => this.client.speech(msg, ["func-fun", "poll", "noChoice"]),
+			POLL_NOCREATE: (msg) => this.client.speech(msg, ["func-fun", "poll", "noCreate"]),
+			POLL_CREATED: (msg) => this.client.speech(msg, ["func-fun", "poll", "created"]),
+			POLL_VOTED: (msg, option) => this.client.speech(msg, ["func-fun", "poll", "voted"], [["-option", option]]),
+			POLL_NOPOLL: (msg) => this.client.speech(msg, ["func-fun", "poll", "noPoll"]),
 			RPS_SAMEUSER: (msg) => this.client.speech(msg, ["rps", "sameUser"]),
 			RPS_SUCCESS: (msg, player1, player2, hand1, hand2, result) => this.client.speech(msg, ["rps", "success"], [
 				["-user1", player1],
@@ -282,7 +282,8 @@ module.exports = class extends Language {
 			FISH: (msg, emote) => this.client.speech(msg, ["fish"], [["-kind", emote]]),
 			HARVEST: (msg, emote) => this.client.speech(msg, ["harvest"], [["-kind", emote]]),
 			CRAFT: (msg, amount, emote) => this.client.speech(msg, ["craft", "success"], [["-amount", amount], ["-item", emote]]),
-			SELL: (msg, emote, amount, price)=> this.client.speech(msg, ["sell", "success"], [["-item", emote], ["-amount", amount], ["-price", price]]), 
+			SELL: (msg, emote, amount, price)=> this.client.speech(msg, ["sell", "success"], [["-item", emote], ["-amount", amount], ["-price", price]]),
+			SELL_NOTENOUGH: (msg) => this.client.speech(msg, ["sell", "notEnough"]), 
 
 			/*
 			 * Commands - Owner

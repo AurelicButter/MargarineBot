@@ -19,14 +19,14 @@ module.exports = class extends Command {
         var title = pollData.info.split("|")[0],
             desc = pollData.info.split("|")[1],
             votes = JSON.parse(pollData.votes),
-            optionDisplay = ""
+            optionDisplay = "",
             header = `The poll has ended!\n__${title}__\n${desc}\n\n`;
 
         for (var x = 0; x < pollData.options.length; x++) {
             optionDisplay = optionDisplay.concat(`${x + 1}) ${pollData.options[x]}: ${votes[x]}\n`);
         }
 
-        msg.channel.send(optionDisplay);
+        msg.channel.send(header + optionDisplay);
         msg.guild.settings.reset(["poll.info", "poll.options", "poll.votes", "poll.userVotes"]);
     }
 };
