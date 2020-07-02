@@ -1,5 +1,4 @@
 const { Command, Possible } = require("klasa");
-const { poll } = require("../../../assets/speech/en-CA/fun");
 
 function pollDisplay(pollData, ending) {
     var title = pollData.info.split("|")[0],
