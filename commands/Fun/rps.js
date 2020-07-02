@@ -15,7 +15,7 @@ module.exports = class extends Command {
 
     async run(msg, [choice, user]) {
         if (!user) { user === this.client.user; }
-        if (user.id === msg.author.id) { return msg.channel.send(this.client.speech(msg, ["rps", "sameuser"])); }
+        if (user.id === msg.author.id) { return msg.sendLocale("RPS_SAMEUSER", [msg]); }
         
         var types = ["rock", "paper", "scissors"];
         var hand = types[Math.floor(Math.random() * (Math.floor(2) - Math.ceil(1) + 1)) + Math.ceil(1)];  
@@ -24,12 +24,6 @@ module.exports = class extends Command {
         else if ((choice === "rock" && hand === "paper") || (choice === "paper" && hand === "scissors") || (choice === "scissors" && hand === "rock")) { var result = `${user.username} wins`; }
         else { var result = "Draw"; }
 
-        msg.channel.send(this.client.speech(msg, ["rps", "success"], [
-            ["-user1", msg.author.username],
-            ["-user2", user.username],
-            ["-hand1", choice],
-            ["-hand2", hand],
-            ["-result", result]
-        ]));
+        msg.sendLocale("RPS_SUCCESS", [msg, msg.author.username, user.username, choice, hand, result]);
     }
 };

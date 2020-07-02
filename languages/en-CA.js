@@ -136,8 +136,6 @@ module.exports = class extends Language {
 			COMMAND_RELOAD_ALL: (type, time) => `✅ Reloaded all ${type}. (Took: ${time})`,
 			COMMAND_RELOAD_EVERYTHING: (time) => `✅ Reloaded everything. (Took: ${time})`,
 			COMMAND_RELOAD_DESCRIPTION: 'Reloads a klasa piece, or all pieces of a klasa store.',
-			COMMAND_REBOOT: 'Rebooting...',
-			COMMAND_REBOOT_DESCRIPTION: 'Reboots the bot.',
 			COMMAND_ENABLE: (type, name) => `+ Successfully enabled ${type}: ${name}`,
 			COMMAND_ENABLE_DESCRIPTION: 'Re-enables or temporarily enables a command/inhibitor/monitor/finalizer. Default state restored on reboot.',
 			COMMAND_DISABLE: (type, name) => `+ Successfully disabled ${type}: ${name}`,
@@ -179,6 +177,12 @@ module.exports = class extends Language {
 			MUSICCHECK_NOQUEUE: this.client.speech(falseMsg, ["func-music", "general", "noQueue"]),
 			MUSICCHECK_MISMATCHVC: this.client.speech(falseMsg, ["func-music", "general", "mismatch"]),
 			MUSICCHECK_NOHANDLER: this.client.speech(falseMsg, ["func-music", "general", "noHandler"]),
+
+			/**
+			 * Monitors
+			 */
+			PREFIXHELP_DEFAULT: (prefix) => `Whoops! Looks like you are thinking of my default prefix. That is not the case here. Please use: ${prefix}`,
+			PREFIXHELP_MISREAD: "Whoops! Looks like you misread my prefix. It's a tilde \`~\`, not a dash!",
 			
 			/* 
 			 * Commands - Config
@@ -231,14 +235,24 @@ module.exports = class extends Language {
 			/*
 			 * Commands - Fun
 			 */
+			EIGHTBALL: (msg, username) => this.client.speech(msg, ["func-fun", "eightball"], [["-user", username]]),
+			CRASH: (msg, username) => this.client.speech(msg, ["func-fun", "crash"], [["-user", username]]),
 			ROLL: (msg, value) => this.client.speech(msg, ["roll"], [["-value", value]]),
-			POLL_NOTITLE: (msg) => this.client.speech(msg, ["poll", "noTitle"]),
-			POLL_NODESC: (msg) => this.client.speech(msg, ["poll", "noDesc"]),
-			POLL_NOOPTIONS: (msg) => this.client.speech(msg, ["poll", "noChoice"]),
-			POLL_NOCREATE: (msg) => this.client.speech(msg, ["poll", "noCreate"]),
-			POLL_CREATED: (msg) => this.client.speech(msg, ["poll", "created"]),
-			POLL_VOTED: (msg, option) => this.client.speech(msg, ["poll", "voted"], [["-option", option]]),
-			POLL_NOPOLL: (msg) => this.client.speech(msg, ["poll", "noPoll"]),
+			POLL_NOTITLE: (msg) => this.client.speech(msg, ["func-fun", "poll", "noTitle"]),
+			POLL_NODESC: (msg) => this.client.speech(msg, ["func-fun", "poll", "noDesc"]),
+			POLL_NOOPTIONS: (msg) => this.client.speech(msg, ["func-fun", "poll", "noChoice"]),
+			POLL_NOCREATE: (msg) => this.client.speech(msg, ["func-fun", "poll", "noCreate"]),
+			POLL_CREATED: (msg) => this.client.speech(msg, ["func-fun", "poll", "created"]),
+			POLL_VOTED: (msg, option) => this.client.speech(msg, ["func-fun", "poll", "voted"], [["-option", option]]),
+			POLL_NOPOLL: (msg) => this.client.speech(msg, ["func-fun", "poll", "noPoll"]),
+			RPS_SAMEUSER: (msg) => this.client.speech(msg, ["rps", "sameUser"]),
+			RPS_SUCCESS: (msg, player1, player2, hand1, hand2, result) => this.client.speech(msg, ["rps", "success"], [
+				["-user1", player1],
+				["-user2", player2],
+				["-hand1", hand1],
+				["-hand2", hand2],
+				["-result", result]
+			]),
 
 			/*
 			 * Commands - Economy
@@ -268,7 +282,8 @@ module.exports = class extends Language {
 			FISH: (msg, emote) => this.client.speech(msg, ["fish"], [["-kind", emote]]),
 			HARVEST: (msg, emote) => this.client.speech(msg, ["harvest"], [["-kind", emote]]),
 			CRAFT: (msg, amount, emote) => this.client.speech(msg, ["craft", "success"], [["-amount", amount], ["-item", emote]]),
-			SELL: (msg, emote, amount, price)=> this.client.speech(msg, ["sell", "success"], [["-item", emote], ["-amount", amount], ["-price", price]]), 
+			SELL: (msg, emote, amount, price)=> this.client.speech(msg, ["sell", "success"], [["-item", emote], ["-amount", amount], ["-price", price]]),
+			SELL_NOTENOUGH: (msg) => this.client.speech(msg, ["sell", "notEnough"]), 
 
 			/*
 			 * Commands - Owner

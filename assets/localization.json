@@ -5,6 +5,7 @@
         ["Rewatching Occultic;Nine", "watch"],
         ["Rewatching Robotics;Notes", "watch"],
         ["Harvesting wild fruits", "play"],
+        ["Fishing for a meal", "play"],
         ["Partying to weeb tunes", "listen"],
         ["Breaking all of the code", "play"],
         ["Spying on Butterstroke", "watch"],
@@ -19,6 +20,16 @@
         ["Someday, surely, for the sake of illuminating someone's path, I want to shine", "listen"],
         ["Considering the possibilities of being an isekai protagonist", "play"],
         ["Wakarimasen", "watch"],
-        ["At the end of a certain world, what runs through is real force", "listen"]
+        ["At the end of a certain world, what runs through is real force", "listen"],
+        ["Creating books in another world", "play"],
+        ["Becoming the hero of my world!", "play"],
+        ["Reading manga", "play"],
+        ["Watching anime", "watch"],
+        ["Gaming the mainframe of the game", "play"],
+        ["Spending thousands of dollars for PNGs... listen, it's worth it!", "play"],
+        ["Time to tip the scales!", "play"],
+        ["I challenge my fate!", "play"],
+        ["Position zero!", "play"],
+        ["Rewatching IDOLM@STER", "watch"]
     ]
 }

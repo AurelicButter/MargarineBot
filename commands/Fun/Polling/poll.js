@@ -76,7 +76,12 @@ module.exports = class extends Command {
     }
 
     async end(msg) {
-        msg.channel.send(pollDisplay(msg.guild.settings.poll, true));
+        var pollData = msg.guild.settings.poll;
+
+        //No poll happening
+        if (!pollData.info) { return msg.sendLocale("POLL_NOPOLL", [msg]); }
+
+        msg.channel.send(pollDisplay(pollData, true));
         msg.guild.settings.reset(["poll.info", "poll.options", "poll.votes", "poll.userVotes"]);
     }
 

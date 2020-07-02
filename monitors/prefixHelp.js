@@ -12,10 +12,16 @@ module.exports = class extends Monitor {
 
     run(msg) {
         var defaultPrefix = msg.client.gateways.guilds.schema.get("prefix").default;
+        var guildPrefix = msg.guild.settings.prefix;
 
         if (msg.content === `${defaultPrefix}help`) {
-            if (defaultPrefix !== msg.guild.settings.prefix) {
-                return msg.channel.send(`Whoops! Looks like you are thinking of my default prefix. That is not the case here. Please use: ${msg.guild.settings.prefix}`); 
+            if (defaultPrefix !== guildPrefix) {
+                return msg.sendLocale("PREFIXHELP_DEFAULT", [guildPrefix]);
+            }
+        }
+        if (msg.content === `${defaultPrefix.replace("~", "-")}help`) {
+            if (defaultPrefix.replace("~", "-") !== guildPrefix) {
+                return msg.sendLocale("PREFIXHELP_MISREAD");
             }
         }
     }
