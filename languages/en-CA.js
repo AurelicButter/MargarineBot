@@ -69,6 +69,7 @@ module.exports = class extends Language {
 			]),
 			RESOLVER_INVALID_CHANNEL: (name) => this.client.speech(falseMsg, ["func-system", "resolver", "channel"], [["-name", name]]),
 			RESOLVER_INVALID_INT: (name) => this.client.speech(falseMsg, ["func-system", "resolver", "integer"], [["-name", name]]),
+			COMMAND_CONF_GUARDED: (name) => this.client.speech(falseMsg, ["func-system", "guarded"], [["-name", util.toTitleCase(name)]]),
 
 			/*
 			 * Klasa System. Copied over from Klasa's en-US.
@@ -143,7 +144,6 @@ module.exports = class extends Language {
 			COMMAND_DISABLE_WARN: 'You probably don\'t want to disable that, since you wouldn\'t be able to run any command to enable it again',
 			COMMAND_CONF_NOKEY: 'You must provide a key',
 			COMMAND_CONF_NOVALUE: 'You must provide a value',
-			COMMAND_CONF_GUARDED: (name) => `${util.toTitleCase(name)} may not be disabled.`,
 			COMMAND_CONF_UPDATED: (key, response) => `Successfully updated the key **${key}**: \`${response}\``,
 			COMMAND_CONF_KEY_NOT_ARRAY: 'This key is not array type. Use the action \'reset\' instead.',
 			COMMAND_CONF_GET_NOEXT: (key) => `The key **${key}** does not seem to exist.`,
