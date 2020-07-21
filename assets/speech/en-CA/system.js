@@ -146,5 +146,9 @@ module.exports = {
             "-name is a required argument. You can't leave it blank!",
             "You need to give me a value for -name! It is required for this command!"
         ]
-    }
+    },
+    "guarded": [
+        "You cannot disable -name! It's one of the essential commands I provide.",
+        "Disabling -name is a no. You'd break my services to your guild that way."
+    ]
 };
