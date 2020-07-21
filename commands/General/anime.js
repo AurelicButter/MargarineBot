@@ -31,7 +31,7 @@ module.exports = class extends Command {
         if (data.title.english) { title = `${title} | ${data.title.english}`; }
 
         var desc = `[Anilist](${data.siteUrl}) | [MyAnimeList](https://myanimelist.net/anime/${data.idMal})\n\n**Format:** `;
-        var time = `${this.client.util.toTitleCase(data.season)} ${data.startDate.year}`;
+        var time = (data.season) ? `${this.client.util.toTitleCase(data.season)} ${data.startDate.year}` : "To be announced";
 
         if (data.format === "TV_SHORT") { data.format = "TV Short"; }
         if (data.format === "SPECIAL") { data.format = "Special"; }

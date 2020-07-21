@@ -15,7 +15,7 @@ module.exports = class extends Command {
     async run(msg, [title, desc, ...option]) {
         if (!title) { return msg.sendLocale("POLL_NOTITLE", [msg]); }
         if (!desc) { return msg.sendLocale("POLL_NODESC", [msg]); }
-        if (option.length < 2) { return msg.sendLocale("POLL_NOOPTION", [msg]); }
+        if (option.length < 2) { return msg.sendLocale("POLL_NOOPTIONS", [msg]); }
 
         if (msg.guild.settings.poll.info) { return msg.sendLocale("POLL_NOCREATE", [msg]); }
 
