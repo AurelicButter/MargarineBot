@@ -1,6 +1,6 @@
 {
   "name": "margarine",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "Javascript bot using the Klasa framework",
   "main": "index.js",
   "dependencies": {
