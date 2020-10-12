@@ -10,7 +10,7 @@ module.exports = class extends Event {
         });
     }
 
-    async run(reaction, user) {
+    async run(reaction) {
         //Reaction is not in a guild, do nothing.
         if (reaction.message.guild === undefined) { return; }
 

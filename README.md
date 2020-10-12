@@ -22,4 +22,4 @@ My typical nickname is Butter, as in the stuff that you put on toast. His name c
 ## License and Contact<br>
 MargarineBot is licensed under the [Apache-2.0 License](LICENSE). 
 
-For issues and bugs, please use the issue tracker on this repository. For any other needs, either contact me by email <a href="mailto:katsurinstudios@protonmail.ch">katsurinstudios@protonmail.ch</a> or through my [Discord server](https://discord.gg/TJJ6KGd) in the #margarine-bot channel.
+For issues and bugs, please use the issue tracker on this repository. For any other needs, either contact me by email <a href="mailto:katsurinstudios@protonmail.ch">katsurinstudios@protonmail.ch</a> or through my [Discord server](https://discord.gg/qKfqsjW) in the #margarine-bot channel.
