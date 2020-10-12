@@ -16,6 +16,8 @@ module.exports = class extends Command {
             extendedHelp: "Note: The user must set their own account name in Margarine in order to search by a Discord user. For general searching, use the search keyword before the username."
         });
 
+        this.humanUse = "<set|remove|search|(Discord User)> [(MyAnimeList username)]";
+
         //Defaults to finding the user. If no user, send usersearch fail message as usage prevents the argument to post.
         this.customizeResponse("set", msg => msg.language.get("USERSEARCH_FAIL", [msg]));
     }

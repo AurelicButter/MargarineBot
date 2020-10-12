@@ -16,9 +16,12 @@ module.exports = class extends Command {
             runIn: ["text"],
             aliases: ["emote", "see", "react"],
             requiredPermissions: ["ATTACH_FILES", "ADD_REACTIONS"],
-            description: "Bring in your pool of emotes from other servers! Either use the big image or use the alias of react and add a message ID to react to a message instead!",
-            usage: "[react|Name:str] [messageID:str]", usageDelim: " "
+            description: "Use your pool of emotes from other servers!",
+            usage: "[react|Name:str] [messageID:str]", usageDelim: " ",
+            extendedHelp: "Either use the big image or use the alias of react and add a message ID to react to a message instead!"
         });
+
+        this.humanUse = "[react|(emote name)] [(messageID if using react)]";
     }
 
     async run(msg, [Name, ID]) {

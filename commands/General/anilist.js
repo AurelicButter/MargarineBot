@@ -18,6 +18,8 @@ module.exports = class extends Command {
 
         //Defaults to finding the user. If no user, send usersearch fail message as usage prevents the argument to post.
         this.customizeResponse("set", msg => msg.language.get("USERSEARCH_FAIL", [msg]));
+
+        this.humanUse = "<set|remove|search|(Discord User)> [(AniList username)]";
     }
 
     async run(msg, [user, username]) {
