@@ -231,6 +231,9 @@ module.exports = class extends Language {
 			ANILIST_NOTERM: (msg) => this.client.speech(msg, ["anilist", "noTerm"]),
 			ANILIST_NOUSER: (msg) => this.client.speech(msg, ["anilist", "noUsername"]),
 			ANILIST_404ERR: (msg) => this.client.speech(msg, ["anilist", "404Err"]),
+			HELP_NOSUPPLIEDCAT: "❌ | You did not supply me with a category!",
+			HELP_NOCATEGORY: "❌ | The category you were looking for does not exist.",
+			HELP_NOCMD: "❌ | Unknown command, please run the help command with no arguments to get a list of categories.",
 
 			/*
 			 * Commands - Fun

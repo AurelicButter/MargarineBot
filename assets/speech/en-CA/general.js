@@ -131,7 +131,7 @@ exports.greet = {
     ]
 };
 
-exports.help = [];
+exports.help = []; //Placeholder
 
 exports.info = {
     "role": [
