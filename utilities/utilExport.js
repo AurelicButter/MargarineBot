@@ -1,4 +1,4 @@
-const { existsSync, unlinkSync, rmdirSync } = require("fs");
+const { existsSync, unlinkSync, rmdirSync, readdirSync } = require("fs");
 const { version: djsVersion } = require("discord.js");
 const { version: kVersion } = require("klasa");
 /* Exports all needed utilities for the client. */
@@ -11,9 +11,15 @@ exports.schemaManager = require("./schemaManager.js");
  */
 exports.commandRemover = function() {
     const cmdNames = ["Admin/load", "Admin/unload", "Admin/transfer", "Admin/reboot"];
-    if (existsSync(`${process.cwd()}/node_modules/klasa/src/commands/General`)) {
-        rmdirSync(`${process.cwd()}/node_modules/klasa/src/commands/General`, { recursive: true });
+    const GeneralPath = `${process.cwd()}/node_modules/klasa/src/commands/General`;
+    if (existsSync(GeneralPath)) {
+        readdirSync(GeneralPath).forEach((file) => {
+            unlinkSync(`${GeneralPath}/${file}`);
+        });
+
+        rmdirSync(GeneralPath);
     }
+
     for(var x = 0; x < cmdNames.length; x++) {
         if (existsSync(`${process.cwd()}/node_modules/klasa/src/commands/${cmdNames[x]}.js`)) {
             unlinkSync(`${process.cwd()}/node_modules/klasa/src/commands/${cmdNames[x]}.js`);
