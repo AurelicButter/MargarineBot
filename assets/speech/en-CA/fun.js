@@ -14,6 +14,19 @@ module.exports = {
             "Hey! You can't play rock, paper, scissors with yourself! Invite someone into the mix or play with me instead!",
             "You can't play rock, paper, scissors by yourself! At least invite me to play!"
         ],
+        "prompt": [
+            "Rock, paper, or scissors?",
+            "Riddle me this? Rock, paper, or scissors?",
+            "Pick your weapon: rock, paper, or scissors"
+        ],
+        "timeout": [
+            "No duel! -player failed to pick an option in time!",
+            "Match stop! -player failed to pick an option in time!"
+        ],
+        "timeoutprompt": [
+            "Time ran out. Should have answered sooner",
+            "You took too long! You should have answered sooner."
+        ],
         "success": [
             "-user1 plays -hand1! -user2 plays -hand2! **-result!**",
             "-user1 reveals -hand1! -user2 reveals -hand2! **-result!**"

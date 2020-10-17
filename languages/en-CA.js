@@ -249,6 +249,9 @@ module.exports = class extends Language {
 			POLL_VOTED: (msg, option) => this.client.speech(msg, ["func-fun", "poll", "voted"], [["-option", option]]),
 			POLL_NOPOLL: (msg) => this.client.speech(msg, ["func-fun", "poll", "noPoll"]),
 			RPS_SAMEUSER: (msg) => this.client.speech(msg, ["rps", "sameUser"]),
+			RPS_PROMPT: (msg) => this.client.speech(msg, ["rps", "prompt"]),
+			RPS_TIMEOUT: (msg, player) => this.client.speech(msg, ["rps", "timeout"], [["-player", player]]),
+			RPS_TIMEOUTPROMPT: (msg) => this.client.speech(msg, ["rps", "timeoutprompt"]),
 			RPS_SUCCESS: (msg, player1, player2, hand1, hand2, result) => this.client.speech(msg, ["rps", "success"], [
 				["-user1", player1],
 				["-user2", player2],
