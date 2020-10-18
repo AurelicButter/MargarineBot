@@ -12,6 +12,8 @@ module.exports = class extends Command {
             usage: "<user:usersearch>",
             extendedHelp: "Need Discord info on a specific user? I got you covered!"
         });
+
+        this.humanUse = "<user>";
     }
 
     async run(msg, [user]) {

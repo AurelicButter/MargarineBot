@@ -16,6 +16,7 @@ module.exports = class extends Command {
             extendedHelp: "There is a 60 second cooldown for each search to not spam the site."
         });
 
+        this.humanUse = "<term>";
         this.customizeResponse("term", msg => msg.language.get("MANGA_NOTERM", [msg]));
     }
 

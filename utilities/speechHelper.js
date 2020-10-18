@@ -51,5 +51,7 @@ module.exports = function speech(msg, keys, replace=[]) {
         }
     }
 
-    return text.replace("-prefix", msg.guild.settings.prefix);
+    return text.replace("-prefix", msg.guild.settings.prefix)
+        .replace("@everyone", "[Redacted - Everyone Ping]")
+        .replace("@here", "[Redacted - Here Ping]");
 };

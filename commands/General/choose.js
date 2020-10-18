@@ -10,6 +10,8 @@ module.exports = class extends Command {
             description: "The one stop picker for hard choices!",
             usage: "[choice:str] [...]", usageDelim: " | "
         });
+
+        this.humanUse = "[choice] | [choice] | [...etc]";
     }
 
     async run(msg, [...choice]) {

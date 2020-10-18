@@ -1,8 +1,8 @@
-const { Command, util: { isFunction } } = require("klasa");
+const { Command } = require("klasa");
 const { MessageEmbed } = require("discord.js");
 const has = (obj, key) => Object.prototype.hasOwnProperty.call(obj, key);
 
-/* This is a modified command from the default Klasa commands. */
+/* This is a modified command based off of the default Klasa help command. */
 module.exports = class extends Command {
     constructor(...args) {
         super(...args, {
@@ -15,6 +15,8 @@ module.exports = class extends Command {
             description: "Displays help for a command",
             usage: "[module|command:str] [mod:str]", usageDelim: " "
         });
+
+        this.humanUse = "[module|(command name)] [(module name if using module)]";
     }
 
     async run(msg, [cmd, mod]) {
@@ -22,49 +24,58 @@ module.exports = class extends Command {
 
         const categories = Object.keys(help);
         const helpMessage = [];
+        let embed;
 
-        if (cmd === undefined) {
-            for (let cat = 0; cat < categories.length; cat++) { helpMessage.push(`- ${this.client.util.toTitleCase(categories[cat])}`); }
+        switch (cmd) {
+            case undefined:
+                for (let cat = 0; cat < categories.length; cat++) { helpMessage.push(`- ${this.client.util.toTitleCase(categories[cat])}`); }
         
-            const embed = new MessageEmbed()
-                .setColor(0x04d5fd)
-                .setTitle(`${this.client.user.username}'s Command Categories`)
-                .setDescription("*Do " + `\`${msg.guild.settings.prefix}help module <module name>\`` + " for category commands.*")
-                .addField("Categories:", helpMessage);
+                embed = new MessageEmbed()
+                    .setColor(0x04d5fd)
+                    .setTitle(`${this.client.user.username}'s Command Categories`)
+                    .setDescription("*Do " + `\`${msg.guild.settings.prefix}help module <module name>\`` + " for category commands.*")
+                    .addField("Categories:", helpMessage);
             
-            return msg.send({embed});
-        } if (cmd === "module") {
-            if (!mod) { return msg.send("You did not supply me with a category!"); }
+                msg.send({embed});
+                break;
+            case "module":
+                if (!mod) { return msg.sendLocale("HELP_NOSUPPLIEDCAT"); }
+
+                // Determine the matching category. If no category, return with error.
+                var cat = categories.filter(category => category.toLowerCase() === mod.toLowerCase());
+                if (cat.length === 0) { return msg.sendLocale("HELP_NOCATEGORY"); }
+
+                // Pull index of category for further help building.
+                cat = categories.indexOf(cat[0]);
     
-            for (let cat = 0; cat < categories.length; cat++) {
-                if (categories[cat].toLowerCase() === mod.toLowerCase()) {
-                    helpMessage.push(`**${this.client.util.toTitleCase(categories[cat])} Commands**: \`\`\`asciidoc`);
-                    const subCategories = Object.keys(help[categories[cat]]);
-                    for (let subCat = 0; subCat < subCategories.length; subCat++) {
-                        helpMessage.push(`= ${this.client.util.toTitleCase(subCategories[subCat])} =`, `${help[categories[cat]][subCategories[subCat]].join("\n")}\n`);
-                    }
-                    helpMessage.push("```");
-    
-                    msg.send(helpMessage, { split: { char: "\u200b" } }); break;
+                helpMessage.push(`**${this.client.util.toTitleCase(categories[cat])} Commands**: \`\`\`asciidoc`);
+                const subCategories = Object.keys(help[categories[cat]]);
+
+                for (let subCat = 0; subCat < subCategories.length; subCat++) {
+                    helpMessage.push(`= ${this.client.util.toTitleCase(subCategories[subCat])} =`, `${help[categories[cat]][subCategories[subCat]].join("\n")}\n`);
                 }
-                if (Number(cat) + 1 === categories.length) { msg.send("The category you were looking for does not exist."); break; }
-            }
-        } else {
-            cmd = this.client.commands.get(cmd) || this.client.commands.aliases.get(cmd);
-            if (!cmd) { return msg.send("❌ | Unknown command, please run the help command with no arguments to get a list of categories."); }
 
-            var usage = cmd.humanUse ? [cmd.humanUse.trim(), "_"] : [cmd.usageString, " "];
-            var usageAct = usage.length < 1 ? "": usage[0].split(usage[1]).join(cmd.usageDelim);
-            var alias = cmd.aliases.length > 0 ? ` aka: (${cmd.aliases.join(", ")})`: "";
+                helpMessage.push("```");
+    
+                msg.send(helpMessage, { split: { char: "\u200b" } }); 
+                break;
+            default:
+                cmd = this.client.commands.get(cmd) || this.client.commands.aliases.get(cmd);
+                if (!cmd) { return msg.sendLocale("HELP_NOCMD"); }
 
-            const embed = new MessageEmbed()
-                .setColor(0x04d5fd)
-                .setTitle(cmd.name + alias)
-                .setDescription(cmd.description)
-                .addField("Usage:", `\`${msg.guild.settings.prefix + cmd.name} ${usageAct}\``)
-                .addField("Permission level:", msg.language.get("PERMLEVEL")[cmd.permissionLevel]);
-                if (typeof cmd.extendedHelp === "string") { embed.addField("Extended Help:", cmd.extendedHelp); }
-            msg.send({embed});
+                var usage = cmd.humanUse ? [cmd.humanUse.trim(), "_"] : [cmd.usageString, " "];
+                var usageAct = usage.length < 1 ? "": usage[0].split(usage[1]).join(cmd.usageDelim);
+                var alias = cmd.aliases.length > 0 ? ` aka: (${cmd.aliases.join(", ")})`: "";
+
+                embed = new MessageEmbed()
+                    .setColor(0x04d5fd)
+                    .setTitle(cmd.name + alias)
+                    .setDescription(cmd.description)
+                    .addField("Usage:", `\`${msg.guild.settings.prefix + cmd.name} ${usageAct}\``)
+                    .addField("Permission level:", msg.language.get("PERMLEVEL")[cmd.permissionLevel]);
+                    if (typeof cmd.extendedHelp === "string") { embed.addField("Extended Help:", cmd.extendedHelp); }
+                    msg.send({embed});
+                break;
         }
     }
 
@@ -80,7 +91,7 @@ module.exports = class extends Command {
 				.then(() => {
 					if (!has(help, command.category)) { help[command.category] = {}; }
 					if (!has(help[command.category], command.subCategory)) { help[command.category][command.subCategory] = []; } 
-					const description = isFunction(command.description) ? command.description(message.language) : command.description;
+					const description = typeof command.description === "function" ? command.description(message.language) : command.description;
 					help[command.category][command.subCategory].push(`${prefix}${command.name.padEnd(longest)} :: ${description}`);
 				})
 				.catch(() => {
