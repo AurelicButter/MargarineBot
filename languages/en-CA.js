@@ -200,6 +200,8 @@ module.exports = class extends Language {
             DCOMMAND_DISABLE: (msg, name) => this.client.speech(msg, ["disablecommand", "disable"], [["-name", name]]),
 			DCOMMAND_ENABLE: (msg, name) => this.client.speech(msg, ["disablecommand", "enable"], [["-name", name]]),
 			DCOMMAND_GUARDED: (msg) => this.client.speech(msg, ["disablecommand", "guarded"]),
+			SETDEFAULTCHANNEL: (msg, channel) => this.client.speech(msg, ["setdefaultchannel", "change"], [["-channel", channel]]),
+			SETDEFAULTCHANNEL_REMOVE: (msg) => this.client.speech(msg, ["setdefaultchannel", "remove"]),
 
 			/*
 			 * Commands - General

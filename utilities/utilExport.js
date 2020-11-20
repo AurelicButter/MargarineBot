@@ -1,6 +1,7 @@
 const { existsSync, unlinkSync, rmdirSync, readdirSync } = require("fs");
 const { version: djsVersion } = require("discord.js");
 const { version: kVersion } = require("klasa");
+const { dateOptions } = require("../assets/settings.json");
 /* Exports all needed utilities for the client. */
 
 exports.speech = require("./speechHelper.js");
@@ -111,5 +112,13 @@ exports.util = {
      */
     toTitleCase: (text) => {
         return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
+    },
+    /**
+     * Generate a Date display for printing
+     * @param { Date } date
+     * @return { String } 
+     */
+    dateDisplay: (date) => {
+        return date.toLocaleString(dateOptions.lang, dateOptions.display);
     }
 };

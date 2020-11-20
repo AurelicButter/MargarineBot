@@ -19,48 +19,62 @@ module.exports = class extends Command {
     async run(msg, [user]) {
         user = msg.guild.members.cache.get(user.id);
 
-        const embed = new MessageEmbed()
-            .setTimestamp()
-            .setFooter(msg.guild.name, msg.guild.iconURL());
-
         const statusList = {
             online: "online",
             idle: "idle",
             dnd: "in do not disturb"
         };
-    
-        var Status = statusList[user.presence.status] || "offline";
 
-        var activity;
-        if (user.presence.activity === null) { activity = " "; }
-        else if (user.presence.activity.name === "Custom Status") {
-            activity = ` while doing ${user.presence.activity.state}`;
-        } else {
-            switch (user.presence.activity.type) { //All cases covered
+        var status = statusList[user.presence.status] || "offline";
+        var activity = user.presence.activities[0];
+        var userActivity;
+
+        if (user.presence.activity === null) { userActivity += " "; }
+        else {
+            switch (activity.type) { //All cases covered
                 case "PLAYING":
-                    activity = " while playing ";
+                    userActivity = " while playing ";
                     break;
                 case "LISTENING":
-                    activity = " while listening to ";
+                    userActivity = " while listening to ";
                     break;
                 case "WATCHING":
-                    activity = " while watching ";
+                    userActivity = " while watching ";
                     break;
                 case "STREAMING":
-                    activity = " while streaming ";
+                    userActivity = " while streaming ";
                     break;
             }
-            activity += user.presence.activity.name;
+            userActivity += activity.name;
         }
-            
-        embed.setThumbnail(user.user.displayAvatarURL())
-            .setAuthor(`${user.user.tag} | ${user.id}`)
-            .setDescription(`Currently ${Status}${activity}`)
-            .addField("ID: ", user.id, true)
-            .addField("Bot user:", user.user.bot ? "True": "False", true)
-            .addBlankField(true)
-            .addField("Created:", user.user.createdAt.toLocaleString(), true)
-            .addField("Joined:", user.joinedAt.toLocaleString(), true)
+
+        var lastMsgTime;
+        if (user.lastMessageChannelID) {
+            var lastMsg = user.guild.channels.cache.get(user.lastMessageChannelID)
+            .messages.cache.get(user.lastMessageID);
+            lastMsgTime = this.client.util.dateDisplay(lastMsg.createdTimestamp);
+        }
+        else {
+            lastMsgTime = "No message found...";
+        }
+
+        const embed = new MessageEmbed()
+            .setTimestamp()
+            .setFooter(msg.guild.name, msg.guild.iconURL())
+            .setThumbnail(user.user.displayAvatarURL())
+            .setAuthor(user.user.tag)
+            .setDescription(`Currently ${status}${userActivity}`);
+        
+        embed.addField("ID", user.id, true);
+
+        if (user.nickname) {
+            embed.addField("Nickname", user.nickname, true);
+        }           
+        
+        embed.addField("User Type", user.user.bot ? "Bot": "Human", true)
+            .addField("Last Guild Message", lastMsgTime)
+            .addField("Created", this.client.util.dateDisplay(user.user.createdAt), true)
+            .addField("Joined", this.client.util.dateDisplay(user.joinedAt), true)
             .setColor(0x04d5fd);
 
         msg.channel.send({embed});
