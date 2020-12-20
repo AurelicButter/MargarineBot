@@ -64,5 +64,13 @@ module.exports = {
             "-name has been reenabled!",
             "*Flicks switch* Okay! -name has been reenabled!"
         ]
+    },
+    "setdefaultchannel": {
+        "change": [
+            "Okay! I have changed the default channel to -channel!"
+        ],
+        "remove": [
+            "Okay! I will stop using the previous default channel."
+        ]
     }
 };

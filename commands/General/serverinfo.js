@@ -7,7 +7,7 @@ module.exports = class extends Command {
             name: "serverinfo",
             enabled: true,
             runIn: ["text"],
-            aliases: ["server"],
+            aliases: ["server", "guildinfo", "guild"],
             description: "Get your server's information",
             extendedHelp: "Need Discord info on your server? I got you covered!"
         });
@@ -22,7 +22,7 @@ module.exports = class extends Command {
             .setAuthor(`${guild.name} | ${guild.id}`)
             .setThumbnail(guild.iconURL())            
             .addField("Region:", guild.region, true)
-            .addField("Created:", guild.createdAt.toLocaleString(), true)
+            .addField("Created:", this.client.util.dateDisplay(guild.createdAt), true) 
             .addField("Owner:", `${guild.owner.user.tag} - ${guild.owner.id}`)
             .addField("Members:", `${guild.memberCount - guild.members.cache.filter(m => m.user.bot).size} (${guild.members.cache.filter(m => m.user.bot).size} bots)`, true)
             .addField("Roles:", guild.roles.cache.size, true)

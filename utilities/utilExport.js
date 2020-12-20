@@ -1,6 +1,7 @@
 const { existsSync, unlinkSync, rmdirSync, readdirSync } = require("fs");
 const { version: djsVersion } = require("discord.js");
 const { version: kVersion } = require("klasa");
+const { dateOptions } = require("../assets/settings.json");
 /* Exports all needed utilities for the client. */
 
 exports.speech = require("./speechHelper.js");
@@ -38,9 +39,12 @@ exports.envCheck = function() {
     var nVersion = process.version.split("v")[1].split(".");
     nVersion = Number(`${nVersion[0]}.${nVersion[1]}`);
 
-    if (djsVersion !== "12.3.1") { missingDep.push("You are not using the right discord.js package! Required version: v12.3.1"); }
+    var djsVer = djsVersion.split(".");
+    djsVer = Number(`${djsVer[0]}.${djsVer[1]}`);
+
+    if (djsVer < 12.3) { missingDep.push("You are not using the right discord.js package! Required version: v12.3.0+"); }
     if (kVersion !== "0.5.0") { missingDep.push("You are not using the right Klasa version! Required version: v0.5.0"); }
-    if (nVersion < 12.0) { missingDep.push("You are not using the right node.js version! Required version: v12.0.0+"); }
+    if (nVersion < 12.0) { missingDep.push("You are not using the right Node.js version! Required version: v12.0.0+"); }
 
     if (missingDep.length > 0) { console.log(missingDep.join("\n")); process.exit(); }
 };
@@ -108,5 +112,22 @@ exports.util = {
      */
     toTitleCase: (text) => {
         return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
+    },
+    /**
+     * Generate a Date display for printing
+     * @param { Date } date
+     * @return { String } 
+     */
+    dateDisplay: (date) => {
+        return date.toLocaleString(dateOptions.lang, dateOptions.display);
+    },
+    /**
+     * Generate a random number
+     * @param { Number } min - The minimum value. Is included in the possible range.
+     * @param { Number } max - The maximum value. Will be excluded in the randomness.
+     * @return { Number }
+     */
+    getRandom: (min, max) => {
+        return Math.floor(Math.random() * (max - min) ) + min;
     }
 };
