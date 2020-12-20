@@ -120,5 +120,14 @@ exports.util = {
      */
     dateDisplay: (date) => {
         return date.toLocaleString(dateOptions.lang, dateOptions.display);
+    },
+    /**
+     * Generate a random number
+     * @param { Number } min - The minimum value. Is included in the possible range.
+     * @param { Number } max - The maximum value. Will be excluded in the randomness.
+     * @return { Number }
+     */
+    getRandom: (min, max) => {
+        return Math.floor(Math.random() * (max - min) ) + min;
     }
 };

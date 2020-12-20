@@ -279,10 +279,20 @@ module.exports = class extends Language {
 			 */
 			TWOUP_SUCCESS: (msg, result, bet) => this.client.speech(msg, ["twoup", "win"], [["-result", result], ["-earnings", bet]]),
 			TWOUP_LOSS: (msg, result, bet) => this.client.speech(msg, ["twoup", "lose"], [["-result", result], ["-earnings", bet]]),
-			COIN_SUCCESS: (msg, result, bet) => this.client.speech(msg, ["coin", "win"], [["-result", result], ["-earning", bet]]),
-			COIN_LOSS: (msg, result, bet) => this.client.speech(msg, ["coin", "lose"], [["-result", result], ["-earning", bet]]),
-			CHOUHAN_SUCCESS: (msg, sum, guess, bet) => this.client.speech(msg, ["chouhan", "win"], [["-sum", sum], ["-guess", guess], ["-earning", (bet * 2)]]),
-			CHOUHAN_LOSS: (msg, sum, guess, bet) => this.client.speech(msg, ["chouhan", "lose"], [["-sum", sum], ["-guess", guess], ["-earning", bet]]),
+			COIN_SUCCESS: (msg, result, bet) => this.client.speech(msg, ["coin", "win"], [["-result", result], ["-earnings", bet]]),
+			COIN_LOSS: (msg, result, bet) => this.client.speech(msg, ["coin", "lose"], [["-result", result], ["-earnings", bet]]),
+			CHOUHAN_SUCCESS: (msg, sum, guess, bet) => this.client.speech(msg, ["chouhan", "win"], [["-sum", sum], ["-guess", guess], ["-earnings", (bet * 2)]]),
+			CHOUHAN_LOSS: (msg, sum, guess, bet) => this.client.speech(msg, ["chouhan", "lose"], [["-sum", sum], ["-guess", guess], ["-earnings", bet]]),
+			BLACKJACK_WINNERTITLE: "Winner:",
+			BLACKJACK_FOLDED: "Player folded! - Dealer Wins!",
+			BLACKJACK_BUSTED: "Player busted... - Dealer Wins!",
+			BLACKJACK_DEALERWIN: "Dealer Wins!",
+			BLACKJACK_PLAYERWIN: "Player Wins!",
+			BLACKJACK_NOWINNER: "DRAW! NO WINNERS",
+			BLACKJACK_TIE: "Tie occured! No money lost or earned.",
+			BLACKJACK_TIMEDOUT: (msg) => this.client.speech(msg, ["blackjack", "timedout"]),
+			BLACKJACK_SUCCESS: (msg, player, bet) => this.client.speech(msg, ["blackjack", "win"], [["-player", player], ["-earnings", bet]]),
+			BLACKJACK_LOSS: (msg, player, bet) => this.client.speech(msg, ["blackjack", "lose"], [["-player", player], ["-earnings", bet]]),
 
 			/*
 			 * Commands - Economy => Cooking

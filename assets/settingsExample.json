@@ -3,7 +3,7 @@
     "prefix": "Prefix", 
     "build": {
         "version": "Release 1.4.0",
-        "releaseDate": "November 22nd, 2020"
+        "releaseDate": "December 20th, 2020"
     },
     "database": "./assets/MargarineData.sqlite",
     "dateOptions": {
