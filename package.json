@@ -30,7 +30,7 @@
     "url": "git+https://github.com/butterstroke/MargarineBot"
   },
   "scripts": {
-    "start": "node indexNew.js"
+    "start": "node index.js"
   },
   "author": {
     "name": "Frederick Katsura",
