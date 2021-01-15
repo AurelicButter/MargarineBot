@@ -13,6 +13,9 @@ module.exports = class extends Inhibitor {
     async run(msg, cmd) {
         //Inhibitor is not meant for DM use or commands lower than 5 (Moderator level).
         if (!msg.guild || cmd.permissionLevel < 5) { return; }
+
+        // Owner and Secondary level commands should not be blocked by the bot.
+        if (cmd.permissionLevel === 9 || cmd.permissionLevel === 10) { return; }
         
         //Guild leaders have access to all mid-range permission level commands.
         if (msg.guild.owner.id === msg.author.id) { return; }
