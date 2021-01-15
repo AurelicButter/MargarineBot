@@ -16,13 +16,13 @@
     "node-fetch": "^2.6.1",
     "querystring": "^0.2.0",
     "request": "^2.88.2",
-    "snekfetch": "^4.0.4",
-    "ytfps": "^1.0.4"
+    "snekfetch": "^4.0.4"
   },
   "optionalDependencies": {
     "@discordjs/opus": "^0.3.2",
     "ffmpeg": "0.0.4",
-    "ytdl-core": "^4.4.3"
+    "ytdl-core": "^4.4.3",
+    "ytfps": "^1.0.4"
   },
   "devDependencies": {},
   "repository": {
