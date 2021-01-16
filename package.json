@@ -5,8 +5,8 @@
   "main": "index.js",
   "private": true,
   "dependencies": {
-    "anilist-node": "^1.6.0",
-    "better-sqlite3": "^7.1.1",
+    "anilist-node": "^1.6.1",
+    "better-sqlite3": "^7.1.2",
     "cheerio": "^1.0.0-rc.3",
     "discord.js": "^12.5.1",
     "klasa": "^0.5.0",

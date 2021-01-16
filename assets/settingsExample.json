@@ -2,8 +2,8 @@
     "token": "Token Key",
     "prefix": "Prefix", 
     "build": {
-        "version": "Release 1.4.0",
-        "releaseDate": "December 20th, 2020"
+        "version": "Release 1.5.0",
+        "releaseDate": "January 16th, 2021"
     },
     "database": "./assets/MargarineData.sqlite",
     "dateOptions": {
