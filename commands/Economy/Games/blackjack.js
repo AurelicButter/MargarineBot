@@ -110,7 +110,7 @@ module.exports = class extends Command {
 
         if (playerWin || dealerWin) { //Detect a blackjack automatically. Declare winner.
             var winner = (dealerWin == playerWin && playerWin == true) + (playerWin == true);
-            this.generateWinDisplay(targetMsg, gameMenu, dealerHand.toString(), winner, "auto");
+            await this.generateWinDisplay(targetMsg, gameMenu, dealerHand.toString(), winner, "auto");
             return await this.payPlayers(targetMsg, gameMenu, true, winner, myHand, bet);
         }     
 
@@ -143,7 +143,7 @@ module.exports = class extends Command {
         // Dealer's Turn
         var dealerPoints = dealerHand.calculateHandValue();
         
-        while (dealerPoints < 17 && response != "fold" && !bustedHand) {
+        while (dealerPoints < 17 && dealerPoints > 0) {
             dealerHand.dealMe(this.dealCard());
             dealerPoints = dealerHand.calculateHandValue();
         }
@@ -157,8 +157,8 @@ module.exports = class extends Command {
         var playerWins = playerPoints > dealerPoints; // Determine winner. True if player wins.
         if (playerPoints === dealerPoints) { playerWins = 2; } // Tie, no winner.
 
-        this.generateWinDisplay(targetMsg, gameMenu, dealerHand.toString(), playerWins, response); 
-        await this.payPlayers(targetMsg, gameMenu, true, playerWins, myHand, bet);
+        await this.generateWinDisplay(targetMsg, gameMenu, dealerHand.toString(), playerWins, response); 
+        await this.payPlayers(targetMsg, gameMenu, data, playerWins, myHand, bet);
     };
 
     /**
@@ -203,7 +203,6 @@ module.exports = class extends Command {
             payout = await msg.language.get("BLACKJACK_TIE");
         } else { //Player lost.
             payout = await msg.language.get("BLACKJACK_LOSS", msg, myHand.playerName, amount);
-            amount = amount * -1;
             this.client.dataManager("update", [`credits=${data.credits - amount}`, myHand.playerID], "users");
         }
 

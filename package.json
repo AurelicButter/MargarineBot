@@ -1,14 +1,14 @@
 {
   "name": "margarine",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Javascript bot using the Klasa framework",
   "main": "index.js",
   "private": true,
   "dependencies": {
-    "anilist-node": "^1.6.0",
-    "better-sqlite3": "^7.1.1",
+    "anilist-node": "^1.6.1",
+    "better-sqlite3": "^7.1.2",
     "cheerio": "^1.0.0-rc.3",
-    "discord.js": "^12.4.1",
+    "discord.js": "^12.5.1",
     "klasa": "^0.5.0",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
@@ -21,8 +21,8 @@
   "optionalDependencies": {
     "@discordjs/opus": "^0.3.2",
     "ffmpeg": "0.0.4",
-    "youtube-playlist": "^1.0.3",
-    "ytdl-core": "^2.1.7"
+    "ytdl-core": "^4.4.3",
+    "ytfps": "^1.0.4"
   },
   "devDependencies": {},
   "repository": {

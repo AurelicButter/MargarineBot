@@ -1,7 +1,6 @@
 const { Command } = require("klasa");
-const { getInfo } = require("ytdl-core");
-const ytPlay = require("youtube-playlist");
-const getInfoAsync = require("util").promisify(getInfo);
+const { getBasicInfo } = require("ytdl-core");
+const ytfps = require("ytfps");
 
 module.exports = class extends Command {
     constructor(...args) {
@@ -17,34 +16,40 @@ module.exports = class extends Command {
     async run(msg, [song]) {
         var handler = this.client.util.musicCheck(msg);
         if (handler === false) { return; }
-        
-        var id = [];
       
-        if (song.match(/(playlist\?list=\S{30,34})/)) { 
+        if (song.match(/(playlist\?list=\S{30,34})/)) { // Handle playlists
             msg.sendLocale("QUEUEADD_LISTDETECT", [msg]);
-            var list = await Promise.resolve(ytPlay(song, "id"));
+            var list = await ytfps(song.split("?list=")[1]);
+            list = list.videos;
               
-            for(var x = 0; x < list.data.playlist.length; x++) {
-                id.push(list.data.playlist[x]);
-            }
-        } else if (song.match(/(?:v=)(\S{11})/)) {
-            id.push(song.match(/(?:v=)(\S{11})/)[1]);
-        } else { throw msg.sendLocale("QUEUEADD_NOURL", [msg]); } 
-       
-        for (var x = 0; x < id.length; x++) {
-            try {
-                var info = await getInfoAsync(`https://youtu.be/${id[x]}`);
-      
+            for (var x = 0; x < list.length; x++) {
                 handler.queue.push({
-                    url: `https://youtu.be/${id[x]}`,
-                    title: info.title,
-                    seconds: info.length_seconds,
+                    url: list[x].url,
+                    title: list[x].title,
+                    seconds: (list[x].milis_length / 1000),
                     requester: msg.author.tag
                 });
-            } catch(err) { msg.sendLocale("QUEUEADD_ERRCATCH", [msg, id[x]]); }
-        }
+            }
+
+            return msg.sendLocale("QUEUEADD_MULTI", [msg, list.length]);
+        } 
+        
+        if (song.match(/(?:v=)(\S{11})/)) { // Handle single videos
+            var id = song.match(/(?:v=)(\S{11})/)[1];
+            try {
+                var info = await getBasicInfo(`https://youtu.be/${id}`);
       
-        if (id.length === 1) { msg.sendLocale("QUEUEADD_SUCCESS", [msg, info.title]); }
-        else { msg.sendLocale("QUEUEADD_MULTI", [msg, id.length]); }
+                handler.queue.push({
+                    url: info.videoDetails.video_url,
+                    title: info.videoDetails.title,
+                    seconds: info.videoDetails.lengthSeconds,
+                    requester: msg.author.tag
+                });
+            } catch(err) { msg.sendLocale("QUEUEADD_ERRCATCH", [msg, id]); }
+
+            return msg.sendLocale("QUEUEADD_SUCCESS", [msg, info.videoDetails.title]);
+        } 
+        
+        msg.sendLocale("QUEUEADD_NOURL", [msg]);
     }
 };
