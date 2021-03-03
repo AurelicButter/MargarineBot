@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: For users looking to report a bug or an issue
 title: ''
 labels: Bug/Issue
 assignees: Butterstroke
