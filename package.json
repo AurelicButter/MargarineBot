@@ -1,40 +1,61 @@
 {
-  "name": "margarine",
-  "version": "1.5.0",
-  "description": "Javascript bot using the Klasa framework",
-  "main": "index.js",
-  "private": true,
-  "dependencies": {
-    "anilist-node": "^1.6.1",
-    "better-sqlite3": "^7.1.2",
-    "cheerio": "^1.0.0-rc.3",
-    "discord.js": "^12.5.1",
-    "klasa": "^0.5.0",
-    "moment": "^2.29.1",
-    "moment-duration-format": "^2.3.2",
-    "ms": "^2.1.2",
-    "node-fetch": "^2.6.1",
-    "querystring": "^0.2.0",
-    "request": "^2.88.2",
-    "snekfetch": "^4.0.4"
+	"name": "margarine",
+	"version": "1.5.0",
+	"description": "Javascript bot using the Klasa framework",
+	"main": "index.js",
+	"private": true,
+	"dependencies": {
+		"@discordjs/opus": "^0.4.0",
+		"anilist-node": "^1.6.1",
+		"better-sqlite3": "^7.1.2",
+		"cheerio": "^1.0.0-rc.3",
+		"discord.js": "^12.5.1",
+		"ffmpeg": "^0.0.4",
+		"klasa": "^0.5.0",
+		"moment": "^2.29.1",
+		"moment-duration-format": "^2.3.2",
+		"ms": "^2.1.2",
+		"node-fetch": "^2.6.1",
+		"querystring": "^0.2.0",
+		"request": "^2.88.2",
+		"snekfetch": "^4.0.4",
+		"ytdl-core": "^4.5.0",
+		"ytfps": "^1.0.4"
+	},
+	"optionalDependencies": {
+		"@discordjs/opus": "^0.4.0",
+		"ffmpeg": "^0.0.4",
+		"ytdl-core": "^4.5.0",
+		"ytfps": "^1.0.4"
+	},
+	"devDependencies": {
+		"eslint": "^7.21.0",
+		"eslint-plugin-prettier": "^3.3.1",
+		"husky": "^4.3.8",
+		"lint-staged": "^10.5.4",
+		"prettier": "2.2.1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/butterstroke/MargarineBot"
+	},
+	"scripts": {
+		"start": "node index.js",
+		"eslint": "eslint .",
+		"prettier": "prettier --write ."
+	},
+  "husky": {
+    "pre-commit": "lint-staged"
   },
-  "optionalDependencies": {
-    "@discordjs/opus": "^0.3.2",
-    "ffmpeg": "0.0.4",
-    "ytdl-core": "^4.4.3",
-    "ytfps": "^1.0.4"
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "prettier --write",
+      "eslint"
+    ]
   },
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/butterstroke/MargarineBot"
-  },
-  "scripts": {
-    "start": "node index.js"
-  },
-  "author": {
-    "name": "Frederick Katsura",
-    "email": "katsurinstudios@protonmail.ch"
-  },
-  "license": "Apache-2.0"
+	"author": {
+		"name": "Frederick Katsura",
+		"email": "katsurinstudios@protonmail.ch"
+	},
+	"license": "Apache-2.0"
 }
