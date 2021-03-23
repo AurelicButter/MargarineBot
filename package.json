@@ -6,9 +6,9 @@
 	"private": true,
 	"dependencies": {
 		"@discordjs/opus": "^0.4.0",
-		"anilist-node": "^1.6.1",
+		"anilist-node": "^1.7.0",
 		"better-sqlite3": "^7.1.2",
-		"cheerio": "^1.0.0-rc.3",
+		"cheerio": "^1.0.0-rc.5",
 		"discord.js": "^12.5.1",
 		"ffmpeg": "^0.0.4",
 		"klasa": "^0.5.0",
@@ -16,7 +16,7 @@
 		"moment-duration-format": "^2.3.2",
 		"ms": "^2.1.2",
 		"node-fetch": "^2.6.1",
-		"querystring": "^0.2.0",
+		"querystring": "^0.2.1",
 		"request": "^2.88.2",
 		"snekfetch": "^4.0.4",
 		"ytdl-core": "^4.5.0",
@@ -44,15 +44,15 @@
 		"eslint": "eslint .",
 		"prettier": "prettier --write ."
 	},
-  "husky": {
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,jsx}": [
-      "prettier --write",
-      "eslint"
-    ]
-  },
+	"husky": {
+		"pre-commit": "lint-staged"
+	},
+	"lint-staged": {
+		"**/*.{js,jsx,json}": [
+			"prettier --write",
+			"eslint"
+		]
+	},
 	"author": {
 		"name": "Frederick Katsura",
 		"email": "katsurinstudios@protonmail.ch"
