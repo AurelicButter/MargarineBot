@@ -72,5 +72,13 @@ module.exports = {
         "remove": [
             "Okay! I will stop using the previous default channel."
         ]
-    }
+    },
+    "setwelcome": [
+        "Okay! I have set the welcome message to `-msg`.",
+        "*Ahem...* `-msg`\nWhat a welcoming message!"
+    ],
+    "setleave": [
+        "Okay! I have set the leave message to `-msg`.",
+        "*Ahem...* `-msg`\nQuite sad that the people leaving won't see your fantastic message."
+    ]
 };

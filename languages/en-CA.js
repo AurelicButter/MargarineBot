@@ -1,4 +1,4 @@
-const { Language } = require("klasa");
+const { Language, util } = require("klasa");
 
 /* For use in Klasa System - Margarine Style responses, msg is required but
  * will be mimiced so that speechHelper doesn't error out.
@@ -61,10 +61,10 @@ module.exports = class extends Language {
 			RESOLVER_MINMAX_BOTH: (name, min, max, suffix) => this.client.speech(falseMsg, ["func-system", "resolver", "minMax", "both"], [
 				["-name", name], ["-min", min], ["-max", max] ["-suffix", suffix]
 			]),
-			RESOLVER_MINMAX_MIN: (name, min, suffix) => this.client.speech(falseMsg, ["func-system", "resolver", "minMax", "min"], [
+			RESOLVER_MINMAX_MIN: (name, min) => this.client.speech(falseMsg, ["func-system", "resolver", "minMax", "min"], [
 				["-name", name], ["-min", min]
 			]),
-			RESOLVER_MINMAX_MAX: (name, max, suffix) => this.client.speech(falseMsg, ["func-system", "resolver", "minMax", "max"], [
+			RESOLVER_MINMAX_MAX: (name, max) => this.client.speech(falseMsg, ["func-system", "resolver", "minMax", "max"], [
 				["-name", name], ["-max", max]
 			]),
 			RESOLVER_INVALID_CHANNEL: (name) => this.client.speech(falseMsg, ["func-system", "resolver", "channel"], [["-name", name]]),
@@ -182,7 +182,7 @@ module.exports = class extends Language {
 			 * Monitors
 			 */
 			PREFIXHELP_DEFAULT: (prefix) => `Whoops! Looks like you are thinking of my default prefix. That is not the case here. Please use: ${prefix}`,
-			PREFIXHELP_MISREAD: "Whoops! Looks like you misread my prefix. It's a tilde \`~\`, not a dash!",
+			PREFIXHELP_MISREAD: "Whoops! Looks like you misread my prefix. It's a tilde `~`, not a dash!",
 			
 			/* 
 			 * Commands - Config
@@ -202,6 +202,10 @@ module.exports = class extends Language {
 			DCOMMAND_GUARDED: (msg) => this.client.speech(msg, ["disablecommand", "guarded"]),
 			SETDEFAULTCHANNEL: (msg, channel) => this.client.speech(msg, ["setdefaultchannel", "change"], [["-channel", channel]]),
 			SETDEFAULTCHANNEL_REMOVE: (msg) => this.client.speech(msg, ["setdefaultchannel", "remove"]),
+			SETWELCOME: (msg, item) => this.client.speech(msg, ["setwelcome"], [["-msg", item]]),
+			REMOVEWELCOME: "Welcome message has been removed!",
+			SETLEAVE: (msg, item) => this.client.speech(msg, ["setleave"], [["-msg", item]]),
+			REMOVELEAVE: "Leave message has been removed!",
 
 			/*
 			 * Commands - General
@@ -281,7 +285,7 @@ module.exports = class extends Language {
 			TWOUP_LOSS: (msg, result, bet) => this.client.speech(msg, ["twoup", "lose"], [["-result", result], ["-earnings", bet]]),
 			COIN_SUCCESS: (msg, result, bet) => this.client.speech(msg, ["coin", "win"], [["-result", result], ["-earnings", bet]]),
 			COIN_LOSS: (msg, result, bet) => this.client.speech(msg, ["coin", "lose"], [["-result", result], ["-earnings", bet]]),
-			CHOUHAN_SUCCESS: (msg, sum, guess, bet) => this.client.speech(msg, ["chouhan", "win"], [["-sum", sum], ["-guess", guess], ["-earnings", (bet * 2)]]),
+			CHOUHAN_SUCCESS: (msg, sum, guess, bet) => this.client.speech(msg, ["chouhan", "win"], [["-sum", sum], ["-guess", guess], ["-earnings", bet * 2]]),
 			CHOUHAN_LOSS: (msg, sum, guess, bet) => this.client.speech(msg, ["chouhan", "lose"], [["-sum", sum], ["-guess", guess], ["-earnings", bet]]),
 			BLACKJACK_WINNERTITLE: "Winner:",
 			BLACKJACK_FOLDED: "Player folded! - Dealer Wins!",
@@ -349,7 +353,7 @@ module.exports = class extends Language {
 			VOLUME_ZERO: (msg) => this.client.speech(msg, ["volume", "zero"]),
 			VOLUME_MAX: (msg) => this.client.speech(msg, ["volume", "overHun"]),
 			VOLUME_PAUSED: (msg) => this.client.speech(msg, ["volume", "notPlay"]),
-			VOLUME_SUCCESS: (msg, change, vol) => this.client.speech(msg, ["volume", "success"], [["-param1", change], ["-param2", vol]]),
+			VOLUME_SUCCESS: (msg, change, vol) => this.client.speech(msg, ["volume", "success"], [["-param1", change], ["-param2", vol]])
 		};
     }
 };

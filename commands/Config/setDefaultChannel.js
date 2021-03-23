@@ -15,11 +15,9 @@ module.exports = class extends Command {
     }
 
     async run(msg, [item]) {
+        if (item && !item.includes("<#")) { return msg.sendLocale("RESOLVER_INVALID_CHANNEL", [item]); }
         if (item === "remove") { item = null; }
 
-        if (item && !item.includes("<#")) { return msg.sendLocale("RESOLVER_INVALID_CHANNEL", [item]); }
-
-        console.log(item);
         msg.guild.settings.update("defaultChannel", item).then(() => {
             if (item) { return msg.sendLocale("SETDEFAULTCHANNEL", [msg, item]); }
             msg.sendLocale("SETDEFAULTCHANNEL_REMOVE", [msg, item]);            
