@@ -24,7 +24,16 @@ module.exports = class extends Language {
             DEFAULT: (key) => `${key} has not been localized for en-CA yet.`,
 			DEFAULT_LANGUAGE: "Default Language",
 			NOCHANNEL: "No channel set",
+			USER: "User",
+			MODR: "Moderator",
+			BANN: "BANNED",
+			UNBAN: "UNBANNED",
+			KICK: "KICKED",
+			MUTE: "MUTED",
+			UNMUTE: "UNMUTED",
 			MISSINGPERMISSION: "❌ ERROR: MISSING PERMISSIONS! ❌",
+			USER_INCORRECTPERM: "You do not have the correct permissions for this command!",
+			MARG_INCORRECTPERM: "I do not have the correct permissions for this command!",
 			MISSINGTERM: (action) => this.client.speech(falseMsg, ["func-system", "missingterm"], ["-action", action]),
 			PERMLEVEL: [
 				"Level 0 - Everyone",
@@ -177,6 +186,9 @@ module.exports = class extends Language {
 			MUSICCHECK_NOQUEUE: this.client.speech(falseMsg, ["func-music", "general", "noQueue"]),
 			MUSICCHECK_MISMATCHVC: this.client.speech(falseMsg, ["func-music", "general", "mismatch"]),
 			MUSICCHECK_NOHANDLER: this.client.speech(falseMsg, ["func-music", "general", "noHandler"]),
+			MODEMBED_MESSAGEHEADER: "Moderator Message",
+			MODEMBED_USERFIELD: (tag, id) => `${tag} (${id})`,
+			MODEMBED_DMMESSAGE: (action, guild, reason) => `You have been ${action} from ${guild}!\n**Reason:** ${reason}`,
 
 			/**
 			 * Monitors
