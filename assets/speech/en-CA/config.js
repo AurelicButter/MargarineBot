@@ -80,5 +80,25 @@ module.exports = {
     "setleave": [
         "Okay! I have set the leave message to `-msg`.",
         "*Ahem...* `-msg`\nQuite sad that the people leaving won't see your fantastic message."
-    ]
+    ],
+    "monitortoggle": {
+        "nomonitor": [
+            "No monitor by that name exists.",
+            "No monitor found",
+            "What? That monitor does not exist."
+        ],
+        "notoggle": [
+            "This monitor is not toggleable.",
+            "Nope, this monitor is not configurable for guilds."
+        ],
+        "disable": [
+            "Okay! I have disabled the -monitor monitor",
+            "-monitor monitor has been disabled by your request"
+
+        ],
+        "enable": [
+            "Okay! I have enabled the -monitor monitor",
+            "-monitor monitor has been enabled by your request"
+        ]
+    }
 };

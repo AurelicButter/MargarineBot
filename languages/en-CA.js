@@ -195,6 +195,7 @@ module.exports = class extends Language {
 			 */
 			PREFIXHELP_DEFAULT: (prefix) => `Whoops! Looks like you are thinking of my default prefix. That is not the case here. Please use: ${prefix}`,
 			PREFIXHELP_MISREAD: "Whoops! Looks like you misread my prefix. It's a tilde `~`, not a dash!",
+			INVITEDETECTOR_BADMESSAGE: (msg, author) => this.client.speech(msg, ["func-monitor", "inviteDetector"], [["-author", author]]),
 			
 			/* 
 			 * Commands - Config
@@ -218,6 +219,10 @@ module.exports = class extends Language {
 			REMOVEWELCOME: "Welcome message has been removed!",
 			SETLEAVE: (msg, item) => this.client.speech(msg, ["setleave"], [["-msg", item]]),
 			REMOVELEAVE: "Leave message has been removed!",
+			MONITORTOGGLE_NOMONITOR: (msg) => this.client.speech(msg, ["monitortoggle", "nomonitor"]),
+			MONITORTOGGLE_NOTOGGLE: (msg) => this.client.speech(msg, ["monitortoggle", "notoggle"]),
+			MONITORTOGGLE_DISABLE: (msg, monitor) => this.client.speech(msg, ["monitortoggle", "disable"], [["-monitor", monitor]]),
+			MONITORTOGGLE_ENABLE: (msg, monitor) => this.client.speech(msg, ["monitortoggle", "enable"], [["-monitor", monitor]]),
 
 			/*
 			 * Commands - General
