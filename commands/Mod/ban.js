@@ -8,24 +8,24 @@ module.exports = class extends Command {
             runIn: ["text"],
             aliases: ["b"],
             permissionLevel: 6,
-            description: "Ban someone.",
+            description: "Ban someone",
             usage: "<user:usersearch> <reason:str>", usageDelim: ","
         });
 
-        this.humanUse = "<user>_<reason>";
+        this.humanUse = "<user>, <reason>";
     }
 
-    async run(msg, [user, reason]) {
+    async run(msg, [user, reason=reason.trim()]) {
         user = msg.guild.members.cache.get(user.id);
-        if (user.bannable === false) { return msg.reply("I cannot ban that member"); }
+        if (user.bannable === false) { return msg.reply(msg.language.get("BAN_UNBANNABLE")); }
         
-        var data = this.client.util.modEmbed(msg, "ban", user, reason);
+        let { embed, DMembed } = this.client.util.modEmbed(msg, "ban", user, reason);
         
-        if (data.embed.thumbnail) {
-            await user.send({embed: data.DMembed});
-            await user.ban(`Automated Action - Moderator: ${msg.author.username} | Reason: ${reason}`);
+        if (embed.thumbnail) {
+            await user.send({embed: DMembed});
+            await user.ban(msg.language.get("MODRMESSAGE", [msg.author.username, reason]));
         }
 
-        this.client.util.defaultChannel(msg.guild, "mod").send({embed: data.embed});
+        this.client.util.defaultChannel(msg.guild, "mod").send({embed: embed});
     }
 };

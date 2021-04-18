@@ -377,7 +377,22 @@ module.exports = class extends Language {
 			VOLUME_ZERO: (msg) => this.client.speech(msg, ["volume", "zero"]),
 			VOLUME_MAX: (msg) => this.client.speech(msg, ["volume", "overHun"]),
 			VOLUME_PAUSED: (msg) => this.client.speech(msg, ["volume", "notPlay"]),
-			VOLUME_SUCCESS: (msg, change, vol) => this.client.speech(msg, ["volume", "success"], [["-param1", change], ["-param2", vol]])
+			VOLUME_SUCCESS: (msg, change, vol) => this.client.speech(msg, ["volume", "success"], [["-param1", change], ["-param2", vol]]),
+
+			/**
+			 * Commands - Moderation
+			 */
+			BAN_UNBANNABLE: "I cannot ban that member",
+			KICK_UNKICKABLE: "I cannot kick that member",
+			MODRMESSAGE: (author, reason) => `Automated Action - ${this.language.get("MODERATOR")}: ${author} | Reason: ${reason}`,
+			NOREASON: "No reason given.",
+			MUTE_NOMUTEROLE: (msg) => this.client.speech(msg, ["mute", "noRole"]),
+			MUTE_HIGHERPOS: (msg) => this.client.speech(msg, ["mute", "rolePos"]),
+			MUTE_ISADMIN: (msg) => this.client.speech(msg, ["mute", "admin"]),
+			MUTE_UNMUTED: (msg, user) => this.client.speech(msg, ["mute", "unmuted"], [["-user", user]]),
+			MUTE_MUTED: (msg, user) => this.client.speech(msg, ["mute", "muted"], [["-user", user]]),
+			PURGE_USERSPECIFIC: (tag) => `by ${tag}`,
+			PURGE_MESSAGE: (msg, amount, user) => this.client.speech(msg, ["purge"], [["-amount", amount], ["-user", user]]) 
 		};
     }
 };
