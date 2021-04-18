@@ -31,6 +31,8 @@ module.exports = class extends Language {
 			KICK: "KICKED",
 			MUTE: "MUTED",
 			UNMUTE: "UNMUTED",
+			WINNER: "WINNER",
+			VERSUS: "vs",
 			MISSINGPERMISSION: "❌ ERROR: MISSING PERMISSIONS! ❌",
 			USER_INCORRECTPERM: "You do not have the correct permissions for this command!",
 			MARG_INCORRECTPERM: "I do not have the correct permissions for this command!",
@@ -248,7 +250,7 @@ module.exports = class extends Language {
 			MAL_REMOVEPROFILE: (msg) => this.client.speech(msg, ["mal", "removeProfile"]),
 			MAL_NOTERM: (msg) => this.client.speech(msg, ["mal", "noTerm"]),
 			MAL_NOUSER: (msg) => this.client.speech(msg, ["mal", "noUsername"]),
-			MAL_404ERR: (msg) => this.client.speech(msg, ["MAL", "404Err"]),
+			MAL_404ERR: (msg) => this.client.speech(msg, ["mal", "404Err"]),
 			ANILIST_SETPROFILE: (msg) => this.client.speech(msg, ["anilist", "setProfile"]),
 			ANILIST_REMOVEPROFILE: (msg) => this.client.speech(msg, ["anilist", "removeProfile"]),
 			ANILIST_NOTERM: (msg) => this.client.speech(msg, ["anilist", "noTerm"]),
@@ -282,6 +284,11 @@ module.exports = class extends Language {
 				["-hand2", hand2],
 				["-result", result]
 			]),
+			TTT_MATCHHEADER: "TicTacToe Match",
+			TTT_BOARD: "Board",
+			TTT_SAMEUSER: (msg) => this.client.speech(msg, ["tictactoe", "sameuser"]),
+			TTT_SPOTTAKEN: (msg) => this.client.speech(msg, ["tictactoe", "spottaken"]),
+			TTT_TIMEOUT: (msg) => this.client.speech(msg, ["tictactoe", "timeout"]),
 
 			/*
 			 * Commands - Economy
