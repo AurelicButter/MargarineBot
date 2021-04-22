@@ -26,11 +26,13 @@ module.exports = class extends Language {
 			NOCHANNEL: "No channel set",
 			USER: "User",
 			MODR: "Moderator",
-			BANN: "BANNED",
+			BAN: "BANNED",
 			UNBAN: "UNBANNED",
 			KICK: "KICKED",
 			MUTE: "MUTED",
 			UNMUTE: "UNMUTED",
+			WARN: "WARNED",
+			RMWARN: "REMOVED WARN",
 			WINNER: "WINNER",
 			VERSUS: "vs",
 			MISSINGPERMISSION: "❌ ERROR: MISSING PERMISSIONS! ❌",
@@ -225,6 +227,8 @@ module.exports = class extends Language {
 			MONITORTOGGLE_NOTOGGLE: (msg) => this.client.speech(msg, ["monitortoggle", "notoggle"]),
 			MONITORTOGGLE_DISABLE: (msg, monitor) => this.client.speech(msg, ["monitortoggle", "disable"], [["-monitor", monitor]]),
 			MONITORTOGGLE_ENABLE: (msg, monitor) => this.client.speech(msg, ["monitortoggle", "enable"], [["-monitor", monitor]]),
+			SETMODLOG: (msg, channel) => this.client.speech(msg, ["setmodlog", "change"], [["-channel", channel]]),
+			SETMODLOG_REMOVE: (msg) => this.client.speech(msg, ["setmodlog", "remove"]),
 
 			/*
 			 * Commands - General
@@ -392,7 +396,8 @@ module.exports = class extends Language {
 			MUTE_UNMUTED: (msg, user) => this.client.speech(msg, ["mute", "unmuted"], [["-user", user]]),
 			MUTE_MUTED: (msg, user) => this.client.speech(msg, ["mute", "muted"], [["-user", user]]),
 			PURGE_USERSPECIFIC: (tag) => `by ${tag}`,
-			PURGE_MESSAGE: (msg, amount, user) => this.client.speech(msg, ["purge"], [["-amount", amount], ["-user", user]]) 
+			PURGE_MESSAGE: (msg, amount, user) => this.client.speech(msg, ["purge"], [["-amount", amount], ["-user", user]]),
+			REDUCEWARN_REASON: (amount) => `Removed ${amount} warns from target user` 
 		};
     }
 };

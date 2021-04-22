@@ -100,5 +100,13 @@ module.exports = {
             "Okay! I have enabled the -monitor monitor",
             "-monitor monitor has been enabled by your request"
         ]
+    },
+    "setmodlog": {
+        "change": [
+            "Okay! I have changed the modlog channel to -channel!"
+        ],
+        "remove": [
+            "Okay! I will stop using the previous modlog channel."
+        ]
     }
 };

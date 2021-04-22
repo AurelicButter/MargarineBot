@@ -47,9 +47,9 @@
 		"pre-commit": "lint-staged"
 	},
 	"lint-staged": {
-		"**/*.{js,jsx,json}": [
-			"prettier --write",
-			"eslint"
+		"*.{js,jsx,json}": [
+			"prettier --write .",
+			"eslint . --fix"
 		]
 	},
 	"author": {

@@ -45,6 +45,7 @@ module.exports = function (client) {
 		)
 		.add("welcomeMsg", "string", { configurable: false })
 		.add("leaveMsg", "string", { configurable: false })
+		.add("warnlog", "string", { default: "{}", configurable: false })
 		.add("monitors", (folder) => 
 			folder
 				.add("inviteDetector", "boolean", { configurable: false, default: false })

@@ -126,7 +126,7 @@ exports.util = {
 	 * @return { String }
 	 */
 	toTitleCase: (text) => {
-		return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
+		return text.split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(" ");
 	},
 	/**
 	 * Generate a Date display for printing
