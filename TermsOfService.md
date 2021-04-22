@@ -4,6 +4,7 @@ The agreements for the users and the maintainers of MargarineBot.
 **Last Updated:** 22 April 2021
 
 **Usage:**
+
 By using MargarineBot (aka Margarine), users (defined as anyone with access to Margarine) agree to have their information usable and manipulated for improving and general use of Margarine. Any data collected will be collected anonymously and, in most cases, not stored.
 
 There are two types of Margarine users of which users can change to freely.
@@ -17,6 +18,7 @@ Second type is a manual agreement where users can approve of additional data col
 User data can also be sent across Discord. With moderation commands, the moderation messages send both the user's identification and moderator's identification to the user's direct messages and a channel specified (or sent into the same channel if no channel is specified) by a server's moderation team for logging. Additionally, users can make reports about any issues or feedback within Margarine through its report command. Since all data is passed and stored within Discord, there is no user permissions required to access and use these commands.
 
 **Virtually Generated Data**
+
 All credits, reputation points, inventory items, etc. that are used within Margarine's commands are generated and hold no real monetary value. They are purely for entertainment. Anyone who is not the developer of Margarine selling any Margarine generated items for real monetary value are to be reported and blacklisted from the bot.
 
 To report an incident, please send an email to <a href="mailto:katsurinstudios@protonmail.ch">katsurinstudios@protonmail.ch</a> with a title relating to the incident.  
