@@ -14,12 +14,14 @@ module.exports = function (msg, action = action.toLowerCase(), user, reason) {
 		unban: ["BAN_MEMBERS", msg.language.get("UNBAN"), 0x38b058],
 		kick: ["KICK_MEMBERS", msg.language.get("KICK"), 0xffff66],
 		mute: ["MANAGE_ROLES", msg.language.get("MUTE"), 0x808080],
-		unmute: ["MANAGE_ROLES", msg.language.get("UNMUTE"), 0x38b058]
+		unmute: ["MANAGE_ROLES", msg.language.get("UNMUTE"), 0x38b058],
+		warn: ["SEND_MESSAGES", msg.language.get("WARN"), 0x808080],
+		rmwarn: ["SEND_MESSAGES", msg.language.get("RMWARN"), 0x808080]
 	};
 
 	const embed = new MessageEmbed().setTimestamp();
 	let options = Options[action];
-
+	
 	if (msg.channel.permissionsFor(msg.author).has(options[0]) === false) {
 		embed
 			.setColor(0xdd2e44)

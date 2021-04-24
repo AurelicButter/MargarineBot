@@ -15,6 +15,8 @@ module.exports = class extends Monitor {
     }
 
     run(msg) {
+        if (!msg.guild) { return; }
+        
         let guildActive = msg.guild.settings.monitors.inviteDetector;
 
         if (!guildActive || !inviteRegex.test(msg.content)) { return; }
