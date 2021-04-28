@@ -44,7 +44,7 @@ module.exports = class extends Command {
             .setFooter(msg.guild.name, msg.guild.iconURL())
             .setColor(0x04d5fd)
             .setTitle(msg.language.get("TTT_MATCHHEADER"))
-            .setDescription(`${msg.author.tag} ${msg.lanugage.get("VERSUS")} ${user.tag}`)
+            .setDescription(`${msg.author.tag} ${msg.language.get("VERSUS")} ${user.tag}`)
             .addField(msg.language.get("TTT_BOARD"), this.genBoardDisplay(board));
 
         let gameMsg = await msg.channel.send(gameMenu);
