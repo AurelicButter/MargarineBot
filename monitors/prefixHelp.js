@@ -11,18 +11,15 @@ module.exports = class extends Monitor {
     }
 
     run(msg) {
-        var defaultPrefix = msg.client.gateways.guilds.schema.get("prefix").default;
-        var guildPrefix = msg.guild.settings.prefix;
+        let defaultPrefix = msg.client.gateways.guilds.schema.get("prefix").default;
+        let guildPrefix = msg.guild.settings.prefix;
 
-        if (msg.content === `${defaultPrefix}help`) {
-            if (defaultPrefix !== guildPrefix) {
-                return msg.sendLocale("PREFIXHELP_DEFAULT", [guildPrefix]);
-            }
+        if (msg.content === `${defaultPrefix}help` && defaultPrefix !== guildPrefix) {
+            return msg.sendLocale("PREFIXHELP_DEFAULT", [guildPrefix]);
         }
-        if (msg.content === `${defaultPrefix.replace("~", "-")}help`) {
-            if (defaultPrefix.replace("~", "-") !== guildPrefix) {
-                return msg.sendLocale("PREFIXHELP_MISREAD");
-            }
+
+        if (msg.content === `${defaultPrefix.replace("~", "-")}help` && defaultPrefix.replace("~", "-") !== guildPrefix) {
+            return msg.sendLocale("PREFIXHELP_MISREAD");
         }
     }
 };

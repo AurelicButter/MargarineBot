@@ -92,5 +92,20 @@ module.exports = {
         "Wow. That's awful of you, -user. I'm just here trying to be helpful and make friends but you want to shut me down. Quite rude!",
         "Ouch! Am I not doing a good enough job for you? BAKA!",
         "-user! So mean! I'm just trying to have fun here!"
-    ]
+    ],
+    "tictactoe": {
+        "sameuser": [
+            "Hey! You can't play Tic Tac Toe with yourself! Invite someone into the mix or play with me instead!",
+            "You can't play Tic Tac Toe by yourself! At least invite me to play!"
+        ],
+        "spottaken": [
+            "Looks like someone already beat you to that spot. Pick another one!",
+            "Pick another one. Someone already claimed that one."
+        ],
+        "timeout": [
+            "Looks like the active player took too long to answer. The match has ended.",
+            "Hello? Hellooooo? Looks like the active player left.",
+            "Ending the match since the active player took too long to respond."
+        ]
+    }
 };

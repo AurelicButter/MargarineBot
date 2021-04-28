@@ -15,6 +15,6 @@ module.exports = class extends Command {
     async run(msg, [image]) {
         this.client.user.setAvatar(image);
 
-        msg.channel.send("I've updated my avatar image to the one you sent me.");
+        msg.sendLocale("AVATAR_UPDATE");
     }
 };

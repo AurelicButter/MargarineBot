@@ -1,4 +1,4 @@
-const { Language } = require("klasa");
+const { Language, util } = require("klasa");
 
 /* For use in Klasa System - Margarine Style responses, msg is required but
  * will be mimiced so that speechHelper doesn't error out.
@@ -24,7 +24,20 @@ module.exports = class extends Language {
             DEFAULT: (key) => `${key} has not been localized for en-CA yet.`,
 			DEFAULT_LANGUAGE: "Default Language",
 			NOCHANNEL: "No channel set",
+			USER: "User",
+			MODR: "Moderator",
+			BAN: "BANNED",
+			UNBAN: "UNBANNED",
+			KICK: "KICKED",
+			MUTE: "MUTED",
+			UNMUTE: "UNMUTED",
+			WARN: "WARNED",
+			RMWARN: "REMOVED WARN",
+			WINNER: "WINNER",
+			VERSUS: "vs",
 			MISSINGPERMISSION: "❌ ERROR: MISSING PERMISSIONS! ❌",
+			USER_INCORRECTPERM: "You do not have the correct permissions for this command!",
+			MARG_INCORRECTPERM: "I do not have the correct permissions for this command!",
 			MISSINGTERM: (action) => this.client.speech(falseMsg, ["func-system", "missingterm"], ["-action", action]),
 			PERMLEVEL: [
 				"Level 0 - Everyone",
@@ -61,10 +74,10 @@ module.exports = class extends Language {
 			RESOLVER_MINMAX_BOTH: (name, min, max, suffix) => this.client.speech(falseMsg, ["func-system", "resolver", "minMax", "both"], [
 				["-name", name], ["-min", min], ["-max", max] ["-suffix", suffix]
 			]),
-			RESOLVER_MINMAX_MIN: (name, min, suffix) => this.client.speech(falseMsg, ["func-system", "resolver", "minMax", "min"], [
+			RESOLVER_MINMAX_MIN: (name, min) => this.client.speech(falseMsg, ["func-system", "resolver", "minMax", "min"], [
 				["-name", name], ["-min", min]
 			]),
-			RESOLVER_MINMAX_MAX: (name, max, suffix) => this.client.speech(falseMsg, ["func-system", "resolver", "minMax", "max"], [
+			RESOLVER_MINMAX_MAX: (name, max) => this.client.speech(falseMsg, ["func-system", "resolver", "minMax", "max"], [
 				["-name", name], ["-max", max]
 			]),
 			RESOLVER_INVALID_CHANNEL: (name) => this.client.speech(falseMsg, ["func-system", "resolver", "channel"], [["-name", name]]),
@@ -177,12 +190,16 @@ module.exports = class extends Language {
 			MUSICCHECK_NOQUEUE: this.client.speech(falseMsg, ["func-music", "general", "noQueue"]),
 			MUSICCHECK_MISMATCHVC: this.client.speech(falseMsg, ["func-music", "general", "mismatch"]),
 			MUSICCHECK_NOHANDLER: this.client.speech(falseMsg, ["func-music", "general", "noHandler"]),
+			MODEMBED_MESSAGEHEADER: "Moderator Message",
+			MODEMBED_USERFIELD: (tag, id) => `${tag} (${id})`,
+			MODEMBED_DMMESSAGE: (action, guild, reason) => `You have been ${action} from ${guild}!\n**Reason:** ${reason}`,
 
 			/**
 			 * Monitors
 			 */
 			PREFIXHELP_DEFAULT: (prefix) => `Whoops! Looks like you are thinking of my default prefix. That is not the case here. Please use: ${prefix}`,
-			PREFIXHELP_MISREAD: "Whoops! Looks like you misread my prefix. It's a tilde \`~\`, not a dash!",
+			PREFIXHELP_MISREAD: "Whoops! Looks like you misread my prefix. It's a tilde `~`, not a dash!",
+			INVITEDETECTOR_BADMESSAGE: (msg, author) => this.client.speech(msg, ["func-monitor", "inviteDetector"], [["-author", author]]),
 			
 			/* 
 			 * Commands - Config
@@ -202,6 +219,16 @@ module.exports = class extends Language {
 			DCOMMAND_GUARDED: (msg) => this.client.speech(msg, ["disablecommand", "guarded"]),
 			SETDEFAULTCHANNEL: (msg, channel) => this.client.speech(msg, ["setdefaultchannel", "change"], [["-channel", channel]]),
 			SETDEFAULTCHANNEL_REMOVE: (msg) => this.client.speech(msg, ["setdefaultchannel", "remove"]),
+			SETWELCOME: (msg, item) => this.client.speech(msg, ["setwelcome"], [["-msg", item]]),
+			REMOVEWELCOME: "Welcome message has been removed!",
+			SETLEAVE: (msg, item) => this.client.speech(msg, ["setleave"], [["-msg", item]]),
+			REMOVELEAVE: "Leave message has been removed!",
+			MONITORTOGGLE_NOMONITOR: (msg) => this.client.speech(msg, ["monitortoggle", "nomonitor"]),
+			MONITORTOGGLE_NOTOGGLE: (msg) => this.client.speech(msg, ["monitortoggle", "notoggle"]),
+			MONITORTOGGLE_DISABLE: (msg, monitor) => this.client.speech(msg, ["monitortoggle", "disable"], [["-monitor", monitor]]),
+			MONITORTOGGLE_ENABLE: (msg, monitor) => this.client.speech(msg, ["monitortoggle", "enable"], [["-monitor", monitor]]),
+			SETMODLOG: (msg, channel) => this.client.speech(msg, ["setmodlog", "change"], [["-channel", channel]]),
+			SETMODLOG_REMOVE: (msg) => this.client.speech(msg, ["setmodlog", "remove"]),
 
 			/*
 			 * Commands - General
@@ -227,7 +254,7 @@ module.exports = class extends Language {
 			MAL_REMOVEPROFILE: (msg) => this.client.speech(msg, ["mal", "removeProfile"]),
 			MAL_NOTERM: (msg) => this.client.speech(msg, ["mal", "noTerm"]),
 			MAL_NOUSER: (msg) => this.client.speech(msg, ["mal", "noUsername"]),
-			MAL_404ERR: (msg) => this.client.speech(msg, ["MAL", "404Err"]),
+			MAL_404ERR: (msg) => this.client.speech(msg, ["mal", "404Err"]),
 			ANILIST_SETPROFILE: (msg) => this.client.speech(msg, ["anilist", "setProfile"]),
 			ANILIST_REMOVEPROFILE: (msg) => this.client.speech(msg, ["anilist", "removeProfile"]),
 			ANILIST_NOTERM: (msg) => this.client.speech(msg, ["anilist", "noTerm"]),
@@ -261,6 +288,11 @@ module.exports = class extends Language {
 				["-hand2", hand2],
 				["-result", result]
 			]),
+			TTT_MATCHHEADER: "TicTacToe Match",
+			TTT_BOARD: "Board",
+			TTT_SAMEUSER: (msg) => this.client.speech(msg, ["tictactoe", "sameuser"]),
+			TTT_SPOTTAKEN: (msg) => this.client.speech(msg, ["tictactoe", "spottaken"]),
+			TTT_TIMEOUT: (msg) => this.client.speech(msg, ["tictactoe", "timeout"]),
 
 			/*
 			 * Commands - Economy
@@ -281,7 +313,7 @@ module.exports = class extends Language {
 			TWOUP_LOSS: (msg, result, bet) => this.client.speech(msg, ["twoup", "lose"], [["-result", result], ["-earnings", bet]]),
 			COIN_SUCCESS: (msg, result, bet) => this.client.speech(msg, ["coin", "win"], [["-result", result], ["-earnings", bet]]),
 			COIN_LOSS: (msg, result, bet) => this.client.speech(msg, ["coin", "lose"], [["-result", result], ["-earnings", bet]]),
-			CHOUHAN_SUCCESS: (msg, sum, guess, bet) => this.client.speech(msg, ["chouhan", "win"], [["-sum", sum], ["-guess", guess], ["-earnings", (bet * 2)]]),
+			CHOUHAN_SUCCESS: (msg, sum, guess, bet) => this.client.speech(msg, ["chouhan", "win"], [["-sum", sum], ["-guess", guess], ["-earnings", bet * 2]]),
 			CHOUHAN_LOSS: (msg, sum, guess, bet) => this.client.speech(msg, ["chouhan", "lose"], [["-sum", sum], ["-guess", guess], ["-earnings", bet]]),
 			BLACKJACK_WINNERTITLE: "Winner:",
 			BLACKJACK_FOLDED: "Player folded! - Dealer Wins!",
@@ -350,6 +382,22 @@ module.exports = class extends Language {
 			VOLUME_MAX: (msg) => this.client.speech(msg, ["volume", "overHun"]),
 			VOLUME_PAUSED: (msg) => this.client.speech(msg, ["volume", "notPlay"]),
 			VOLUME_SUCCESS: (msg, change, vol) => this.client.speech(msg, ["volume", "success"], [["-param1", change], ["-param2", vol]]),
+
+			/**
+			 * Commands - Moderation
+			 */
+			BAN_UNBANNABLE: "I cannot ban that member",
+			KICK_UNKICKABLE: "I cannot kick that member",
+			MODRMESSAGE: (author, reason) => `Automated Action - ${this.language.get("MODERATOR")}: ${author} | Reason: ${reason}`,
+			NOREASON: "No reason given.",
+			MUTE_NOMUTEROLE: (msg) => this.client.speech(msg, ["mute", "noRole"]),
+			MUTE_HIGHERPOS: (msg) => this.client.speech(msg, ["mute", "rolePos"]),
+			MUTE_ISADMIN: (msg) => this.client.speech(msg, ["mute", "admin"]),
+			MUTE_UNMUTED: (msg, user) => this.client.speech(msg, ["mute", "unmuted"], [["-user", user]]),
+			MUTE_MUTED: (msg, user) => this.client.speech(msg, ["mute", "muted"], [["-user", user]]),
+			PURGE_USERSPECIFIC: (tag) => `by ${tag}`,
+			PURGE_MESSAGE: (msg, amount, user) => this.client.speech(msg, ["purge"], [["-amount", amount], ["-user", user]]),
+			REDUCEWARN_REASON: (amount) => `Removed ${amount} warns from target user` 
 		};
     }
 };

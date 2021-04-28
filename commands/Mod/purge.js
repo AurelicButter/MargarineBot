@@ -28,21 +28,22 @@ module.exports = class extends Command {
             const embed = new MessageEmbed()
                 .setColor("#FF0000")
                 .setTimestamp()
-                .setTitle("❌ ERROR: MISSING PERMISSIONS! ❌")
-                .setDescription("You do not have the correct permissions for this command!");
+                .setTitle(msg.language.get("MISSINGPERMISSION"))
+                .setDescription(msg.language.get("USER_INCORRECTPERM"));
             
             return msg.channel.send({embed});
         }
 
         msg.channel.messages.fetch({ limit: msgCount }).then((messages) => {
+            let userSpecific = "";
             if (user && userCheck[2]) {
                 const filterBy = user ? user.id : this.client.user.id;
                 messages = messages.filter(m => m.author.id === filterBy).array().slice(0, amount);
-                var extra = `by ${user.tag} `;
+                userSpecific = msg.language.get("PURGE_USERSPECIFIC", [user.tag]);
             }
 
             msg.channel.bulkDelete(messages).catch(error => console.log(error.stack));
-            msg.channel.send(this.client.speech(msg, ["purge"], [["-amount", amount], ["-user", (extra || "")]]));
+            msg.sendLocale("PURGE_MESSAGES", [msg, amount, userSpecific]);
         });
     }
 };

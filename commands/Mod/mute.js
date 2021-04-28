@@ -13,38 +13,38 @@ module.exports = class extends Command {
             usage: "<user:usersearch> [reason:str]", usageDelim: ","
         });
 
-        this.humanUse = "<user>_[reason]";
+        this.humanUse = "<user>, [reason]";
     }
 
-    async run(msg, [user, reason="No reason given."]) {
-        if (msg.guild.settings.muteRole === null) { return msg.channel.send(this.client.speech(msg, ["mute", "noRole"])); }
+    async run(msg, [user, reason=msg.language.get("NOREASON")]) {
+        if (msg.guild.settings.muteRole === null) { return msg.sendLocale("MUTE_NOMUTEROLE", [msg]); }
         user = msg.guild.members.cache.get(user.id);
 
-        var role = msg.guild.roles.cache.get(msg.guild.settings.muteRole);
-        if (role.position > msg.guild.members.cache.get(this.client.user.id).roles.highest.position) { return msg.channel.send(this.client.speech(msg, ["mute", "rolePos"])); }
+        let role = msg.guild.roles.cache.get(msg.guild.settings.muteRole);
+        if (role.position > msg.guild.members.cache.get(this.client.user.id).roles.highest.position) { 
+            return msg.sendLocale("MUTE_HIGHERPOS", [msg]);
+        }
 
-        if (msg.channel.permissionsFor(user).has("ADMINISTRATOR")) { //Admins can talk regardless. Send message to warn that it will not work.
-            msg.channel.send(this.client.speech(msg, ["mute", "admin"]));
+        if (msg.channel.permissionsFor(user).has("ADMINISTRATOR")) { //Admins can talk regardless
+            msg.sendLocale("MUTE_ISADMIN", [msg]);
         }
 
         if (user.roles.cache.get(role.id)) { 
-            var data = this.client.util.modEmbed(msg, "unmute", user, reason);
-            user.roles.remove(role.id, `Automated Action - Moderator: ${msg.author.username} | ${reason}`);
+            let { embed, DMembed } = this.client.util.modEmbed(msg, "unmute", user, reason);
+            user.roles.remove(role.id, msg.language.get("MODRMESSAGE", [msg.author.username, reason]));
 
-            //Send embeds to logs and target user.
-            user.send({embed: data.DMembed});
-            this.client.util.defaultChannel(msg.guild, "mod").send({embed: data.embed});
+            user.send({embed: DMembed});
+            this.client.util.defaultChannel(msg.guild, "mod").send({embed: embed});
 
-            return msg.channel.send(this.client.speech(msg, ["mute", "unmuted"], [["-user", user.user.username]]));
+            return msg.sendLocale("MUTE_UNMUTED", [msg, user.user.username]);
         }
 
-        var data = this.client.util.modEmbed(msg, "mute", user, reason);
-        user.roles.add(role.id, `Automated Action - Moderator: ${msg.author.username} | ${reason}`);
+        let { embed, DMembed } = this.client.util.modEmbed(msg, "mute", user, reason);
+        user.roles.add(role.id, msg.language.get("MODRMESSAGE", [msg.author.username, reason]));
 
-        //Send embeds to logs and target user.
-        user.send({embed: data.DMembed});
-        this.client.util.defaultChannel(msg.guild, "mod").send({embed: data.embed});
+        user.send({embed: DMembed});
+        this.client.util.defaultChannel(msg.guild, "mod").send({embed: embed});
         
-        msg.channel.send(this.client.speech(msg, ["mute", "muted"], [["-user", user.user.username]]));
+        msg.sendLocale("MUTE_MUTED", [msg, user.user.username]);
     }
 };

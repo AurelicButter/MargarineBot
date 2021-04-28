@@ -20,13 +20,12 @@ module.exports = class extends Inhibitor {
         //Guild leaders have access to all mid-range permission level commands.
         if (msg.guild.owner.id === msg.author.id) { return; }
 
-        var user = msg.guild.members.cache.get(msg.author.id);
+        let user = msg.guild.members.cache.get(msg.author.id);
 
         if (cmd.permissionLevel === 6 && user.permissions.has("ADMINISTRATOR")) { return; }
 
         if (cmd.permissionLevel === 5) {
             if (user.permissions.has("ADMINISTRATOR") || user.roles.cache.has(msg.guild.settings.modRole)) { return; }
-            throw true;
         }
 
         throw true;

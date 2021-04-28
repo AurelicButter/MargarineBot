@@ -1,5 +1,4 @@
 const { Command } = require("klasa");
-const config = require("../../assets/settings.json");
 
 module.exports = class extends Command {
     constructor(...args) {
@@ -12,12 +11,12 @@ module.exports = class extends Command {
     }
 
     async run(msg) {
-        var permLevel = 0;
+        let permLevel = 0;
 
         if (msg.author === this.client.owner || this.client.secondary.includes(msg.author.id)) {
-            var guild = msg.guild;
-            var authorLvl = (msg.author === this.client.owner) ? 10 : 9;
-            var author = guild.members.cache.get(msg.author.id);
+            let guild = msg.guild;
+            let authorLvl = msg.author === this.client.owner ? 10 : 9;
+            let author = guild.members.cache.get(msg.author.id);
 
             if (!guild) { permLevel = 0; }
             else if (guild.owner.id === msg.author.id) { permLevel = 3; }
@@ -25,14 +24,12 @@ module.exports = class extends Command {
             else if (author.roles.cache.has(guild.settings.modRole)) { permLevel = 1; }
             else { permLevel = 0; }
 
-            
-
-            var info = msg.language.get("ADDPERMS")[permLevel];
+            let info = msg.language.get("ADDPERMS")[permLevel];
             return msg.sendLocale("PERMLEVEL_OWNER", [msg.language.get("PERMLEVEL")[authorLvl], info]);
         } 
         
-        for (var i = 5; i < 8; i++) {
-            var check = await msg.hasAtLeastPermissionLevel(i);
+        for (let i = 5; i < 8; i++) {
+            let check = await msg.hasAtLeastPermissionLevel(i);
             if (check) { permLevel = i; }
         }
 
