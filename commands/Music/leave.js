@@ -1,20 +1,22 @@
 const { Command } = require("klasa");
 
 module.exports = class extends Command {
-    constructor(...args) {
-        super(...args, {
-            name: "leave",
-            runIn: ["text"],
-            description: "Leaves the VC that you are in."
-        });
-    }
+	constructor(...args) {
+		super(...args, {
+			name: "leave",
+			runIn: ["text"],
+			description: "Leaves the VC that you are in."
+		});
+	}
 
-    async run(msg) {
-        var vcID = this.client.util.musicCheck(msg);
-        if (vcID === false) { return; }
+	async run(msg) {
+		let vcID = this.client.util.musicCheck(msg);
+		if (vcID === false) {
+			return;
+		}
 
-        vcID.channel.leave();
-        this.client.music.delete(msg.guild.id);
-        msg.sendLocale("LEAVE", [msg, vcID.channel.name]);
-    }
+		vcID.channel.leave();
+		this.client.music.delete(msg.guild.id);
+		msg.sendLocale("LEAVE", [msg, vcID.channel.name]);
+	}
 };
