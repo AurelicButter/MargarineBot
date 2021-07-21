@@ -69,6 +69,7 @@ exports.util = {
 			return guild.channels.cache.get(guild.settings.modlog);
 		}
 
+		let client = guild.client;
 		let name = ["general", "general-chat", "off-topic"];
 		let channelID = Array.from(guild.channels.cache).filter(
 			(channel) => name.includes(channel[1].name) && channel[1].type === "text"
@@ -82,7 +83,7 @@ exports.util = {
 			let currChannel = channels[x][1];
 			if (
 				currChannel.type === "text" &&
-				currChannel.permissionsFor(guild.members.cache.get(this.client.user.id)).has("SEND_MESSAGES")
+				currChannel.permissionsFor(guild.members.cache.get(client.user.id)).has("SEND_MESSAGES")
 			) {
 				channelID = currChannel;
 				x = channels.length;
@@ -101,8 +102,8 @@ exports.util = {
 		if (!msg.member.voice.channelID) {
 			msg.sendLocale("MUSICCHECK_USERNOVC");
 			return false;
-		} 
-		
+		}
+
 		if (tag !== "join") {
 			let handler = msg.client.music.get(msg.guild.id);
 			if (!handler) {
@@ -126,7 +127,10 @@ exports.util = {
 	 * @return { String }
 	 */
 	toTitleCase: (text) => {
-		return text.split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(" ");
+		return text
+			.split(" ")
+			.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+			.join(" ");
 	},
 	/**
 	 * Generate a Date display for printing
