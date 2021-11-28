@@ -1,0 +1,19 @@
+name: ESLint Check
+on:
+  push:
+    branches: [master, development]
+  pull_request:
+    branches: [master, development]
+
+jobs:
+  lint-files:
+    runs-on: ubuntu-latest 
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      - name: Install Packages
+        run: npm install
+      - name: Lint Files
+        run: npm run eslint
